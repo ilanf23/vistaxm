@@ -1,4 +1,12 @@
-import { Link } from "@tanstack/react-router";
+import type { ReactNode } from "react";
+
+function CTAButton({ to, className, children }: { to: string; className: string; children: ReactNode }) {
+  if (to.startsWith("mailto:") || to.startsWith("http") || to.startsWith("tel:")) {
+    return <a href={to} className={className}>{children}</a>;
+  }
+  return <a href={to} className={className}>{children}</a>;
+}
+
 import type { ReactNode } from "react";
 
 export function Hero({ eyebrow, title, subtitle, primary, secondary, children }: {
@@ -24,10 +32,11 @@ export function Hero({ eyebrow, title, subtitle, primary, secondary, children }:
           {subtitle && <p className="mt-5 text-lg md:text-xl text-white/80 max-w-2xl">{subtitle}</p>}
           {(primary || secondary) && (
             <div className="mt-8 flex flex-wrap gap-3">
-              {primary && <Link to={primary.to} className="btn-primary">{primary.label}</Link>}
-              {secondary && <Link to={secondary.to} className="btn-secondary">{secondary.label}</Link>}
+              {primary && <CTAButton to={primary.to} className="btn-primary">{primary.label}</CTAButton>}
+              {secondary && <CTAButton to={secondary.to} className="btn-secondary">{secondary.label}</CTAButton>}
             </div>
           )}
+
           {children}
         </div>
       </div>
@@ -67,13 +76,13 @@ export function CTABand() {
           <p className="mt-2 text-white/80">Book a 30-minute conversation.</p>
         </div>
         <div className="flex flex-wrap gap-3">
-          <Link to="/contact" className="btn-primary">Book a 30-minute conversation</Link>
-          <Link to="/offers" className="btn-secondary">Start with a Rapid Diagnostic</Link>
+          <a href="mailto:sales@vistaxm.com" className="btn-primary">Book a 30-minute conversation</a>
         </div>
       </div>
     </section>
   );
 }
+
 
 export function Stat({ value, label }: { value: string; label: string }) {
   return (
