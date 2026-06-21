@@ -9,8 +9,56 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as TheModelRouteImport } from './routes/the-model'
+import { Route as ProofRouteImport } from './routes/proof'
+import { Route as PartnerpulseRouteImport } from './routes/partnerpulse'
+import { Route as OffersRouteImport } from './routes/offers'
+import { Route as InsightsRouteImport } from './routes/insights'
+import { Route as ContactRouteImport } from './routes/contact'
+import { Route as BrokerpulseRouteImport } from './routes/brokerpulse'
+import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 
+const TheModelRoute = TheModelRouteImport.update({
+  id: '/the-model',
+  path: '/the-model',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProofRoute = ProofRouteImport.update({
+  id: '/proof',
+  path: '/proof',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PartnerpulseRoute = PartnerpulseRouteImport.update({
+  id: '/partnerpulse',
+  path: '/partnerpulse',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OffersRoute = OffersRouteImport.update({
+  id: '/offers',
+  path: '/offers',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const InsightsRoute = InsightsRouteImport.update({
+  id: '/insights',
+  path: '/insights',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BrokerpulseRoute = BrokerpulseRouteImport.update({
+  id: '/brokerpulse',
+  path: '/brokerpulse',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AboutRoute = AboutRouteImport.update({
+  id: '/about',
+  path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -19,28 +67,144 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/brokerpulse': typeof BrokerpulseRoute
+  '/contact': typeof ContactRoute
+  '/insights': typeof InsightsRoute
+  '/offers': typeof OffersRoute
+  '/partnerpulse': typeof PartnerpulseRoute
+  '/proof': typeof ProofRoute
+  '/the-model': typeof TheModelRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/brokerpulse': typeof BrokerpulseRoute
+  '/contact': typeof ContactRoute
+  '/insights': typeof InsightsRoute
+  '/offers': typeof OffersRoute
+  '/partnerpulse': typeof PartnerpulseRoute
+  '/proof': typeof ProofRoute
+  '/the-model': typeof TheModelRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/brokerpulse': typeof BrokerpulseRoute
+  '/contact': typeof ContactRoute
+  '/insights': typeof InsightsRoute
+  '/offers': typeof OffersRoute
+  '/partnerpulse': typeof PartnerpulseRoute
+  '/proof': typeof ProofRoute
+  '/the-model': typeof TheModelRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/about'
+    | '/brokerpulse'
+    | '/contact'
+    | '/insights'
+    | '/offers'
+    | '/partnerpulse'
+    | '/proof'
+    | '/the-model'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/about'
+    | '/brokerpulse'
+    | '/contact'
+    | '/insights'
+    | '/offers'
+    | '/partnerpulse'
+    | '/proof'
+    | '/the-model'
+  id:
+    | '__root__'
+    | '/'
+    | '/about'
+    | '/brokerpulse'
+    | '/contact'
+    | '/insights'
+    | '/offers'
+    | '/partnerpulse'
+    | '/proof'
+    | '/the-model'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AboutRoute: typeof AboutRoute
+  BrokerpulseRoute: typeof BrokerpulseRoute
+  ContactRoute: typeof ContactRoute
+  InsightsRoute: typeof InsightsRoute
+  OffersRoute: typeof OffersRoute
+  PartnerpulseRoute: typeof PartnerpulseRoute
+  ProofRoute: typeof ProofRoute
+  TheModelRoute: typeof TheModelRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/the-model': {
+      id: '/the-model'
+      path: '/the-model'
+      fullPath: '/the-model'
+      preLoaderRoute: typeof TheModelRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/proof': {
+      id: '/proof'
+      path: '/proof'
+      fullPath: '/proof'
+      preLoaderRoute: typeof ProofRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/partnerpulse': {
+      id: '/partnerpulse'
+      path: '/partnerpulse'
+      fullPath: '/partnerpulse'
+      preLoaderRoute: typeof PartnerpulseRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/offers': {
+      id: '/offers'
+      path: '/offers'
+      fullPath: '/offers'
+      preLoaderRoute: typeof OffersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/insights': {
+      id: '/insights'
+      path: '/insights'
+      fullPath: '/insights'
+      preLoaderRoute: typeof InsightsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/brokerpulse': {
+      id: '/brokerpulse'
+      path: '/brokerpulse'
+      fullPath: '/brokerpulse'
+      preLoaderRoute: typeof BrokerpulseRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -53,6 +217,14 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AboutRoute: AboutRoute,
+  BrokerpulseRoute: BrokerpulseRoute,
+  ContactRoute: ContactRoute,
+  InsightsRoute: InsightsRoute,
+  OffersRoute: OffersRoute,
+  PartnerpulseRoute: PartnerpulseRoute,
+  ProofRoute: ProofRoute,
+  TheModelRoute: TheModelRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
