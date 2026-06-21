@@ -7,7 +7,7 @@ import {
   HeadContent,
   Scripts,
 } from "@tanstack/react-router";
-import { useEffect, type ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import logoAsset from "../assets/vistaxm-logo.svg.asset.json";
@@ -113,17 +113,48 @@ const nav = [
 ] as const;
 
 function Header() {
+  const [open, setOpen] = useState(false);
   return (
     <header className="sticky top-0 z-40 bg-[color:var(--navy-deep)] text-white">
       <div className="container-x flex h-16 items-center justify-between">
         <Link to="/" className="flex items-center font-semibold tracking-tight text-white" aria-label="VistaXM home">
           <img src={logoAsset.url} alt="VistaXM" className="h-7 w-auto" />
         </Link>
-        <a href="mailto:sales@vistaxm.com" className="btn-primary !py-2 !px-4 text-sm">Book a call</a>
+        <nav className="hidden lg:flex items-center gap-7 text-sm">
+          {nav.map(n => (
+            <a key={n.label} href="#" onClick={(e) => e.preventDefault()} className="text-white/80 hover:text-white transition-colors cursor-default">
+              {n.label}
+            </a>
+          ))}
+        </nav>
+        <div className="hidden lg:block">
+          <a href="mailto:sales@vistaxm.com" className="btn-primary !py-2 !px-4 text-sm">Book a call</a>
+        </div>
+        <button
+          className="lg:hidden p-2 -mr-2"
+          aria-label="Toggle menu"
+          aria-expanded={open}
+          onClick={() => setOpen(v => !v)}
+        >
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            {open ? <path d="M6 6l12 12M6 18L18 6"/> : <path d="M3 6h18M3 12h18M3 18h18"/>}
+          </svg>
+        </button>
       </div>
+      {open && (
+        <div className="lg:hidden border-t border-white/10 bg-[color:var(--navy-deep)]">
+          <div className="container-x py-4 flex flex-col gap-3">
+            {nav.map(n => (
+              <a key={n.label} href="#" onClick={(e) => { e.preventDefault(); setOpen(false); }} className="text-white/90 py-1">{n.label}</a>
+            ))}
+            <a href="mailto:sales@vistaxm.com" onClick={() => setOpen(false)} className="btn-primary mt-2 self-start">Book a call</a>
+          </div>
+        </div>
+      )}
     </header>
   );
 }
+
 
 
 function Footer() {
