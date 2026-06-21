@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { CTABand, Card, Hero, Section, SectionHead, Stat } from "@/components/site";
+import { CTABand, Card, Hero, JourneyMatrix, Section, SectionHead, Stat } from "@/components/site";
 
 
 export const Route = createFileRoute("/")({

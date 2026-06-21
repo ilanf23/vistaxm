@@ -7,7 +7,8 @@ function CTAButton({ to, className, children }: { to: string; className: string;
   return <a href={to} className={className}>{children}</a>;
 }
 
-import type { ReactNode } from "react";
+
+
 
 export function Hero({ eyebrow, title, subtitle, primary, secondary, children }: {
   eyebrow?: string; title: ReactNode; subtitle?: ReactNode;
