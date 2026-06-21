@@ -1,5 +1,6 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import { CTABand, Card, Hero, JourneyMatrix, Section, SectionHead, Stat } from "@/components/site";
+
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -20,8 +21,8 @@ function Home() {
         eyebrow="Revenue Channel Intelligence"
         title={<>Your NPS is a score. <br className="hidden md:block" /><span className="text-[color:var(--blue-light)]">Your renewal is a decision.</span></>}
         subtitle="We turn partner and broker experience into the account-level signal of where revenue is about to grow or walk — before it shows up in a renewal."
-        primary={{ label: "Book a 30-minute conversation", to: "/contact" }}
-        secondary={{ label: "Start with a 3-week Rapid Diagnostic", to: "/offers" }}
+        primary={{ label: "Book a 30-minute conversation", to: "mailto:sales@vistaxm.com" }}
+
       />
 
       {/* The partner shadow */}
@@ -162,10 +163,8 @@ function Home() {
           <Stat value="$26.8M" label="Opportunity-and-risk pool surfaced for a full-service industrial supplier; $11M+ revenue protected." />
           <Stat value="33%" label="Only one-third of companies that measure NPS link it to revenue. The rest are flying blind." />
         </div>
-        <div className="mt-8">
-          <Link to="/proof" className="text-[color:var(--blue-link)] font-semibold">See the full case studies →</Link>
-        </div>
       </Section>
+
 
       {/* Offer ladder */}
       <Section tint>
@@ -181,8 +180,8 @@ function Home() {
             The full ongoing program. PartnerPulse and BrokerPulse, continuous signal, executive reviews, certified NPS, benchmark compounding.
           </Card>
         </div>
-        <div className="mt-8"><Link to="/offers" className="btn-secondary-dark">Compare offers</Link></div>
       </Section>
+
 
       {/* Pillars strip */}
       <section className="bg-[color:var(--navy)] text-white">

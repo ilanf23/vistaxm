@@ -7,7 +7,7 @@ import {
   HeadContent,
   Scripts,
 } from "@tanstack/react-router";
-import { useEffect, useState, type ReactNode } from "react";
+import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import logoAsset from "../assets/vistaxm-logo.svg.asset.json";
@@ -113,47 +113,18 @@ const nav = [
 ] as const;
 
 function Header() {
-  const [open, setOpen] = useState(false);
   return (
     <header className="sticky top-0 z-40 bg-[color:var(--navy-deep)] text-white">
       <div className="container-x flex h-16 items-center justify-between">
         <Link to="/" className="flex items-center font-semibold tracking-tight text-white" aria-label="VistaXM home">
           <img src={logoAsset.url} alt="VistaXM" className="h-7 w-auto" />
         </Link>
-        <nav className="hidden lg:flex items-center gap-7 text-sm">
-          {nav.map(n => (
-            <Link key={n.to} to={n.to} className="text-white/80 hover:text-white transition-colors" activeProps={{ className: "text-white font-semibold" }}>
-              {n.label}
-            </Link>
-          ))}
-        </nav>
-        <div className="hidden lg:block">
-          <Link to="/contact" className="btn-primary !py-2 !px-4 text-sm">Book a call</Link>
-        </div>
-        <button
-          className="lg:hidden p-2 -mr-2"
-          aria-label="Toggle menu"
-          aria-expanded={open}
-          onClick={() => setOpen(v => !v)}
-        >
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            {open ? <path d="M6 6l12 12M6 18L18 6"/> : <path d="M3 6h18M3 12h18M3 18h18"/>}
-          </svg>
-        </button>
+        <a href="mailto:sales@vistaxm.com" className="btn-primary !py-2 !px-4 text-sm">Book a call</a>
       </div>
-      {open && (
-        <div className="lg:hidden border-t border-white/10 bg-[color:var(--navy-deep)]">
-          <div className="container-x py-4 flex flex-col gap-3">
-            {nav.map(n => (
-              <Link key={n.to} to={n.to} onClick={() => setOpen(false)} className="text-white/90 py-1">{n.label}</Link>
-            ))}
-            <Link to="/contact" onClick={() => setOpen(false)} className="btn-primary mt-2 self-start">Book a call</Link>
-          </div>
-        </div>
-      )}
     </header>
   );
 }
+
 
 function Footer() {
   return (
@@ -170,11 +141,11 @@ function Footer() {
         <div>
           <div className="text-white font-semibold text-sm mb-3">Products</div>
           <ul className="space-y-2 text-sm">
-            <li><Link to="/partnerpulse" className="text-white/80 hover:text-white">PartnerPulse</Link></li>
-            <li><Link to="/brokerpulse" className="text-white/80 hover:text-white">BrokerPulse</Link></li>
-            <li><Link to="/offers" className="text-white/80 hover:text-white">Offers</Link></li>
+            <li>PartnerPulse</li>
+            <li>BrokerPulse</li>
           </ul>
         </div>
+
         <div>
           <div className="text-white font-semibold text-sm mb-3">Contact</div>
           <ul className="space-y-2 text-sm">
