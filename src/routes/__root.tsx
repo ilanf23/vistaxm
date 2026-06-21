@@ -114,15 +114,33 @@ const nav = [
 
 function Header() {
   const [open, setOpen] = useState(false);
+  const [condensed, setCondensed] = useState(false);
+  useEffect(() => {
+    const onScroll = () => setCondensed(window.scrollY > 24);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
   return (
-    <header className="sticky top-0 z-40 bg-[color:var(--navy-deep)] text-white">
-      <div className="container-x flex h-16 items-center justify-between">
+    <header
+      className={`sticky top-0 z-40 text-white transition-all duration-300 ${
+        condensed
+          ? "bg-[color:var(--navy-deep)]/85 backdrop-blur-lg border-b border-white/10"
+          : "bg-[color:var(--navy-deep)] border-b border-transparent"
+      }`}
+    >
+      <div className={`container-x flex items-center justify-between transition-all duration-300 ${condensed ? "h-14" : "h-20"}`}>
         <Link to="/" className="flex items-center font-semibold tracking-tight text-white" aria-label="VistaXM home">
-          <img src={logoAsset.url} alt="VistaXM" className="h-7 w-auto" />
+          <img src={logoAsset.url} alt="VistaXM" className={`w-auto transition-all duration-300 ${condensed ? "h-6" : "h-7"}`} />
         </Link>
-        <nav className="hidden lg:flex items-center gap-7 text-sm">
+        <nav className="hidden lg:flex items-center gap-8 text-sm">
           {nav.map(n => (
-            <a key={n.label} href="#" onClick={(e) => e.preventDefault()} className="text-white/80 hover:text-white transition-colors cursor-default">
+            <a
+              key={n.label}
+              href="#"
+              onClick={(e) => e.preventDefault()}
+              className="text-white/70 hover:text-white transition-colors cursor-default tracking-tight"
+            >
               {n.label}
             </a>
           ))}
@@ -155,39 +173,54 @@ function Header() {
   );
 }
 
-
-
 function Footer() {
   return (
-    <footer className="bg-[color:var(--navy-deep)] text-white/80 mt-24">
-      <div className="container-x py-14 grid gap-10 md:grid-cols-4">
-        <div className="md:col-span-2">
-          <div className="flex items-center">
-            <img src={logoAsset.url} alt="VistaXM" className="h-7 w-auto" />
-          </div>
-          <p className="mt-3 max-w-md text-sm leading-relaxed">
-            Revenue Channel Intelligence. Turning partner and broker experience into the account-level signal of where revenue is about to grow or walk.
+    <footer className="relative bg-[color:var(--navy-deep)] text-white/75 overflow-hidden">
+      <div
+        aria-hidden
+        className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/15 to-transparent"
+      />
+      <div
+        aria-hidden
+        className="absolute -top-32 -left-32 w-[480px] h-[480px] rounded-full opacity-30 pointer-events-none"
+        style={{ background: "radial-gradient(circle, rgba(49,133,252,0.35), transparent 70%)" }}
+      />
+      <div className="container-x relative py-20 grid gap-12 md:grid-cols-12">
+        <div className="md:col-span-5">
+          <img src={logoAsset.url} alt="VistaXM" className="h-7 w-auto" />
+          <p className="mt-5 max-w-md text-sm leading-relaxed text-white/65">
+            Revenue Channel Intelligence. We turn partner and broker experience into the account-level signal of where revenue is about to grow or walk.
           </p>
+          <a href="mailto:sales@vistaxm.com" className="btn-primary mt-7 text-sm">Book a 30-minute conversation</a>
         </div>
-        <div>
-          <div className="text-white font-semibold text-sm mb-3">Products</div>
-          <ul className="space-y-2 text-sm">
+        <div className="md:col-span-2">
+          <div className="eyebrow !text-[color:var(--blue-light)] !text-[0.7rem] mb-4">Products</div>
+          <ul className="space-y-2.5 text-sm">
             <li>PartnerPulse</li>
             <li>BrokerPulse</li>
+            <li>Certified NPS</li>
           </ul>
         </div>
-
-        <div>
-          <div className="text-white font-semibold text-sm mb-3">Contact</div>
-          <ul className="space-y-2 text-sm">
-            <li>Salt Lake City, Utah</li>
-            <li><a href="mailto:sales@vistaxm.com" className="text-white/80 hover:text-white">sales@vistaxm.com</a></li>
-            <li><a href="tel:+18015024841" className="text-white/80 hover:text-white">(801) 502-4841</a></li>
+        <div className="md:col-span-2">
+          <div className="eyebrow !text-[color:var(--blue-light)] !text-[0.7rem] mb-4">Company</div>
+          <ul className="space-y-2.5 text-sm">
+            <li>About</li>
+            <li>Insights</li>
+            <li>Proof</li>
+            <li>Careers</li>
+          </ul>
+        </div>
+        <div className="md:col-span-3">
+          <div className="eyebrow !text-[color:var(--blue-light)] !text-[0.7rem] mb-4">Contact</div>
+          <ul className="space-y-2.5 text-sm">
+            <li className="text-white/65">Salt Lake City, Utah</li>
+            <li><a href="mailto:sales@vistaxm.com" className="text-white hover:text-[color:var(--blue-light)] transition-colors">sales@vistaxm.com</a></li>
+            <li><a href="tel:+18015024841" className="text-white hover:text-[color:var(--blue-light)] transition-colors">(801) 502-4841</a></li>
           </ul>
         </div>
       </div>
       <div className="border-t border-white/10">
-        <div className="container-x py-5 text-xs text-white/60 flex flex-wrap justify-between gap-2">
+        <div className="container-x py-6 text-xs text-white/55 flex flex-wrap justify-between gap-3">
           <span>© {new Date().getFullYear()} VistaXM. All rights reserved.</span>
           <span>PartnerPulse and BrokerPulse are products of VistaXM.</span>
         </div>
@@ -195,6 +228,7 @@ function Footer() {
     </footer>
   );
 }
+
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
