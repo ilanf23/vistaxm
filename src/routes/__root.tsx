@@ -10,6 +10,7 @@ import {
 import { useEffect, useState, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
+import logoAsset from "../assets/vistaxm-logo.svg.asset.json";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 
 function NotFoundComponent() {
@@ -112,11 +113,8 @@ function Header() {
   return (
     <header className="sticky top-0 z-40 bg-[color:var(--navy-deep)] text-white">
       <div className="container-x flex h-16 items-center justify-between">
-        <Link to="/" className="flex items-center gap-2 font-semibold tracking-tight text-white" aria-label="VistaXM home">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <path d="M12 3l8 9h-5v9h-6v-9H4l8-9z" fill="#3185fc"/>
-          </svg>
-          <span className="text-lg">VistaXM</span>
+        <Link to="/" className="flex items-center font-semibold tracking-tight text-white" aria-label="VistaXM home">
+          <img src={logoAsset.url} alt="VistaXM" className="h-7 w-auto" />
         </Link>
         <nav className="hidden lg:flex items-center gap-7 text-sm">
           {nav.map(n => (
@@ -158,11 +156,8 @@ function Footer() {
     <footer className="bg-[color:var(--navy-deep)] text-white/80 mt-24">
       <div className="container-x py-14 grid gap-10 md:grid-cols-4">
         <div className="md:col-span-2">
-          <div className="flex items-center gap-2 text-white font-semibold text-lg">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <path d="M12 3l8 9h-5v9h-6v-9H4l8-9z" fill="#3185fc"/>
-            </svg>
-            VistaXM
+          <div className="flex items-center">
+            <img src={logoAsset.url} alt="VistaXM" className="h-7 w-auto" />
           </div>
           <p className="mt-3 max-w-md text-sm leading-relaxed">
             Revenue Channel Intelligence. Turning partner and broker experience into the account-level signal of where revenue is about to grow or walk.
