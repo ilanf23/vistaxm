@@ -525,7 +525,7 @@ export function Hero({
       />
 
       <div ref={ref} className="container-x relative z-[2] pt-24 pb-24 md:pt-28 md:pb-32">
-        <div className="grid lg:grid-cols-[0.82fr_1.18fr] gap-12 lg:gap-14 items-center">
+        <div className="grid lg:grid-cols-[0.92fr_1.08fr] gap-12 lg:gap-14 items-center">
           <div className="max-w-[560px]">
             {eyebrow && (
               <div
@@ -809,7 +809,7 @@ function HeroMockup() {
           style={{ "--tilt-x": `${tilt.x}deg`, "--tilt-y": `${tilt.y}deg` } as CSSProperties}
         >
           <div
-            className="relative mx-auto w-full max-w-[760px] overflow-hidden rounded-[18px] bg-white"
+            className="relative mx-auto w-full max-w-[660px] overflow-hidden rounded-[16px] bg-white"
             style={{
               border: "1px solid rgba(255,255,255,.5)",
               boxShadow: "0 40px 90px -24px rgba(0,8,24,.65), 0 4px 16px rgba(0,0,0,.2)",
