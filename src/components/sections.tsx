@@ -244,8 +244,8 @@ export function RealProof() {
         </Reveal>
 
         {/* Certified NPS credential */}
-        <Reveal delay={220}>
-          <article className="md:col-span-4 rounded-2xl hairline bg-white p-8 h-full relative overflow-hidden">
+        <Reveal delay={220} className="md:col-span-4">
+          <article className="rounded-2xl hairline bg-white p-8 h-full relative overflow-hidden">
             <div
               aria-hidden
               className="absolute -top-12 -right-10 h-44 w-44 rounded-full opacity-50"
