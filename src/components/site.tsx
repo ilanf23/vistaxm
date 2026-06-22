@@ -809,7 +809,7 @@ function HeroMockup() {
           style={{ "--tilt-x": `${tilt.x}deg`, "--tilt-y": `${tilt.y}deg` } as CSSProperties}
         >
           <div
-            className="relative mx-auto w-full max-w-[760px] overflow-hidden rounded-[18px] bg-white"
+            className="relative mx-auto w-full max-w-[660px] overflow-hidden rounded-[16px] bg-white"
             style={{
               border: "1px solid rgba(255,255,255,.5)",
               boxShadow: "0 40px 90px -24px rgba(0,8,24,.65), 0 4px 16px rgba(0,0,0,.2)",
