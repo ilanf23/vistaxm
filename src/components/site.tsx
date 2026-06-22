@@ -841,9 +841,9 @@ function HeroMockup() {
               </span>
             </div>
 
-            <div className="flex flex-col gap-[14px] p-[18px]">
+            <div className="flex flex-col gap-[10px] p-[14px]">
               {/* KPI row */}
-              <div className="grid grid-cols-3 gap-[11px]">
+              <div className="grid grid-cols-3 gap-[10px]">
                 <div
                   className="rounded-[13px] p-[13px] transition-[transform,box-shadow] duration-200 hover:-translate-y-[3px] hover:shadow-[0_10px_26px_-10px_rgba(2,37,80,0.3)]"
                   style={{ background: "#f7f9fc", border: "1px solid #e7ebf2" }}
