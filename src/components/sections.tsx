@@ -211,8 +211,8 @@ export function RealProof() {
         </Reveal>
 
         {/* Industrial supplier */}
-        <Reveal delay={180}>
-          <article className="md:col-span-4 rounded-2xl hairline bg-white p-8 h-full">
+        <Reveal delay={180} className="md:col-span-4">
+          <article className="rounded-2xl hairline bg-white p-8 h-full">
             <div
               className="text-sm font-semibold text-[color:var(--navy-deep)]"
               style={{ fontFamily: "var(--font-display)" }}
