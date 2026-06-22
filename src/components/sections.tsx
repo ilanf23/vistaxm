@@ -197,8 +197,8 @@ export function RealProof() {
         </Reveal>
 
         {/* Market reality stat */}
-        <Reveal delay={140}>
-          <article className="md:col-span-4 rounded-2xl hairline bg-[color:var(--blue-tint)] p-8 h-full">
+        <Reveal delay={140} className="md:col-span-4">
+          <article className="rounded-2xl hairline bg-[color:var(--blue-tint)] p-8 h-full">
             <div className="eyebrow mb-3">Market reality</div>
             <div className="text-6xl font-semibold tabular-nums text-[color:var(--navy-deep)] leading-none">
               33%
