@@ -115,8 +115,8 @@ export function RealProof() {
       />
       <div className="mt-14 grid gap-5 md:grid-cols-12">
         {/* Softchoice — hero proof card */}
-        <Reveal>
-          <article className="md:col-span-7 rounded-2xl overflow-hidden bg-[color:var(--navy-deep)] text-white p-8 md:p-10 relative h-full">
+        <Reveal className="md:col-span-7">
+          <article className="rounded-2xl overflow-hidden bg-[color:var(--navy-deep)] text-white p-8 md:p-10 relative h-full">
             <div
               aria-hidden
               className="absolute -top-24 -right-20 h-72 w-72 rounded-full opacity-40"
@@ -157,8 +157,8 @@ export function RealProof() {
         </Reveal>
 
         {/* Veeam */}
-        <Reveal delay={100}>
-          <article className="md:col-span-5 rounded-2xl hairline bg-white p-8 h-full">
+        <Reveal delay={100} className="md:col-span-5">
+          <article className="rounded-2xl hairline bg-white p-8 h-full">
             <div
               className="text-xl font-semibold tracking-tight text-[color:var(--navy-deep)]"
               style={{ fontFamily: "var(--font-display)" }}
@@ -197,8 +197,8 @@ export function RealProof() {
         </Reveal>
 
         {/* Market reality stat */}
-        <Reveal delay={140}>
-          <article className="md:col-span-4 rounded-2xl hairline bg-[color:var(--blue-tint)] p-8 h-full">
+        <Reveal delay={140} className="md:col-span-4">
+          <article className="rounded-2xl hairline bg-[color:var(--blue-tint)] p-8 h-full">
             <div className="eyebrow mb-3">Market reality</div>
             <div className="text-6xl font-semibold tabular-nums text-[color:var(--navy-deep)] leading-none">
               33%
@@ -211,8 +211,8 @@ export function RealProof() {
         </Reveal>
 
         {/* Industrial supplier */}
-        <Reveal delay={180}>
-          <article className="md:col-span-4 rounded-2xl hairline bg-white p-8 h-full">
+        <Reveal delay={180} className="md:col-span-4">
+          <article className="rounded-2xl hairline bg-white p-8 h-full">
             <div
               className="text-sm font-semibold text-[color:var(--navy-deep)]"
               style={{ fontFamily: "var(--font-display)" }}
@@ -244,8 +244,8 @@ export function RealProof() {
         </Reveal>
 
         {/* Certified NPS credential */}
-        <Reveal delay={220}>
-          <article className="md:col-span-4 rounded-2xl hairline bg-white p-8 h-full relative overflow-hidden">
+        <Reveal delay={220} className="md:col-span-4">
+          <article className="rounded-2xl hairline bg-white p-8 h-full relative overflow-hidden">
             <div
               aria-hidden
               className="absolute -top-12 -right-10 h-44 w-44 rounded-full opacity-50"
