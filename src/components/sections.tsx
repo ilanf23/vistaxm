@@ -157,8 +157,8 @@ export function RealProof() {
         </Reveal>
 
         {/* Veeam */}
-        <Reveal delay={100}>
-          <article className="md:col-span-5 rounded-2xl hairline bg-white p-8 h-full">
+        <Reveal delay={100} className="md:col-span-5">
+          <article className="rounded-2xl hairline bg-white p-8 h-full">
             <div
               className="text-xl font-semibold tracking-tight text-[color:var(--navy-deep)]"
               style={{ fontFamily: "var(--font-display)" }}
