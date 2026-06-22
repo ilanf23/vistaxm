@@ -23,7 +23,9 @@ function NotFoundComponent() {
           The page you're looking for doesn't exist.
         </p>
         <div className="mt-6">
-          <Link to="/" className="btn-primary">Go home</Link>
+          <Link to="/" className="btn-primary">
+            Go home
+          </Link>
         </div>
       </div>
     </div>
@@ -46,12 +48,17 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
         </p>
         <div className="mt-6 flex flex-wrap justify-center gap-2">
           <button
-            onClick={() => { router.invalidate(); reset(); }}
+            onClick={() => {
+              router.invalidate();
+              reset();
+            }}
             className="btn-primary"
           >
             Try again
           </button>
-          <a href="/" className="btn-secondary-dark">Go home</a>
+          <a href="/" className="btn-secondary-dark">
+            Go home
+          </a>
         </div>
       </div>
     </div>
@@ -63,23 +70,46 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "VistaXM — Revenue Channel Intelligence" },
-      { name: "description", content: "VistaXM turns partner and broker experience into account-level revenue decisions. Revenue Channel Intelligence for OEMs, IT channel companies, and insurance carriers." },
+      { title: "VistaXM: Revenue Channel Intelligence" },
+      {
+        name: "description",
+        content:
+          "VistaXM turns partner and broker experience into account-level revenue decisions. Revenue Channel Intelligence for OEMs, IT channel companies, and insurance carriers.",
+      },
       { name: "author", content: "VistaXM" },
-      { property: "og:title", content: "VistaXM — Revenue Channel Intelligence" },
-      { property: "og:description", content: "VistaXM turns partner and broker experience into account-level revenue decisions. Revenue Channel Intelligence for OEMs, IT channel companies, and insurance carriers." },
+      { property: "og:title", content: "VistaXM: Revenue Channel Intelligence" },
+      {
+        property: "og:description",
+        content:
+          "VistaXM turns partner and broker experience into account-level revenue decisions. Revenue Channel Intelligence for OEMs, IT channel companies, and insurance carriers.",
+      },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
-      { name: "twitter:title", content: "VistaXM — Revenue Channel Intelligence" },
-      { name: "twitter:description", content: "VistaXM turns partner and broker experience into account-level revenue decisions. Revenue Channel Intelligence for OEMs, IT channel companies, and insurance carriers." },
-      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/9670506a-3c5b-462b-a991-5526a63279c6/id-preview-d7cffc1a--c6219d6c-100f-4251-8283-e18943afdffa.lovable.app-1782062431036.png" },
-      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/9670506a-3c5b-462b-a991-5526a63279c6/id-preview-d7cffc1a--c6219d6c-100f-4251-8283-e18943afdffa.lovable.app-1782062431036.png" },
+      { name: "twitter:title", content: "VistaXM: Revenue Channel Intelligence" },
+      {
+        name: "twitter:description",
+        content:
+          "VistaXM turns partner and broker experience into account-level revenue decisions. Revenue Channel Intelligence for OEMs, IT channel companies, and insurance carriers.",
+      },
+      {
+        property: "og:image",
+        content:
+          "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/9670506a-3c5b-462b-a991-5526a63279c6/id-preview-d7cffc1a--c6219d6c-100f-4251-8283-e18943afdffa.lovable.app-1782062431036.png",
+      },
+      {
+        name: "twitter:image",
+        content:
+          "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/9670506a-3c5b-462b-a991-5526a63279c6/id-preview-d7cffc1a--c6219d6c-100f-4251-8283-e18943afdffa.lovable.app-1782062431036.png",
+      },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
-      { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" },
+      {
+        rel: "stylesheet",
+        href: "https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Hanken+Grotesk:wght@400;500;600;700&display=swap",
+      },
     ],
   }),
   shellComponent: RootShell,
@@ -129,12 +159,22 @@ function Header() {
           : "bg-[color:var(--navy-deep)] border-b border-transparent"
       }`}
     >
-      <div className={`container-x flex items-center justify-between transition-all duration-300 ${condensed ? "h-14" : "h-20"}`}>
-        <Link to="/" className="flex items-center font-semibold tracking-tight text-white" aria-label="VistaXM home">
-          <img src={logoAsset.url} alt="VistaXM" className={`w-auto transition-all duration-300 ${condensed ? "h-6" : "h-7"}`} />
+      <div
+        className={`container-x flex items-center justify-between transition-all duration-300 ${condensed ? "h-14" : "h-20"}`}
+      >
+        <Link
+          to="/"
+          className="flex items-center font-semibold tracking-tight text-white"
+          aria-label="VistaXM home"
+        >
+          <img
+            src={logoAsset.url}
+            alt="VistaXM"
+            className={`w-auto transition-all duration-300 ${condensed ? "h-6" : "h-7"}`}
+          />
         </Link>
         <nav className="hidden lg:flex items-center gap-8 text-sm">
-          {nav.map(n => (
+          {nav.map((n) => (
             <a
               key={n.label}
               href="#"
@@ -146,26 +186,51 @@ function Header() {
           ))}
         </nav>
         <div className="hidden lg:block">
-          <a href="mailto:sales@vistaxm.com" className="btn-primary !py-3 !px-6 text-base !bg-[#facc15] hover:!bg-[#eab308] !text-[color:var(--navy-deep)] !shadow-none">Book a call</a>
+          <a href="mailto:sales@vistaxm.com" className="btn-primary text-sm">
+            Book a call
+          </a>
         </div>
         <button
           className="lg:hidden p-2 -mr-2"
           aria-label="Toggle menu"
           aria-expanded={open}
-          onClick={() => setOpen(v => !v)}
+          onClick={() => setOpen((v) => !v)}
         >
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            {open ? <path d="M6 6l12 12M6 18L18 6"/> : <path d="M3 6h18M3 12h18M3 18h18"/>}
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+          >
+            {open ? <path d="M6 6l12 12M6 18L18 6" /> : <path d="M3 6h18M3 12h18M3 18h18" />}
           </svg>
         </button>
       </div>
       {open && (
         <div className="lg:hidden border-t border-white/10 bg-[color:var(--navy-deep)]">
           <div className="container-x py-4 flex flex-col gap-3">
-            {nav.map(n => (
-              <a key={n.label} href="#" onClick={(e) => { e.preventDefault(); setOpen(false); }} className="text-white/90 py-1">{n.label}</a>
+            {nav.map((n) => (
+              <a
+                key={n.label}
+                href="#"
+                onClick={(e) => {
+                  e.preventDefault();
+                  setOpen(false);
+                }}
+                className="text-white/90 py-1"
+              >
+                {n.label}
+              </a>
             ))}
-            <a href="mailto:sales@vistaxm.com" onClick={() => setOpen(false)} className="btn-primary mt-2 self-start">Book a call</a>
+            <a
+              href="mailto:sales@vistaxm.com"
+              onClick={() => setOpen(false)}
+              className="btn-primary mt-2 self-start"
+            >
+              Book a call
+            </a>
           </div>
         </div>
       )}
@@ -189,12 +254,17 @@ function Footer() {
         <div className="md:col-span-5">
           <img src={logoAsset.url} alt="VistaXM" className="h-7 w-auto" />
           <p className="mt-5 max-w-md text-sm leading-relaxed text-white/65">
-            Revenue Channel Intelligence. We turn partner and broker experience into the account-level signal of where revenue is about to grow or walk.
+            Revenue Channel Intelligence. We turn partner and broker experience into the
+            account-level signal of where revenue is about to grow or walk.
           </p>
-          <a href="mailto:sales@vistaxm.com" className="btn-primary mt-7 text-sm">Book a 30-minute conversation</a>
+          <a href="mailto:sales@vistaxm.com" className="btn-primary mt-7 text-sm">
+            Book a 30-minute conversation
+          </a>
         </div>
         <div className="md:col-span-2">
-          <div className="eyebrow !text-[color:var(--blue-light)] !text-[0.7rem] mb-4">Products</div>
+          <div className="eyebrow !text-[color:var(--blue-light)] !text-[0.7rem] mb-4">
+            Products
+          </div>
           <ul className="space-y-2.5 text-sm">
             <li>PartnerPulse</li>
             <li>BrokerPulse</li>
@@ -214,8 +284,22 @@ function Footer() {
           <div className="eyebrow !text-[color:var(--blue-light)] !text-[0.7rem] mb-4">Contact</div>
           <ul className="space-y-2.5 text-sm">
             <li className="text-white/65">Salt Lake City, Utah</li>
-            <li><a href="mailto:sales@vistaxm.com" className="text-white hover:text-[color:var(--blue-light)] transition-colors">sales@vistaxm.com</a></li>
-            <li><a href="tel:+18015024841" className="text-white hover:text-[color:var(--blue-light)] transition-colors">(801) 502-4841</a></li>
+            <li>
+              <a
+                href="mailto:sales@vistaxm.com"
+                className="text-white hover:text-[color:var(--blue-light)] transition-colors"
+              >
+                sales@vistaxm.com
+              </a>
+            </li>
+            <li>
+              <a
+                href="tel:+18015024841"
+                className="text-white hover:text-[color:var(--blue-light)] transition-colors"
+              >
+                (801) 502-4841
+              </a>
+            </li>
           </ul>
         </div>
       </div>
@@ -228,7 +312,6 @@ function Footer() {
     </footer>
   );
 }
-
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
