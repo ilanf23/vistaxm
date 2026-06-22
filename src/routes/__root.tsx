@@ -146,7 +146,7 @@ function Header() {
           ))}
         </nav>
         <div className="hidden lg:block">
-          <a href="mailto:sales@vistaxm.com" className="btn-primary !py-3 !px-6 text-base">Book a call</a>
+          <a href="mailto:sales@vistaxm.com" className="btn-primary !py-3 !px-6 text-base !bg-[#facc15] hover:!bg-[#eab308] !text-[color:var(--navy-deep)] !shadow-none">Book a call</a>
         </div>
         <button
           className="lg:hidden p-2 -mr-2"
