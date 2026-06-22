@@ -754,7 +754,7 @@ function HeroMockup() {
           onMouseEnter={() => setHover([r, c])}
           onMouseLeave={() => setHover(null)}
           title={`${p} × ${HERO_STAGES[c]}: ${m.label}`}
-          className="h-[28px] cursor-pointer rounded-[7px] p-0"
+          className="h-[20px] cursor-pointer rounded-[6px] p-0"
           style={{
             background: m.cell,
             border: `${isSel ? "2px" : "1px"} solid ${isSel ? m.color : m.bd}`,
