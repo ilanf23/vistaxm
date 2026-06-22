@@ -525,7 +525,7 @@ export function Hero({
       />
 
       <div ref={ref} className="container-x relative z-[2] pt-24 pb-24 md:pt-28 md:pb-32">
-        <div className="grid lg:grid-cols-[1.02fr_0.98fr] gap-12 lg:gap-16 items-center">
+        <div className="grid lg:grid-cols-[0.82fr_1.18fr] gap-12 lg:gap-14 items-center">
           <div className="max-w-[560px]">
             {eyebrow && (
               <div
