@@ -957,10 +957,10 @@ function HeroMockup() {
 
               {/* Journey x persona matrix */}
               <div
-                className="rounded-[14px] px-[15px] py-[14px]"
+                className="rounded-[14px] px-[14px] py-[11px]"
                 style={{ background: "#fbfcfe", border: "1px solid #e7ebf2" }}
               >
-                <div className="mb-[12px] flex items-center justify-between">
+                <div className="mb-[9px] flex items-center justify-between">
                   <span
                     className="text-[11px] font-semibold uppercase tracking-[0.04em]"
                     style={{ color: "#41557a" }}
