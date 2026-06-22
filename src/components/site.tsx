@@ -1136,6 +1136,122 @@ function HeroMockup() {
   );
 }
 
+/* ---------------- Leadership ---------------- */
+
+function LinkedInIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      className={className}
+      fill="currentColor"
+      aria-hidden
+      focusable="false"
+    >
+      <path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.55V9h3.57v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.22.79 24 1.77 24h20.45c.98 0 1.78-.78 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z" />
+    </svg>
+  );
+}
+
+function LeaderCard({
+  name,
+  title,
+  bio,
+  quote,
+  linkedin,
+  initials,
+  delay = 0,
+}: {
+  name: string;
+  title: string;
+  bio: string;
+  quote: string;
+  linkedin: string;
+  initials: string;
+  delay?: number;
+}) {
+  const { ref, shown } = useReveal<HTMLDivElement>();
+  return (
+    <Reveal delay={delay} className="h-full">
+      <div
+        ref={ref}
+        className="group relative flex h-full flex-col rounded-2xl hairline bg-white p-8 md:p-10 card-lift"
+      >
+        <div className="flex items-center gap-5">
+          <span
+            aria-hidden
+            className="flex h-20 w-20 flex-none items-center justify-center rounded-full bg-gradient-to-br from-[color:var(--navy-deep)] to-[color:var(--blue-cta)] text-xl font-semibold tracking-wide text-white ring-2 ring-[color:var(--blue-cta)] ring-offset-2 ring-offset-white"
+            style={{ fontFamily: "var(--font-display)" }}
+          >
+            {initials}
+          </span>
+          <div>
+            <h3 className="text-xl font-semibold text-[color:var(--ink)]">{name}</h3>
+            <p className="mt-1 text-sm font-semibold uppercase tracking-wide text-[color:var(--blue-link)]">
+              {title}
+            </p>
+          </div>
+        </div>
+
+        <p className="mt-6 leading-relaxed text-[color:var(--ink-soft)]">{bio}</p>
+
+        <blockquote
+          className={`quote-emphasis ${shown ? "quote-emphasis-in" : ""} mt-6 text-lg italic leading-relaxed text-[color:var(--ink)]`}
+        >
+          <span aria-hidden className="mr-1 text-[color:var(--orange-pop)]">
+            &ldquo;
+          </span>
+          {quote}
+        </blockquote>
+
+        <div className="mt-auto pt-7">
+          <a
+            href={linkedin}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`${name} on LinkedIn`}
+            className="inline-flex text-[color:var(--ink-soft)]/40 transition-colors hover:text-[color:var(--blue-cta)] group-hover:text-[color:var(--blue-cta)]"
+          >
+            <LinkedInIcon className="h-6 w-6" />
+          </a>
+        </div>
+      </div>
+    </Reveal>
+  );
+}
+
+export function TeamSection() {
+  return (
+    <Section tint id="team">
+      <SectionHead
+        center
+        eyebrow="Leadership"
+        title="The team behind the category."
+        intro="Revenue Channel Intelligence was built by people who have run customer experience and the channel at scale."
+      />
+      <div className="mx-auto mt-12 grid max-w-5xl gap-6 md:mt-14 md:grid-cols-2 md:gap-8">
+        <LeaderCard
+          name="Erik Vogel"
+          title="Founder and CEO"
+          initials="EV"
+          linkedin="https://www.linkedin.com/in/erikvogel2020/"
+          bio="Twenty-six years in IT services. Built the customer experience program for HPE GreenLake, then led the high-tech and telecom practice at Qualtrics, the leading experience platform, advising the world's top technology brands. He founded VistaXM to bring that rigor to the channel."
+          quote="Companies don't spend NPS points. They spend dollars."
+          delay={0}
+        />
+        <LeaderCard
+          name="Bruce Coughlin"
+          title="Chief Growth Officer"
+          initials="BC"
+          linkedin="https://www.linkedin.com/in/brucecoughlin"
+          bio="Former CEO of Cloud Technology Partners, which he helped guide to its acquisition by HPE. A relationship-first channel leader who believes the experience you deliver is the only real differentiator left."
+          quote="The most progressive partners create differentiation and sustain it with customer experience. That is the fundamental tenet of what is happening in the channel."
+          delay={120}
+        />
+      </div>
+    </Section>
+  );
+}
+
 /* ---------------- CTA Band ---------------- */
 
 export function CTABand() {

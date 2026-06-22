@@ -13,6 +13,7 @@ import {
   Section,
   SectionHead,
   SpendByCohort,
+  TeamSection,
 } from "@/components/site";
 
 export const Route = createFileRoute("/")({
@@ -214,6 +215,8 @@ function Home() {
           ))}
         </div>
       </section>
+
+      <TeamSection />
 
       <CTABand />
     </>
