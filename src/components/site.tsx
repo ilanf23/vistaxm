@@ -448,6 +448,7 @@ export function Hero({
   subtitle,
   primary,
   secondary,
+  ctas,
   hint,
   children,
 }: {
@@ -456,6 +457,7 @@ export function Hero({
   subtitle?: ReactNode;
   primary?: { label: string; to: string };
   secondary?: { label: string; to: string };
+  ctas?: ReactNode;
   hint?: string;
   children?: ReactNode;
 }) {
@@ -548,17 +550,23 @@ export function Hero({
                 {subtitle}
               </p>
             )}
-            {(primary || secondary) && (
-              <div className="mt-9 flex flex-wrap gap-3.5" style={reveal(460)}>
-                {primary && (
-                  <CTAButton to={primary.to} className="btn-primary">
-                    {primary.label}
-                  </CTAButton>
-                )}
-                {secondary && (
-                  <CTAButton to={secondary.to} className="btn-secondary">
-                    {secondary.label}
-                  </CTAButton>
+            {(ctas || primary || secondary) && (
+              <div className="mt-9 flex flex-wrap gap-3.5 items-center" style={reveal(460)}>
+                {ctas ? (
+                  ctas
+                ) : (
+                  <>
+                    {primary && (
+                      <CTAButton to={primary.to} className="btn-primary">
+                        {primary.label}
+                      </CTAButton>
+                    )}
+                    {secondary && (
+                      <CTAButton to={secondary.to} className="btn-secondary">
+                        {secondary.label}
+                      </CTAButton>
+                    )}
+                  </>
                 )}
               </div>
             )}
