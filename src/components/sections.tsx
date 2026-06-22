@@ -115,8 +115,8 @@ export function RealProof() {
       />
       <div className="mt-14 grid gap-5 md:grid-cols-12">
         {/* Softchoice — hero proof card */}
-        <Reveal>
-          <article className="md:col-span-7 rounded-2xl overflow-hidden bg-[color:var(--navy-deep)] text-white p-8 md:p-10 relative h-full">
+        <Reveal className="md:col-span-7">
+          <article className="rounded-2xl overflow-hidden bg-[color:var(--navy-deep)] text-white p-8 md:p-10 relative h-full">
             <div
               aria-hidden
               className="absolute -top-24 -right-20 h-72 w-72 rounded-full opacity-40"
