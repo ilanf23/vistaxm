@@ -525,7 +525,7 @@ export function Hero({
       />
 
       <div ref={ref} className="container-x relative z-[2] pt-24 pb-24 md:pt-28 md:pb-32">
-        <div className="grid lg:grid-cols-[1.02fr_0.98fr] gap-12 lg:gap-16 items-center">
+        <div className="grid lg:grid-cols-[0.82fr_1.18fr] gap-12 lg:gap-14 items-center">
           <div className="max-w-[560px]">
             {eyebrow && (
               <div
@@ -754,7 +754,7 @@ function HeroMockup() {
           onMouseEnter={() => setHover([r, c])}
           onMouseLeave={() => setHover(null)}
           title={`${p} × ${HERO_STAGES[c]}: ${m.label}`}
-          className="h-[28px] cursor-pointer rounded-[7px] p-0"
+          className="h-[20px] cursor-pointer rounded-[6px] p-0"
           style={{
             background: m.cell,
             border: `${isSel ? "2px" : "1px"} solid ${isSel ? m.color : m.bd}`,
@@ -809,7 +809,7 @@ function HeroMockup() {
           style={{ "--tilt-x": `${tilt.x}deg`, "--tilt-y": `${tilt.y}deg` } as CSSProperties}
         >
           <div
-            className="relative mx-auto max-w-[600px] overflow-hidden rounded-[18px] bg-white"
+            className="relative mx-auto w-full max-w-[760px] overflow-hidden rounded-[18px] bg-white"
             style={{
               border: "1px solid rgba(255,255,255,.5)",
               boxShadow: "0 40px 90px -24px rgba(0,8,24,.65), 0 4px 16px rgba(0,0,0,.2)",
@@ -841,9 +841,9 @@ function HeroMockup() {
               </span>
             </div>
 
-            <div className="flex flex-col gap-[14px] p-[18px]">
+            <div className="flex flex-col gap-[10px] p-[14px]">
               {/* KPI row */}
-              <div className="grid grid-cols-3 gap-[11px]">
+              <div className="grid grid-cols-3 gap-[10px]">
                 <div
                   className="rounded-[13px] p-[13px] transition-[transform,box-shadow] duration-200 hover:-translate-y-[3px] hover:shadow-[0_10px_26px_-10px_rgba(2,37,80,0.3)]"
                   style={{ background: "#f7f9fc", border: "1px solid #e7ebf2" }}
@@ -957,10 +957,10 @@ function HeroMockup() {
 
               {/* Journey x persona matrix */}
               <div
-                className="rounded-[14px] px-[15px] py-[14px]"
+                className="rounded-[14px] px-[14px] py-[11px]"
                 style={{ background: "#fbfcfe", border: "1px solid #e7ebf2" }}
               >
-                <div className="mb-[12px] flex items-center justify-between">
+                <div className="mb-[9px] flex items-center justify-between">
                   <span
                     className="text-[11px] font-semibold uppercase tracking-[0.04em]"
                     style={{ color: "#41557a" }}
