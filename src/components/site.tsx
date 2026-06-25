@@ -815,22 +815,23 @@ function HeroMockup() {
               boxShadow: "0 40px 90px -24px rgba(0,8,24,.65), 0 4px 16px rgba(0,0,0,.2)",
             }}
           >
-            {/* Window chrome (light) */}
+            {/* Brief header */}
             <div
-              className="flex items-center gap-2 px-[15px]"
-              style={{ height: 40, background: "#f5f7fb", borderBottom: "1px solid #e9edf4" }}
+              className="flex items-center justify-between px-[18px]"
+              style={{
+                height: 38,
+                background: "#fbfcfe",
+                borderBottom: "1px solid #e9edf4",
+              }}
             >
-              <span className="h-[11px] w-[11px] rounded-full" style={{ background: "#ff5f57" }} />
-              <span className="h-[11px] w-[11px] rounded-full" style={{ background: "#febc2e" }} />
-              <span className="h-[11px] w-[11px] rounded-full" style={{ background: "#28c840" }} />
               <span
-                className="flex-1 text-center text-[11.5px] font-semibold"
-                style={{ color: "#5a6b85" }}
+                className="text-[10px] font-semibold uppercase tracking-[0.14em]"
+                style={{ color: "#41557a" }}
               >
-                Revenue Channel Intelligence
+                Account Signal Brief
               </span>
               <span
-                className="flex items-center gap-[5px] text-[10px] font-semibold uppercase tracking-[0.08em]"
+                className="flex items-center gap-[6px] text-[10px] font-semibold uppercase tracking-[0.08em]"
                 style={{ color: "#1f9d6b" }}
               >
                 <span
@@ -841,299 +842,197 @@ function HeroMockup() {
               </span>
             </div>
 
-            <div className="flex flex-col gap-[10px] p-[14px]">
-              {/* KPI row */}
-              <div className="grid grid-cols-3 gap-[10px]">
-                <div
-                  className="rounded-[13px] p-[13px] transition-[transform,box-shadow] duration-200 hover:-translate-y-[3px] hover:shadow-[0_10px_26px_-10px_rgba(2,37,80,0.3)]"
-                  style={{ background: "#f7f9fc", border: "1px solid #e7ebf2" }}
-                >
+            <div className="flex flex-col gap-[14px] p-[20px]">
+              {/* Account identity */}
+              <div className="flex items-end justify-between gap-3">
+                <div>
                   <div
-                    className="mb-[7px] text-[10px] uppercase tracking-[0.05em]"
+                    className="text-[11px] uppercase tracking-[0.08em]"
                     style={{ color: "#7286a3" }}
                   >
-                    Revenue at risk
+                    Top account at risk
                   </div>
                   <div
-                    className="text-[27px] font-bold leading-none tabular-nums"
-                    style={{ color: "#d2591a", fontFamily: "var(--font-display)" }}
-                  >
-                    ${Math.round(revenue)}M
-                  </div>
-                  <div className="mt-[6px] text-[10.5px]" style={{ color: "#9aa9c0" }}>
-                    across 3 accounts
-                  </div>
-                </div>
-
-                <div
-                  className="rounded-[13px] p-[13px] transition-[transform,box-shadow] duration-200 hover:-translate-y-[3px] hover:shadow-[0_10px_26px_-10px_rgba(2,37,80,0.3)]"
-                  style={{ background: "#f7f9fc", border: "1px solid #e7ebf2" }}
-                >
-                  <div
-                    className="mb-[5px] text-[10px] uppercase tracking-[0.05em]"
-                    style={{ color: "#7286a3" }}
-                  >
-                    Certified NPS
-                  </div>
-                  <div className="flex items-center gap-[9px]">
-                    <div className="relative h-[50px] w-[50px] flex-none">
-                      <svg width="50" height="50" viewBox="0 0 80 80">
-                        <circle
-                          cx="40"
-                          cy="40"
-                          r="34"
-                          fill="none"
-                          style={{ stroke: "#e7ebf2", strokeWidth: 7 }}
-                        />
-                        <circle
-                          cx="40"
-                          cy="40"
-                          r="34"
-                          fill="none"
-                          style={{
-                            stroke: "#3185fc",
-                            strokeWidth: 7,
-                            strokeLinecap: "round",
-                            strokeDasharray: gaugeC,
-                            strokeDashoffset: gaugeOffset,
-                            transform: "rotate(-90deg)",
-                            transformOrigin: "40px 40px",
-                          }}
-                        />
-                      </svg>
-                      <div
-                        className="absolute inset-0 flex items-center justify-center text-[17px] font-bold tabular-nums"
-                        style={{ color: "#0d2747", fontFamily: "var(--font-display)" }}
-                      >
-                        {Math.round(nps)}
-                      </div>
-                    </div>
-                    <span className="text-[10.5px] leading-[1.3]" style={{ color: "#7286a3" }}>
-                      +6 pts
-                      <br />
-                      vs Q1
-                    </span>
-                  </div>
-                </div>
-
-                <div
-                  className="rounded-[13px] p-[13px] transition-[transform,box-shadow] duration-200 hover:-translate-y-[3px] hover:shadow-[0_10px_26px_-10px_rgba(2,37,80,0.3)]"
-                  style={{ background: "#f7f9fc", border: "1px solid #e7ebf2" }}
-                >
-                  <div
-                    className="mb-[7px] text-[10px] uppercase tracking-[0.05em]"
-                    style={{ color: "#7286a3" }}
-                  >
-                    Renewal window
-                  </div>
-                  <div
-                    className="text-[27px] font-bold leading-none tabular-nums"
+                    className="mt-[4px] text-[20px] font-bold leading-[1.1] tracking-[-0.01em]"
                     style={{ color: "#0d2747", fontFamily: "var(--font-display)" }}
                   >
-                    {Math.round(renewal)}
-                    <span className="ml-1 text-[13px] font-medium" style={{ color: "#7286a3" }}>
-                      days
-                    </span>
+                    Meridian Industrial Supply
                   </div>
+                </div>
+                <div className="text-right">
                   <div
-                    className="mt-[10px] h-[5px] overflow-hidden rounded-[3px]"
-                    style={{ background: "#e7ebf2" }}
+                    className="text-[18px] font-bold tabular-nums leading-none"
+                    style={{ color: "#0d2747", fontFamily: "var(--font-display)" }}
                   >
-                    <div
-                      className="h-full rounded-[3px]"
-                      style={{
-                        width: "66%",
-                        background: "linear-gradient(90deg,#3185fc,#7fb0f0)",
-                        transformOrigin: "left",
-                        transform: shown ? undefined : "scaleX(0)",
-                        animation: shown
-                          ? "bar-grow 1s cubic-bezier(.2,.7,.3,1) both 1.1s"
-                          : undefined,
-                      }}
-                    />
+                    ${(revenue / 4).toFixed(1)}M
+                  </div>
+                  <div className="mt-[3px] text-[10px]" style={{ color: "#7286a3" }}>
+                    ARR · renews in {Math.round(renewal)}d
                   </div>
                 </div>
               </div>
 
-              {/* Journey x persona matrix */}
+              {/* The contrast: Score vs Decision */}
               <div
-                className="rounded-[14px] px-[14px] py-[11px]"
-                style={{ background: "#fbfcfe", border: "1px solid #e7ebf2" }}
+                className="grid gap-0 overflow-hidden rounded-[12px]"
+                style={{ gridTemplateColumns: "1fr 1fr", border: "1px solid #e7ebf2" }}
               >
-                <div className="mb-[9px] flex items-center justify-between">
-                  <span
-                    className="text-[11px] font-semibold uppercase tracking-[0.04em]"
-                    style={{ color: "#41557a" }}
-                  >
-                    Journey by persona
-                  </span>
-                  <span
-                    className="flex items-center gap-[11px] text-[9.5px]"
+                <div className="p-[13px]" style={{ background: "#f7f9fc" }}>
+                  <div
+                    className="text-[9.5px] uppercase tracking-[0.08em]"
                     style={{ color: "#7286a3" }}
                   >
-                    <span className="flex items-center gap-[4px]">
-                      <i
-                        className="inline-block h-2 w-2 rounded-[2px]"
-                        style={{ background: "#1f9d6b" }}
-                      />
-                      Strong
+                    What the score says
+                  </div>
+                  <div className="mt-[6px] flex items-baseline gap-[6px]">
+                    <span
+                      className="text-[22px] font-bold tabular-nums leading-none"
+                      style={{ color: "#1f9d6b", fontFamily: "var(--font-display)" }}
+                    >
+                      {Math.round(nps)}
                     </span>
-                    <span className="flex items-center gap-[4px]">
-                      <i
-                        className="inline-block h-2 w-2 rounded-[2px]"
-                        style={{ background: "#f5b54a" }}
-                      />
-                      Watch
+                    <span
+                      className="text-[10.5px] font-semibold uppercase tracking-[0.04em]"
+                      style={{ color: "#1f9d6b" }}
+                    >
+                      NPS · healthy
                     </span>
-                    <span className="flex items-center gap-[4px]">
-                      <i
-                        className="inline-block h-2 w-2 rounded-[2px]"
-                        style={{ background: "#f68241" }}
-                      />
-                      Risk
-                    </span>
-                  </span>
+                  </div>
+                  <div className="mt-[6px] text-[11px] leading-[1.4]" style={{ color: "#5a6b85" }}>
+                    Executive sponsor satisfied. Forecast is green.
+                  </div>
                 </div>
-
                 <div
-                  className="grid items-stretch gap-[6px]"
-                  style={{ gridTemplateColumns: "74px repeat(5,1fr)" }}
+                  className="p-[13px]"
+                  style={{
+                    background: "linear-gradient(180deg,#fff5ec,#ffe9d6)",
+                    borderLeft: "1px solid #f5d3b4",
+                  }}
                 >
-                  {matrixCells}
+                  <div
+                    className="text-[9.5px] uppercase tracking-[0.08em]"
+                    style={{ color: "#a8693a" }}
+                  >
+                    What the revenue says
+                  </div>
+                  <div className="mt-[6px] flex items-baseline gap-[6px]">
+                    <span
+                      className="text-[22px] font-bold tabular-nums leading-none"
+                      style={{ color: "#d2591a", fontFamily: "var(--font-display)" }}
+                    >
+                      ${(revenue / 5.7).toFixed(1)}M
+                    </span>
+                    <span
+                      className="text-[10.5px] font-semibold uppercase tracking-[0.04em]"
+                      style={{ color: "#d2591a" }}
+                    >
+                      walking
+                    </span>
+                  </div>
+                  <div className="mt-[6px] text-[11px] leading-[1.4]" style={{ color: "#7a4e2e" }}>
+                    4 of 6 day-to-day influencers have quietly disengaged.
+                  </div>
                 </div>
               </div>
 
-              {/* Selection insight: score -> decision */}
+              {/* The Influencer Gap */}
               <div
-                className="grid items-stretch gap-[14px] rounded-[14px] p-[14px]"
-                style={{
-                  gridTemplateColumns: "auto 1fr",
-                  border: `1px solid ${cur.softBd}`,
-                  background: cur.soft,
-                  transition: "background .3s ease, border-color .3s ease",
-                }}
-              >
-                <div
-                  className="flex min-w-[88px] flex-col items-center justify-center pr-[14px]"
-                  style={{ borderRight: "1px solid #e7ebf2" }}
-                >
-                  <div
-                    className="text-[9.5px] uppercase tracking-[0.05em]"
-                    style={{ color: "#7286a3" }}
-                  >
-                    Cell score
-                  </div>
-                  <div
-                    className="text-[38px] font-bold leading-none tracking-[-0.02em] tabular-nums"
-                    style={{ color: cur.color, fontFamily: "var(--font-display)" }}
-                  >
-                    {cur.score}
-                  </div>
-                  <div
-                    className="mt-1 text-[10px] font-semibold uppercase tracking-[0.04em]"
-                    style={{ color: cur.color }}
-                  >
-                    {cur.label}
-                  </div>
-                </div>
-                <div className="flex flex-col justify-center gap-[6px]">
-                  <div className="text-[12px] font-semibold" style={{ color: "#0d2747" }}>
-                    {HERO_PERSONAS[sel[0]]} × {HERO_STAGES[sel[1]]}
-                  </div>
-                  <div className="text-[13px] leading-[1.45]" style={{ color: "#41557a" }}>
-                    {cur.note}
-                  </div>
-                  {cur.stake && (
-                    <div className="text-[11.5px] font-semibold" style={{ color: "#d2591a" }}>
-                      {cur.stake}
-                    </div>
-                  )}
-                </div>
-              </div>
-
-              {/* Top accounts to watch */}
-              <div
-                className="rounded-[14px] px-[15px] py-[13px]"
+                className="rounded-[12px] p-[14px]"
                 style={{ background: "#fbfcfe", border: "1px solid #e7ebf2" }}
               >
                 <div className="mb-[10px] flex items-center justify-between">
                   <span
-                    className="text-[11px] font-semibold uppercase tracking-[0.04em]"
+                    className="text-[10.5px] font-semibold uppercase tracking-[0.06em]"
                     style={{ color: "#41557a" }}
                   >
-                    Top accounts to watch
+                    The Decision Maker → Influencer gap
                   </span>
-                  <span className="text-[10px]" style={{ color: "#9aa9c0" }}>
-                    90-day trend
+                  <span
+                    className="text-[10px] font-semibold tabular-nums"
+                    style={{ color: "#d2591a" }}
+                  >
+                    37 pt gap
                   </span>
                 </div>
-                <div className="flex flex-col gap-[9px]">
-                  {HERO_ACCOUNTS.map((a) => (
+
+                <div className="flex flex-col gap-[8px]">
+                  {[
+                    { label: "Decision Maker", val: 78, color: "#1f9d6b", w: "78%", d: "0.9s" },
+                    { label: "Champion", val: 64, color: "#5fa97a", w: "64%", d: "1.0s" },
+                    { label: "Influencers", val: 41, color: "#f68241", w: "41%", d: "1.1s" },
+                    { label: "End users", val: 38, color: "#e2703a", w: "38%", d: "1.2s" },
+                  ].map((row) => (
                     <div
-                      key={a.name}
-                      className="grid items-center gap-[12px]"
-                      style={{ gridTemplateColumns: "1fr auto 64px" }}
+                      key={row.label}
+                      className="grid items-center gap-[10px]"
+                      style={{ gridTemplateColumns: "92px 1fr 28px" }}
                     >
-                      <div className="flex items-center gap-[8px]">
-                        <span
-                          className="h-2 w-2 flex-none rounded-full"
-                          style={{ background: a.dot }}
-                        />
-                        <span className="text-[12.5px] font-medium" style={{ color: "#0d2747" }}>
-                          {a.name}
-                        </span>
-                      </div>
-                      <span
-                        className="text-[12px] font-semibold tabular-nums"
-                        style={{ color: a.amountColor }}
-                      >
-                        {a.amount}
+                      <span className="text-[11px]" style={{ color: "#5a6b85" }}>
+                        {row.label}
                       </span>
-                      <svg width="64" height="20" viewBox="0 0 64 20" preserveAspectRatio="none">
-                        <path
-                          d={a.path}
-                          pathLength={1}
+                      <div
+                        className="h-[8px] overflow-hidden rounded-[4px]"
+                        style={{ background: "#eef2f8" }}
+                      >
+                        <div
+                          className="h-full rounded-[4px]"
                           style={{
-                            fill: "none",
-                            stroke: a.stroke,
-                            strokeWidth: 2,
-                            strokeLinecap: "round",
-                            strokeDasharray: 1,
-                            strokeDashoffset: shown ? undefined : 1,
+                            width: row.w,
+                            background: row.color,
+                            transformOrigin: "left",
+                            transform: shown ? undefined : "scaleX(0)",
                             animation: shown
-                              ? `draw-line 1.4s ease-out both ${a.delay}`
+                              ? `bar-grow .9s cubic-bezier(.2,.7,.3,1) both ${row.d}`
                               : undefined,
                           }}
                         />
-                      </svg>
+                      </div>
+                      <span
+                        className="text-right text-[11px] font-semibold tabular-nums"
+                        style={{ color: row.color }}
+                      >
+                        {row.val}
+                      </span>
                     </div>
                   ))}
                 </div>
               </div>
 
-              {/* Promoter / passive / detractor split */}
-              <div>
-                <div
-                  className="flex h-[11px] overflow-hidden rounded-[6px]"
-                  style={{
-                    transformOrigin: "left",
-                    transform: shown ? undefined : "scaleX(0)",
-                    animation: shown
-                      ? "bar-grow 1s cubic-bezier(.2,.7,.3,1) both 1.15s"
-                      : undefined,
-                  }}
-                >
-                  <div style={{ width: "58%", background: "#1f9d6b" }} />
-                  <div style={{ width: "27%", background: "#9fb2cd" }} />
-                  <div style={{ width: "15%", background: "#f68241" }} />
+              {/* Recommended move tied to dollars */}
+              <div
+                className="flex items-center justify-between gap-[12px] rounded-[12px] p-[13px]"
+                style={{
+                  background: "linear-gradient(90deg,#eaf2ff,#f4f8ff)",
+                  border: "1px solid #cfe0ff",
+                }}
+              >
+                <div>
+                  <div
+                    className="text-[9.5px] uppercase tracking-[0.08em]"
+                    style={{ color: "#1863dc" }}
+                  >
+                    Recommended move
+                  </div>
+                  <div
+                    className="mt-[3px] text-[12.5px] font-semibold leading-[1.35]"
+                    style={{ color: "#0d2747" }}
+                  >
+                    Re-engage 4 influencers in next 23 days
+                  </div>
                 </div>
-                <div
-                  className="mt-[8px] flex justify-between text-[10px]"
-                  style={{ color: "#7286a3" }}
-                >
-                  <span>Promoters 58%</span>
-                  <span>Passives 27%</span>
-                  <span>Detractors 15%</span>
+                <div className="text-right">
+                  <div
+                    className="text-[10px] uppercase tracking-[0.06em]"
+                    style={{ color: "#41557a" }}
+                  >
+                    Protects
+                  </div>
+                  <div
+                    className="text-[18px] font-bold tabular-nums leading-none"
+                    style={{ color: "#1863dc", fontFamily: "var(--font-display)" }}
+                  >
+                    ${(revenue / 5.7).toFixed(1)}M
+                  </div>
                 </div>
               </div>
             </div>
