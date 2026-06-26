@@ -1,0 +1,280 @@
+import { createFileRoute } from "@tanstack/react-router";
+import {
+  CTABand,
+  InfluencerGapCard,
+  PageHero,
+  PartnerShadow,
+  Reveal,
+  Section,
+  SectionHead,
+  Stat,
+} from "@/components/site";
+import { FadeIn, Stagger, StaggerItem } from "@/components/motion";
+
+export const Route = createFileRoute("/for-oems")({
+  head: () => ({
+    meta: [
+      { title: "For OEMs and Distributors | VistaXM" },
+      {
+        name: "description",
+        content:
+          "A neutral, benchmarked view of how your channel is really performing. See partner conviction, the conviction gap, and where alternatives are gaining traction, before it shows up in revenue.",
+      },
+      { property: "og:title", content: "For OEMs and Distributors | VistaXM" },
+      {
+        property: "og:description",
+        content:
+          "You can see how your partners sell. You cannot see how they serve. VistaXM gives OEMs and distributors a neutral read on the whole channel.",
+      },
+    ],
+  }),
+  component: ForOems,
+});
+
+/* ---------------- Local: check glyph for list rows ---------------- */
+
+function CheckGlyph({ className }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      className={className}
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden
+    >
+      <circle cx="12" cy="12" r="9" />
+      <path d="M8.5 12.2l2.4 2.4 4.6-4.8" />
+    </svg>
+  );
+}
+
+/* ---------------- Local: "what you see" list (neutral read) ---------------- */
+
+const NEUTRAL_READ: { title: string; note: string }[] = [
+  {
+    title: "Partner conviction by organization",
+    note: "How strongly each partner believes in you, not just whether they are certified.",
+  },
+  {
+    title: "Active recommendation rate",
+    note: "How often partners actually put you forward in a competitive moment.",
+  },
+  {
+    title: "The conviction gap by partner",
+    note: "The distance between what leadership commits to and what the front line recommends.",
+  },
+  {
+    title: "Where alternatives are gaining traction",
+    note: "Which competitors are winning ground, and at which stage of the deal.",
+  },
+  {
+    title: "Investment confidence by program dimension",
+    note: "Where partners trust your program to keep investing, and where confidence is thinning.",
+  },
+];
+
+function NeutralReadList() {
+  return (
+    <div className="mt-12">
+      <Stagger className="grid gap-4 md:grid-cols-2" stagger={0.08}>
+        {NEUTRAL_READ.map((item) => (
+          <StaggerItem key={item.title}>
+            <div className="group flex h-full items-start gap-4 rounded-2xl hairline bg-white p-6 card-lift">
+              <span className="mt-0.5 flex h-9 w-9 flex-none items-center justify-center rounded-xl bg-[color:var(--blue-tint)] text-[color:var(--blue-link)]">
+                <CheckGlyph className="h-5 w-5" />
+              </span>
+              <div>
+                <div className="text-base font-semibold text-[color:var(--navy-deep)]">
+                  {item.title}
+                </div>
+                <p className="mt-1.5 text-sm leading-relaxed text-[color:var(--ink-soft)]">
+                  {item.note}
+                </p>
+              </div>
+            </div>
+          </StaggerItem>
+        ))}
+      </Stagger>
+
+      <Reveal delay={120} className="mt-6">
+        <div className="flex items-center gap-3 rounded-2xl bg-[color:var(--navy-deep)] px-6 py-5 text-white">
+          <span
+            className="h-2 w-2 flex-none rounded-full bg-[color:var(--orange-pop)]"
+            aria-hidden
+          />
+          <p className="text-sm font-semibold md:text-[0.95rem]">
+            All benchmarked across your ecosystem.
+          </p>
+        </div>
+      </Reveal>
+    </div>
+  );
+}
+
+/* ---------------- Local: light-touch pilot steps ---------------- */
+
+const PILOT_STEPS: { n: string; title: string; desc: string }[] = [
+  {
+    n: "01",
+    title: "You provide a partner contact list",
+    desc: "One input. That is the whole ask of your team.",
+  },
+  {
+    n: "02",
+    title: "We design, field, and analyze",
+    desc: "No survey to write, no outreach to manage, no internal project team to stand up.",
+  },
+  {
+    n: "03",
+    title: "We present an executive readout",
+    desc: "A baseline across 60 to 80 partners, delivered and walked through at day ninety.",
+  },
+];
+
+function PilotSteps() {
+  return (
+    <Stagger className="mt-12 grid gap-5 md:grid-cols-3" stagger={0.1}>
+      {PILOT_STEPS.map((step) => (
+        <StaggerItem key={step.n} className="h-full">
+          <div className="group relative flex h-full flex-col rounded-2xl hairline bg-white p-7 card-lift">
+            <span
+              aria-hidden
+              className="absolute inset-x-0 top-0 h-[2px] origin-left scale-x-0 bg-gradient-to-r from-[color:var(--blue-cta)] to-[color:var(--blue-light)] transition-transform duration-500 group-hover:scale-x-100"
+            />
+            <div
+              className="text-sm font-semibold tabular-nums text-[color:var(--blue-link)]"
+              style={{ fontFamily: "var(--font-display)" }}
+            >
+              {step.n}
+            </div>
+            <h3 className="mt-3 !text-lg">{step.title}</h3>
+            <p className="mt-2.5 text-sm leading-relaxed text-[color:var(--ink-soft)]">
+              {step.desc}
+            </p>
+          </div>
+        </StaggerItem>
+      ))}
+    </Stagger>
+  );
+}
+
+/* ---------------- Page ---------------- */
+
+function ForOems() {
+  return (
+    <>
+      {/* 1. Hero */}
+      <PageHero
+        eyebrow="For OEMs and distributors"
+        title={
+          <>
+            You can see how your partners sell.
+            <br className="hidden md:block" /> You cannot see how they serve.
+          </>
+        }
+        subtitle="Your brand is on the box, but the end-customer experience lives with the partner. VistaXM gives you a neutral, benchmarked view of how your channel is really performing, before it shows up in revenue."
+        trust="Already live with a major OEM."
+      />
+
+      {/* 2. The partner shadow */}
+      <Section tint className="overflow-hidden">
+        <PartnerShadow />
+      </Section>
+
+      {/* 3. The conviction gap */}
+      <Section dark>
+        <div className="grid items-center gap-14 lg:grid-cols-[1fr_1.15fr]">
+          <SectionHead
+            dark
+            eyebrow="The conviction gap"
+            title="Certified is not the same as convinced."
+            intro="Your partners are enrolled, certified, and tier-qualified. That tells you they can sell you. It does not tell you whether they will, in a competitive moment. The conviction gap, the distance between what a practice leader commits to and what the front line actually recommends, is where revenue is won or lost."
+          />
+          <Reveal delay={120}>
+            <InfluencerGapCard />
+          </Reveal>
+        </div>
+      </Section>
+
+      {/* 4. A neutral read on your whole channel */}
+      <Section>
+        <SectionHead
+          eyebrow="What you finally see"
+          title="A neutral read on your whole channel."
+          intro="One benchmarked view of how the channel really feels about selling you, drawn from the partners who decide whether you make the shortlist."
+        />
+        <NeutralReadList />
+      </Section>
+
+      {/* 5. Why a neutral third party */}
+      <Section tint>
+        <SectionHead
+          eyebrow="Why a neutral third party"
+          title="Why your partners will tell us what they will not tell you."
+          intro="Partners hear your surveys as performance reviews. They tell a confidential neutral third party what they will never put in writing to you. Independence is structural, and it is not something the program being evaluated can replicate."
+        />
+      </Section>
+
+      {/* 6. The light-touch pilot */}
+      <Section>
+        <SectionHead
+          eyebrow="The light-touch pilot"
+          title="One input from you. An executive readout in 90 days."
+          intro="You provide a partner contact list. We design, field, analyze, and present. No survey to write, no outreach to manage, no internal project team. A baseline across 60 to 80 partners, with an executive readout at day ninety."
+        />
+        <div className="mt-12 grid gap-5 sm:grid-cols-3">
+          <Stat
+            value="1 input"
+            label="A partner contact list is the only thing you provide."
+            delay={0}
+          />
+          <Stat
+            value="60 to 80"
+            label="Partners covered in the baseline across your ecosystem."
+            delay={120}
+          />
+          <Stat
+            value="90 days"
+            label="From kickoff to a presented executive readout."
+            delay={240}
+          />
+        </div>
+        <PilotSteps />
+      </Section>
+
+      {/* 7. Proof quote */}
+      <Section dark>
+        <FadeIn>
+          <figure className="mx-auto max-w-4xl text-center">
+            <span
+              aria-hidden
+              className="block text-7xl leading-none text-[color:var(--orange-pop)]/40"
+              style={{ fontFamily: "var(--font-display)" }}
+            >
+              &ldquo;
+            </span>
+            <blockquote
+              className="-mt-4 text-2xl font-semibold leading-snug !text-white md:text-[2rem] md:leading-[1.25]"
+              style={{ fontFamily: "var(--font-display)" }}
+            >
+              They bring an agnostic viewpoint into the data, and having that unbiased filter is
+              critical to our mission.
+            </blockquote>
+            <figcaption className="mt-7 text-sm font-semibold uppercase tracking-[0.12em] text-[color:var(--blue-light)]">
+              Deanna Davenport, VP of Customer Experience, ePlus
+              <span className="ml-2 font-normal normal-case tracking-normal text-white/55">
+                (CRN, April 2026)
+              </span>
+            </figcaption>
+          </figure>
+        </FadeIn>
+      </Section>
+
+      {/* 8. CTA */}
+      <CTABand />
+    </>
+  );
+}

@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import {
   CTABand,
+  CTAButton,
   Card,
   Hero,
   InfluencerGapCard,
@@ -41,16 +42,11 @@ function Home() {
     <>
       <Hero
         eyebrow="Revenue Channel Intelligence"
-        title={
-          <>
-            Your NPS is a score. Your renewal is{" "}
-            <span className="text-[color:var(--blue-cta)]">a decision.</span>
-          </>
-        }
-        subtitle="Revenue Channel Intelligence turns partner and broker experience into the account-level signal of where revenue is about to grow or walk, before it shows up in a renewal."
-        primary={{ label: "Book a 30-minute conversation", to: "mailto:sales@vistaxm.com" }}
-        secondary={{ label: "Start with a 3-week Rapid Diagnostic", to: "#model" }}
-        hint="Click any cell in the dashboard to see the account-level signal."
+        title="Know which accounts are about to grow or walk, while you can still do something about it."
+        subtitle="VistaXM turns customer and partner experience into the revenue moves IT solution providers and MSPs make every week. Not another score. The next decision."
+        primary={{ label: "Book a 30-minute call", to: "/book-a-call" }}
+        secondary={{ label: "See how it works", to: "#model" }}
+        trust="Built by operators from Softchoice, Veeam, HPE, and Qualtrics"
       />
 
       {/* Proven results — aggregate outcomes */}
@@ -109,19 +105,18 @@ function Home() {
         </div>
       </Section>
 
-      {/* Two moats */}
+      {/* Our advantage */}
       <Section tint>
-        <SectionHead eyebrow="The two moats" title="Why no one else can produce this." />
+        <SectionHead eyebrow="Our advantage" title="Why no one else can produce this." />
         <div className="mt-14 grid gap-6 md:grid-cols-2">
-          <Card title="Neutrality" kicker="Moat 01" delay={0}>
-            As a neutral third party, VistaXM gets candid signal neither the vendor nor the partner
-            can collect for themselves. Customers tell us what they would never put in a vendor
-            survey.
+          <Card title="Structural neutrality" kicker="Advantage 01" delay={0}>
+            Our neutrality is a structural advantage. As a neutral third party, customers and
+            partners tell us things confidentially that they would never put in a vendor survey.
           </Card>
-          <Card title="The data moat" kicker="Moat 02" delay={120}>
-            The channel's largest standardized, apples-to-apples benchmark set, compounding with
-            every customer added. You are measured against the channel, not against yourself last
-            quarter.
+          <Card title="Industry benchmarks" kicker="Advantage 02" delay={120}>
+            We have a robust set of industry benchmarks built from our experience across the
+            channel. We help OEMs and Channel Partners understand where they stand against the
+            competition with real customer and partner data.
           </Card>
         </div>
       </Section>
@@ -162,26 +157,31 @@ function Home() {
         </div>
       </Section>
 
-      {/* Offer ladder */}
+      {/* How to start */}
       <Section tint>
         <SectionHead
-          eyebrow="The offer ladder"
-          title="Three ways to start."
-          intro="Low-risk proof to fully managed program."
+          eyebrow="How to start"
+          title="Start small. Scale when it works."
+          intro="Two ways in, both fully managed. Prove the signal exists, then expand into the ongoing program."
         />
-        <div className="mt-14 grid gap-6 md:grid-cols-3">
-          <Card title="Rapid Diagnostic" kicker="$25k–$50k · 3 weeks" delay={0}>
-            Targeted slice of your channel or book of business. Low-risk proof that the signal
-            exists and that it changes a decision.
+        <div className="mt-14 grid gap-6 md:grid-cols-2">
+          <Card
+            title="Revenue Channel Intelligence Essentials"
+            kicker="First wave in about 90 days"
+            delay={0}
+          >
+            A fixed, fast first wave. Your certified NPS and your first account-level revenue
+            signals, with a prioritized list of moves.
           </Card>
-          <Card title="RCI Essentials" kicker="~$25k · first wave in 90 days" delay={110}>
-            First production wave of Revenue Channel Intelligence across journey × persona.
-            Account-level scoring and your first benchmark.
+          <Card title="The Fully Managed Program" kicker="Small · Medium · Large" delay={120}>
+            The ongoing program that keeps finding and protecting revenue, wave after wave.
+            Continuous signal, benchmark tracking, and quarterly reviews, all run by us.
           </Card>
-          <Card title="Managed Program" kicker="Ongoing" delay={220}>
-            The full ongoing program. PartnerPulse and BrokerPulse, continuous signal, executive
-            reviews, certified NPS, benchmark compounding.
-          </Card>
+        </div>
+        <div className="mt-8">
+          <CTAButton to="/how-to-start" className="btn-ghost">
+            See how to start
+          </CTAButton>
         </div>
       </Section>
 
@@ -202,7 +202,7 @@ function Home() {
             "Persona × journey, not a score.",
             "Neutral and certified.",
             "Managed, fast, proven.",
-            "The data moat.",
+            "The data advantage.",
           ].map((p, i) => (
             <Reveal key={p} delay={i * 90}>
               <div

@@ -384,6 +384,21 @@
   }
 }
 
+/* Hero signal card: gentle "New" dot pulse */
+@keyframes dot-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.3;
+  }
+}
+
+@utility signal-dot {
+  animation: dot-pulse 1.6s ease-in-out infinite;
+}
+
 @keyframes cell-pulse {
   0%,
   100% {

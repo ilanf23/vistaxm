@@ -1,9 +1,10 @@
-import { useRef, useState, type CSSProperties, type ReactNode } from "react";
+import { type CSSProperties, type ReactNode } from "react";
 import { useReveal, useCountUp } from "@/hooks/use-reveal";
+import { FadeIn, Floaty, Parallax, Stagger, StaggerItem } from "@/components/motion";
 
 /* ---------------- Primitives ---------------- */
 
-function CTAButton({
+export function CTAButton({
   to,
   className,
   children,
@@ -440,7 +441,10 @@ export function PartnerShadow() {
   );
 }
 
-/* ---------------- Hero: score → decision ---------------- */
+/* ---------------- Hero ----------------
+   The hero pairs the revenue-and-decision message with a single, embedded
+   "next move" signal. The right-side card is illustrative example data only
+   (see RevenueSignalCard), never a real client result. */
 
 export function Hero({
   eyebrow,
@@ -448,16 +452,14 @@ export function Hero({
   subtitle,
   primary,
   secondary,
-  hint,
-  children,
+  trust,
 }: {
   eyebrow?: string;
   title: ReactNode;
   subtitle?: ReactNode;
   primary?: { label: string; to: string };
   secondary?: { label: string; to: string };
-  hint?: string;
-  children?: ReactNode;
+  trust?: string;
 }) {
   const { ref, shown } = useReveal(0.05);
   const reveal = (delay: number): CSSProperties => ({
@@ -469,112 +471,65 @@ export function Hero({
   });
 
   return (
-    <section className="hero-rci relative overflow-hidden bg-[color:var(--navy-deep)] text-white">
-      {/* Animated gradient mesh blobs */}
-      <div aria-hidden className="absolute z-0 pointer-events-none" style={{ inset: "-15%" }}>
-        <div
-          className="absolute rounded-full"
-          style={{
-            top: "-10%",
-            left: "-5%",
-            width: "60vw",
-            height: "60vw",
-            background: "radial-gradient(circle, rgba(49,133,252,.28), transparent 62%)",
-            filter: "blur(40px)",
-            animation: "mesh-drift 26s ease-in-out infinite, glow-breath 12s ease-in-out infinite",
-          }}
-        />
-        <div
-          className="absolute rounded-full"
-          style={{
-            bottom: "-20%",
-            right: "-10%",
-            width: "55vw",
-            height: "55vw",
-            background: "radial-gradient(circle, rgba(6,45,87,.9), transparent 60%)",
-            filter: "blur(30px)",
-            animation: "mesh-drift-2 32s ease-in-out infinite",
-          }}
-        />
-        <div
-          className="absolute rounded-full"
-          style={{
-            top: "30%",
-            right: "18%",
-            width: "34vw",
-            height: "34vw",
-            background: "radial-gradient(circle, rgba(49,133,252,.16), transparent 60%)",
-            filter: "blur(48px)",
-            animation:
-              "mesh-drift 20s ease-in-out infinite reverse, glow-breath 9s ease-in-out infinite",
-          }}
-        />
-      </div>
-      {/* Fine noise overlay */}
-      <div
-        aria-hidden
-        className="absolute inset-0 z-[1] pointer-events-none"
-        style={{
-          opacity: 0.05,
-          mixBlendMode: "overlay",
-          backgroundImage:
-            "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")",
-        }}
-      />
-
-      <div ref={ref} className="container-x relative z-[2] pt-24 pb-24 md:pt-28 md:pb-32">
-        <div className="grid lg:grid-cols-[1.02fr_0.98fr] gap-12 lg:gap-16 items-center">
+    <section className="hero-rci relative overflow-hidden bg-[#022550] text-white">
+      <div ref={ref} className="container-x relative pt-20 pb-20 md:pt-24 md:pb-28">
+        <div className="grid items-center gap-12 lg:grid-cols-[1fr_340px] lg:gap-16">
+          {/* Left column: the message */}
           <div className="max-w-[560px]">
             {eyebrow && (
               <div
-                className="flex items-center gap-2.5 text-[0.78rem] font-semibold uppercase tracking-[0.16em] text-[color:var(--blue-light)]"
+                className="inline-flex items-center rounded-full bg-[#0a3a6b] px-3 py-1 text-[0.8rem] font-semibold text-[#67a6ff]"
                 style={reveal(0)}
               >
-                <span
-                  className="w-1.5 h-1.5 rounded-full bg-[color:var(--blue-cta)]"
-                  style={{ boxShadow: "0 0 10px rgba(49,133,252,.9)" }}
-                />
                 {eyebrow}
               </div>
             )}
-            <h1 className="!text-white mt-5" style={reveal(120)}>
+            <h1
+              className="mt-5 !text-[1.875rem] !font-bold !leading-[1.12] !tracking-[-0.02em] !text-white md:!text-[2.125rem]"
+              style={reveal(120)}
+            >
               {title}
             </h1>
             {subtitle && (
               <p
-                className="mt-6 text-lg md:text-xl text-[color:var(--blue-pale)] max-w-[520px] leading-relaxed"
-                style={reveal(300)}
+                className="mt-5 max-w-[430px] text-[0.95rem] leading-relaxed text-[#bcd6f5] md:text-[1rem]"
+                style={reveal(260)}
               >
                 {subtitle}
               </p>
             )}
             {(primary || secondary) && (
-              <div className="mt-9 flex flex-wrap gap-3.5" style={reveal(460)}>
+              <div className="mt-8 flex flex-wrap gap-3.5" style={reveal(400)}>
                 {primary && (
                   <CTAButton to={primary.to} className="btn-primary">
                     {primary.label}
                   </CTAButton>
                 )}
                 {secondary && (
-                  <CTAButton to={secondary.to} className="btn-secondary">
+                  <a
+                    href={secondary.to}
+                    className="inline-flex items-center justify-center gap-2 rounded-lg border border-[#2a5183] px-6 py-3.5 text-[0.9375rem] font-semibold text-[#cfe3ff] transition-[transform,background-color,border-color] duration-200 hover:border-[#67a6ff] hover:bg-white/[0.04] active:scale-[0.98]"
+                  >
                     {secondary.label}
-                  </CTAButton>
+                  </a>
                 )}
               </div>
             )}
-            {hint && (
+            {trust && (
               <div
-                className="mt-6 flex items-center gap-2 text-[0.8rem] text-white/55"
-                style={reveal(600)}
+                className="mt-7 flex items-center gap-2.5 text-[0.85rem] text-[#9fc0e8]"
+                style={reveal(540)}
               >
-                <span className="w-[5px] h-[5px] rounded-full bg-emerald-400" />
-                {hint}
+                <ShieldCheckIcon className="h-[18px] w-[18px] flex-none text-[#67a6ff]" />
+                {trust}
               </div>
             )}
-            {children}
           </div>
 
-          <HeroMockup />
+          {/* Right column: the "next move" signal card */}
+          <div className="w-full lg:w-[340px] lg:justify-self-end">
+            <RevenueSignalCard />
+          </div>
         </div>
       </div>
       {/* hairline base */}
@@ -583,554 +538,188 @@ export function Hero({
   );
 }
 
-/* The hero "product shot": an interactive Revenue Channel Intelligence
-   dashboard. Animated KPIs, a clickable journey x persona matrix that drives
-   the selection insight panel, accounts to watch, and a promoter split. */
+/* ---------------- Hero icons (Tabler-style, decorative) ---------------- */
 
-type CellTone = "green" | "amber" | "risk";
-
-interface CellMeta {
-  label: string;
-  color: string;
-  cell: string;
-  bd: string;
-  soft: string;
-  softBd: string;
-  score: number;
-  note: string;
-  stake: string;
+function HeroIcon({ className, children }: { className?: string; children: ReactNode }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      className={className}
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.8"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden
+    >
+      {children}
+    </svg>
+  );
 }
 
-const HERO_STAGES = ["Sales", "Procurement", "Onboarding", "Support", "Renewal"] as const;
-const HERO_PERSONAS = ["Executive", "Technical", "Procurement", "Operations"] as const;
-const HERO_GRID: CellTone[][] = [
-  ["green", "green", "amber", "green", "green"],
-  ["green", "amber", "green", "green", "amber"],
-  ["green", "green", "amber", "green", "risk"],
-  ["green", "green", "green", "amber", "green"],
-];
-const HERO_META: Record<CellTone, CellMeta> = {
-  green: {
-    label: "Strong",
-    color: "#1f9d6b",
-    cell: "rgba(31,157,107,.20)",
-    bd: "rgba(31,157,107,.5)",
-    soft: "#f1faf6",
-    softBd: "#cdeadd",
-    score: 78,
-    note: "Healthy signal: promoters outpace detractors and momentum is positive here.",
-    stake: "",
-  },
-  amber: {
-    label: "Watch",
-    color: "#c47f08",
-    cell: "rgba(245,181,74,.32)",
-    bd: "rgba(214,147,10,.55)",
-    soft: "#fdf7ea",
-    softBd: "#f0e0bb",
-    score: 62,
-    note: "Sentiment is softening. Worth a proactive check-in before the next review cycle.",
-    stake: "",
-  },
-  risk: {
-    label: "At risk",
-    color: "#d2591a",
-    cell: "rgba(246,130,65,.34)",
-    bd: "rgba(232,101,30,.7)",
-    soft: "#fdf2ec",
-    softBd: "#f6d6c3",
-    score: 41,
-    note: "Renewal risk rising. Procurement friction is suppressing certified sentiment across your top accounts.",
-    stake: "$47M at stake · 60-day window",
-  },
-};
-
-const HERO_ACCOUNTS = [
-  {
-    name: "Northwind Mutual",
-    dot: "#f68241",
-    amount: "$18M",
-    amountColor: "#d2591a",
-    path: "M0,6 L13,8 L26,7 L39,11 L52,13 L64,16",
-    stroke: "#d2591a",
-    delay: "1.3s",
-  },
-  {
-    name: "Cordova Health",
-    dot: "#f5b54a",
-    amount: "$14M",
-    amountColor: "#c47f08",
-    path: "M0,9 L13,8 L26,10 L39,9 L52,11 L64,10",
-    stroke: "#c47f08",
-    delay: "1.45s",
-  },
-  {
-    name: "Atlas Freight",
-    dot: "#1f9d6b",
-    amount: "$15M",
-    amountColor: "#1f9d6b",
-    path: "M0,14 L13,12 L26,13 L39,9 L52,7 L64,4",
-    stroke: "#1f9d6b",
-    delay: "1.6s",
-  },
-];
-
-function HeroMockup() {
-  const { ref, shown } = useReveal(0.2);
-  const revenue = useCountUp(47, 1700, shown);
-  const nps = useCountUp(72, 1700, shown);
-  const renewal = useCountUp(60, 1700, shown);
-  const [sel, setSel] = useState<[number, number]>([2, 4]);
-  const [hover, setHover] = useState<[number, number] | null>(null);
-  const [tilt, setTilt] = useState({ x: 0, y: 0 });
-  const glowRef = useRef<HTMLDivElement | null>(null);
-
-  const gaugeC = 2 * Math.PI * 34; // ring circumference (r = 34)
-  const gaugeOffset = gaugeC * (1 - nps / 100);
-  const cur = HERO_META[HERO_GRID[sel[0]][sel[1]]];
-
-  function onMove(e: React.MouseEvent<HTMLDivElement>) {
-    const r = e.currentTarget.getBoundingClientRect();
-    const px = (e.clientX - r.left) / r.width - 0.5;
-    const py = (e.clientY - r.top) / r.height - 0.5;
-    setTilt({ x: -py * 6, y: px * 6 });
-    const g = glowRef.current;
-    if (g) {
-      g.style.left = `${e.clientX - r.left}px`;
-      g.style.top = `${e.clientY - r.top}px`;
-      g.style.opacity = "1";
-    }
-  }
-  function onLeave() {
-    setTilt({ x: 0, y: 0 });
-    if (glowRef.current) glowRef.current.style.opacity = "0";
-  }
-
-  // Flat matrix cell list (corner, stage headers, then per-row label + cells)
-  const matrixCells: ReactNode[] = [];
-  matrixCells.push(<div key="corner" />);
-  HERO_STAGES.forEach((s) =>
-    matrixCells.push(
-      <div
-        key={`h-${s}`}
-        className="self-end overflow-hidden text-ellipsis whitespace-nowrap pb-[3px] text-[9px] uppercase tracking-[0.03em]"
-        style={{ color: "#8294b0" }}
-      >
-        {s}
-      </div>,
-    ),
+function BellIcon({ className }: { className?: string }) {
+  return (
+    <HeroIcon className={className}>
+      <path d="M10 5a2 2 0 1 1 4 0 7 7 0 0 1 4 6v3a4 4 0 0 0 2 3H4a4 4 0 0 0 2-3v-3a7 7 0 0 1 4-6" />
+      <path d="M9 17v1a3 3 0 0 0 6 0v-1" />
+    </HeroIcon>
   );
-  HERO_PERSONAS.forEach((p, r) => {
-    matrixCells.push(
-      <div
-        key={`rl-${r}`}
-        className="self-center whitespace-nowrap pr-[8px] text-right text-[10px]"
-        style={{ color: "#8294b0" }}
-      >
-        {p}
-      </div>,
-    );
-    HERO_GRID[r].forEach((tone, c) => {
-      const m = HERO_META[tone];
-      const isSel = sel[0] === r && sel[1] === c;
-      const isHover = !!hover && hover[0] === r && hover[1] === c;
-      const idx = r * 5 + c;
-      let anim = `cell-in .5s cubic-bezier(.2,.7,.3,1) both ${720 + idx * 46}ms`;
-      if (tone === "risk" && !isSel)
-        anim += `, ring-pulse 2.4s ease-in-out ${720 + idx * 46 + 500}ms infinite`;
-      matrixCells.push(
-        <button
-          type="button"
-          key={`c-${r}-${c}`}
-          onClick={() => setSel([r, c])}
-          onMouseEnter={() => setHover([r, c])}
-          onMouseLeave={() => setHover(null)}
-          title={`${p} × ${HERO_STAGES[c]}: ${m.label}`}
-          className="h-[28px] cursor-pointer rounded-[7px] p-0"
-          style={{
-            background: m.cell,
-            border: `${isSel ? "2px" : "1px"} solid ${isSel ? m.color : m.bd}`,
-            boxShadow: isSel
-              ? `0 0 0 3px ${m.cell}, 0 6px 14px -4px ${m.bd}`
-              : isHover
-                ? "0 4px 10px -3px rgba(2,37,80,.25)"
-                : "none",
-            transform: isHover && !isSel ? "scale(1.07)" : "scale(1)",
-            transition: "transform .15s ease, box-shadow .15s ease, border-color .15s ease",
-            animation: anim,
-          }}
-        />,
-      );
-    });
-  });
+}
 
+function FolderIcon({ className }: { className?: string }) {
+  return (
+    <HeroIcon className={className}>
+      <path d="M5 4h4l2 2h7a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z" />
+    </HeroIcon>
+  );
+}
+
+function CircleCheckIcon({ className }: { className?: string }) {
+  return (
+    <HeroIcon className={className}>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M9 12l2 2 4-4" />
+    </HeroIcon>
+  );
+}
+
+function ClockIcon({ className }: { className?: string }) {
+  return (
+    <HeroIcon className={className}>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M12 7v5l3 2" />
+    </HeroIcon>
+  );
+}
+
+function UserPlusIcon({ className }: { className?: string }) {
+  return (
+    <HeroIcon className={className}>
+      <circle cx="9" cy="7" r="3" />
+      <path d="M3 21v-1a5 5 0 0 1 5-5h2" />
+      <path d="M16 11h6M19 8v6" />
+    </HeroIcon>
+  );
+}
+
+function ShieldCheckIcon({ className }: { className?: string }) {
+  return (
+    <HeroIcon className={className}>
+      <path d="M12 3l7 3v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3z" />
+      <path d="M9 12l2 2 4-4" />
+    </HeroIcon>
+  );
+}
+
+/* ---------------- Revenue signal card ----------------
+   ILLUSTRATIVE example only. A reusable component with clearly-labeled
+   placeholder defaults and a visible "Illustrative" tag. Never present the
+   contents as a real client result. Pass props to render different signals. */
+
+export function RevenueSignalCard({
+  account = "Cordova Health",
+  amountLabel = "$1.2M",
+  reason = "The team that uses you daily has gone quiet while the exec stays happy. That gap shows up at renewal.",
+  action = "Re-engage the day-to-day team now",
+  daysToRenewal = 58,
+  index = 1,
+  total = 3,
+}: {
+  account?: string;
+  amountLabel?: string;
+  reason?: string;
+  action?: string;
+  daysToRenewal?: number;
+  index?: number;
+  total?: number;
+}) {
+  const { ref, shown } = useReveal(0.2);
   return (
     <div
       ref={ref}
-      className="relative"
-      onMouseMove={onMove}
-      onMouseLeave={onLeave}
       style={{
         opacity: shown ? 1 : 0,
-        transform: shown ? "translateY(0)" : "translateY(24px)",
-        transition:
-          "opacity 0.9s cubic-bezier(0.22,1,0.36,1), transform 0.9s cubic-bezier(0.22,1,0.36,1)",
+        transform: shown ? "translateY(0)" : "translateY(12px)",
+        transition: "opacity 0.6s ease-out, transform 0.6s ease-out",
       }}
     >
-      {/* Cursor-follow glow */}
       <div
-        ref={glowRef}
-        aria-hidden
-        className="pointer-events-none absolute z-0 rounded-full"
+        className="overflow-hidden rounded-[14px]"
         style={{
-          left: "50%",
-          top: "50%",
-          width: 520,
-          height: 520,
-          transform: "translate(-50%,-50%)",
-          background: "radial-gradient(circle, rgba(49,133,252,.20), transparent 60%)",
-          filter: "blur(20px)",
-          opacity: 0,
-          transition: "opacity 0.35s ease",
+          background: "#06294e",
+          border: "0.5px solid #1f4878",
+          borderLeft: "3px solid #f68241",
         }}
-      />
-
-      <div className="relative" style={{ animation: "float-y 9s ease-in-out infinite" }}>
+      >
+        {/* Header */}
         <div
-          className="tilt-3d relative"
-          style={{ "--tilt-x": `${tilt.x}deg`, "--tilt-y": `${tilt.y}deg` } as CSSProperties}
+          className="flex items-center justify-between px-4 py-3"
+          style={{ borderBottom: "1px solid rgba(255,255,255,.08)" }}
         >
+          <div className="flex items-center gap-2.5">
+            <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-[#0a3a6b]">
+              <BellIcon className="h-4 w-4 text-[#67a6ff]" />
+            </span>
+            <span className="text-[0.8rem] font-semibold text-white">VistaXM signal</span>
+          </div>
+          <span className="flex items-center gap-1.5 text-[0.72rem] font-semibold text-[#f68241]">
+            <span className="signal-dot h-1.5 w-1.5 rounded-full bg-[#f68241]" aria-hidden />
+            New
+          </span>
+        </div>
+
+        {/* Body */}
+        <div className="px-4 py-4">
+          <div className="flex items-center gap-1.5 text-[0.72rem] text-[#7fa3cf]">
+            <FolderIcon className="h-3.5 w-3.5" />
+            Renewals · {account}
+          </div>
           <div
-            className="relative mx-auto max-w-[600px] overflow-hidden rounded-[18px] bg-white"
-            style={{
-              border: "1px solid rgba(255,255,255,.5)",
-              boxShadow: "0 40px 90px -24px rgba(0,8,24,.65), 0 4px 16px rgba(0,0,0,.2)",
-            }}
+            className="mt-2.5 text-[17px] font-bold leading-snug text-white"
+            style={{ fontFamily: "var(--font-display)" }}
           >
-            {/* Window chrome (light) */}
-            <div
-              className="flex items-center gap-2 px-[15px]"
-              style={{ height: 40, background: "#f5f7fb", borderBottom: "1px solid #e9edf4" }}
-            >
-              <span className="h-[11px] w-[11px] rounded-full" style={{ background: "#ff5f57" }} />
-              <span className="h-[11px] w-[11px] rounded-full" style={{ background: "#febc2e" }} />
-              <span className="h-[11px] w-[11px] rounded-full" style={{ background: "#28c840" }} />
-              <span
-                className="flex-1 text-center text-[11.5px] font-semibold"
-                style={{ color: "#5a6b85" }}
-              >
-                Revenue Channel Intelligence
-              </span>
-              <span
-                className="flex items-center gap-[5px] text-[10px] font-semibold uppercase tracking-[0.08em]"
-                style={{ color: "#1f9d6b" }}
-              >
-                <span
-                  className="h-[7px] w-[7px] rounded-full"
-                  style={{ background: "#2fbf8f", animation: "live-pulse 2s ease-in-out infinite" }}
-                />
-                Live
-              </span>
-            </div>
+            A {amountLabel} renewal is about to walk.
+          </div>
+          <p className="mt-2 text-[12.5px] leading-relaxed text-[#cfe0f7]">{reason}</p>
 
-            <div className="flex flex-col gap-[14px] p-[18px]">
-              {/* KPI row */}
-              <div className="grid grid-cols-3 gap-[11px]">
-                <div
-                  className="rounded-[13px] p-[13px] transition-[transform,box-shadow] duration-200 hover:-translate-y-[3px] hover:shadow-[0_10px_26px_-10px_rgba(2,37,80,0.3)]"
-                  style={{ background: "#f7f9fc", border: "1px solid #e7ebf2" }}
-                >
-                  <div
-                    className="mb-[7px] text-[10px] uppercase tracking-[0.05em]"
-                    style={{ color: "#7286a3" }}
-                  >
-                    Revenue at risk
-                  </div>
-                  <div
-                    className="text-[27px] font-bold leading-none tabular-nums"
-                    style={{ color: "#d2591a", fontFamily: "var(--font-display)" }}
-                  >
-                    ${Math.round(revenue)}M
-                  </div>
-                  <div className="mt-[6px] text-[10.5px]" style={{ color: "#9aa9c0" }}>
-                    across 3 accounts
-                  </div>
-                </div>
-
-                <div
-                  className="rounded-[13px] p-[13px] transition-[transform,box-shadow] duration-200 hover:-translate-y-[3px] hover:shadow-[0_10px_26px_-10px_rgba(2,37,80,0.3)]"
-                  style={{ background: "#f7f9fc", border: "1px solid #e7ebf2" }}
-                >
-                  <div
-                    className="mb-[5px] text-[10px] uppercase tracking-[0.05em]"
-                    style={{ color: "#7286a3" }}
-                  >
-                    Certified NPS
-                  </div>
-                  <div className="flex items-center gap-[9px]">
-                    <div className="relative h-[50px] w-[50px] flex-none">
-                      <svg width="50" height="50" viewBox="0 0 80 80">
-                        <circle
-                          cx="40"
-                          cy="40"
-                          r="34"
-                          fill="none"
-                          style={{ stroke: "#e7ebf2", strokeWidth: 7 }}
-                        />
-                        <circle
-                          cx="40"
-                          cy="40"
-                          r="34"
-                          fill="none"
-                          style={{
-                            stroke: "#3185fc",
-                            strokeWidth: 7,
-                            strokeLinecap: "round",
-                            strokeDasharray: gaugeC,
-                            strokeDashoffset: gaugeOffset,
-                            transform: "rotate(-90deg)",
-                            transformOrigin: "40px 40px",
-                          }}
-                        />
-                      </svg>
-                      <div
-                        className="absolute inset-0 flex items-center justify-center text-[17px] font-bold tabular-nums"
-                        style={{ color: "#0d2747", fontFamily: "var(--font-display)" }}
-                      >
-                        {Math.round(nps)}
-                      </div>
-                    </div>
-                    <span className="text-[10.5px] leading-[1.3]" style={{ color: "#7286a3" }}>
-                      +6 pts
-                      <br />
-                      vs Q1
-                    </span>
-                  </div>
-                </div>
-
-                <div
-                  className="rounded-[13px] p-[13px] transition-[transform,box-shadow] duration-200 hover:-translate-y-[3px] hover:shadow-[0_10px_26px_-10px_rgba(2,37,80,0.3)]"
-                  style={{ background: "#f7f9fc", border: "1px solid #e7ebf2" }}
-                >
-                  <div
-                    className="mb-[7px] text-[10px] uppercase tracking-[0.05em]"
-                    style={{ color: "#7286a3" }}
-                  >
-                    Renewal window
-                  </div>
-                  <div
-                    className="text-[27px] font-bold leading-none tabular-nums"
-                    style={{ color: "#0d2747", fontFamily: "var(--font-display)" }}
-                  >
-                    {Math.round(renewal)}
-                    <span className="ml-1 text-[13px] font-medium" style={{ color: "#7286a3" }}>
-                      days
-                    </span>
-                  </div>
-                  <div
-                    className="mt-[10px] h-[5px] overflow-hidden rounded-[3px]"
-                    style={{ background: "#e7ebf2" }}
-                  >
-                    <div
-                      className="h-full rounded-[3px]"
-                      style={{
-                        width: "66%",
-                        background: "linear-gradient(90deg,#3185fc,#7fb0f0)",
-                        transformOrigin: "left",
-                        transform: shown ? undefined : "scaleX(0)",
-                        animation: shown
-                          ? "bar-grow 1s cubic-bezier(.2,.7,.3,1) both 1.1s"
-                          : undefined,
-                      }}
-                    />
-                  </div>
-                </div>
-              </div>
-
-              {/* Journey x persona matrix */}
-              <div
-                className="rounded-[14px] px-[15px] py-[14px]"
-                style={{ background: "#fbfcfe", border: "1px solid #e7ebf2" }}
-              >
-                <div className="mb-[12px] flex items-center justify-between">
-                  <span
-                    className="text-[11px] font-semibold uppercase tracking-[0.04em]"
-                    style={{ color: "#41557a" }}
-                  >
-                    Journey by persona
-                  </span>
-                  <span
-                    className="flex items-center gap-[11px] text-[9.5px]"
-                    style={{ color: "#7286a3" }}
-                  >
-                    <span className="flex items-center gap-[4px]">
-                      <i
-                        className="inline-block h-2 w-2 rounded-[2px]"
-                        style={{ background: "#1f9d6b" }}
-                      />
-                      Strong
-                    </span>
-                    <span className="flex items-center gap-[4px]">
-                      <i
-                        className="inline-block h-2 w-2 rounded-[2px]"
-                        style={{ background: "#f5b54a" }}
-                      />
-                      Watch
-                    </span>
-                    <span className="flex items-center gap-[4px]">
-                      <i
-                        className="inline-block h-2 w-2 rounded-[2px]"
-                        style={{ background: "#f68241" }}
-                      />
-                      Risk
-                    </span>
-                  </span>
-                </div>
-
-                <div
-                  className="grid items-stretch gap-[6px]"
-                  style={{ gridTemplateColumns: "74px repeat(5,1fr)" }}
-                >
-                  {matrixCells}
-                </div>
-              </div>
-
-              {/* Selection insight: score -> decision */}
-              <div
-                className="grid items-stretch gap-[14px] rounded-[14px] p-[14px]"
-                style={{
-                  gridTemplateColumns: "auto 1fr",
-                  border: `1px solid ${cur.softBd}`,
-                  background: cur.soft,
-                  transition: "background .3s ease, border-color .3s ease",
-                }}
-              >
-                <div
-                  className="flex min-w-[88px] flex-col items-center justify-center pr-[14px]"
-                  style={{ borderRight: "1px solid #e7ebf2" }}
-                >
-                  <div
-                    className="text-[9.5px] uppercase tracking-[0.05em]"
-                    style={{ color: "#7286a3" }}
-                  >
-                    Cell score
-                  </div>
-                  <div
-                    className="text-[38px] font-bold leading-none tracking-[-0.02em] tabular-nums"
-                    style={{ color: cur.color, fontFamily: "var(--font-display)" }}
-                  >
-                    {cur.score}
-                  </div>
-                  <div
-                    className="mt-1 text-[10px] font-semibold uppercase tracking-[0.04em]"
-                    style={{ color: cur.color }}
-                  >
-                    {cur.label}
-                  </div>
-                </div>
-                <div className="flex flex-col justify-center gap-[6px]">
-                  <div className="text-[12px] font-semibold" style={{ color: "#0d2747" }}>
-                    {HERO_PERSONAS[sel[0]]} × {HERO_STAGES[sel[1]]}
-                  </div>
-                  <div className="text-[13px] leading-[1.45]" style={{ color: "#41557a" }}>
-                    {cur.note}
-                  </div>
-                  {cur.stake && (
-                    <div className="text-[11.5px] font-semibold" style={{ color: "#d2591a" }}>
-                      {cur.stake}
-                    </div>
-                  )}
-                </div>
-              </div>
-
-              {/* Top accounts to watch */}
-              <div
-                className="rounded-[14px] px-[15px] py-[13px]"
-                style={{ background: "#fbfcfe", border: "1px solid #e7ebf2" }}
-              >
-                <div className="mb-[10px] flex items-center justify-between">
-                  <span
-                    className="text-[11px] font-semibold uppercase tracking-[0.04em]"
-                    style={{ color: "#41557a" }}
-                  >
-                    Top accounts to watch
-                  </span>
-                  <span className="text-[10px]" style={{ color: "#9aa9c0" }}>
-                    90-day trend
-                  </span>
-                </div>
-                <div className="flex flex-col gap-[9px]">
-                  {HERO_ACCOUNTS.map((a) => (
-                    <div
-                      key={a.name}
-                      className="grid items-center gap-[12px]"
-                      style={{ gridTemplateColumns: "1fr auto 64px" }}
-                    >
-                      <div className="flex items-center gap-[8px]">
-                        <span
-                          className="h-2 w-2 flex-none rounded-full"
-                          style={{ background: a.dot }}
-                        />
-                        <span className="text-[12.5px] font-medium" style={{ color: "#0d2747" }}>
-                          {a.name}
-                        </span>
-                      </div>
-                      <span
-                        className="text-[12px] font-semibold tabular-nums"
-                        style={{ color: a.amountColor }}
-                      >
-                        {a.amount}
-                      </span>
-                      <svg width="64" height="20" viewBox="0 0 64 20" preserveAspectRatio="none">
-                        <path
-                          d={a.path}
-                          pathLength={1}
-                          style={{
-                            fill: "none",
-                            stroke: a.stroke,
-                            strokeWidth: 2,
-                            strokeLinecap: "round",
-                            strokeDasharray: 1,
-                            strokeDashoffset: shown ? undefined : 1,
-                            animation: shown
-                              ? `draw-line 1.4s ease-out both ${a.delay}`
-                              : undefined,
-                          }}
-                        />
-                      </svg>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Promoter / passive / detractor split */}
-              <div>
-                <div
-                  className="flex h-[11px] overflow-hidden rounded-[6px]"
-                  style={{
-                    transformOrigin: "left",
-                    transform: shown ? undefined : "scaleX(0)",
-                    animation: shown
-                      ? "bar-grow 1s cubic-bezier(.2,.7,.3,1) both 1.15s"
-                      : undefined,
-                  }}
-                >
-                  <div style={{ width: "58%", background: "#1f9d6b" }} />
-                  <div style={{ width: "27%", background: "#9fb2cd" }} />
-                  <div style={{ width: "15%", background: "#f68241" }} />
-                </div>
-                <div
-                  className="mt-[8px] flex justify-between text-[10px]"
-                  style={{ color: "#7286a3" }}
-                >
-                  <span>Promoters 58%</span>
-                  <span>Passives 27%</span>
-                  <span>Detractors 15%</span>
-                </div>
-              </div>
-            </div>
+          <div className="mt-3.5 flex items-start gap-2">
+            <CircleCheckIcon className="mt-px h-4 w-4 flex-none text-[#f68241]" />
+            <span className="text-[12.5px] font-semibold text-white">{action}</span>
+          </div>
+          <div className="mt-2.5 flex items-center gap-1.5 text-[0.72rem] text-[#9fc0e8]">
+            <ClockIcon className="h-3.5 w-3.5" />
+            {daysToRenewal} days to renewal
           </div>
         </div>
+
+        {/* Footer */}
+        <div
+          className="flex items-center gap-2 px-4 py-3"
+          style={{ background: "#08305c", borderTop: "1px solid rgba(255,255,255,.08)" }}
+        >
+          <button
+            type="button"
+            className="rounded-lg bg-white px-3.5 py-2 text-[0.8rem] font-semibold text-[#022550] transition-[transform,background-color] duration-200 hover:bg-[#eaf2ff] active:scale-[0.98]"
+          >
+            Start the play
+          </button>
+          <button
+            type="button"
+            aria-label="Assign"
+            className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#0a3a6b] text-[#cfe3ff] transition-[transform,filter] duration-200 hover:brightness-125 active:scale-[0.98]"
+          >
+            <UserPlusIcon className="h-4 w-4" />
+          </button>
+          <span className="ml-auto text-[0.72rem] text-[#7fa3cf]">
+            {index} of {total}
+          </span>
+        </div>
+      </div>
+
+      {/* Illustrative tag */}
+      <div className="mt-2.5 flex items-center gap-1.5 text-[0.68rem] font-semibold uppercase tracking-[0.12em] text-[#7fa3cf]">
+        <span className="h-1 w-1 rounded-full bg-[#7fa3cf]" aria-hidden />
+        Illustrative
       </div>
     </div>
   );
@@ -1277,9 +866,9 @@ export function CTABand() {
           </div>
         </Reveal>
         <Reveal delay={120}>
-          <a href="mailto:sales@vistaxm.com" className="btn-primary">
+          <CTAButton to="/book-a-call" className="btn-primary">
             Book a 30-minute conversation
-          </a>
+          </CTAButton>
         </Reveal>
       </div>
     </section>
@@ -2307,5 +1896,213 @@ export function InfluencerGapCard() {
         </div>
       </div>
     </div>
+  );
+}
+
+/* ---------------- Interior page hero ----------------
+   A lighter hero for interior marketing pages (not the homepage). Navy ground
+   that matches the header, an orchestrated stagger entrance, and scroll-linked
+   parallax on the decorative layer. Pass `visual` to render a right-side panel
+   (two-column); omit it for a single, centered statement. */
+
+export function PageHero({
+  eyebrow,
+  badge,
+  title,
+  subtitle,
+  primary = { label: "Book a 30-minute call", to: "/book-a-call" },
+  secondary,
+  trust,
+  visual,
+  align = "left",
+}: {
+  eyebrow?: string;
+  badge?: string;
+  title: ReactNode;
+  subtitle?: ReactNode;
+  primary?: { label: string; to: string } | null;
+  secondary?: { label: string; to: string };
+  trust?: string;
+  visual?: ReactNode;
+  align?: "left" | "center";
+}) {
+  const centered = align === "center" && !visual;
+  return (
+    <section className="hero-rci relative overflow-hidden bg-[#022550] text-white">
+      {/* Decorative, scroll-parallaxed glow layer */}
+      <Parallax
+        aria-hidden
+        distance={70}
+        className="pointer-events-none absolute inset-0"
+        style={{ willChange: "transform" }}
+      >
+        <div
+          className="absolute inset-0 opacity-80"
+          style={{
+            animation: "aurora-drift 24s ease-in-out infinite",
+            backgroundImage:
+              "radial-gradient(720px 360px at 82% 6%, rgba(49,133,252,0.24), transparent 64%), radial-gradient(540px 320px at 6% 96%, rgba(0,86,167,0.32), transparent 66%), radial-gradient(360px 220px at 70% 92%, rgba(246,130,65,0.12), transparent 70%)",
+          }}
+        />
+      </Parallax>
+
+      <div
+        className={`container-x relative pt-20 pb-20 md:pt-24 md:pb-28 ${
+          visual ? "grid items-center gap-12 lg:grid-cols-[1.05fr_.95fr] lg:gap-16" : ""
+        }`}
+      >
+        <Stagger className={centered ? "mx-auto max-w-3xl text-center" : "max-w-[600px]"}>
+          {(eyebrow || badge) && (
+            <StaggerItem className={centered ? "flex justify-center" : ""}>
+              <div className="flex flex-wrap items-center gap-2.5">
+                {eyebrow && (
+                  <span className="inline-flex items-center rounded-full bg-[#0a3a6b] px-3 py-1 text-[0.8rem] font-semibold text-[#67a6ff]">
+                    {eyebrow}
+                  </span>
+                )}
+                {badge && (
+                  <span className="inline-flex items-center gap-1.5 rounded-full border border-[rgba(246,130,65,0.35)] bg-[rgba(246,130,65,0.14)] px-3 py-1 text-[0.8rem] font-semibold text-[#ffd2b5]">
+                    <span className="h-1.5 w-1.5 rounded-full bg-[color:var(--orange-pop)]" />
+                    {badge}
+                  </span>
+                )}
+              </div>
+            </StaggerItem>
+          )}
+          <StaggerItem>
+            <h1 className="mt-5 !text-[2rem] !font-bold !leading-[1.1] !tracking-[-0.02em] !text-white md:!text-[2.6rem]">
+              {title}
+            </h1>
+          </StaggerItem>
+          {subtitle && (
+            <StaggerItem>
+              <p
+                className={`mt-5 text-[1rem] leading-relaxed text-[#bcd6f5] md:text-[1.075rem] ${
+                  centered ? "mx-auto max-w-[52ch]" : "max-w-[48ch]"
+                }`}
+              >
+                {subtitle}
+              </p>
+            </StaggerItem>
+          )}
+          {(primary || secondary) && (
+            <StaggerItem>
+              <div className={`mt-8 flex flex-wrap gap-3.5 ${centered ? "justify-center" : ""}`}>
+                {primary && (
+                  <CTAButton to={primary.to} className="btn-primary">
+                    {primary.label}
+                  </CTAButton>
+                )}
+                {secondary && (
+                  <a
+                    href={secondary.to}
+                    className="inline-flex items-center justify-center gap-2 rounded-lg border border-[#2a5183] px-6 py-3.5 text-[0.9375rem] font-semibold text-[#cfe3ff] transition-[transform,background-color,border-color] duration-200 hover:border-[#67a6ff] hover:bg-white/[0.04] active:scale-[0.98]"
+                  >
+                    {secondary.label}
+                  </a>
+                )}
+              </div>
+            </StaggerItem>
+          )}
+          {trust && (
+            <StaggerItem>
+              <div
+                className={`mt-7 flex items-center gap-2.5 text-[0.85rem] text-[#9fc0e8] ${
+                  centered ? "justify-center" : ""
+                }`}
+              >
+                <ShieldCheckIcon className="h-[18px] w-[18px] flex-none text-[#67a6ff]" />
+                {trust}
+              </div>
+            </StaggerItem>
+          )}
+        </Stagger>
+
+        {visual && (
+          <FadeIn delay={200} className="w-full">
+            <Floaty amplitude={8} duration={7}>
+              {visual}
+            </Floaty>
+          </FadeIn>
+        )}
+      </div>
+
+      <div className="absolute bottom-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-white/15 to-transparent" />
+    </section>
+  );
+}
+
+/* ---------------- Scheduling embed ----------------
+   Embed-ready booking slot. When a scheduling URL is provided (Calendly,
+   HubSpot Meetings, etc.) it renders the embed; otherwise it shows a styled
+   "book by email" fallback so the page is live today. Drop in `url` later to
+   activate live scheduling. */
+
+export function SchedulingEmbed({
+  url,
+  email = "sales@vistaxm.com",
+  height = 680,
+}: {
+  url?: string;
+  email?: string;
+  height?: number;
+}) {
+  const fields = ["Name", "Work email", "Company", "Role"];
+  return (
+    <Reveal>
+      <div className="overflow-hidden rounded-2xl hairline bg-white shadow-[var(--shadow-elevation-2)]">
+        <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[color:var(--hairline)] px-5 py-4 md:px-7">
+          <div className="flex items-center gap-2.5 text-sm font-semibold text-[color:var(--navy-deep)]">
+            <span className="flex h-7 w-7 items-center justify-center rounded-full bg-[color:var(--blue-tint)] text-[color:var(--blue-link)]">
+              <ClockIcon className="h-4 w-4" />
+            </span>
+            Pick a time
+          </div>
+          <span className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-[0.12em] text-[color:var(--ink-soft)]/60">
+            <span className="h-2 w-2 rounded-full bg-[color:var(--blue-cta)]" />
+            30 minutes
+          </span>
+        </div>
+
+        {url ? (
+          <iframe
+            title="Book a call"
+            src={url}
+            className="w-full"
+            style={{ height, border: "0" }}
+            loading="lazy"
+          />
+        ) : (
+          <div className="px-6 py-10 md:px-10 md:py-12">
+            <p className="text-lg font-semibold text-[color:var(--navy-deep)]">
+              Book by email while we finish wiring live scheduling.
+            </p>
+            <p className="mt-2 max-w-prose text-[color:var(--ink-soft)]">
+              Send a note and we will reply within one business day with times. No marketing list,
+              no obligation. When you reach out, share these four things so we come prepared:
+            </p>
+            <ul className="mt-6 grid gap-2.5 sm:grid-cols-2">
+              {fields.map((f) => (
+                <li
+                  key={f}
+                  className="flex items-center gap-2.5 rounded-xl bg-[color:var(--blue-tint)] px-4 py-3 text-sm font-medium text-[color:var(--navy-deep)]"
+                >
+                  <CircleCheckIcon className="h-4 w-4 flex-none text-[color:var(--blue-cta)]" />
+                  {f}
+                </li>
+              ))}
+            </ul>
+            <div className="mt-7 flex flex-wrap items-center gap-4">
+              <a href={`mailto:${email}`} className="btn-primary">
+                Email {email}
+              </a>
+              <span className="text-sm text-[color:var(--ink-soft)]">
+                One business day response.
+              </span>
+            </div>
+          </div>
+        )}
+      </div>
+    </Reveal>
   );
 }

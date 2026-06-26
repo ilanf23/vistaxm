@@ -8,6 +8,7 @@ import {
   Scripts,
 } from "@tanstack/react-router";
 import { useEffect, useState, type ReactNode } from "react";
+import { MotionConfig } from "motion/react";
 
 import appCss from "../styles.css?url";
 import logoAsset from "../assets/vistaxm-logo.svg.asset.json";
@@ -132,15 +133,56 @@ function RootShell({ children }: { children: ReactNode }) {
   );
 }
 
-const nav = [
-  { to: "/the-model", label: "The Model" },
-  { to: "/partnerpulse", label: "PartnerPulse" },
-  { to: "/brokerpulse", label: "BrokerPulse" },
-  { to: "/offers", label: "Offers" },
+const solutions = [
+  {
+    to: "/solutions/partnerpulse",
+    label: "PartnerPulse",
+    desc: "Partner conviction intelligence",
+  },
+  { to: "/solutions/brokerpulse", label: "BrokerPulse", desc: "Broker experience for carriers" },
+  {
+    to: "/solutions/industrialpulse",
+    label: "IndustrialPulse",
+    desc: "Industrial OEMs, coming soon",
+  },
+] as const;
+
+// Rendered after "The Model" and the Solutions dropdown.
+const navAfterSolutions = [
+  { to: "/how-to-start", label: "How to Start" },
   { to: "/proof", label: "Proof" },
+  { to: "/for-oems", label: "For OEMs" },
   { to: "/insights", label: "Insights" },
   { to: "/about", label: "About" },
 ] as const;
+
+const navLinkClass =
+  "text-white/70 hover:text-white transition-colors tracking-tight whitespace-nowrap";
+
+const footerLinkClass = "text-white/65 hover:text-[color:var(--blue-light)] transition-colors";
+
+function Logo({ className = "h-7" }: { className?: string }) {
+  const [failed, setFailed] = useState(false);
+
+  if (failed) {
+    return (
+      <span className={`inline-flex items-center text-white ${className}`}>
+        <span className="font-heading text-[1.05rem] font-extrabold leading-none tracking-tight">
+          Vista<span className="text-[color:var(--blue-light)]">XM</span>
+        </span>
+      </span>
+    );
+  }
+
+  return (
+    <img
+      src={logoAsset.url}
+      alt="VistaXM"
+      className={`w-auto transition-all duration-300 ${className}`}
+      onError={() => setFailed(true)}
+    />
+  );
+}
 
 function Header() {
   const [open, setOpen] = useState(false);
@@ -167,28 +209,66 @@ function Header() {
           className="flex items-center font-semibold tracking-tight text-white"
           aria-label="VistaXM home"
         >
-          <img
-            src={logoAsset.url}
-            alt="VistaXM"
-            className={`w-auto transition-all duration-300 ${condensed ? "h-6" : "h-7"}`}
-          />
+          <Logo className={condensed ? "h-6" : "h-7"} />
         </Link>
-        <nav className="hidden lg:flex items-center gap-8 text-sm">
-          {nav.map((n) => (
-            <a
-              key={n.label}
-              href="#"
-              onClick={(e) => e.preventDefault()}
-              className="text-white/70 hover:text-white transition-colors cursor-default tracking-tight"
+        <nav className="hidden lg:flex items-center gap-6 text-sm">
+          <Link to="/the-model" className={navLinkClass} activeProps={{ className: "text-white" }}>
+            The Model
+          </Link>
+
+          {/* Solutions dropdown (CSS hover + focus-within, SSR-safe) */}
+          <div className="group relative">
+            <button
+              type="button"
+              className={`flex items-center gap-1 ${navLinkClass} group-hover:text-white group-focus-within:text-white`}
+              aria-haspopup="true"
+            >
+              Solutions
+              <svg
+                width="12"
+                height="12"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.5"
+                aria-hidden
+                className="mt-px transition-transform duration-200 group-hover:rotate-180 group-focus-within:rotate-180"
+              >
+                <path d="M6 9l6 6 6-6" />
+              </svg>
+            </button>
+            <div className="invisible absolute left-1/2 top-full z-50 w-72 -translate-x-1/2 pt-3 opacity-0 transition-all duration-200 group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100">
+              <div className="overflow-hidden rounded-2xl border border-white/10 bg-[color:var(--navy-deep)]/95 p-2 shadow-[var(--shadow-elevation-3)] backdrop-blur-lg">
+                {solutions.map((s) => (
+                  <Link
+                    key={s.to}
+                    to={s.to}
+                    className="block rounded-xl px-3.5 py-3 transition-colors hover:bg-white/[0.06]"
+                    activeProps={{ className: "block rounded-xl px-3.5 py-3 bg-white/[0.06]" }}
+                  >
+                    <span className="block text-sm font-semibold text-white">{s.label}</span>
+                    <span className="mt-0.5 block text-xs text-white/55">{s.desc}</span>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {navAfterSolutions.map((n) => (
+            <Link
+              key={n.to}
+              to={n.to}
+              className={navLinkClass}
+              activeProps={{ className: "text-white" }}
             >
               {n.label}
-            </a>
+            </Link>
           ))}
         </nav>
         <div className="hidden lg:block">
-          <a href="mailto:sales@vistaxm.com" className="btn-primary text-sm">
+          <Link to="/book-a-call" className="btn-primary text-sm">
             Book a call
-          </a>
+          </Link>
         </div>
         <button
           className="lg:hidden p-2 -mr-2"
@@ -211,26 +291,43 @@ function Header() {
       {open && (
         <div className="lg:hidden border-t border-white/10 bg-[color:var(--navy-deep)]">
           <div className="container-x py-4 flex flex-col gap-3">
-            {nav.map((n) => (
-              <a
-                key={n.label}
-                href="#"
-                onClick={(e) => {
-                  e.preventDefault();
-                  setOpen(false);
-                }}
+            <Link to="/the-model" onClick={() => setOpen(false)} className="text-white/90 py-1">
+              The Model
+            </Link>
+            <div className="py-1">
+              <div className="eyebrow !text-[color:var(--blue-light)] !text-[0.7rem] mb-2">
+                Solutions
+              </div>
+              <div className="flex flex-col gap-2 pl-3">
+                {solutions.map((s) => (
+                  <Link
+                    key={s.to}
+                    to={s.to}
+                    onClick={() => setOpen(false)}
+                    className="text-white/80 text-sm"
+                  >
+                    {s.label}
+                  </Link>
+                ))}
+              </div>
+            </div>
+            {navAfterSolutions.map((n) => (
+              <Link
+                key={n.to}
+                to={n.to}
+                onClick={() => setOpen(false)}
                 className="text-white/90 py-1"
               >
                 {n.label}
-              </a>
+              </Link>
             ))}
-            <a
-              href="mailto:sales@vistaxm.com"
+            <Link
+              to="/book-a-call"
               onClick={() => setOpen(false)}
               className="btn-primary mt-2 self-start"
             >
               Book a call
-            </a>
+            </Link>
           </div>
         </div>
       )}
@@ -252,32 +349,70 @@ function Footer() {
       />
       <div className="container-x relative py-20 grid gap-12 md:grid-cols-12">
         <div className="md:col-span-5">
-          <img src={logoAsset.url} alt="VistaXM" className="h-7 w-auto" />
+          <Logo className="h-7" />
           <p className="mt-5 max-w-md text-sm leading-relaxed text-white/65">
             Revenue Channel Intelligence. We turn partner and broker experience into the
             account-level signal of where revenue is about to grow or walk.
           </p>
-          <a href="mailto:sales@vistaxm.com" className="btn-primary mt-7 text-sm">
+          <Link to="/book-a-call" className="btn-primary mt-7 text-sm">
             Book a 30-minute conversation
-          </a>
+          </Link>
         </div>
         <div className="md:col-span-2">
           <div className="eyebrow !text-[color:var(--blue-light)] !text-[0.7rem] mb-4">
-            Products
+            Solutions
           </div>
           <ul className="space-y-2.5 text-sm">
-            <li>PartnerPulse</li>
-            <li>BrokerPulse</li>
-            <li>Certified NPS</li>
+            <li>
+              <Link to="/solutions/partnerpulse" className={footerLinkClass}>
+                PartnerPulse
+              </Link>
+            </li>
+            <li>
+              <Link to="/solutions/brokerpulse" className={footerLinkClass}>
+                BrokerPulse
+              </Link>
+            </li>
+            <li>
+              <Link to="/solutions/industrialpulse" className={footerLinkClass}>
+                IndustrialPulse
+              </Link>
+            </li>
+            <li>
+              <Link to="/proof" className={footerLinkClass}>
+                Certified NPS
+              </Link>
+            </li>
           </ul>
         </div>
         <div className="md:col-span-2">
           <div className="eyebrow !text-[color:var(--blue-light)] !text-[0.7rem] mb-4">Company</div>
           <ul className="space-y-2.5 text-sm">
-            <li>About</li>
-            <li>Insights</li>
-            <li>Proof</li>
-            <li>Careers</li>
+            <li>
+              <Link to="/the-model" className={footerLinkClass}>
+                The Model
+              </Link>
+            </li>
+            <li>
+              <Link to="/how-to-start" className={footerLinkClass}>
+                How to Start
+              </Link>
+            </li>
+            <li>
+              <Link to="/for-oems" className={footerLinkClass}>
+                For OEMs
+              </Link>
+            </li>
+            <li>
+              <Link to="/insights" className={footerLinkClass}>
+                Insights
+              </Link>
+            </li>
+            <li>
+              <Link to="/about" className={footerLinkClass}>
+                About
+              </Link>
+            </li>
           </ul>
         </div>
         <div className="md:col-span-3">
@@ -318,13 +453,15 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <div className="flex min-h-dvh flex-col">
-        <Header />
-        <main className="flex-1">
-          <Outlet />
-        </main>
-        <Footer />
-      </div>
+      <MotionConfig reducedMotion="user">
+        <div className="flex min-h-dvh flex-col">
+          <Header />
+          <main className="flex-1">
+            <Outlet />
+          </main>
+          <Footer />
+        </div>
+      </MotionConfig>
     </QueryClientProvider>
   );
 }

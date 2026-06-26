@@ -9,38 +9,242 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as TheModelRouteImport } from './routes/the-model'
+import { Route as ProofRouteImport } from './routes/proof'
+import { Route as InsightsRouteImport } from './routes/insights'
+import { Route as HowToStartRouteImport } from './routes/how-to-start'
+import { Route as ForOemsRouteImport } from './routes/for-oems'
+import { Route as CrnRouteImport } from './routes/crn'
+import { Route as BookACallRouteImport } from './routes/book-a-call'
+import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as SolutionsPartnerpulseRouteImport } from './routes/solutions/partnerpulse'
+import { Route as SolutionsIndustrialpulseRouteImport } from './routes/solutions/industrialpulse'
+import { Route as SolutionsBrokerpulseRouteImport } from './routes/solutions/brokerpulse'
 
+const TheModelRoute = TheModelRouteImport.update({
+  id: '/the-model',
+  path: '/the-model',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProofRoute = ProofRouteImport.update({
+  id: '/proof',
+  path: '/proof',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const InsightsRoute = InsightsRouteImport.update({
+  id: '/insights',
+  path: '/insights',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HowToStartRoute = HowToStartRouteImport.update({
+  id: '/how-to-start',
+  path: '/how-to-start',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ForOemsRoute = ForOemsRouteImport.update({
+  id: '/for-oems',
+  path: '/for-oems',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CrnRoute = CrnRouteImport.update({
+  id: '/crn',
+  path: '/crn',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BookACallRoute = BookACallRouteImport.update({
+  id: '/book-a-call',
+  path: '/book-a-call',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AboutRoute = AboutRouteImport.update({
+  id: '/about',
+  path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SolutionsPartnerpulseRoute = SolutionsPartnerpulseRouteImport.update({
+  id: '/solutions/partnerpulse',
+  path: '/solutions/partnerpulse',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SolutionsIndustrialpulseRoute =
+  SolutionsIndustrialpulseRouteImport.update({
+    id: '/solutions/industrialpulse',
+    path: '/solutions/industrialpulse',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const SolutionsBrokerpulseRoute = SolutionsBrokerpulseRouteImport.update({
+  id: '/solutions/brokerpulse',
+  path: '/solutions/brokerpulse',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/book-a-call': typeof BookACallRoute
+  '/crn': typeof CrnRoute
+  '/for-oems': typeof ForOemsRoute
+  '/how-to-start': typeof HowToStartRoute
+  '/insights': typeof InsightsRoute
+  '/proof': typeof ProofRoute
+  '/the-model': typeof TheModelRoute
+  '/solutions/brokerpulse': typeof SolutionsBrokerpulseRoute
+  '/solutions/industrialpulse': typeof SolutionsIndustrialpulseRoute
+  '/solutions/partnerpulse': typeof SolutionsPartnerpulseRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/book-a-call': typeof BookACallRoute
+  '/crn': typeof CrnRoute
+  '/for-oems': typeof ForOemsRoute
+  '/how-to-start': typeof HowToStartRoute
+  '/insights': typeof InsightsRoute
+  '/proof': typeof ProofRoute
+  '/the-model': typeof TheModelRoute
+  '/solutions/brokerpulse': typeof SolutionsBrokerpulseRoute
+  '/solutions/industrialpulse': typeof SolutionsIndustrialpulseRoute
+  '/solutions/partnerpulse': typeof SolutionsPartnerpulseRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/book-a-call': typeof BookACallRoute
+  '/crn': typeof CrnRoute
+  '/for-oems': typeof ForOemsRoute
+  '/how-to-start': typeof HowToStartRoute
+  '/insights': typeof InsightsRoute
+  '/proof': typeof ProofRoute
+  '/the-model': typeof TheModelRoute
+  '/solutions/brokerpulse': typeof SolutionsBrokerpulseRoute
+  '/solutions/industrialpulse': typeof SolutionsIndustrialpulseRoute
+  '/solutions/partnerpulse': typeof SolutionsPartnerpulseRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/about'
+    | '/book-a-call'
+    | '/crn'
+    | '/for-oems'
+    | '/how-to-start'
+    | '/insights'
+    | '/proof'
+    | '/the-model'
+    | '/solutions/brokerpulse'
+    | '/solutions/industrialpulse'
+    | '/solutions/partnerpulse'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/about'
+    | '/book-a-call'
+    | '/crn'
+    | '/for-oems'
+    | '/how-to-start'
+    | '/insights'
+    | '/proof'
+    | '/the-model'
+    | '/solutions/brokerpulse'
+    | '/solutions/industrialpulse'
+    | '/solutions/partnerpulse'
+  id:
+    | '__root__'
+    | '/'
+    | '/about'
+    | '/book-a-call'
+    | '/crn'
+    | '/for-oems'
+    | '/how-to-start'
+    | '/insights'
+    | '/proof'
+    | '/the-model'
+    | '/solutions/brokerpulse'
+    | '/solutions/industrialpulse'
+    | '/solutions/partnerpulse'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AboutRoute: typeof AboutRoute
+  BookACallRoute: typeof BookACallRoute
+  CrnRoute: typeof CrnRoute
+  ForOemsRoute: typeof ForOemsRoute
+  HowToStartRoute: typeof HowToStartRoute
+  InsightsRoute: typeof InsightsRoute
+  ProofRoute: typeof ProofRoute
+  TheModelRoute: typeof TheModelRoute
+  SolutionsBrokerpulseRoute: typeof SolutionsBrokerpulseRoute
+  SolutionsIndustrialpulseRoute: typeof SolutionsIndustrialpulseRoute
+  SolutionsPartnerpulseRoute: typeof SolutionsPartnerpulseRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/the-model': {
+      id: '/the-model'
+      path: '/the-model'
+      fullPath: '/the-model'
+      preLoaderRoute: typeof TheModelRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/proof': {
+      id: '/proof'
+      path: '/proof'
+      fullPath: '/proof'
+      preLoaderRoute: typeof ProofRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/insights': {
+      id: '/insights'
+      path: '/insights'
+      fullPath: '/insights'
+      preLoaderRoute: typeof InsightsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/how-to-start': {
+      id: '/how-to-start'
+      path: '/how-to-start'
+      fullPath: '/how-to-start'
+      preLoaderRoute: typeof HowToStartRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/for-oems': {
+      id: '/for-oems'
+      path: '/for-oems'
+      fullPath: '/for-oems'
+      preLoaderRoute: typeof ForOemsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/crn': {
+      id: '/crn'
+      path: '/crn'
+      fullPath: '/crn'
+      preLoaderRoute: typeof CrnRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/book-a-call': {
+      id: '/book-a-call'
+      path: '/book-a-call'
+      fullPath: '/book-a-call'
+      preLoaderRoute: typeof BookACallRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,11 +252,43 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/solutions/partnerpulse': {
+      id: '/solutions/partnerpulse'
+      path: '/solutions/partnerpulse'
+      fullPath: '/solutions/partnerpulse'
+      preLoaderRoute: typeof SolutionsPartnerpulseRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/solutions/industrialpulse': {
+      id: '/solutions/industrialpulse'
+      path: '/solutions/industrialpulse'
+      fullPath: '/solutions/industrialpulse'
+      preLoaderRoute: typeof SolutionsIndustrialpulseRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/solutions/brokerpulse': {
+      id: '/solutions/brokerpulse'
+      path: '/solutions/brokerpulse'
+      fullPath: '/solutions/brokerpulse'
+      preLoaderRoute: typeof SolutionsBrokerpulseRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AboutRoute: AboutRoute,
+  BookACallRoute: BookACallRoute,
+  CrnRoute: CrnRoute,
+  ForOemsRoute: ForOemsRoute,
+  HowToStartRoute: HowToStartRoute,
+  InsightsRoute: InsightsRoute,
+  ProofRoute: ProofRoute,
+  TheModelRoute: TheModelRoute,
+  SolutionsBrokerpulseRoute: SolutionsBrokerpulseRoute,
+  SolutionsIndustrialpulseRoute: SolutionsIndustrialpulseRoute,
+  SolutionsPartnerpulseRoute: SolutionsPartnerpulseRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
