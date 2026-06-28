@@ -705,9 +705,22 @@ function ShieldCheckIcon({ className }: { className?: string }) {
    container-query units so the whole composition scales without distortion.
    All values are illustrative example data, never a real client result. */
 
-const NET_W = 640;
-const NET_H = 600;
-const HUB = { x: 340, y: 250 };
+const NET_W = 600;
+const NET_H = 660;
+const HUB = { x: 300, y: 300 };
+// Symmetric 2-column x 3-row layout: left/right columns equidistant from the
+// hub, three evenly-spaced rows. Keeps the network balanced rather than fanned.
+const COL_L = 108;
+const COL_R = NET_W - COL_L; // 492
+// Middle row sits wider than top/bottom so the two side cards pull away from
+// the hub (a gentle outward bulge at the widest point of the network).
+const COL_MID_L = 63;
+const COL_MID_R = NET_W - COL_MID_L; // 537
+const ROW_TOP = 170;
+const ROW_MID = HUB.y; // 300 — middle cards align with the hub
+const ROW_BOT = HUB.y + (HUB.y - ROW_TOP); // 430
+// The problem statement sits at the top and feeds the decision hub.
+const PROBLEM = { x: HUB.x, y: 60 };
 
 type Accent = "orange" | "blue" | "green";
 type ChartKind = "spark-down" | "line-up" | "bars" | "progress";
@@ -752,8 +765,8 @@ type NetCard = {
 
 const NET_CARDS: NetCard[] = [
   {
-    x: 116,
-    y: 80,
+    x: COL_L,
+    y: ROW_TOP,
     accent: "orange",
     icon: "alert",
     title: "Revenue at risk",
@@ -762,8 +775,8 @@ const NET_CARDS: NetCard[] = [
     chart: "spark-down",
   },
   {
-    x: 548,
-    y: 80,
+    x: COL_R,
+    y: ROW_TOP,
     accent: "blue",
     icon: "arrow-up",
     title: "Expansion opportunity",
@@ -772,8 +785,8 @@ const NET_CARDS: NetCard[] = [
     chart: "line-up",
   },
   {
-    x: 82,
-    y: 250,
+    x: COL_MID_L,
+    y: ROW_MID,
     accent: "blue",
     icon: "people",
     title: "Partner-sourced growth",
@@ -782,8 +795,8 @@ const NET_CARDS: NetCard[] = [
     chart: "bars",
   },
   {
-    x: 560,
-    y: 238,
+    x: COL_MID_R,
+    y: ROW_MID,
     accent: "green",
     icon: "shield",
     title: "Renewal confidence",
@@ -792,8 +805,8 @@ const NET_CARDS: NetCard[] = [
     chart: "progress",
   },
   {
-    x: 122,
-    y: 420,
+    x: COL_L,
+    y: ROW_BOT,
     accent: "orange",
     icon: "gauge",
     title: "Margin pressure",
@@ -802,8 +815,8 @@ const NET_CARDS: NetCard[] = [
     chart: "spark-down",
   },
   {
-    x: 548,
-    y: 416,
+    x: COL_R,
+    y: ROW_BOT,
     accent: "blue",
     icon: "graph",
     title: "Pipeline shift",
@@ -813,7 +826,7 @@ const NET_CARDS: NetCard[] = [
   },
 ];
 
-const ACTION = { x: 352, y: 522 };
+const ACTION = { x: HUB.x, y: 566 };
 
 // design unit -> scaled length (640 design units == container inline width)
 const u = (n: number) => `calc(${n} * var(--net-u))`;
@@ -961,9 +974,10 @@ function NetMetricCard({ card, delay }: { card: NetCard; delay: number }) {
       style={{
         left: u(card.x),
         top: u(card.y),
-        width: u(158),
+        width: u(150),
+        // Center on the anchor point. The float animation lives on the inner
+        // element so its transform does not clobber this centering.
         transform: "translate(-50%, -50%)",
-        animation: `float-y-sm ${6 + (delay % 3)}s ease-in-out ${delay}s infinite`,
       }}
     >
       <div
@@ -975,6 +989,7 @@ function NetMetricCard({ card, delay }: { card: NetCard; delay: number }) {
           border: `1px solid ${c.border}`,
           boxShadow: `0 ${u(18)} ${u(40)} rgba(2,16,40,0.55), 0 0 ${u(26)} ${c.glow}, inset 0 1px 0 rgba(255,255,255,0.06)`,
           backdropFilter: "blur(8px)",
+          animation: `float-y-sm ${6 + (delay % 3)}s ease-in-out ${delay}s infinite`,
         }}
       >
         <div className="flex items-center" style={{ gap: u(8) }}>
@@ -1017,6 +1032,107 @@ function NetMetricCard({ card, delay }: { card: NetCard; delay: number }) {
   );
 }
 
+/* The problem statement at the top of the network: an orange-accented "issue"
+   box that feeds the decision hub below it. Outer div centers on the anchor;
+   inner div carries the float so its transform does not clobber centering. */
+function ProblemBox() {
+  return (
+    <div
+      className="absolute"
+      style={{
+        left: u(PROBLEM.x),
+        top: u(PROBLEM.y),
+        width: u(258),
+        transform: "translate(-50%, -50%)",
+      }}
+    >
+      <div
+        className="relative overflow-hidden"
+        style={{
+          borderRadius: u(15),
+          padding: `${u(13)} ${u(16)}`,
+          background: "linear-gradient(165deg, rgba(58,33,18,0.62), rgba(7,28,58,0.93))",
+          border: "1px solid rgba(246,130,65,0.42)",
+          boxShadow: `0 ${u(20)} ${u(44)} rgba(2,16,40,0.55), 0 0 ${u(30)} rgba(246,130,65,0.2), inset 0 1px 0 rgba(255,255,255,0.07)`,
+          backdropFilter: "blur(8px)",
+          animation: "float-y-sm 7s ease-in-out 0.15s infinite",
+        }}
+      >
+        <div className="flex items-center" style={{ gap: u(8) }}>
+          <span
+            className="flex flex-none items-center justify-center"
+            style={{
+              width: u(26),
+              height: u(26),
+              borderRadius: u(8),
+              background: "rgba(246,130,65,0.16)",
+              border: "1px solid rgba(246,130,65,0.4)",
+              padding: u(5),
+            }}
+          >
+            <NetIcon kind="alert" color="#f68241" />
+          </span>
+          <span
+            className="font-semibold uppercase"
+            style={{ fontSize: u(10.5), letterSpacing: "0.14em", color: "#f9a26a" }}
+          >
+            The problem
+          </span>
+        </div>
+        <div
+          className="font-bold leading-snug text-white"
+          style={{ fontFamily: "var(--font-display)", fontSize: u(15.5), marginTop: u(9) }}
+        >
+          A score won&apos;t tell you which account is about to walk.
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* A sleeker "next move" arrow: a forward arrow that nudges with a motion
+   trail, inside a glowing badge. */
+function NextMoveArrow() {
+  return (
+    <span
+      className="relative flex flex-none items-center justify-center overflow-hidden"
+      style={{
+        width: u(24),
+        height: u(24),
+        borderRadius: u(8),
+        background: "linear-gradient(135deg, rgba(49,133,252,0.42), rgba(13,78,216,0.16))",
+        border: "1px solid rgba(103,166,255,0.55)",
+        boxShadow: "inset 0 1px 0 rgba(255,255,255,0.2), 0 0 12px rgba(49,133,252,0.5)",
+      }}
+    >
+      <svg
+        viewBox="0 0 24 24"
+        width="64%"
+        height="64%"
+        fill="none"
+        stroke="#dbeafe"
+        strokeWidth="2.4"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        aria-hidden
+      >
+        {/* fading motion trail behind the arrow */}
+        <path
+          d="M2 12h6"
+          stroke="#67a6ff"
+          strokeWidth="2"
+          style={{ animation: "arrow-trail 1.8s ease-in-out infinite" }}
+        />
+        {/* the arrow itself, nudging forward */}
+        <g style={{ animation: "arrow-nudge 1.8s ease-in-out infinite" }}>
+          <path d="M5 12h9" />
+          <path d="M11.5 7.5l5 4.5-5 4.5" />
+        </g>
+      </svg>
+    </span>
+  );
+}
+
 function NetActionCard() {
   return (
     <div
@@ -1024,9 +1140,8 @@ function NetActionCard() {
       style={{
         left: u(ACTION.x),
         top: u(ACTION.y),
-        width: u(212),
+        width: u(200),
         transform: "translate(-50%, -50%)",
-        animation: "float-y-sm 7.5s ease-in-out 0.4s infinite",
       }}
     >
       <div
@@ -1038,22 +1153,11 @@ function NetActionCard() {
           border: "1px solid rgba(49,133,252,0.42)",
           boxShadow: `0 ${u(24)} ${u(50)} rgba(2,16,40,0.6), 0 0 ${u(34)} rgba(49,133,252,0.28), inset 0 1px 0 rgba(255,255,255,0.07)`,
           backdropFilter: "blur(8px)",
+          animation: "float-y-sm 7.5s ease-in-out 0.4s infinite",
         }}
       >
         <div className="flex items-center" style={{ gap: u(7) }}>
-          <span
-            className="flex flex-none items-center justify-center"
-            style={{
-              width: u(22),
-              height: u(22),
-              borderRadius: u(7),
-              background: "rgba(49,133,252,0.18)",
-              border: "1px solid rgba(49,133,252,0.4)",
-              padding: u(4.5),
-            }}
-          >
-            <NetIcon kind="arrow-up" color="#67a6ff" />
-          </span>
+          <NextMoveArrow />
           <span
             className="font-semibold uppercase text-[color:var(--blue-light)]"
             style={{ fontSize: u(10), letterSpacing: "0.12em" }}
@@ -1104,9 +1208,9 @@ export function RevenueDecisionNetwork() {
       ref={ref}
       className="relative mx-auto w-full"
       style={{
-        maxWidth: 640,
+        maxWidth: 560,
         aspectRatio: `${NET_W} / ${NET_H}`,
-        // 640 design units span the container's inline width
+        // NET_W design units span the container's inline width
         ["--net-u" as string]: `calc(100cqi / ${NET_W})`,
         containerType: "inline-size",
         opacity: shown ? 1 : 0,
@@ -1127,9 +1231,34 @@ export function RevenueDecisionNetwork() {
             <stop offset="60%" stopColor="rgba(103,166,255,0)" />
             <stop offset="100%" stopColor="rgba(103,166,255,0.12)" />
           </radialGradient>
-          <linearGradient id="net-conn" x1="0" y1="0" x2="1" y2="0">
-            <stop offset="0%" stopColor="rgba(103,166,255,0.55)" />
-            <stop offset="100%" stopColor="rgba(103,166,255,0.08)" />
+          {/* One gradient per connector in user space so it paints at any angle
+              (an objectBoundingBox gradient does not render on a perfectly
+              horizontal/vertical line, which would drop the middle connectors). */}
+          {targets.map((t, i) => (
+            <linearGradient
+              key={`cg${i}`}
+              id={`conn-${i}`}
+              gradientUnits="userSpaceOnUse"
+              x1={HUB.x}
+              y1={HUB.y}
+              x2={t.x}
+              y2={t.y}
+            >
+              <stop offset="0%" stopColor="rgba(103,166,255,0.6)" />
+              <stop offset="100%" stopColor="rgba(103,166,255,0.1)" />
+            </linearGradient>
+          ))}
+          {/* Problem -> hub: orange at the problem fading to blue at the engine. */}
+          <linearGradient
+            id="conn-problem"
+            gradientUnits="userSpaceOnUse"
+            x1={PROBLEM.x}
+            y1={PROBLEM.y}
+            x2={HUB.x}
+            y2={HUB.y}
+          >
+            <stop offset="0%" stopColor="rgba(246,130,65,0.6)" />
+            <stop offset="100%" stopColor="rgba(103,166,255,0.12)" />
           </linearGradient>
         </defs>
 
@@ -1163,10 +1292,20 @@ export function RevenueDecisionNetwork() {
             y1={HUB.y}
             x2={t.x}
             y2={t.y}
-            stroke="url(#net-conn)"
+            stroke={`url(#conn-${i})`}
             strokeWidth="1.4"
           />
         ))}
+
+        {/* Problem -> hub connector (feeds the engine from the top) */}
+        <line
+          x1={PROBLEM.x}
+          y1={PROBLEM.y}
+          x2={HUB.x}
+          y2={HUB.y}
+          stroke="url(#conn-problem)"
+          strokeWidth="1.6"
+        />
 
         {/* Anchor dots on the hub ring at each connector angle.
             Round trig output so SSR (Node) and client (browser) match. */}
@@ -1184,6 +1323,14 @@ export function RevenueDecisionNetwork() {
             />
           );
         })}
+        {/* Anchor dot where the problem connector meets the top of the hub ring */}
+        <circle
+          cx={HUB.x}
+          cy={HUB.y - 76}
+          r="3"
+          fill="#f9a26a"
+          style={{ filter: "drop-shadow(0 0 4px rgba(246,130,65,0.9))" }}
+        />
       </svg>
 
       {/* Travelling signal pulses (hub -> card), scaled vectors via CSS vars */}
@@ -1207,6 +1354,25 @@ export function RevenueDecisionNetwork() {
           }}
         />
       ))}
+
+      {/* Pulse travelling down from the problem into the hub (problem feeds engine) */}
+      <span
+        className="absolute rounded-full"
+        aria-hidden
+        style={{
+          left: u(PROBLEM.x),
+          top: u(PROBLEM.y),
+          width: u(6),
+          height: u(6),
+          marginLeft: u(-3),
+          marginTop: u(-3),
+          background: "#ffd2b5",
+          boxShadow: "0 0 8px 2px rgba(246,130,65,0.8)",
+          ["--dx" as string]: u(0),
+          ["--dy" as string]: u(HUB.y - PROBLEM.y),
+          animation: "signal-travel 3s 0.3s ease-in-out infinite",
+        }}
+      />
 
       {/* Central hub */}
       <div
@@ -1267,9 +1433,10 @@ export function RevenueDecisionNetwork() {
             className="font-semibold leading-tight text-white"
             style={{
               fontFamily: "var(--font-display)",
-              fontSize: u(12.5),
+              fontSize: u(11.8),
               marginTop: u(8),
-              letterSpacing: "-0.01em",
+              maxWidth: u(116),
+              letterSpacing: "-0.012em",
             }}
           >
             Revenue decisions
@@ -1278,6 +1445,9 @@ export function RevenueDecisionNetwork() {
           </span>
         </div>
       </div>
+
+      {/* The problem, at the top, feeding the hub */}
+      <ProblemBox />
 
       {/* Metric cards */}
       {NET_CARDS.map((card, i) => (
