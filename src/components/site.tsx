@@ -787,7 +787,7 @@ export function Hero({
 
           {/* Right column: account-level revenue signal */}
           <div className="w-full lg:justify-self-end">
-            <AccountSignalBrief />
+            <RevenueDecisionNetwork />
           </div>
         </div>
       </div>
