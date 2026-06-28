@@ -498,6 +498,184 @@ function HeroDataWave() {
   );
 }
 
+function AccountSignalBrief() {
+  const { ref, shown } = useReveal(0.1);
+  const arr = useCountUp(12.4, 1500, shown);
+  const exposure = useCountUp(8.2, 1500, shown);
+  const personas = [
+    { label: "Decision maker", value: 78, tone: "blue" },
+    { label: "Champion", value: 64, tone: "blue" },
+    { label: "Influencers", value: 41, tone: "orange" },
+    { label: "End users", value: 38, tone: "orange" },
+  ];
+
+  return (
+    <div
+      ref={ref}
+      className="relative mx-auto w-full max-w-[620px]"
+      style={{
+        opacity: shown ? 1 : 0,
+        transform: shown ? "translateY(0) rotateX(0deg) rotateY(0deg)" : "translateY(18px)",
+        transition:
+          "opacity 0.8s cubic-bezier(0.22,1,0.36,1), transform 0.8s cubic-bezier(0.22,1,0.36,1)",
+      }}
+    >
+      <div
+        aria-hidden
+        className="absolute inset-8 rounded-full blur-3xl"
+        style={{ background: "rgba(49,133,252,0.28)" }}
+      />
+      <div
+        className="relative overflow-hidden rounded-[24px]"
+        style={{
+          background: "linear-gradient(160deg, rgba(7,37,77,0.94), rgba(4,24,52,0.98))",
+          border: "1px solid rgba(120,170,255,0.25)",
+          boxShadow:
+            "0 34px 90px rgba(2,16,40,0.58), inset 0 1px 0 rgba(255,255,255,0.08)",
+        }}
+      >
+        <div
+          aria-hidden
+          className="absolute inset-0 opacity-70"
+          style={{
+            background:
+              "radial-gradient(420px 220px at 82% 12%, rgba(49,133,252,0.24), transparent 70%), radial-gradient(300px 180px at 12% 88%, rgba(246,130,65,0.14), transparent 72%)",
+          }}
+        />
+
+        <div className="relative p-5 sm:p-6">
+          <div className="flex flex-wrap items-start justify-between gap-4 border-b border-white/10 pb-5">
+            <div>
+              <div className="flex items-center gap-2 text-[0.68rem] font-semibold uppercase tracking-[0.12em] text-[#9cc4ff]">
+                <span className="h-1.5 w-1.5 rounded-full bg-[#67a6ff] shadow-[0_0_8px_2px_rgba(103,166,255,0.7)]" />
+                Account Signal Brief
+              </div>
+              <div
+                className="mt-3 text-[1.45rem] font-bold leading-tight text-white sm:text-[1.75rem]"
+                style={{ fontFamily: "var(--font-display)" }}
+              >
+                Meridian Industrial Supply
+              </div>
+              <div className="mt-1 text-[0.84rem] text-[#9fc0e8]">Renewal decision in 47 days</div>
+            </div>
+            <div className="grid grid-cols-2 gap-2 text-right">
+              <div className="rounded-[14px] border border-white/10 bg-white/[0.04] px-3 py-2.5">
+                <div className="text-[0.68rem] font-semibold uppercase tracking-[0.1em] text-[#7fa3cf]">
+                  ARR
+                </div>
+                <div className="mt-1 text-[1.15rem] font-bold text-white tabular-nums">
+                  ${arr.toFixed(1)}M
+                </div>
+              </div>
+              <div className="rounded-[14px] border border-[rgba(246,130,65,0.28)] bg-[rgba(246,130,65,0.1)] px-3 py-2.5">
+                <div className="text-[0.68rem] font-semibold uppercase tracking-[0.1em] text-[#f9bd91]">
+                  Exposure
+                </div>
+                <div className="mt-1 text-[1.15rem] font-bold text-white tabular-nums">
+                  ${exposure.toFixed(1)}M
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-5 grid gap-3 sm:grid-cols-2">
+            <div className="rounded-[16px] border border-white/10 bg-white/[0.035] p-4">
+              <div className="text-[0.72rem] font-semibold uppercase tracking-[0.1em] text-[#7fa3cf]">
+                What the score says
+              </div>
+              <div className="mt-3 flex items-end gap-2">
+                <span className="text-[2rem] font-bold leading-none text-white tabular-nums">72</span>
+                <span className="pb-1 text-[0.78rem] font-semibold text-[#5ee0b0]">healthy NPS</span>
+              </div>
+              <p className="mt-3 text-[0.82rem] leading-relaxed text-[#b8c6e3]">
+                Executive sponsor is positive and the account reads as stable.
+              </p>
+            </div>
+            <div className="rounded-[16px] border border-[rgba(246,130,65,0.32)] bg-[rgba(246,130,65,0.1)] p-4">
+              <div className="text-[0.72rem] font-semibold uppercase tracking-[0.1em] text-[#f9bd91]">
+                What the revenue says
+              </div>
+              <div className="mt-3 flex items-end gap-2">
+                <span className="text-[2rem] font-bold leading-none text-white tabular-nums">$8.2M</span>
+                <span className="pb-1 text-[0.78rem] font-semibold text-[#f9bd91]">walking</span>
+              </div>
+              <p className="mt-3 text-[0.82rem] leading-relaxed text-[#f6d3bf]">
+                Four influencers are disengaged before budget approval.
+              </p>
+            </div>
+          </div>
+
+          <div className="mt-5 rounded-[18px] border border-white/10 bg-[#06294e]/70 p-4">
+            <div className="flex items-center justify-between gap-4">
+              <div>
+                <div className="text-[0.72rem] font-semibold uppercase tracking-[0.1em] text-[#9cc4ff]">
+                  Decision maker to influencer gap
+                </div>
+                <div className="mt-1 text-[0.82rem] text-[#9fc0e8]">Revenue-weighted buying committee view</div>
+              </div>
+              <div className="rounded-full border border-[rgba(246,130,65,0.35)] bg-[rgba(246,130,65,0.12)] px-3 py-1 text-[0.74rem] font-bold text-[#ffd2b5]">
+                37 pt gap
+              </div>
+            </div>
+
+            <div className="mt-4 space-y-3">
+              {personas.map((persona, index) => (
+                <div key={persona.label} className="grid grid-cols-[104px_1fr_34px] items-center gap-3">
+                  <div className="text-[0.78rem] font-semibold text-[#cfe0f7]">{persona.label}</div>
+                  <div className="h-2.5 overflow-hidden rounded-full bg-white/10">
+                    <div
+                      className="h-full rounded-full"
+                      style={{
+                        width: shown ? `${persona.value}%` : "0%",
+                        background:
+                          persona.tone === "orange"
+                            ? "linear-gradient(90deg, #f68241, #f9bd91)"
+                            : "linear-gradient(90deg, #3185fc, #9cc4ff)",
+                        transition: `width 0.9s ${0.12 + index * 0.1}s cubic-bezier(0.22,1,0.36,1)`,
+                      }}
+                    />
+                  </div>
+                  <div className="text-right text-[0.78rem] font-bold text-white tabular-nums">
+                    {persona.value}%
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="mt-5 rounded-[18px] border border-[rgba(49,133,252,0.34)] bg-[rgba(49,133,252,0.12)] p-4">
+            <div className="flex items-start gap-3">
+              <span className="mt-0.5 flex h-8 w-8 flex-none items-center justify-center rounded-[10px] bg-[rgba(49,133,252,0.2)] text-[#9cc4ff]">
+                <CircleCheckIcon className="h-4 w-4" />
+              </span>
+              <div>
+                <div className="text-[0.72rem] font-semibold uppercase tracking-[0.1em] text-[#9cc4ff]">
+                  Recommended move
+                </div>
+                <div className="mt-1 text-[1rem] font-bold leading-snug text-white">
+                  Re-engage 4 influencers in the next 23 days.
+                </div>
+                <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1 text-[0.78rem] text-[#b8c6e3]">
+                  <span className="flex items-center gap-1.5">
+                    <ClockIcon className="h-3.5 w-3.5 text-[#9cc4ff]" />
+                    Protects $8.2M renewal exposure
+                  </span>
+                  <span className="font-semibold text-[#ffd2b5]">Business owner: CRO</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-3 flex items-center gap-1.5 text-[0.68rem] font-semibold uppercase tracking-[0.12em] text-[#7fa3cf]">
+            <span className="h-1 w-1 rounded-full bg-[#7fa3cf]" aria-hidden />
+            Illustrative
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export function Hero({
   eyebrow,
   title,
@@ -607,14 +785,9 @@ export function Hero({
             )}
           </div>
 
-          {/* Right column: the revenue decision network (lg+) / signal card fallback */}
+          {/* Right column: account-level revenue signal */}
           <div className="w-full lg:justify-self-end">
-            <div className="hidden lg:block">
-              <RevenueDecisionNetwork />
-            </div>
-            <div className="mx-auto max-w-[360px] lg:hidden">
-              <RevenueSignalCard />
-            </div>
+            <AccountSignalBrief />
           </div>
         </div>
       </div>
