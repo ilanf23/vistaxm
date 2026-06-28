@@ -880,7 +880,7 @@ function ShieldCheckIcon({ className }: { className?: string }) {
 
 const NET_W = 640;
 const NET_H = 600;
-const HUB = { x: 340, y: 250 };
+const HUB = { x: 320, y: 250 };
 
 type Accent = "orange" | "blue" | "green";
 type ChartKind = "spark-down" | "line-up" | "bars" | "progress";
@@ -925,7 +925,7 @@ type NetCard = {
 
 const NET_CARDS: NetCard[] = [
   {
-    x: 116,
+    x: 110,
     y: 80,
     accent: "orange",
     icon: "alert",
@@ -935,7 +935,7 @@ const NET_CARDS: NetCard[] = [
     chart: "spark-down",
   },
   {
-    x: 548,
+    x: 530,
     y: 80,
     accent: "blue",
     icon: "arrow-up",
@@ -945,7 +945,7 @@ const NET_CARDS: NetCard[] = [
     chart: "line-up",
   },
   {
-    x: 82,
+    x: 105,
     y: 250,
     accent: "blue",
     icon: "people",
@@ -955,8 +955,8 @@ const NET_CARDS: NetCard[] = [
     chart: "bars",
   },
   {
-    x: 560,
-    y: 238,
+    x: 535,
+    y: 250,
     accent: "green",
     icon: "shield",
     title: "Renewal confidence",
@@ -965,7 +965,7 @@ const NET_CARDS: NetCard[] = [
     chart: "progress",
   },
   {
-    x: 122,
+    x: 110,
     y: 420,
     accent: "orange",
     icon: "gauge",
@@ -975,8 +975,8 @@ const NET_CARDS: NetCard[] = [
     chart: "spark-down",
   },
   {
-    x: 548,
-    y: 416,
+    x: 530,
+    y: 420,
     accent: "blue",
     icon: "graph",
     title: "Pipeline shift",
@@ -986,7 +986,8 @@ const NET_CARDS: NetCard[] = [
   },
 ];
 
-const ACTION = { x: 352, y: 522 };
+const ACTION = { x: 320, y: 525 };
+
 
 // design unit -> scaled length (640 design units == container inline width)
 const u = (n: number) => `calc(${n} * var(--net-u))`;
@@ -1277,7 +1278,7 @@ export function RevenueDecisionNetwork() {
       ref={ref}
       className="relative mx-auto w-full"
       style={{
-        maxWidth: 640,
+        maxWidth: 540,
         aspectRatio: `${NET_W} / ${NET_H}`,
         // 640 design units span the container's inline width
         ["--net-u" as string]: `calc(100cqi / ${NET_W})`,
