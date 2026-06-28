@@ -446,6 +446,58 @@ export function PartnerShadow() {
    "next move" signal. The right-side card is illustrative example data only
    (see RevenueSignalCard), never a real client result. */
 
+/* Dotted "data terrain" that drifts along the lower-left of the hero. */
+function HeroDataWave() {
+  // Round trig-derived values: Node (SSR) and browser V8 differ in the last
+  // ULPs of Math.sin/cos, which would otherwise cause hydration mismatches.
+  const r2 = (n: number) => Math.round(n * 100) / 100;
+  const cols = 50;
+  const span = 1200;
+  const step = span / cols;
+  const dots: { x: number; y: number; o: number; d: number }[] = [];
+  for (let i = 0; i < cols; i++) {
+    const x = i * step;
+    const baseY = 300 - Math.sin(i * 0.28) * 34 - Math.cos(i * 0.11) * 18 - i * 1.1;
+    const stack = 3 + (i % 4);
+    for (let k = 0; k < stack; k++) {
+      dots.push({
+        x: r2(x),
+        y: r2(baseY - k * 16),
+        o: r2(Math.max(0.12, 0.6 - k * 0.12)),
+        d: r2((i * 0.06 + k * 0.22) % 4),
+      });
+    }
+  }
+  return (
+    <div
+      aria-hidden
+      className="pointer-events-none absolute bottom-0 left-0 z-0 hidden h-[340px] w-[78%] overflow-hidden sm:block"
+      style={{ maskImage: "linear-gradient(90deg, #000 55%, transparent 100%)" }}
+    >
+      <svg
+        viewBox="0 0 1200 360"
+        preserveAspectRatio="xMidYMax meet"
+        className="absolute inset-0 h-full w-full"
+        style={{ animation: "wave-drift 14s linear infinite alternate" }}
+      >
+        {dots.map((p, i) => (
+          <circle
+            key={i}
+            cx={p.x}
+            cy={p.y}
+            r={2.1}
+            fill="#67a6ff"
+            opacity={p.o}
+            style={{
+              animation: `dot-twinkle ${3.2 + (i % 5) * 0.4}s ${p.d}s ease-in-out infinite`,
+            }}
+          />
+        ))}
+      </svg>
+    </div>
+  );
+}
+
 export function Hero({
   eyebrow,
   title,
@@ -472,27 +524,56 @@ export function Hero({
 
   return (
     <section className="hero-rci relative overflow-hidden bg-[#022550] text-white">
-      <div ref={ref} className="container-x relative pt-20 pb-20 md:pt-24 md:pb-28">
-        <div className="grid items-center gap-12 lg:grid-cols-[1fr_340px] lg:gap-16">
+      {/* Background depth: gradient base, glow zones, vignette */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 z-0"
+        style={{
+          background:
+            "radial-gradient(1100px 620px at 78% 18%, rgba(13,78,216,0.34), transparent 62%)," +
+            "radial-gradient(900px 700px at 96% 78%, rgba(37,99,235,0.22), transparent 60%)," +
+            "linear-gradient(160deg, #062a68 0%, #041b4a 46%, #03153a 100%)",
+        }}
+      />
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 z-0"
+        style={{
+          background:
+            "radial-gradient(820px 560px at 74% 30%, rgba(49,133,252,0.16), transparent 60%)",
+          animation: "aurora-drift 24s ease-in-out infinite",
+        }}
+      />
+      {/* vignette */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 z-0"
+        style={{ boxShadow: "inset 0 0 220px 60px rgba(3,15,42,0.55)" }}
+      />
+      <HeroDataWave />
+
+      <div ref={ref} className="container-x relative z-10 pt-20 pb-24 md:pt-24 md:pb-28">
+        <div className="grid items-center gap-12 lg:grid-cols-[minmax(0,0.86fr)_minmax(0,1.14fr)] lg:gap-12">
           {/* Left column: the message */}
-          <div className="max-w-[560px]">
+          <div className="max-w-[580px]">
             {eyebrow && (
               <div
-                className="inline-flex items-center rounded-full bg-[#0a3a6b] px-3 py-1 text-[0.8rem] font-semibold text-[#67a6ff]"
+                className="inline-flex items-center gap-2 rounded-full border border-[rgba(103,166,255,0.32)] bg-[rgba(13,78,216,0.18)] px-3.5 py-1.5 text-[0.78rem] font-semibold text-[#9cc4ff] backdrop-blur-sm"
                 style={reveal(0)}
               >
+                <span className="h-1.5 w-1.5 rounded-full bg-[#67a6ff] shadow-[0_0_8px_2px_rgba(103,166,255,0.7)]" />
                 {eyebrow}
               </div>
             )}
             <h1
-              className="mt-5 !text-[1.875rem] !font-bold !leading-[1.12] !tracking-[-0.02em] !text-white md:!text-[2.125rem]"
+              className="mt-6 !text-[2.3rem] !font-bold !leading-[1.04] !tracking-[-0.028em] !text-white sm:!text-[2.7rem] md:!text-[3.15rem] lg:!text-[3.35rem]"
               style={reveal(120)}
             >
               {title}
             </h1>
             {subtitle && (
               <p
-                className="mt-5 max-w-[430px] text-[0.95rem] leading-relaxed text-[#bcd6f5] md:text-[1rem]"
+                className="mt-6 max-w-[470px] text-[1rem] leading-relaxed text-[#b8c6e3] md:text-[1.05rem]"
                 style={reveal(260)}
               >
                 {subtitle}
@@ -508,7 +589,7 @@ export function Hero({
                 {secondary && (
                   <a
                     href={secondary.to}
-                    className="inline-flex items-center justify-center gap-2 rounded-lg border border-[#2a5183] px-6 py-3.5 text-[0.9375rem] font-semibold text-[#cfe3ff] transition-[transform,background-color,border-color] duration-200 hover:border-[#67a6ff] hover:bg-white/[0.04] active:scale-[0.98]"
+                    className="inline-flex items-center justify-center gap-2 rounded-lg border border-[#2a5183] bg-white/[0.02] px-6 py-3.5 text-[0.9375rem] font-semibold text-[#cfe3ff] transition-[transform,background-color,border-color] duration-200 hover:border-[#67a6ff] hover:bg-white/[0.06] active:scale-[0.98]"
                   >
                     {secondary.label}
                   </a>
@@ -526,14 +607,19 @@ export function Hero({
             )}
           </div>
 
-          {/* Right column: the "next move" signal card */}
-          <div className="w-full lg:w-[340px] lg:justify-self-end">
-            <RevenueSignalCard />
+          {/* Right column: the revenue decision network (lg+) / signal card fallback */}
+          <div className="w-full lg:justify-self-end">
+            <div className="hidden lg:block">
+              <RevenueDecisionNetwork />
+            </div>
+            <div className="mx-auto max-w-[360px] lg:hidden">
+              <RevenueSignalCard />
+            </div>
           </div>
         </div>
       </div>
       {/* hairline base */}
-      <div className="absolute bottom-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-white/15 to-transparent" />
+      <div className="absolute bottom-0 inset-x-0 z-10 h-px bg-gradient-to-r from-transparent via-white/15 to-transparent" />
     </section>
   );
 }
@@ -608,6 +694,608 @@ function ShieldCheckIcon({ className }: { className?: string }) {
       <path d="M12 3l7 3v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3z" />
       <path d="M9 12l2 2 4-4" />
     </HeroIcon>
+  );
+}
+
+/* ---------------- Revenue decision network (hero right visual) ----------------
+   A floating "revenue intelligence decision map": a glowing central hub, six
+   metric cards, and a recommended-action card, wired together with illuminated
+   connectors carrying signal pulses. Built on a fixed 640x600 design canvas; an
+   SVG (same viewBox) draws the connectors/rings while cards are positioned in
+   container-query units so the whole composition scales without distortion.
+   All values are illustrative example data, never a real client result. */
+
+const NET_W = 640;
+const NET_H = 600;
+const HUB = { x: 340, y: 250 };
+
+type Accent = "orange" | "blue" | "green";
+type ChartKind = "spark-down" | "line-up" | "bars" | "progress";
+
+const ACCENTS: Record<
+  Accent,
+  { stroke: string; icon: string; ring: string; border: string; glow: string }
+> = {
+  orange: {
+    stroke: "#f9a26a",
+    icon: "#f68241",
+    ring: "rgba(246,130,65,0.16)",
+    border: "rgba(246,130,65,0.34)",
+    glow: "rgba(246,130,65,0.22)",
+  },
+  blue: {
+    stroke: "#67a6ff",
+    icon: "#3185fc",
+    ring: "rgba(49,133,252,0.18)",
+    border: "rgba(49,133,252,0.36)",
+    glow: "rgba(49,133,252,0.24)",
+  },
+  green: {
+    stroke: "#5ee0b0",
+    icon: "#22c55e",
+    ring: "rgba(52,211,153,0.16)",
+    border: "rgba(52,211,153,0.36)",
+    glow: "rgba(52,211,153,0.22)",
+  },
+};
+
+type NetCard = {
+  x: number;
+  y: number;
+  accent: Accent;
+  icon: "alert" | "arrow-up" | "people" | "shield" | "gauge" | "graph";
+  title: string;
+  metric: string;
+  support: string;
+  chart: ChartKind;
+};
+
+const NET_CARDS: NetCard[] = [
+  {
+    x: 116,
+    y: 80,
+    accent: "orange",
+    icon: "alert",
+    title: "Revenue at risk",
+    metric: "$1.2M",
+    support: "revenue at risk",
+    chart: "spark-down",
+  },
+  {
+    x: 548,
+    y: 80,
+    accent: "blue",
+    icon: "arrow-up",
+    title: "Expansion opportunity",
+    metric: "$480K",
+    support: "expansion potential",
+    chart: "line-up",
+  },
+  {
+    x: 82,
+    y: 250,
+    accent: "blue",
+    icon: "people",
+    title: "Partner-sourced growth",
+    metric: "+18%",
+    support: "vs last 90 days",
+    chart: "bars",
+  },
+  {
+    x: 560,
+    y: 238,
+    accent: "green",
+    icon: "shield",
+    title: "Renewal confidence",
+    metric: "61%",
+    support: "confidence score",
+    chart: "progress",
+  },
+  {
+    x: 122,
+    y: 420,
+    accent: "orange",
+    icon: "gauge",
+    title: "Margin pressure",
+    metric: "-3.2 pts",
+    support: "gross margin impact",
+    chart: "spark-down",
+  },
+  {
+    x: 548,
+    y: 416,
+    accent: "blue",
+    icon: "graph",
+    title: "Pipeline shift",
+    metric: "$2.7M",
+    support: "at risk next quarter",
+    chart: "bars",
+  },
+];
+
+const ACTION = { x: 352, y: 522 };
+
+// design unit -> scaled length (640 design units == container inline width)
+const u = (n: number) => `calc(${n} * var(--net-u))`;
+
+function NetIcon({ kind, color }: { kind: NetCard["icon"]; color: string }) {
+  const common = {
+    viewBox: "0 0 24 24",
+    fill: "none",
+    stroke: color,
+    strokeWidth: 1.9,
+    strokeLinecap: "round" as const,
+    strokeLinejoin: "round" as const,
+    width: "100%",
+    height: "100%",
+    "aria-hidden": true,
+  };
+  switch (kind) {
+    case "alert":
+      return (
+        <svg {...common}>
+          <path d="M12 9v4" />
+          <path d="M12 17h.01" />
+          <path d="M10.3 3.9 2.4 18a2 2 0 0 0 1.7 3h15.8a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z" />
+        </svg>
+      );
+    case "arrow-up":
+      return (
+        <svg {...common}>
+          <path d="M7 14l5-5 5 5" />
+          <path d="M12 9v10" />
+        </svg>
+      );
+    case "people":
+      return (
+        <svg {...common}>
+          <circle cx="9" cy="8" r="3" />
+          <path d="M3 20v-1a5 5 0 0 1 5-5h2a5 5 0 0 1 5 5v1" />
+          <path d="M16 5.2a3 3 0 0 1 0 5.6" />
+          <path d="M21 20v-1a5 5 0 0 0-3-4.6" />
+        </svg>
+      );
+    case "shield":
+      return (
+        <svg {...common}>
+          <path d="M12 3l7 3v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3z" />
+          <path d="M9 12l2 2 4-4" />
+        </svg>
+      );
+    case "gauge":
+      return (
+        <svg {...common}>
+          <path d="M4 18a8 8 0 1 1 16 0" />
+          <path d="M12 18l4-5" />
+          <circle cx="12" cy="18" r="1.2" fill={color} stroke="none" />
+        </svg>
+      );
+    case "graph":
+      return (
+        <svg {...common}>
+          <path d="M4 19V5" />
+          <path d="M4 19h16" />
+          <path d="M8 15l3-3 3 2 4-5" />
+        </svg>
+      );
+  }
+}
+
+function MiniChart({ kind, accent }: { kind: ChartKind; accent: Accent }) {
+  const c = ACCENTS[accent];
+  if (kind === "progress") {
+    return (
+      <svg viewBox="0 0 64 18" width="100%" height="100%" aria-hidden>
+        <rect x="0" y="7" width="64" height="4" rx="2" fill="rgba(255,255,255,0.1)" />
+        <rect
+          x="0"
+          y="7"
+          width="39"
+          height="4"
+          rx="2"
+          fill={c.icon}
+          style={{ transformOrigin: "left center", animation: "bar-grow 1.1s 0.3s both ease-out" }}
+        />
+        <circle cx="39" cy="9" r="4" fill="#06294e" stroke={c.stroke} strokeWidth="1.6" />
+      </svg>
+    );
+  }
+  if (kind === "bars") {
+    const hs = [9, 5, 12, 8, 14, 11];
+    return (
+      <svg viewBox="0 0 64 18" width="100%" height="100%" aria-hidden>
+        {hs.map((h, i) => (
+          <rect
+            key={i}
+            x={i * 11 + 1}
+            y={18 - h}
+            width="6"
+            height={h}
+            rx="1.4"
+            fill={c.stroke}
+            opacity={0.55 + i * 0.07}
+            style={{
+              transformOrigin: "center bottom",
+              animation: `bar-grow 0.7s ${0.25 + i * 0.08}s both cubic-bezier(0.22,1,0.36,1)`,
+            }}
+          />
+        ))}
+      </svg>
+    );
+  }
+  // line charts (up or down)
+  const pts =
+    kind === "line-up" ? "0,15 12,12 24,13 36,7 48,8 64,2" : "0,4 12,6 24,5 36,10 48,9 64,15";
+  return (
+    <svg viewBox="0 0 64 18" width="100%" height="100%" aria-hidden>
+      <defs>
+        <linearGradient id={`mg-${accent}-${kind}`} x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor={c.stroke} stopOpacity="0.32" />
+          <stop offset="100%" stopColor={c.stroke} stopOpacity="0" />
+        </linearGradient>
+      </defs>
+      <polygon points={`${pts} 64,18 0,18`} fill={`url(#mg-${accent}-${kind})`} opacity="0.9" />
+      <polyline
+        points={pts}
+        fill="none"
+        stroke={c.stroke}
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        pathLength={100}
+        style={{
+          strokeDasharray: 100,
+          strokeDashoffset: 100,
+          animation: "draw-line 1.3s 0.3s ease forwards",
+        }}
+      />
+    </svg>
+  );
+}
+
+function NetMetricCard({ card, delay }: { card: NetCard; delay: number }) {
+  const c = ACCENTS[card.accent];
+  return (
+    <div
+      className="absolute"
+      style={{
+        left: u(card.x),
+        top: u(card.y),
+        width: u(158),
+        transform: "translate(-50%, -50%)",
+        animation: `float-y-sm ${6 + (delay % 3)}s ease-in-out ${delay}s infinite`,
+      }}
+    >
+      <div
+        className="relative overflow-hidden"
+        style={{
+          borderRadius: u(15),
+          padding: `${u(13)} ${u(14)}`,
+          background: "linear-gradient(165deg, rgba(10,42,80,0.92), rgba(5,28,58,0.94))",
+          border: `1px solid ${c.border}`,
+          boxShadow: `0 ${u(18)} ${u(40)} rgba(2,16,40,0.55), 0 0 ${u(26)} ${c.glow}, inset 0 1px 0 rgba(255,255,255,0.06)`,
+          backdropFilter: "blur(8px)",
+        }}
+      >
+        <div className="flex items-center" style={{ gap: u(8) }}>
+          <span
+            className="flex flex-none items-center justify-center"
+            style={{
+              width: u(26),
+              height: u(26),
+              borderRadius: u(8),
+              background: c.ring,
+              border: `1px solid ${c.border}`,
+              padding: u(5),
+            }}
+          >
+            <NetIcon kind={card.icon} color={c.icon} />
+          </span>
+          <span
+            className="font-semibold leading-tight text-white/85"
+            style={{ fontSize: u(11.5), letterSpacing: "-0.01em" }}
+          >
+            {card.title}
+          </span>
+        </div>
+        <div
+          className="font-bold leading-none text-white"
+          style={{ fontFamily: "var(--font-display)", fontSize: u(25), marginTop: u(11) }}
+        >
+          {card.metric}
+        </div>
+        <div className="flex items-center justify-between" style={{ marginTop: u(8), gap: u(8) }}>
+          <span className="text-white/55" style={{ fontSize: u(9.8), letterSpacing: "0.01em" }}>
+            {card.support}
+          </span>
+          <span className="flex-none" style={{ width: u(46), height: u(15) }}>
+            <MiniChart kind={card.chart} accent={card.accent} />
+          </span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function NetActionCard() {
+  return (
+    <div
+      className="absolute"
+      style={{
+        left: u(ACTION.x),
+        top: u(ACTION.y),
+        width: u(212),
+        transform: "translate(-50%, -50%)",
+        animation: "float-y-sm 7.5s ease-in-out 0.4s infinite",
+      }}
+    >
+      <div
+        className="relative overflow-hidden"
+        style={{
+          borderRadius: u(16),
+          padding: `${u(15)} ${u(16)}`,
+          background: "linear-gradient(165deg, rgba(11,46,92,0.96), rgba(5,28,58,0.97))",
+          border: "1px solid rgba(49,133,252,0.42)",
+          boxShadow: `0 ${u(24)} ${u(50)} rgba(2,16,40,0.6), 0 0 ${u(34)} rgba(49,133,252,0.28), inset 0 1px 0 rgba(255,255,255,0.07)`,
+          backdropFilter: "blur(8px)",
+        }}
+      >
+        <div className="flex items-center" style={{ gap: u(7) }}>
+          <span
+            className="flex flex-none items-center justify-center"
+            style={{
+              width: u(22),
+              height: u(22),
+              borderRadius: u(7),
+              background: "rgba(49,133,252,0.18)",
+              border: "1px solid rgba(49,133,252,0.4)",
+              padding: u(4.5),
+            }}
+          >
+            <NetIcon kind="arrow-up" color="#67a6ff" />
+          </span>
+          <span
+            className="font-semibold uppercase text-[color:var(--blue-light)]"
+            style={{ fontSize: u(10), letterSpacing: "0.12em" }}
+          >
+            Next best move
+          </span>
+        </div>
+        <div
+          className="font-bold leading-snug text-white"
+          style={{ fontFamily: "var(--font-display)", fontSize: u(17.5), marginTop: u(10) }}
+        >
+          Re-engage the day-to-day team now
+        </div>
+        <div className="flex items-center" style={{ gap: u(6), marginTop: u(9) }}>
+          <span className="flex-none" style={{ width: u(13), height: u(13) }}>
+            <ClockIcon className="h-full w-full text-[#9fc0e8]" />
+          </span>
+          <span className="text-white/60" style={{ fontSize: u(10.5) }}>
+            58 days to renewal
+          </span>
+        </div>
+        <button
+          type="button"
+          className="flex items-center justify-center font-semibold text-white transition-[transform,box-shadow] hover:brightness-110 active:scale-[0.98]"
+          style={{
+            marginTop: u(13),
+            width: "100%",
+            borderRadius: u(9),
+            padding: `${u(9)} ${u(12)}`,
+            fontSize: u(11.5),
+            background: "var(--blue-cta)",
+            boxShadow: `0 ${u(8)} ${u(18)} rgba(49,133,252,0.45)`,
+          }}
+        >
+          Take action
+        </button>
+      </div>
+    </div>
+  );
+}
+
+export function RevenueDecisionNetwork() {
+  const { ref, shown } = useReveal(0.1);
+  const targets = [...NET_CARDS.map((c) => ({ x: c.x, y: c.y })), ACTION];
+
+  return (
+    <div
+      ref={ref}
+      className="relative mx-auto w-full"
+      style={{
+        maxWidth: 640,
+        aspectRatio: `${NET_W} / ${NET_H}`,
+        // 640 design units span the container's inline width
+        ["--net-u" as string]: `calc(100cqi / ${NET_W})`,
+        containerType: "inline-size",
+        opacity: shown ? 1 : 0,
+        transform: shown ? "translateY(0)" : "translateY(18px)",
+        transition:
+          "opacity 0.8s cubic-bezier(0.22,1,0.36,1), transform 0.8s cubic-bezier(0.22,1,0.36,1)",
+      }}
+    >
+      {/* Connectors, radar rings and anchor dots (under the cards) */}
+      <svg
+        viewBox={`0 0 ${NET_W} ${NET_H}`}
+        className="absolute inset-0 h-full w-full"
+        aria-hidden
+        style={{ overflow: "visible" }}
+      >
+        <defs>
+          <radialGradient id="net-ring" cx="50%" cy="50%" r="50%">
+            <stop offset="60%" stopColor="rgba(103,166,255,0)" />
+            <stop offset="100%" stopColor="rgba(103,166,255,0.12)" />
+          </radialGradient>
+          <linearGradient id="net-conn" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stopColor="rgba(103,166,255,0.55)" />
+            <stop offset="100%" stopColor="rgba(103,166,255,0.08)" />
+          </linearGradient>
+        </defs>
+
+        {/* Faint radar rings behind the hub */}
+        {[150, 116, 84].map((r) => (
+          <circle
+            key={r}
+            cx={HUB.x}
+            cy={HUB.y}
+            r={r}
+            fill="none"
+            stroke="rgba(120,170,255,0.14)"
+            strokeWidth="1"
+          />
+        ))}
+        <circle cx={HUB.x} cy={HUB.y} r="190" fill="url(#net-ring)" />
+        {/* faint outer radar arc */}
+        <path
+          d={`M ${HUB.x - 220} ${HUB.y} A 220 220 0 0 1 ${HUB.x + 220} ${HUB.y}`}
+          fill="none"
+          stroke="rgba(120,170,255,0.1)"
+          strokeWidth="1"
+          strokeDasharray="2 7"
+        />
+
+        {/* Connector lines from hub to each card */}
+        {targets.map((t, i) => (
+          <line
+            key={i}
+            x1={HUB.x}
+            y1={HUB.y}
+            x2={t.x}
+            y2={t.y}
+            stroke="url(#net-conn)"
+            strokeWidth="1.4"
+          />
+        ))}
+
+        {/* Anchor dots on the hub ring at each connector angle.
+            Round trig output so SSR (Node) and client (browser) match. */}
+        {targets.map((t, i) => {
+          const ang = Math.atan2(t.y - HUB.y, t.x - HUB.x);
+          const rr = 76;
+          return (
+            <circle
+              key={`a${i}`}
+              cx={Math.round((HUB.x + Math.cos(ang) * rr) * 100) / 100}
+              cy={Math.round((HUB.y + Math.sin(ang) * rr) * 100) / 100}
+              r="3"
+              fill="#9cc4ff"
+              style={{ filter: "drop-shadow(0 0 4px rgba(103,166,255,0.9))" }}
+            />
+          );
+        })}
+      </svg>
+
+      {/* Travelling signal pulses (hub -> card), scaled vectors via CSS vars */}
+      {targets.map((t, i) => (
+        <span
+          key={`p${i}`}
+          className="absolute rounded-full"
+          aria-hidden
+          style={{
+            left: u(HUB.x),
+            top: u(HUB.y),
+            width: u(6),
+            height: u(6),
+            marginLeft: u(-3),
+            marginTop: u(-3),
+            background: "#bcdcff",
+            boxShadow: "0 0 8px 2px rgba(120,170,255,0.8)",
+            ["--dx" as string]: u(t.x - HUB.x),
+            ["--dy" as string]: u(t.y - HUB.y),
+            animation: `signal-travel ${3.4 + (i % 3) * 0.5}s ${i * 0.55}s ease-in-out infinite`,
+          }}
+        />
+      ))}
+
+      {/* Central hub */}
+      <div
+        className="absolute"
+        style={{
+          left: u(HUB.x),
+          top: u(HUB.y),
+          width: u(150),
+          height: u(150),
+          transform: "translate(-50%, -50%)",
+        }}
+      >
+        {/* expanding signal rings */}
+        {[0, 1.3].map((d) => (
+          <span
+            key={d}
+            className="absolute inset-0 rounded-full"
+            aria-hidden
+            style={{
+              border: "1px solid rgba(103,166,255,0.5)",
+              animation: `radar-emit 3.8s ${d}s ease-out infinite`,
+            }}
+          />
+        ))}
+        {/* glow halo */}
+        <span
+          className="absolute rounded-full"
+          aria-hidden
+          style={{
+            inset: u(-22),
+            background: "radial-gradient(circle, rgba(49,133,252,0.4), transparent 68%)",
+            animation: "hub-breath 5s ease-in-out infinite",
+          }}
+        />
+        {/* hub disc */}
+        <div
+          className="absolute inset-0 flex flex-col items-center justify-center rounded-full text-center"
+          style={{
+            background:
+              "radial-gradient(circle at 50% 36%, rgba(20,58,108,0.96), rgba(4,24,52,0.97))",
+            border: "1px solid rgba(120,170,255,0.45)",
+            boxShadow:
+              "inset 0 1px 0 rgba(255,255,255,0.12), inset 0 0 30px rgba(49,133,252,0.25), 0 20px 50px rgba(2,16,40,0.6)",
+            padding: u(14),
+          }}
+        >
+          <span
+            className="absolute rounded-full"
+            aria-hidden
+            style={{ inset: u(11), border: "1px solid rgba(120,170,255,0.2)" }}
+          />
+          <svg viewBox="0 0 24 24" style={{ width: u(26), height: u(26) }} aria-hidden>
+            <rect x="3" y="13" width="4" height="8" rx="1" fill="#67a6ff" />
+            <rect x="10" y="8" width="4" height="13" rx="1" fill="#9cc4ff" />
+            <rect x="17" y="4" width="4" height="17" rx="1" fill="#3185fc" />
+          </svg>
+          <span
+            className="font-semibold leading-tight text-white"
+            style={{
+              fontFamily: "var(--font-display)",
+              fontSize: u(12.5),
+              marginTop: u(8),
+              letterSpacing: "-0.01em",
+            }}
+          >
+            Revenue decisions
+            <br />
+            with confidence
+          </span>
+        </div>
+      </div>
+
+      {/* Metric cards */}
+      {NET_CARDS.map((card, i) => (
+        <NetMetricCard key={card.title} card={card} delay={0.3 + i * 0.35} />
+      ))}
+
+      {/* Recommended action */}
+      <NetActionCard />
+
+      {/* Illustrative tag */}
+      <div
+        className="absolute left-0 flex items-center gap-1.5 text-[0.62rem] font-semibold uppercase tracking-[0.14em] text-[#6f93c4]"
+        style={{ bottom: u(4) }}
+      >
+        <span className="h-1 w-1 rounded-full bg-[#6f93c4]" aria-hidden />
+        Illustrative
+      </div>
+    </div>
   );
 }
 

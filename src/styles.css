@@ -62,6 +62,8 @@
   --blue-pale: #cfe3ff;
   --blue-tint: #f1f7ff;
   --orange-pop: #f68241;
+  --green-confidence: #34d399;
+  --green-deep: #22c55e;
   --ink: #212121;
   --ink-soft: #363636;
   --gray-soft: #f4f4f4;
@@ -579,6 +581,73 @@
   transform: perspective(1200px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg));
   transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
   will-change: transform;
+}
+
+/* ---------------- Revenue decision network (hero right visual) ---------------- */
+
+/* A signal pulse travelling from the hub out to a card. Each dot carries its own
+   --dx/--dy vector (in scaled units) so one keyframe drives every connector. */
+@keyframes signal-travel {
+  0% {
+    transform: translate(0, 0);
+    opacity: 0;
+  }
+  12% {
+    opacity: 1;
+  }
+  85% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate(var(--dx), var(--dy));
+    opacity: 0;
+  }
+}
+
+/* Hub signal propagation: a ring that expands outward and fades. */
+@keyframes radar-emit {
+  0% {
+    transform: scale(0.62);
+    opacity: 0.5;
+  }
+  100% {
+    transform: scale(1.95);
+    opacity: 0;
+  }
+}
+
+/* Calm breathing glow for the central hub. */
+@keyframes hub-breath {
+  0%,
+  100% {
+    opacity: 0.55;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.9;
+    transform: scale(1.06);
+  }
+}
+
+/* Data-wave: slow horizontal drift of the dotted terrain. */
+@keyframes wave-drift {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-46px);
+  }
+}
+
+/* Per-dot shimmer for the data-wave. */
+@keyframes dot-twinkle {
+  0%,
+  100% {
+    opacity: 0.18;
+  }
+  50% {
+    opacity: 0.85;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
