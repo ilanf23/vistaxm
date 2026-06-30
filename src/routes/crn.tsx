@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { BOOK_A_CALL_URL } from "@/lib/links";
 import { CTABand, PageHero, Section, SectionHead } from "@/components/site";
 import { FadeIn, Stagger, StaggerItem } from "@/components/motion";
 import { type ReactNode } from "react";
@@ -116,7 +117,7 @@ function CRNLanding() {
         eyebrow="For IT solution providers and MSPs"
         title="You are leaving money on the table. We will show you where."
         subtitle="Your customers are telling you which accounts are about to grow, stall, or churn. VistaXM turns that signal into the revenue moves you make every week."
-        primary={{ label: "Book a 30-minute call", to: "/book-a-call" }}
+        primary={{ label: "Book a 30-minute call", to: BOOK_A_CALL_URL }}
       />
 
       {/* The three assets */}

@@ -13,6 +13,7 @@ import { MotionConfig } from "motion/react";
 import appCss from "../styles.css?url";
 import logoAsset from "../assets/vistaxm-logo.svg.asset.json";
 import { reportLovableError } from "../lib/lovable-error-reporting";
+import { BOOK_A_CALL_URL } from "../lib/links";
 
 function NotFoundComponent() {
   return (
@@ -109,7 +110,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
         rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Hanken+Grotesk:wght@400;500;600;700&display=swap",
+        href: "https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap",
       },
     ],
   }),
@@ -145,6 +146,18 @@ const solutions = [
     label: "IndustrialPulse",
     desc: "Industrial OEMs, coming soon",
   },
+] as const;
+
+// "Industries We Serve" dropdown, rendered to the left of Solutions.
+// Each industry routes to the solution that serves it.
+const industries = [
+  { to: "/solutions/partnerpulse", label: "IT OEM" },
+  { to: "/solutions/partnerpulse", label: "IT Solution Provider" },
+  { to: "/solutions/brokerpulse", label: "Insurance Carrier" },
+  { to: "/solutions/brokerpulse", label: "Insurance Broker" },
+  { to: "/solutions/industrialpulse", label: "Industrial OEM" },
+  { to: "/solutions/industrialpulse", label: "Industrial Distributor" },
+  { to: "/solutions/partnerpulse", label: "Technology Providers" },
 ] as const;
 
 // Rendered after "The Model" and the Solutions dropdown.
@@ -216,6 +229,42 @@ function Header() {
             The Model
           </Link>
 
+          {/* Industries We Serve dropdown (left of Solutions; CSS hover + focus-within) */}
+          <div className="group relative">
+            <button
+              type="button"
+              className={`flex items-center gap-1 ${navLinkClass} group-hover:text-white group-focus-within:text-white`}
+              aria-haspopup="true"
+            >
+              Industries We Serve
+              <svg
+                width="12"
+                height="12"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.5"
+                aria-hidden
+                className="mt-px transition-transform duration-200 group-hover:rotate-180 group-focus-within:rotate-180"
+              >
+                <path d="M6 9l6 6 6-6" />
+              </svg>
+            </button>
+            <div className="invisible absolute left-1/2 top-full z-50 w-64 -translate-x-1/2 pt-3 opacity-0 transition-all duration-200 group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100">
+              <div className="overflow-hidden rounded-2xl border border-white/10 bg-[color:var(--navy-deep)]/95 p-2 shadow-[var(--shadow-elevation-3)] backdrop-blur-lg">
+                {industries.map((ind) => (
+                  <Link
+                    key={ind.label}
+                    to={ind.to}
+                    className="block rounded-xl px-3.5 py-2.5 text-sm font-medium text-white/85 transition-colors hover:bg-white/[0.06] hover:text-white"
+                  >
+                    {ind.label}
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </div>
+
           {/* Solutions dropdown (CSS hover + focus-within, SSR-safe) */}
           <div className="group relative">
             <button
@@ -266,9 +315,14 @@ function Header() {
           ))}
         </nav>
         <div className="hidden lg:block">
-          <Link to="/book-a-call" className="btn-primary text-sm">
+          <a
+            href={BOOK_A_CALL_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn-primary text-sm"
+          >
             Book a call
-          </Link>
+          </a>
         </div>
         <button
           className="lg:hidden p-2 -mr-2"
@@ -296,6 +350,23 @@ function Header() {
             </Link>
             <div className="py-1">
               <div className="eyebrow !text-[color:var(--blue-light)] !text-[0.7rem] mb-2">
+                Industries We Serve
+              </div>
+              <div className="flex flex-col gap-2 pl-3">
+                {industries.map((ind) => (
+                  <Link
+                    key={ind.label}
+                    to={ind.to}
+                    onClick={() => setOpen(false)}
+                    className="text-white/80 text-sm"
+                  >
+                    {ind.label}
+                  </Link>
+                ))}
+              </div>
+            </div>
+            <div className="py-1">
+              <div className="eyebrow !text-[color:var(--blue-light)] !text-[0.7rem] mb-2">
                 Solutions
               </div>
               <div className="flex flex-col gap-2 pl-3">
@@ -321,13 +392,15 @@ function Header() {
                 {n.label}
               </Link>
             ))}
-            <Link
-              to="/book-a-call"
+            <a
+              href={BOOK_A_CALL_URL}
+              target="_blank"
+              rel="noopener noreferrer"
               onClick={() => setOpen(false)}
               className="btn-primary mt-2 self-start"
             >
               Book a call
-            </Link>
+            </a>
           </div>
         </div>
       )}
@@ -354,9 +427,14 @@ function Footer() {
             Revenue Channel Intelligence. We turn partner and broker experience into the
             account-level signal of where revenue is about to grow or walk.
           </p>
-          <Link to="/book-a-call" className="btn-primary mt-7 text-sm">
+          <a
+            href={BOOK_A_CALL_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn-primary mt-7 text-sm"
+          >
             Book a 30-minute conversation
-          </Link>
+          </a>
         </div>
         <div className="md:col-span-2">
           <div className="eyebrow !text-[color:var(--blue-light)] !text-[0.7rem] mb-4">

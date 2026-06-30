@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { BOOK_A_CALL_URL } from "@/lib/links";
 import {
   CTABand,
   CTAButton,
@@ -44,9 +45,8 @@ function Home() {
         eyebrow="Revenue Channel Intelligence"
         title="Know which accounts are about to grow or walk, while you can still do something about it."
         subtitle="VistaXM turns customer and partner experience into the revenue moves IT solution providers and MSPs make every week. Not another score. The next decision."
-        primary={{ label: "Book a 30-minute call", to: "/book-a-call" }}
+        primary={{ label: "Book a 30-minute call", to: BOOK_A_CALL_URL }}
         secondary={{ label: "See how it works", to: "#model" }}
-        trust="Built by operators from Softchoice, Veeam, HPE, and Qualtrics"
       />
 
       {/* Proven results — aggregate outcomes */}
@@ -132,7 +132,7 @@ function Home() {
           <SectionHead
             dark
             eyebrow="The certified NPS"
-            title="The J.D. Power of the channel."
+            title="The independent, certified NPS standard for the channel."
             intro="A third-party certified NPS, usable in proposals, RFPs, and marketing. The only certified NPS a carrier or OEM cannot produce for itself."
           />
           <Reveal delay={140}>
@@ -165,15 +165,15 @@ function Home() {
           intro="Two ways in, both fully managed. Prove the signal exists, then expand into the ongoing program."
         />
         <div className="mt-14 grid gap-6 md:grid-cols-2">
-          <Card
-            title="Revenue Channel Intelligence Essentials"
-            kicker="First wave in about 90 days"
-            delay={0}
-          >
+          <Card title="Essentials" kicker="First wave in about 90 days" delay={0}>
             A fixed, fast first wave. Your certified NPS and your first account-level revenue
             signals, with a prioritized list of moves.
           </Card>
-          <Card title="The Fully Managed Program" kicker="Small · Medium · Large" delay={120}>
+          <Card
+            title="The Fully Managed Program"
+            kicker="Standard · Advanced · Strategic"
+            delay={120}
+          >
             The ongoing program that keeps finding and protecting revenue, wave after wave.
             Continuous signal, benchmark tracking, and quarterly reviews, all run by us.
           </Card>

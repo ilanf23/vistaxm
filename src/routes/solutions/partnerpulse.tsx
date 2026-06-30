@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { BOOK_A_CALL_URL } from "@/lib/links";
 import { CTABand, Card, NPSGauge, PageHero, Section, SectionHead } from "@/components/site";
 import { FadeIn, Stagger, StaggerItem } from "@/components/motion";
 
@@ -182,7 +183,7 @@ function PartnerPulse() {
         eyebrow="Solutions / PartnerPulse"
         title="See your channel the way your customers do."
         subtitle="A neutral, benchmarked read on how your partners actually deliver, and whether they are convinced enough to recommend you when it counts."
-        primary={{ label: "Book a 30-minute call", to: "/book-a-call" }}
+        primary={{ label: "Book a 30-minute call", to: BOOK_A_CALL_URL }}
       />
 
       {/* What it measures */}
@@ -228,6 +229,27 @@ function PartnerPulse() {
           intro="The read is only useful if it changes what you do next. Each measure routes straight into the channel decisions that move revenue."
         />
         <InformsList />
+      </Section>
+
+      {/* Custom graphic slot (placeholder, correct aspect ratio) */}
+      <Section tint>
+        <SectionHead
+          center
+          eyebrow="PartnerPulse in action"
+          title="A look at the PartnerPulse read."
+        />
+        <FadeIn delay={120} className="mx-auto mt-12 max-w-4xl">
+          <figure>
+            <div className="flex aspect-[16/9] w-full items-center justify-center rounded-2xl border-2 border-dashed border-[color:var(--gray-line)] bg-[color:var(--blue-tint)] text-center">
+              <span className="px-6 text-sm font-semibold uppercase tracking-[0.14em] text-[color:var(--ink-soft)]">
+                Custom PartnerPulse graphic
+              </span>
+            </div>
+            <figcaption className="mt-3 text-center text-sm italic text-[color:var(--ink-soft)]">
+              Custom graphic to come.
+            </figcaption>
+          </figure>
+        </FadeIn>
       </Section>
 
       <CTABand />

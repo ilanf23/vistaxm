@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { BOOK_A_CALL_URL } from "@/lib/links";
 import { type ReactNode } from "react";
 import { PageHero, Section, SectionHead } from "@/components/site";
 import { FadeIn, Stagger, StaggerItem } from "@/components/motion";
@@ -34,8 +35,13 @@ function CTALink({
   className: string;
   children: ReactNode;
 }) {
+  const newTab = to.startsWith("http");
   return (
-    <a href={to} className={className}>
+    <a
+      href={to}
+      className={className}
+      {...(newTab ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+    >
       {children}
     </a>
   );
@@ -76,7 +82,7 @@ function IndustrialPulse() {
         badge="Coming soon"
         title="Revenue Channel Intelligence for industrial OEMs and distributors."
         subtitle="The same neutral, benchmarked read on the channel, built for industrial manufacturers and distributors who sell through partners."
-        primary={{ label: "Talk to us about an early pilot", to: "/book-a-call" }}
+        primary={{ label: "Talk to us about an early pilot", to: BOOK_A_CALL_URL }}
       />
 
       {/* The opportunity */}
@@ -148,7 +154,7 @@ function IndustrialPulse() {
             </div>
           </FadeIn>
           <FadeIn delay={120}>
-            <CTALink to="/book-a-call" className="btn-primary">
+            <CTALink to={BOOK_A_CALL_URL} className="btn-primary">
               Talk to us
             </CTALink>
           </FadeIn>

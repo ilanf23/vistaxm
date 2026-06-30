@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { BOOK_A_CALL_URL } from "@/lib/links";
 import {
   CTABand,
   Card,
@@ -40,7 +41,7 @@ function TheModel() {
         eyebrow="The model"
         title="Revenue Channel Intelligence: turn experience into the next revenue decision."
         subtitle="Every account is sending signals about where revenue is headed. We make those signals legible, account by account, and tie each one to a decision you can act on."
-        primary={{ label: "Book a 30-minute call", to: "/book-a-call" }}
+        primary={{ label: "Book a 30-minute call", to: BOOK_A_CALL_URL }}
         secondary={{ label: "See the proof", to: "/proof" }}
       />
 
@@ -65,7 +66,7 @@ function TheModel() {
                 className="relative text-2xl font-semibold leading-snug text-[color:var(--navy-deep)] md:text-[1.75rem]"
                 style={{ fontFamily: "var(--font-display)" }}
               >
-                A score. Not a decision. A revenue decision. Not a score.
+                A score is not a decision. We provide true intelligence to drive revenue decisions.
               </blockquote>
               <figcaption className="mt-5 text-sm font-semibold uppercase tracking-wide text-[color:var(--blue-link)]">
                 Erik Vogel, Founder and CEO

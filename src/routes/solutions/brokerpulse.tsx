@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { BOOK_A_CALL_URL } from "@/lib/links";
 import {
   CTABand,
   InfluencerGapCard,
@@ -7,7 +8,7 @@ import {
   Section,
   SectionHead,
 } from "@/components/site";
-import { Stagger, StaggerItem } from "@/components/motion";
+import { FadeIn, Stagger, StaggerItem } from "@/components/motion";
 
 export const Route = createFileRoute("/solutions/brokerpulse")({
   head: () => ({
@@ -103,7 +104,7 @@ function BrokerPulse() {
         eyebrow="Solutions / BrokerPulse"
         title="Know which agencies are quietly at risk, before production drops."
         subtitle="Brokers drive most of your premium, yet you cannot see the experience behind it. BrokerPulse gives carriers a neutral, benchmarked read on broker and agency experience, tied to premium."
-        primary={{ label: "Book a 30-minute call", to: "/book-a-call" }}
+        primary={{ label: "Book a 30-minute call", to: BOOK_A_CALL_URL }}
       />
 
       {/* What it does */}
@@ -133,6 +134,27 @@ function BrokerPulse() {
           intro="Each signal points to a decision about your network: where the relationship is headed, and the move that changes it."
         />
         <InformsList />
+      </Section>
+
+      {/* Custom graphic slot (placeholder, correct aspect ratio) */}
+      <Section>
+        <SectionHead
+          center
+          eyebrow="BrokerPulse in action"
+          title="A look at the BrokerPulse read."
+        />
+        <FadeIn delay={120} className="mx-auto mt-12 max-w-4xl">
+          <figure>
+            <div className="flex aspect-[16/9] w-full items-center justify-center rounded-2xl border-2 border-dashed border-[color:var(--gray-line)] bg-[color:var(--blue-tint)] text-center">
+              <span className="px-6 text-sm font-semibold uppercase tracking-[0.14em] text-[color:var(--ink-soft)]">
+                Custom BrokerPulse graphic
+              </span>
+            </div>
+            <figcaption className="mt-3 text-center text-sm italic text-[color:var(--ink-soft)]">
+              Custom graphic to come.
+            </figcaption>
+          </figure>
+        </FadeIn>
       </Section>
 
       <CTABand />

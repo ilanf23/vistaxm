@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { BOOK_A_CALL_URL } from "@/lib/links";
 import { CTABand, NPSGauge, PageHero, Reveal, Section, SectionHead } from "@/components/site";
 import { FadeIn, Stagger, StaggerItem } from "@/components/motion";
 
@@ -209,7 +210,7 @@ function Proof() {
         eyebrow="Proof"
         title="The only certified NPS your competitors cannot print for themselves."
         subtitle="Third-party verified, benchmarked against the channel. Real results below."
-        primary={{ label: "Book a 30-minute call", to: "/book-a-call" }}
+        primary={{ label: "Book a 30-minute call", to: BOOK_A_CALL_URL }}
       />
 
       {/* The certified NPS */}
@@ -218,7 +219,7 @@ function Proof() {
           <SectionHead
             dark
             eyebrow="The certified NPS"
-            title="The J.D. Power of the channel."
+            title="The independent, certified NPS standard for the channel."
             intro="A third-party certified NPS you can use in proposals, RFPs, and marketing. Verifiable evidence, where a self-reported number is not. One competitive win attributable to the credential pays for the program many times over."
           />
           <Reveal delay={140}>

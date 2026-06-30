@@ -1,6 +1,7 @@
 import { type CSSProperties, type ReactNode } from "react";
 import { useReveal, useCountUp } from "@/hooks/use-reveal";
 import { FadeIn, Floaty, Parallax, Stagger, StaggerItem } from "@/components/motion";
+import { BOOK_A_CALL_URL } from "@/lib/links";
 
 /* ---------------- Primitives ---------------- */
 
@@ -13,19 +14,13 @@ export function CTAButton({
   className: string;
   children: ReactNode;
 }) {
-  const external =
-    to.startsWith("mailto:") ||
-    to.startsWith("http") ||
-    to.startsWith("tel:") ||
-    to.startsWith("#");
-  if (external)
-    return (
-      <a href={to} className={className}>
-        {children}
-      </a>
-    );
+  const newTab = to.startsWith("http");
   return (
-    <a href={to} className={className}>
+    <a
+      href={to}
+      className={className}
+      {...(newTab ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+    >
       {children}
     </a>
   );
@@ -291,7 +286,7 @@ export function PartnerShadow() {
         />
         <Reveal delay={100}>
           <p className="max-w-xl text-lg leading-relaxed text-[color:var(--ink-soft)] lg:pb-1">
-            When a partner or broker owns the relationship, the vendor sees the forecast—not the
+            When a partner or broker owns the relationship, the vendor sees the forecast, not the
             experience behind it. The signals that predict churn stay hidden until the renewal is
             already at risk.
           </p>
@@ -1681,7 +1676,7 @@ export function TeamSection() {
           title="Founder and CEO"
           initials="EV"
           linkedin="https://www.linkedin.com/in/erikvogel2020/"
-          bio="Twenty-six years in IT services. Built the customer experience program for HPE GreenLake, then led the high-tech and telecom practice at Qualtrics, the leading experience platform, advising the world's top technology brands. He founded VistaXM to bring that rigor to the channel."
+          bio="Twenty-six years in IT services. Built the customer experience program for HPE GreenLake, then led the high-tech and telecom practice at a leading experience-management platform, advising the world's top technology brands. He founded VistaXM to bring that rigor to the channel."
           quote="Companies don't spend NPS points. They spend dollars."
           delay={0}
         />
@@ -1724,7 +1719,7 @@ export function CTABand() {
           </div>
         </Reveal>
         <Reveal delay={120}>
-          <CTAButton to="/book-a-call" className="btn-primary">
+          <CTAButton to={BOOK_A_CALL_URL} className="btn-primary">
             Book a 30-minute conversation
           </CTAButton>
         </Reveal>
@@ -1834,13 +1829,54 @@ const PERSONAS = [
   "Operations / Day-to-Day User",
 ] as const;
 
-// Curated signal intensities: meaningful pattern, not random
-const INTENSITY: number[][] = [
-  // Sales, Procurement, Implementation, Support, Renewal
-  [0.85, 0.55, 0.4, 0.35, 0.75], // Executive
-  [0.45, 0.7, 0.85, 0.65, 0.5], // Technical
-  [0.7, 0.8, 0.45, 0.4, 0.6], // Procurement
-  [0.3, 0.45, 0.7, 0.8, 1.0], // Operations  ← Renewal cell = early warning
+type CellStatus = "red" | "yellow" | "green" | "neutral";
+
+const STATUS_STYLES: Record<
+  CellStatus,
+  { bg: string; border: string; dot: string; label: string }
+> = {
+  red: {
+    bg: "rgba(220,38,38,0.10)",
+    border: "rgba(220,38,38,0.45)",
+    dot: "#dc2626",
+    label: "At risk",
+  },
+  yellow: {
+    bg: "rgba(234,179,8,0.14)",
+    border: "rgba(202,138,4,0.5)",
+    dot: "#ca8a04",
+    label: "Watch",
+  },
+  green: {
+    bg: "rgba(22,163,74,0.10)",
+    border: "rgba(22,163,74,0.45)",
+    dot: "#16a34a",
+    label: "Healthy",
+  },
+  neutral: {
+    bg: "var(--gray-soft)",
+    border: "var(--hairline)",
+    dot: "var(--gray-line)",
+    label: "TBD",
+  },
+};
+
+// Per-cell status and the short text shown on hover/focus. Default: every cell
+// is neutral with a clearly marked placeholder note. The client will supply the
+// real Red/Yellow/Green status and the per-cell copy for each
+// persona x stage intersection.
+const CELLS: { status: CellStatus; note: string }[][] = PERSONAS.map(() =>
+  STAGES.map(() => ({
+    status: "neutral" as CellStatus,
+    note: "Placeholder: short status note to come.",
+  })),
+);
+
+const LEGEND: { status: CellStatus; meaning: string }[] = [
+  { status: "green", meaning: "Healthy" },
+  { status: "yellow", meaning: "Watch" },
+  { status: "red", meaning: "At risk" },
+  { status: "neutral", meaning: "Not yet scored" },
 ];
 
 export function JourneyMatrix() {
@@ -1892,36 +1928,40 @@ export function JourneyMatrix() {
                   {p}
                 </div>
                 {STAGES.map((s, j) => {
-                  const v = INTENSITY[i][j];
-                  const isEarly = i === 3 && j === 4;
-                  const delay = (i * 5 + j) * 45;
+                  const cell = CELLS[i][j];
+                  const st = STATUS_STYLES[cell.status];
+                  const delay = (i * STAGES.length + j) * 40;
                   return (
                     <div key={s} className="px-2 py-3 border-l border-[color:var(--hairline)]">
-                      <div
-                        title={`${p} × ${s} · intensity ${(v * 100).toFixed(0)}`}
-                        className={`relative h-11 rounded-lg flex items-center justify-center text-[0.7rem] font-semibold transition-all duration-700 ${
-                          isEarly ? "text-white" : "text-[color:var(--navy-deep)]"
-                        }`}
-                        style={{
-                          background: isEarly
-                            ? "linear-gradient(135deg, #f68241 0%, #e35a1f 100%)"
-                            : `rgba(49,133,252, ${shown ? v * 0.22 + 0.04 : 0})`,
-                          boxShadow:
-                            isEarly && shown
-                              ? "0 8px 22px -8px rgba(246,130,65,0.55)"
-                              : shown
-                                ? `inset 0 0 0 1px rgba(49,133,252, ${v * 0.18})`
-                                : "inset 0 0 0 1px transparent",
-                          opacity: shown ? 1 : 0,
-                          transform: shown ? "scale(1)" : "scale(0.92)",
-                          transitionDelay: `${delay}ms`,
-                          animation:
-                            isEarly && shown
-                              ? "cell-pulse 2.6s ease-in-out 1.4s infinite"
-                              : undefined,
-                        }}
-                      >
-                        {isEarly ? "Early warning" : ""}
+                      <div className="group/cell relative">
+                        <button
+                          type="button"
+                          aria-label={`${p} at ${s}: ${st.label}. ${cell.note}`}
+                          className="flex h-11 w-full items-center justify-center gap-1.5 rounded-lg text-[0.7rem] font-semibold text-[color:var(--navy-deep)] transition-all duration-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--blue-cta)] focus-visible:ring-offset-1"
+                          style={{
+                            background: st.bg,
+                            boxShadow: `inset 0 0 0 1px ${st.border}`,
+                            opacity: shown ? 1 : 0,
+                            transform: shown ? "scale(1)" : "scale(0.92)",
+                            transitionDelay: `${delay}ms`,
+                          }}
+                        >
+                          <span
+                            aria-hidden
+                            className="h-2 w-2 flex-none rounded-full"
+                            style={{ background: st.dot }}
+                          />
+                          {st.label}
+                        </button>
+                        <div
+                          role="tooltip"
+                          className="pointer-events-none invisible absolute bottom-full left-1/2 z-20 mb-2 w-44 -translate-x-1/2 rounded-lg bg-[color:var(--navy-deep)] px-3 py-2 text-[0.7rem] font-medium leading-snug text-white opacity-0 shadow-[var(--shadow-elevation-3)] transition-all duration-150 group-hover/cell:visible group-hover/cell:opacity-100 group-focus-within/cell:visible group-focus-within/cell:opacity-100"
+                        >
+                          <span className="mb-1 block font-semibold text-[color:var(--blue-light)]">
+                            {p} × {s}
+                          </span>
+                          {cell.note}
+                        </div>
                       </div>
                     </div>
                   );
@@ -1932,23 +1972,23 @@ export function JourneyMatrix() {
         </div>
       </div>
 
-      {/* Legend */}
+      {/* Legend: Red / Yellow / Green status (cells default to neutral until scored) */}
       <div className="mt-5 flex flex-wrap items-center gap-5 text-xs text-[color:var(--ink-soft)]">
-        <div className="flex items-center gap-2">
-          <span className="w-3 h-3 rounded-sm" style={{ background: "rgba(49,133,252,0.08)" }} />
-          Low signal
-        </div>
-        <div className="flex items-center gap-2">
-          <span className="w-3 h-3 rounded-sm" style={{ background: "rgba(49,133,252,0.28)" }} />
-          Strong signal
-        </div>
-        <div className="flex items-center gap-2">
-          <span
-            className="w-3 h-3 rounded-sm"
-            style={{ background: "linear-gradient(135deg,#f68241,#e35a1f)" }}
-          />
-          Early warning: Operations × Renewal
-        </div>
+        {LEGEND.map((item) => (
+          <div key={item.status} className="flex items-center gap-2">
+            <span
+              className="h-3 w-3 rounded-sm"
+              style={{
+                background: STATUS_STYLES[item.status].bg,
+                boxShadow: `inset 0 0 0 1px ${STATUS_STYLES[item.status].border}`,
+              }}
+            />
+            {item.meaning}
+          </div>
+        ))}
+        <span className="italic text-[color:var(--ink-soft)]/80">
+          Hover or focus a cell for detail. Status and notes to be supplied.
+        </span>
       </div>
     </div>
   );
@@ -2768,7 +2808,7 @@ export function PageHero({
   badge,
   title,
   subtitle,
-  primary = { label: "Book a 30-minute call", to: "/book-a-call" },
+  primary = { label: "Book a 30-minute call", to: BOOK_A_CALL_URL },
   secondary,
   trust,
   visual,

@@ -1,5 +1,6 @@
 import { type ReactNode } from "react";
 import { createFileRoute } from "@tanstack/react-router";
+import { BOOK_A_CALL_URL } from "@/lib/links";
 import { CTABand, Section, SectionHead, PageHero } from "@/components/site";
 import { FadeIn, Stagger, StaggerItem } from "@/components/motion";
 
@@ -56,17 +57,17 @@ function GetItem({ children }: { children: ReactNode }) {
 
 const TIERS = [
   {
-    size: "Small",
+    size: "Standard",
     headline: "A focused book.",
     desc: "Continuous signal across a defined set of priority accounts, with the core benchmark and quarterly review.",
   },
   {
-    size: "Medium",
+    size: "Advanced",
     headline: "A growing portfolio.",
     desc: "Wider coverage across segments and personas, deeper benchmark tracking, and a faster cadence of waves.",
   },
   {
-    size: "Large",
+    size: "Strategic",
     headline: "The full channel.",
     desc: "Program-wide measurement across the channel, peer-group benchmarking, and executive reporting end to end.",
   },
@@ -87,7 +88,7 @@ function HowToStart() {
         eyebrow="How to start"
         title="Start small. Scale when it works."
         subtitle="Two ways in, both fully managed. Prove the signal exists and that it changes a decision, then expand into the ongoing program."
-        primary={{ label: "Book a 30-minute call", to: "/book-a-call" }}
+        primary={{ label: "Book a 30-minute call", to: BOOK_A_CALL_URL }}
       />
 
       {/* The two entry paths */}
@@ -107,7 +108,7 @@ function HowToStart() {
                 className="absolute inset-x-0 top-0 h-[2px] origin-left scale-x-0 bg-gradient-to-r from-[color:var(--orange-pop)] to-[color:var(--blue-light)] transition-transform duration-500 group-hover:scale-x-100"
               />
               <span className="pill-light w-fit">Start here</span>
-              <h3 className="mt-4 !text-2xl">Revenue Channel Intelligence Essentials.</h3>
+              <h3 className="mt-4 !text-2xl">Essentials.</h3>
               <p className="mt-3 leading-relaxed text-[color:var(--ink-soft)]">
                 A fixed, fast first wave. We stand up your program, deliver your certified NPS and
                 your first account-level revenue signals, and hand you a prioritized list of moves.
@@ -118,7 +119,7 @@ function HowToStart() {
                 <div className="eyebrow mb-4">What you get</div>
                 <ul className="space-y-3">
                   <GetItem>Certified NPS</GetItem>
-                  <GetItem>Benchmarked indexes</GetItem>
+                  <GetItem>Benchmarked indexes (when available)</GetItem>
                   <GetItem>The Decision Maker to Influencer gap</GetItem>
                   <GetItem>A named at-risk and expansion account list</GetItem>
                   <GetItem>First insight in about 90 days</GetItem>
@@ -126,7 +127,12 @@ function HowToStart() {
               </div>
 
               <div className="mt-auto pt-7">
-                <a href="/book-a-call" className="btn-primary">
+                <a
+                  href={BOOK_A_CALL_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-primary"
+                >
                   Start with Essentials
                 </a>
               </div>
@@ -173,12 +179,13 @@ function HowToStart() {
                   ))}
                 </Stagger>
 
-                <p className="mt-4 text-xs italic text-white/55">
-                  Tier naming to be finalized with VistaXM.
-                </p>
-
                 <div className="mt-auto pt-7">
-                  <a href="/book-a-call" className="btn-primary">
+                  <a
+                    href={BOOK_A_CALL_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn-primary"
+                  >
                     Scope the program
                   </a>
                 </div>
