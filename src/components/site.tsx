@@ -1886,6 +1886,7 @@ export function GetTheBrief({ brief }: { brief: Brief }) {
             ) : (
               <a
                 href={brief.pdfHref}
+                download
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn-primary inline-flex items-center gap-2"
@@ -2080,6 +2081,7 @@ const STATUS_STYLES: Record<
 // IMPORTANT: colors and hover text below are ILLUSTRATIVE placeholders; the
 // status colors and one-line signal descriptions are to be confirmed by
 // VistaXM. A cell with no `desc` falls back to a clearly-marked placeholder.
+// TODO(VistaXM): final per-cell colors + hover copy pending
 const HEATMAP: {
   stages: readonly string[];
   personas: readonly string[];

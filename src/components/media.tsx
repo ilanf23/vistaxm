@@ -108,7 +108,7 @@ export function Quote({
     >
       <span
         aria-hidden
-        className="absolute right-7 top-6 font-serif text-5xl leading-none text-[color:var(--blue-pale)]"
+        className="absolute right-7 top-6 text-5xl leading-none text-[color:var(--blue-pale)]"
         style={{ fontFamily: "var(--font-display)" }}
       >
         &rdquo;

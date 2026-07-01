@@ -1,7 +1,15 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { BOOK_A_CALL_URL, BRIEFS, handleBookingClick } from "@/lib/links";
 import { type ReactNode } from "react";
-import { GetTheBrief, PageHero, Reveal, Section, SectionHead } from "@/components/site";
+import {
+  GetTheBrief,
+  PageHero,
+  Reveal,
+  RevenueSignalCard,
+  Section,
+  SectionHead,
+} from "@/components/site";
+import { ChannelSignalMap } from "@/components/solutions-viz";
 import { AmbientBand } from "@/components/media";
 import { FadeIn, Stagger, StaggerItem } from "@/components/motion";
 
@@ -86,6 +94,17 @@ function IndustrialPulse() {
         title="Revenue Channel Intelligence for industrial OEMs and distributors."
         subtitle="The same neutral, benchmarked read on the channel, built for industrial manufacturers and distributors who sell through partners."
         primary={{ label: "Talk to us about an early pilot", to: BOOK_A_CALL_URL }}
+        visual={
+          <RevenueSignalCard
+            account="Atlas Industrial Supply"
+            amountLabel="$1.9M"
+            reason="Your distributor reports a healthy account, but the plant running your equipment has logged repeat install issues. You are two steps from the signal."
+            action="Get ahead of the reorder before a rival is specced in"
+            daysToRenewal={90}
+            index={1}
+            total={3}
+          />
+        }
       />
 
       {/* The opportunity */}
@@ -132,8 +151,21 @@ function IndustrialPulse() {
         </Stagger>
       </Section>
 
-      {/* Ambient divider: built for the industrial channel */}
+      {/* IndustrialPulse in action: the channel signal path */}
       <Section tint>
+        <SectionHead
+          center
+          eyebrow="IndustrialPulse in action"
+          title="The signal fades the further it travels."
+          intro="Revenue runs from you to the distributor to the plant floor, and the experience that decides your next order lives at the far end. Here is where the visibility drops off, and what IndustrialPulse puts back."
+        />
+        <div className="mx-auto mt-12 max-w-4xl">
+          <ChannelSignalMap />
+        </div>
+      </Section>
+
+      {/* Ambient divider: built for the industrial channel */}
+      <Section>
         <Reveal>
           <AmbientBand
             image="/images/ambient/warehouse-floor.jpg"

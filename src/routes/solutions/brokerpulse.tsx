@@ -5,12 +5,15 @@ import {
   GetTheBrief,
   InfluencerGapCard,
   PageHero,
+  ProvenResults,
   Reveal,
+  RevenueSignalCard,
   Section,
   SectionHead,
 } from "@/components/site";
+import { BrokerBookMap } from "@/components/solutions-viz";
 import { AmbientBand } from "@/components/media";
-import { FadeIn, Stagger, StaggerItem } from "@/components/motion";
+import { Stagger, StaggerItem } from "@/components/motion";
 
 export const Route = createFileRoute("/solutions/brokerpulse")({
   head: () => ({
@@ -107,6 +110,17 @@ function BrokerPulse() {
         title="Know which agencies are quietly at risk, before production drops."
         subtitle="Brokers drive most of your premium, yet you cannot see the experience behind it. BrokerPulse gives carriers a neutral, benchmarked read on broker and agency experience, tied to premium."
         primary={{ label: "Book a 30-minute call", to: BOOK_A_CALL_URL }}
+        visual={
+          <RevenueSignalCard
+            account="Ridgeline Brokers"
+            amountLabel="$3.4M"
+            reason="The day-to-day servicing team has cooled while the principal stays happy. That gap shows up when the book renews."
+            action="Re-engage the servicing team before Q3 renewals"
+            daysToRenewal={74}
+            index={1}
+            total={4}
+          />
+        }
       />
 
       {/* What it does */}
@@ -152,26 +166,21 @@ function BrokerPulse() {
         </Reveal>
       </Section>
 
-      {/* Custom graphic slot (placeholder, correct aspect ratio) */}
+      {/* BrokerPulse in action: the agency book read */}
       <Section>
         <SectionHead
           center
           eyebrow="BrokerPulse in action"
           title="A look at the BrokerPulse read."
+          intro="Every agency in your book, plotted by the premium it carries against where its experience is heading. The ones to catch sit high on premium and low on trend."
         />
-        <FadeIn delay={120} className="mx-auto mt-12 max-w-4xl">
-          <figure>
-            <div className="flex aspect-[16/9] w-full items-center justify-center rounded-2xl border-2 border-dashed border-[color:var(--gray-line)] bg-[color:var(--blue-tint)] text-center">
-              <span className="px-6 text-sm font-semibold uppercase tracking-[0.14em] text-[color:var(--ink-soft)]">
-                Custom BrokerPulse graphic
-              </span>
-            </div>
-            <figcaption className="mt-3 text-center text-sm italic text-[color:var(--ink-soft)]">
-              Custom graphic to come.
-            </figcaption>
-          </figure>
-        </FadeIn>
+        <div className="mx-auto mt-12 max-w-4xl">
+          <BrokerBookMap />
+        </div>
       </Section>
+
+      {/* Proof */}
+      <ProvenResults />
 
       {/* Get the brief */}
       <Section tint>

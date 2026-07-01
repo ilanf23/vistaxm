@@ -295,16 +295,48 @@ const CASE_STUDIES: { title: string; note: string }[] = [
 ];
 
 // e) Video / Media
-// BUILD NOTE: retire the existing/outdated videos and replace them with
-// on-message clips. The Erik Vogel x Terry Richardson webinar can be split into
-// several short, placed assets, so keep this array able to hold multiple clips
-// cut from a single source. Featured slot leads; the rest are supporting clips.
-const VIDEOS: { title: string; featured?: boolean; comingSoon?: boolean }[] = [
-  { title: "Erik Vogel × Terry Richardson webinar", featured: true, comingSoon: true },
-  { title: "Webinar highlight: the partner shadow", comingSoon: true },
-  { title: "Webinar highlight: closing the influencer gap", comingSoon: true },
-  { title: "On-message product clip", comingSoon: true },
-];
+// The featured webinar drives from a single config value: paste a YouTube or
+// Vimeo URL into `featured.url` and the section renders a responsive embed;
+// leave it empty and it shows a labeled "Video coming soon" placeholder with
+// the title. Additional placed clips go in `clips` with the same shape.
+// BUILD NOTE: retire the existing/outdated webinar videos once the new,
+// on-message clips are cut (the Erik Vogel x Terry Richardson webinar can be
+// split into several short placed assets) and add those clips below.
+const VIDEOS: {
+  featured: { title: string; url: string };
+  clips: { title: string; url: string }[];
+} = {
+  featured: { title: "Erik Vogel × Terry Richardson", url: "" }, // paste YouTube/Vimeo URL here
+  clips: [], // additional placed clips later
+};
+
+/** Convert a YouTube or Vimeo watch/share URL into an embeddable iframe src.
+ *  Returns null when the URL is empty or unrecognized (caller shows a
+ *  placeholder instead). */
+function toEmbedUrl(url: string): string | null {
+  if (!url) return null;
+  try {
+    const u = new URL(url);
+    const host = u.hostname.replace(/^www\./, "");
+    if (host === "youtu.be") {
+      const id = u.pathname.slice(1);
+      return id ? `https://www.youtube.com/embed/${id}` : null;
+    }
+    if (host === "youtube.com" || host === "m.youtube.com") {
+      if (u.pathname.startsWith("/embed/")) return u.toString();
+      const id = u.searchParams.get("v");
+      return id ? `https://www.youtube.com/embed/${id}` : null;
+    }
+    if (host === "vimeo.com") {
+      const id = u.pathname.split("/").filter(Boolean)[0];
+      return id && /^\d+$/.test(id) ? `https://player.vimeo.com/video/${id}` : null;
+    }
+    if (host === "player.vimeo.com") return u.toString();
+    return null;
+  } catch {
+    return null;
+  }
+}
 
 /* ---------------- Cards ---------------- */
 
@@ -392,41 +424,54 @@ function ComingSoonCard({
   );
 }
 
-/** Video gallery card with a play affordance and thumbnail placeholder. */
+/** Video gallery card. Renders a responsive YouTube/Vimeo embed when `url`
+ *  resolves, otherwise a labeled "Video coming soon" placeholder. */
 function VideoCard({
   title,
+  url = "",
   featured = false,
-  comingSoon = false,
   delay = 0,
 }: {
   title: string;
+  url?: string;
   featured?: boolean;
-  comingSoon?: boolean;
   delay?: number;
 }) {
+  const embed = toEmbedUrl(url);
   return (
     <Reveal delay={delay}>
       <div className="group relative h-full overflow-hidden rounded-2xl hairline bg-white card-lift">
         <div
-          className={`relative flex items-center justify-center overflow-hidden bg-[color:var(--navy-deep)] grain ${
+          className={`relative overflow-hidden bg-[color:var(--navy-deep)] grain ${
             featured ? "aspect-[16/9]" : "aspect-video"
           }`}
         >
-          <div
-            aria-hidden
-            className="absolute inset-0 opacity-80"
-            style={{
-              backgroundImage:
-                "radial-gradient(520px 260px at 80% 10%, rgba(49,133,252,0.28), transparent 66%), radial-gradient(420px 240px at 10% 100%, rgba(0,86,167,0.34), transparent 68%)",
-            }}
-          />
-          <span className="relative flex h-16 w-16 items-center justify-center rounded-full bg-white/15 text-white ring-1 ring-white/25 backdrop-blur transition-transform duration-300 group-hover:scale-105">
-            <PlayIcon className="ml-0.5 h-6 w-6" />
-          </span>
-          {comingSoon && (
-            <span className="absolute right-3 top-3">
-              <StatusTag>Coming soon</StatusTag>
-            </span>
+          {embed ? (
+            <iframe
+              src={embed}
+              title={title}
+              className="absolute inset-0 h-full w-full"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerPolicy="strict-origin-when-cross-origin"
+              allowFullScreen
+            />
+          ) : (
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div
+                aria-hidden
+                className="absolute inset-0 opacity-80"
+                style={{
+                  backgroundImage:
+                    "radial-gradient(520px 260px at 80% 10%, rgba(49,133,252,0.28), transparent 66%), radial-gradient(420px 240px at 10% 100%, rgba(0,86,167,0.34), transparent 68%)",
+                }}
+              />
+              <span className="relative flex h-16 w-16 items-center justify-center rounded-full bg-white/15 text-white ring-1 ring-white/25 backdrop-blur transition-transform duration-300 group-hover:scale-105">
+                <PlayIcon className="ml-0.5 h-6 w-6" />
+              </span>
+              <span className="absolute right-3 top-3">
+                <StatusTag>Video coming soon</StatusTag>
+              </span>
+            </div>
           )}
         </div>
         <div className="p-5">
@@ -446,8 +491,6 @@ function VideoCard({
 /* ---------------- Page ---------------- */
 
 function Insights() {
-  const featuredVideo = VIDEOS.find((v) => v.featured);
-  const clipVideos = VIDEOS.filter((v) => !v.featured);
   return (
     <>
       <PageHero
@@ -521,18 +564,18 @@ function Insights() {
       {/* e) Video / Media */}
       <Section>
         <SectionHead eyebrow="Video and media" title="Watch the thinking, not just read it." />
-        {featuredVideo && (
-          <div className="mt-12 md:mt-14">
-            <VideoCard title={featuredVideo.title} featured comingSoon={featuredVideo.comingSoon} />
-          </div>
+        <div className="mt-12 md:mt-14">
+          <VideoCard title={VIDEOS.featured.title} url={VIDEOS.featured.url} featured />
+        </div>
+        {VIDEOS.clips.length > 0 && (
+          <Stagger className="mt-6 grid gap-6 md:grid-cols-3" stagger={0.08}>
+            {VIDEOS.clips.map((v, i) => (
+              <StaggerItem key={v.title}>
+                <VideoCard title={v.title} url={v.url} delay={i * 40} />
+              </StaggerItem>
+            ))}
+          </Stagger>
         )}
-        <Stagger className="mt-6 grid gap-6 md:grid-cols-3" stagger={0.08}>
-          {clipVideos.map((v, i) => (
-            <StaggerItem key={v.title}>
-              <VideoCard title={v.title} comingSoon={v.comingSoon} delay={i * 40} />
-            </StaggerItem>
-          ))}
-        </Stagger>
       </Section>
 
       {/* f) Brochures */}

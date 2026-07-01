@@ -7,9 +7,12 @@ import {
   NPSGauge,
   PageHero,
   Reveal,
+  RevenueSignalCard,
+  ScoreVsDecision,
   Section,
   SectionHead,
 } from "@/components/site";
+import { ConvictionMap } from "@/components/solutions-viz";
 import { AmbientBand } from "@/components/media";
 import { FadeIn, Stagger, StaggerItem } from "@/components/motion";
 
@@ -194,6 +197,17 @@ function PartnerPulse() {
         title="See your channel the way your customers do."
         subtitle="A neutral, benchmarked read on how your partners actually deliver, and whether they are convinced enough to recommend you when it counts."
         primary={{ label: "Book a 30-minute call", to: BOOK_A_CALL_URL }}
+        visual={
+          <RevenueSignalCard
+            account="Belmont IT"
+            amountLabel="$2.1M"
+            reason="Belmont still believes in you, but they have stopped putting you forward in new deals. The conviction is high; the recommendation has gone quiet."
+            action="Re-engage Belmont's front line before the next cycle"
+            daysToRenewal={63}
+            index={1}
+            total={3}
+          />
+        }
       />
 
       {/* Two tracks (sits between the hero and What it measures) */}
@@ -255,25 +269,30 @@ function PartnerPulse() {
         <InformsList />
       </Section>
 
-      {/* Custom graphic slot (placeholder, correct aspect ratio) */}
+      {/* PartnerPulse in action: the conviction map */}
       <Section tint>
         <SectionHead
           center
           eyebrow="PartnerPulse in action"
           title="A look at the PartnerPulse read."
+          intro="Every partner org, plotted by how strongly they believe in you against how often they actually recommend you. The gap to close sits top-left: conviction without recommendation."
         />
-        <FadeIn delay={120} className="mx-auto mt-12 max-w-4xl">
-          <figure>
-            <div className="flex aspect-[16/9] w-full items-center justify-center rounded-2xl border-2 border-dashed border-[color:var(--gray-line)] bg-[color:var(--blue-tint)] text-center">
-              <span className="px-6 text-sm font-semibold uppercase tracking-[0.14em] text-[color:var(--ink-soft)]">
-                Custom PartnerPulse graphic
-              </span>
-            </div>
-            <figcaption className="mt-3 text-center text-sm italic text-[color:var(--ink-soft)]">
-              Custom graphic to come.
-            </figcaption>
-          </figure>
-        </FadeIn>
+        <div className="mx-auto mt-12 max-w-4xl">
+          <ConvictionMap />
+        </div>
+      </Section>
+
+      {/* From score to decision: proof of the shift PartnerPulse creates */}
+      <Section tint>
+        <SectionHead
+          center
+          eyebrow="From score to decision"
+          title="A number becomes a move."
+          intro="A benchmarked read is only worth the decision it changes. Here is the shift: from a score with nowhere to go, to a channel decision with the next move attached."
+        />
+        <div className="mt-12">
+          <ScoreVsDecision />
+        </div>
       </Section>
 
       {/* Get the brief */}
