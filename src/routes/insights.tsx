@@ -193,39 +193,71 @@ function PlayIcon({ className = "h-6 w-6" }: { className?: string }) {
    external links open in a new tab; any not-yet-available item sets
    `comingSoon` and renders as a non-linking placeholder with a status tag. */
 
-type LinkItem = { title: string; type: string; href: string; comingSoon?: boolean };
+type LinkItem = {
+  title: string;
+  type: string;
+  href: string;
+  comingSoon?: boolean;
+  summary?: string;
+  source?: string;
+  date?: string;
+};
 
 // a) Newsroom / Press
+// Branded summary-and-link index: each item is on-brand summary copy written for
+// us plus an outbound link to the canonical source. We do not reproduce any
+// third-party article or press-release body text. Ordered newest first.
 const NEWSROOM: LinkItem[] = [
   {
-    title: "VistaXM is Powering a Customer Experience Revolution",
-    type: "CRN press release",
-    href: "https://www.vistaxm.com/news/",
+    type: "In the news",
+    title: "VistaXM Is Powering a Customer Experience Partner Revolution",
+    summary:
+      "CRN covers how VistaXM is bringing Revenue Channel Intelligence to the IT channel: turning partner-delivered customer experience into an account-level signal of where revenue is headed.",
+    source: "CRN",
+    date: "2026",
+    href: "https://www.crn.com/news/software/2026/vistaxm-is-powering-a-customer-experience-partner-revolution",
   },
   {
-    title: "VistaXM Launches PartnerPulse",
+    type: "Interview",
+    title: "Erik Vogel on Turning Customer Experience Into Revenue Growth",
+    summary:
+      "VistaXM founder and CEO Erik Vogel on why a score is not a decision, and how channel experience becomes the intelligence that drives revenue decisions.",
+    source: "CXCurrent",
+    date: "2026",
+    href: "https://www.cxcurrent.com/news/erik-vogel-vistaxm-cx-revenue-growth-strategy",
+  },
+  {
+    type: "Article",
+    title: "8 Ways Data-Driven Decisions Are Better Than Gut Feel",
+    summary:
+      "Why the strongest channel operators replace gut feel with structured measurement: eight ways data-driven decisions beat intuition when revenue is on the line.",
+    source: "CustomerThink",
+    date: "2026",
+    href: "https://customerthink.com/8-ways-data-driven-decisions-are-better-than-gut-feel-because-you-are-not-steve-jobs/",
+  },
+  {
     type: "Press release",
+    title: "VistaXM Launches PartnerPulse",
+    summary:
+      "VistaXM introduces PartnerPulse, giving OEMs and distributors a neutral, benchmarked view of partner-delivered customer experience across the full journey.",
+    source: "EIN Presswire",
+    date: "Dec 2025",
     href: "https://www.einpresswire.com/article/874930219/vistaxm-launches-partnerpulse-redefining-how-oems-measure-and-improve-partner-delivered-customer-experience",
   },
   {
-    title: "VistaXM Launches Broker Experience Management (BXM)",
     type: "Press release",
+    title: "VistaXM Launches Broker Experience Management (BXM)",
+    summary:
+      "VistaXM introduces BrokerPulse and the Broker Experience Management discipline: quantifying the premium at risk in carrier-broker relationships and how to protect it.",
+    source: "EIN Presswire",
+    date: "Nov 2025",
     href: "https://www.einpresswire.com/article/866359864/vistaxm-launches-broker-experience-management-bxm-the-missing-link-between-broker-loyalty-and-retention",
   },
   {
-    title: "ePlus press release",
     type: "Press release",
+    title: "ePlus press release",
     href: "#",
     comingSoon: true,
-  },
-];
-
-// b) Articles / Blog
-const ARTICLES: LinkItem[] = [
-  {
-    title: "8 Ways Data-Driven Decisions are Better than Gut Feel",
-    type: "Article",
-    href: "https://www.vistaxm.com/news/",
   },
 ];
 
@@ -289,7 +321,8 @@ function LinkCard({
 }) {
   const isLive = !item.comingSoon && item.href !== "#";
   const Icon = icon === "download" ? DownloadIcon : ArrowIcon;
-  const actionLabel = icon === "download" ? "Download" : "Read";
+  const actionLabel = icon === "download" ? "Download" : item.summary ? "Read more" : "Read";
+  const meta = [item.source, item.date].filter(Boolean).join(" · ");
   const body = (
     <div className="group relative flex h-full flex-col overflow-hidden rounded-2xl hairline bg-white p-6 card-lift md:p-7">
       <span
@@ -304,6 +337,14 @@ function LinkCard({
         {!isLive && <StatusTag>Coming soon</StatusTag>}
       </div>
       <h3 className="mt-4 !text-lg !leading-snug !text-[color:var(--navy-deep)]">{item.title}</h3>
+      {item.summary && (
+        <p className="mt-3 text-sm leading-relaxed text-[color:var(--ink-soft)]">{item.summary}</p>
+      )}
+      {meta && (
+        <p className="mt-3 text-xs font-medium tracking-wide text-[color:var(--ink-soft)]">
+          {meta}
+        </p>
+      )}
       <div className="mt-auto flex items-center gap-1.5 pt-5 text-sm font-semibold text-[color:var(--blue-link)]">
         {isLive ? (
           <>
@@ -433,28 +474,8 @@ function Insights() {
         </Stagger>
       </Section>
 
-      {/* b) Articles / Blog */}
-      <Section>
-        <SectionHead
-          eyebrow="Articles"
-          title="Long-form and short-form, optimized for search and AI answers."
-        />
-        <Stagger className="mt-12 grid gap-6 md:mt-14 md:grid-cols-2 lg:grid-cols-3" stagger={0.08}>
-          {ARTICLES.map((item, i) => (
-            <StaggerItem key={item.title}>
-              <LinkCard item={item} delay={i * 40} />
-            </StaggerItem>
-          ))}
-        </Stagger>
-        <Reveal delay={120}>
-          <p className="mt-8 text-sm italic text-[color:var(--ink-soft)]">
-            Selected articles migrated from the current site; new pieces added on a regular cadence.
-          </p>
-        </Reveal>
-      </Section>
-
       {/* Ambient divider: take the thinking with you */}
-      <Section tint>
+      <Section>
         <Reveal>
           <AmbientBand
             image="/images/ambient/reading-report.jpg"
