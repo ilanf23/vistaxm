@@ -22,7 +22,7 @@ export const Route = createFileRoute("/the-model")({
       {
         name: "description",
         content:
-          "Revenue Channel Intelligence maps every account across five journey stages and four personas, then turns each signal into a revenue decision: who is about to grow, who is about to churn, and the move that changes it.",
+          "Revenue Channel Intelligence maps every account across five journey stages and four personas, then turns each signal into a revenue decision. Customer experience analytics and customer intelligence, tied to Net Promoter Score (NPS) and customer retention: who is about to grow, who is about to churn, and the move that changes it.",
       },
       { property: "og:title", content: "The Model: Revenue Channel Intelligence | VistaXM" },
       {

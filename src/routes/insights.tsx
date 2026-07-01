@@ -1,18 +1,18 @@
 import { type ReactNode } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { BOOK_A_CALL_URL } from "@/lib/links";
-import { CTABand, Card, PageHero, Reveal, Section, SectionHead } from "@/components/site";
+import { CTABand, PageHero, Reveal, Section, SectionHead } from "@/components/site";
 import { AmbientBand } from "@/components/media";
 import { FadeIn, Stagger, StaggerItem } from "@/components/motion";
 
 export const Route = createFileRoute("/insights")({
   head: () => ({
     meta: [
-      { title: "Insights and Resources | VistaXM" },
+      { title: "Insights and Resources: Customer Experience Management | VistaXM" },
       {
         name: "description",
         content:
-          "The public point of view on Revenue Channel Intelligence: long-form articles, the flagship report, briefs, and sample deliverables. Ungated, optimized for search and AI answers.",
+          "The public point of view on Revenue Channel Intelligence: articles, press, and whitepapers on customer experience management, customer retention, and the voice of the customer across the channel. Ungated, optimized for search and AI answers.",
       },
       { property: "og:title", content: "Insights and Resources | VistaXM" },
       {
@@ -27,7 +27,8 @@ export const Route = createFileRoute("/insights")({
 
 /* ---------------- Local primitives (not exported from site.tsx) ---------------- */
 
-/** Lightweight link/button mirroring the site CTAButton API. */
+/** Lightweight link/button mirroring the site CTAButton API. External
+ *  (http) links open in a new tab, matching CTAButton's behavior. */
 function LinkButton({
   to,
   className,
@@ -37,8 +38,13 @@ function LinkButton({
   className: string;
   children: ReactNode;
 }) {
+  const newTab = to.startsWith("http");
   return (
-    <a href={to} className={className}>
+    <a
+      href={to}
+      className={className}
+      {...(newTab ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+    >
       {children}
     </a>
   );
@@ -155,31 +161,242 @@ function FeaturedReport() {
   );
 }
 
-/* ---------------- Resource item ---------------- */
+/** Download/read icon for resource cards. */
+function DownloadIcon({ className = "h-4 w-4" }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      className={className}
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.9"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden
+    >
+      <path d="M12 3v12m0 0l-4-4m4 4l4-4M5 21h14" />
+    </svg>
+  );
+}
 
-function ResourceCard({
+/** Play icon for the video gallery. */
+function PlayIcon({ className = "h-6 w-6" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} fill="currentColor" aria-hidden>
+      <path d="M8 5.5v13l11-6.5-11-6.5z" />
+    </svg>
+  );
+}
+
+/* ---------------- Content config (single source of truth per section) ----------------
+   Every array below drives one section so new items are trivial to add. All
+   external links open in a new tab; any not-yet-available item sets
+   `comingSoon` and renders as a non-linking placeholder with a status tag. */
+
+type LinkItem = { title: string; type: string; href: string; comingSoon?: boolean };
+
+// a) Newsroom / Press
+const NEWSROOM: LinkItem[] = [
+  {
+    title: "VistaXM is Powering a Customer Experience Revolution",
+    type: "CRN press release",
+    href: "https://www.vistaxm.com/news/",
+  },
+  {
+    title: "VistaXM Launches PartnerPulse",
+    type: "Press release",
+    href: "https://www.einpresswire.com/article/874930219/vistaxm-launches-partnerpulse-redefining-how-oems-measure-and-improve-partner-delivered-customer-experience",
+  },
+  {
+    title: "VistaXM Launches Broker Experience Management (BXM)",
+    type: "Press release",
+    href: "https://www.einpresswire.com/article/866359864/vistaxm-launches-broker-experience-management-bxm-the-missing-link-between-broker-loyalty-and-retention",
+  },
+  {
+    title: "ePlus press release",
+    type: "Press release",
+    href: "#",
+    comingSoon: true,
+  },
+];
+
+// b) Articles / Blog
+const ARTICLES: LinkItem[] = [
+  {
+    title: "8 Ways Data-Driven Decisions are Better than Gut Feel",
+    type: "Article",
+    href: "https://www.vistaxm.com/news/",
+  },
+];
+
+// c) Whitepapers & Resources
+const RESOURCES: LinkItem[] = [
+  {
+    title: "PartnerPulse / The Future of Partner Experience",
+    type: "Whitepaper",
+    href: "https://www.vistaxm.com/white-paper/partnerpulse-the-future-of-partner-experience/",
+  },
+  {
+    title: "The PartnerPulse Business Case",
+    type: "Whitepaper",
+    href: "https://www.vistaxm.com/white-paper/the-partnerpulse-business-case/",
+  },
+  {
+    title: "The State of Broker Experience 2025",
+    type: "Whitepaper",
+    href: "https://www.vistaxm.com/white-paper/the-state-of-broker-experience-2025/",
+  },
+  {
+    title: "The BrokerPulse Business Case",
+    type: "Whitepaper",
+    href: "https://www.vistaxm.com/white-paper/the-brokerpulse-business-case/",
+  },
+];
+
+// d) Case Studies (placeholders until published)
+const CASE_STUDIES: { title: string; note: string }[] = [
+  { title: "ePlus case study", note: "Our certified-NPS proof story, written up in full." },
+  {
+    title: "Additional customer stories",
+    note: "More channel and carrier outcomes, added as they clear approval.",
+  },
+];
+
+// e) Video / Media
+// BUILD NOTE: retire the existing/outdated videos and replace them with
+// on-message clips. The Erik Vogel x Terry Richardson webinar can be split into
+// several short, placed assets, so keep this array able to hold multiple clips
+// cut from a single source. Featured slot leads; the rest are supporting clips.
+const VIDEOS: { title: string; featured?: boolean; comingSoon?: boolean }[] = [
+  { title: "Erik Vogel × Terry Richardson webinar", featured: true, comingSoon: true },
+  { title: "Webinar highlight: the partner shadow", comingSoon: true },
+  { title: "Webinar highlight: closing the influencer gap", comingSoon: true },
+  { title: "On-message product clip", comingSoon: true },
+];
+
+/* ---------------- Cards ---------------- */
+
+/** Outbound content card (newsroom, articles, whitepapers). Renders as a link
+ *  when available (new tab) or a non-linking placeholder when coming soon. */
+function LinkCard({
+  item,
+  icon = "arrow",
+  delay = 0,
+}: {
+  item: LinkItem;
+  icon?: "arrow" | "download";
+  delay?: number;
+}) {
+  const isLive = !item.comingSoon && item.href !== "#";
+  const Icon = icon === "download" ? DownloadIcon : ArrowIcon;
+  const actionLabel = icon === "download" ? "Download" : "Read";
+  const body = (
+    <div className="group relative flex h-full flex-col overflow-hidden rounded-2xl hairline bg-white p-6 card-lift md:p-7">
+      <span
+        aria-hidden
+        className="absolute inset-x-0 top-0 h-[2px] origin-left scale-x-0 bg-gradient-to-r from-[color:var(--blue-cta)] to-[color:var(--blue-light)] transition-transform duration-500 group-hover:scale-x-100"
+      />
+      <div className="flex items-center justify-between gap-3">
+        <span className="pill-light">
+          <span className="h-1.5 w-1.5 rounded-full bg-[color:var(--blue-cta)]" />
+          {item.type}
+        </span>
+        {!isLive && <StatusTag>Coming soon</StatusTag>}
+      </div>
+      <h3 className="mt-4 !text-lg !leading-snug !text-[color:var(--navy-deep)]">{item.title}</h3>
+      <div className="mt-auto flex items-center gap-1.5 pt-5 text-sm font-semibold text-[color:var(--blue-link)]">
+        {isLive ? (
+          <>
+            {actionLabel}
+            <Icon className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5" />
+          </>
+        ) : (
+          <span className="text-[color:var(--ink-soft)]">Available soon</span>
+        )}
+      </div>
+    </div>
+  );
+  if (!isLive) {
+    return <Reveal delay={delay}>{body}</Reveal>;
+  }
+  return (
+    <Reveal delay={delay}>
+      <a href={item.href} target="_blank" rel="noopener noreferrer" className="block h-full">
+        {body}
+      </a>
+    </Reveal>
+  );
+}
+
+/** Coming-soon placeholder card (case studies, brochures). */
+function ComingSoonCard({
   title,
-  children,
-  tag,
+  note,
   delay = 0,
 }: {
   title: string;
-  children: ReactNode;
-  tag?: string;
+  note?: string;
   delay?: number;
 }) {
   return (
     <Reveal delay={delay}>
-      <div className="group relative h-full overflow-hidden rounded-2xl hairline bg-white p-7 card-lift md:p-8">
-        <span
-          aria-hidden
-          className="absolute inset-x-0 top-0 h-[2px] origin-left scale-x-0 bg-gradient-to-r from-[color:var(--blue-cta)] to-[color:var(--blue-light)] transition-transform duration-500 group-hover:scale-x-100"
-        />
-        <div className="flex items-start justify-between gap-4">
-          <h3 className="!text-xl">{title}</h3>
-          {tag && <StatusTag>{tag}</StatusTag>}
+      <div className="flex h-full flex-col rounded-2xl border-2 border-dashed border-[color:var(--gray-line)] bg-[color:var(--blue-tint)] p-6 md:p-7">
+        <StatusTag>Coming soon</StatusTag>
+        <h3 className="mt-4 !text-lg !text-[color:var(--navy-deep)]">{title}</h3>
+        {note && (
+          <p className="mt-2 text-sm leading-relaxed text-[color:var(--ink-soft)]">{note}</p>
+        )}
+      </div>
+    </Reveal>
+  );
+}
+
+/** Video gallery card with a play affordance and thumbnail placeholder. */
+function VideoCard({
+  title,
+  featured = false,
+  comingSoon = false,
+  delay = 0,
+}: {
+  title: string;
+  featured?: boolean;
+  comingSoon?: boolean;
+  delay?: number;
+}) {
+  return (
+    <Reveal delay={delay}>
+      <div className="group relative h-full overflow-hidden rounded-2xl hairline bg-white card-lift">
+        <div
+          className={`relative flex items-center justify-center overflow-hidden bg-[color:var(--navy-deep)] grain ${
+            featured ? "aspect-[16/9]" : "aspect-video"
+          }`}
+        >
+          <div
+            aria-hidden
+            className="absolute inset-0 opacity-80"
+            style={{
+              backgroundImage:
+                "radial-gradient(520px 260px at 80% 10%, rgba(49,133,252,0.28), transparent 66%), radial-gradient(420px 240px at 10% 100%, rgba(0,86,167,0.34), transparent 68%)",
+            }}
+          />
+          <span className="relative flex h-16 w-16 items-center justify-center rounded-full bg-white/15 text-white ring-1 ring-white/25 backdrop-blur transition-transform duration-300 group-hover:scale-105">
+            <PlayIcon className="ml-0.5 h-6 w-6" />
+          </span>
+          {comingSoon && (
+            <span className="absolute right-3 top-3">
+              <StatusTag>Coming soon</StatusTag>
+            </span>
+          )}
         </div>
-        <p className="mt-3 leading-relaxed text-[color:var(--ink-soft)]">{children}</p>
+        <div className="p-5">
+          {featured && (
+            <div className="eyebrow mb-2 !text-[color:var(--blue-link)]">
+              <span className="h-1.5 w-1.5 rounded-full bg-[color:var(--orange-pop)]" />
+              Featured
+            </div>
+          )}
+          <h3 className="!text-base !leading-snug !text-[color:var(--navy-deep)]">{title}</h3>
+        </div>
       </div>
     </Reveal>
   );
@@ -187,36 +404,15 @@ function ResourceCard({
 
 /* ---------------- Page ---------------- */
 
-const ARTICLE_THEMES: { theme: string; blurb: string }[] = [
-  {
-    theme: "Channel revenue",
-    blurb:
-      "Why indirect revenue behaves differently, and how to read the signals a partner sits between you and.",
-  },
-  {
-    theme: "The partner shadow",
-    blurb:
-      "The part of the journey vendors never see, and what it quietly costs in retention and expansion.",
-  },
-  {
-    theme: "The Decision Maker to Influencer gap",
-    blurb:
-      "When the executive is happy and the daily users are not. The most reliable early warning of churn.",
-  },
-  {
-    theme: "Why experience is revenue",
-    blurb:
-      "Experience is the method, revenue is the point. Tying every signal to retention, expansion, and churn.",
-  },
-];
-
 function Insights() {
+  const featuredVideo = VIDEOS.find((v) => v.featured);
+  const clipVideos = VIDEOS.filter((v) => !v.featured);
   return (
     <>
       <PageHero
         eyebrow="Insights"
         title="The point of view on Revenue Channel Intelligence."
-        subtitle="Our thinking is public. Read it, use it, bring questions, not budget."
+        subtitle="Our thinking is public: articles, press, whitepapers, and video on customer experience management, customer retention, and the voice of the customer across the channel. Read it, use it, bring questions, not budget."
         primary={{ label: "Book a 30-minute call", to: BOOK_A_CALL_URL }}
       />
 
@@ -225,18 +421,28 @@ function Insights() {
         <FeaturedReport />
       </Section>
 
-      {/* Articles */}
+      {/* a) Newsroom / Press */}
       <Section tint>
+        <SectionHead eyebrow="Newsroom" title="Press and announcements." />
+        <Stagger className="mt-12 grid gap-6 md:mt-14 md:grid-cols-2 lg:grid-cols-3" stagger={0.08}>
+          {NEWSROOM.map((item, i) => (
+            <StaggerItem key={item.title}>
+              <LinkCard item={item} delay={i * 40} />
+            </StaggerItem>
+          ))}
+        </Stagger>
+      </Section>
+
+      {/* b) Articles / Blog */}
+      <Section>
         <SectionHead
           eyebrow="Articles"
           title="Long-form and short-form, optimized for search and AI answers."
         />
-        <Stagger className="mt-12 grid gap-6 md:mt-14 md:grid-cols-2" stagger={0.08}>
-          {ARTICLE_THEMES.map((a) => (
-            <StaggerItem key={a.theme}>
-              <Card title={a.theme} kicker="Theme">
-                {a.blurb}
-              </Card>
+        <Stagger className="mt-12 grid gap-6 md:mt-14 md:grid-cols-2 lg:grid-cols-3" stagger={0.08}>
+          {ARTICLES.map((item, i) => (
+            <StaggerItem key={item.title}>
+              <LinkCard item={item} delay={i * 40} />
             </StaggerItem>
           ))}
         </Stagger>
@@ -248,7 +454,7 @@ function Insights() {
       </Section>
 
       {/* Ambient divider: take the thinking with you */}
-      <Section>
+      <Section tint>
         <Reveal>
           <AmbientBand
             image="/images/ambient/reading-report.jpg"
@@ -261,27 +467,61 @@ function Insights() {
         </Reveal>
       </Section>
 
-      {/* Resources and artifacts */}
+      {/* c) Whitepapers & Resources */}
       <Section>
-        <SectionHead eyebrow="Resources" title="Downloads, briefs, and sample deliverables." />
+        <SectionHead
+          eyebrow="Whitepapers and resources"
+          title="Whitepapers and business cases."
+          intro="The research and business cases behind PartnerPulse and BrokerPulse. Read the customer experience analytics and customer intelligence that inform each program."
+        />
+        <Stagger className="mt-12 grid gap-6 md:mt-14 md:grid-cols-2" stagger={0.08}>
+          {RESOURCES.map((item, i) => (
+            <StaggerItem key={item.title}>
+              <LinkCard item={item} icon="download" delay={i * 40} />
+            </StaggerItem>
+          ))}
+        </Stagger>
+      </Section>
+
+      {/* d) Case Studies */}
+      <Section tint>
+        <SectionHead
+          eyebrow="Case studies"
+          title="Customer stories and outcomes."
+          intro="Proof of customer retention and customer success in the channel, told through named accounts."
+        />
         <div className="mt-12 grid gap-6 md:mt-14 md:grid-cols-2">
-          <ResourceCard title="Sample deliverables" delay={0}>
-            See a readout before you commit. Sample deliverables, clearly labeled as samples, are
-            available on request.
-          </ResourceCard>
-          <ResourceCard title="Platform demo" tag="Video coming soon" delay={120}>
-            A 2 to 4 minute walkthrough.
-          </ResourceCard>
+          {CASE_STUDIES.map((cs, i) => (
+            <ComingSoonCard key={cs.title} title={cs.title} note={cs.note} delay={i * 80} />
+          ))}
         </div>
       </Section>
 
-      {/* Podcast */}
+      {/* e) Video / Media */}
+      <Section>
+        <SectionHead eyebrow="Video and media" title="Watch the thinking, not just read it." />
+        {featuredVideo && (
+          <div className="mt-12 md:mt-14">
+            <VideoCard title={featuredVideo.title} featured comingSoon={featuredVideo.comingSoon} />
+          </div>
+        )}
+        <Stagger className="mt-6 grid gap-6 md:grid-cols-3" stagger={0.08}>
+          {clipVideos.map((v, i) => (
+            <StaggerItem key={v.title}>
+              <VideoCard title={v.title} comingSoon={v.comingSoon} delay={i * 40} />
+            </StaggerItem>
+          ))}
+        </Stagger>
+      </Section>
+
+      {/* f) Brochures */}
       <Section tint>
-        <div className="flex flex-col gap-4">
-          <Reveal>
-            <StatusTag>Planned</StatusTag>
-          </Reveal>
-          <SectionHead eyebrow="Podcast" title="The Revenue Channel Intelligence conversation." />
+        <SectionHead eyebrow="Brochures" title="Overview brochures." />
+        <div className="mt-12 grid gap-6 md:mt-14 md:grid-cols-2">
+          <ComingSoonCard
+            title="Brochures"
+            note="Printable overviews of VistaXM and the Pulse programs."
+          />
         </div>
       </Section>
 

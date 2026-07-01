@@ -1,7 +1,7 @@
 import { type CSSProperties, type ReactNode, useEffect, useState } from "react";
 import { useReveal, useCountUp } from "@/hooks/use-reveal";
 import { FadeIn, Floaty, Parallax, Stagger, StaggerItem } from "@/components/motion";
-import { BOOK_A_CALL_URL, handleBookingClick } from "@/lib/links";
+import { BOOK_A_CALL_URL, handleBookingClick, type Brief } from "@/lib/links";
 
 /* ---------------- Primitives ---------------- */
 
@@ -714,7 +714,7 @@ const COL_R = NET_W - COL_L; // 492
 const COL_MID_L = 63;
 const COL_MID_R = NET_W - COL_MID_L; // 537
 const ROW_TOP = 170;
-const ROW_MID = HUB.y; // 300 — middle cards align with the hub
+const ROW_MID = HUB.y; // 300: middle cards align with the hub
 const ROW_BOT = HUB.y + (HUB.y - ROW_TOP); // 430
 // The problem statement sits at the top and feeds the decision hub.
 const PROBLEM = { x: HUB.x, y: 60 };
@@ -1836,6 +1836,89 @@ export function TeamSection() {
 
 /* ---------------- CTA Band ---------------- */
 
+/* ---------------- Get the brief ---------------- */
+
+function DownloadIcon({ className = "h-4 w-4" }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      className={className}
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.9"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden
+    >
+      <path d="M12 3v12m0 0l-4-4m4 4l4-4M5 21h14" />
+    </svg>
+  );
+}
+
+/**
+ * "Get the brief" block for the Pulse pages. Shows a download (or a disabled
+ * "Brief coming soon" placeholder), an optional "Learn more" whitepaper link,
+ * and the Book a 30-minute call CTA alongside it.
+ */
+export function GetTheBrief({ brief }: { brief: Brief }) {
+  return (
+    <FadeIn>
+      <div className="relative overflow-hidden rounded-2xl hairline bg-[color:var(--blue-tint)] p-8 md:p-10">
+        <div className="grid gap-8 lg:grid-cols-[1.1fr_.9fr] lg:items-center">
+          <div>
+            <div className="eyebrow mb-3 !text-[color:var(--blue-link)]">
+              <span className="h-1.5 w-1.5 rounded-full bg-[color:var(--orange-pop)]" />
+              Get the brief
+            </div>
+            <p className="max-w-[52ch] text-lg leading-relaxed text-[color:var(--navy-deep)]">
+              {brief.catchphrase}
+            </p>
+          </div>
+          <div className="flex flex-col gap-3 lg:items-end">
+            {brief.comingSoon || !brief.pdfHref ? (
+              <span
+                aria-disabled="true"
+                className="btn-secondary inline-flex cursor-not-allowed items-center gap-2 opacity-60"
+              >
+                <DownloadIcon />
+                Brief coming soon
+              </span>
+            ) : (
+              <a
+                href={brief.pdfHref}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-primary inline-flex items-center gap-2"
+              >
+                <DownloadIcon />
+                Download the brief (PDF)
+              </a>
+            )}
+            {brief.learnMore && (
+              <a
+                href={brief.learnMore.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-sm font-semibold text-[color:var(--blue-link)] transition-colors hover:text-[color:var(--blue-cta)]"
+              >
+                {brief.learnMore.label} &rarr;
+              </a>
+            )}
+            <CTAButton
+              to={BOOK_A_CALL_URL}
+              className="btn-secondary inline-flex items-center gap-2"
+            >
+              {brief.comingSoon ? "Talk to us about an early pilot" : "Book a 30-minute call"}
+            </CTAButton>
+          </div>
+        </div>
+      </div>
+    </FadeIn>
+  );
+}
+
+/* ---------------- CTA band ---------------- */
+
 export function CTABand() {
   return (
     <section className="relative bg-[color:var(--navy-deep)] text-white grain overflow-hidden">
@@ -1955,42 +2038,33 @@ export function ProvenResults() {
 
 /* ---------------- Journey × Persona Matrix ---------------- */
 
-const STAGES = [
-  "Sales",
-  "Procurement & Onboarding",
-  "Implementation",
-  "Support & Operations",
-  "Renewal & Expansion",
-] as const;
-const PERSONAS = [
-  "Executive / Decision Maker",
-  "Technical",
-  "Procurement / Commercial",
-  "Operations / Day-to-Day User",
-] as const;
-
 type CellStatus = "red" | "yellow" | "green" | "neutral";
 
+type HeatCell = { title: string; status: CellStatus; desc?: string };
+
+// Status color tokens. Fills are low-alpha tints of the confirmed hexes so the
+// navy cell text stays legible; the border and dot carry the full-strength
+// color. Green #5fcf9e, yellow #e6c34d, red #f0807f.
 const STATUS_STYLES: Record<
   CellStatus,
   { bg: string; border: string; dot: string; label: string }
 > = {
   red: {
-    bg: "rgba(220,38,38,0.10)",
-    border: "rgba(220,38,38,0.45)",
-    dot: "#dc2626",
+    bg: "rgba(240,128,127,0.16)",
+    border: "rgba(240,128,127,0.6)",
+    dot: "#f0807f",
     label: "At risk",
   },
   yellow: {
-    bg: "rgba(234,179,8,0.14)",
-    border: "rgba(202,138,4,0.5)",
-    dot: "#ca8a04",
+    bg: "rgba(230,195,77,0.18)",
+    border: "rgba(230,195,77,0.65)",
+    dot: "#e6c34d",
     label: "Watch",
   },
   green: {
-    bg: "rgba(22,163,74,0.10)",
-    border: "rgba(22,163,74,0.45)",
-    dot: "#16a34a",
+    bg: "rgba(95,207,158,0.18)",
+    border: "rgba(95,207,158,0.6)",
+    dot: "#5fcf9e",
     label: "Healthy",
   },
   neutral: {
@@ -2001,26 +2075,68 @@ const STATUS_STYLES: Record<
   },
 };
 
-// Per-cell status and the short text shown on hover/focus. Default: every cell
-// is neutral with a clearly marked placeholder note. The client will supply the
-// real Red/Yellow/Green status and the per-cell copy for each
-// persona x stage intersection.
-const CELLS: { status: CellStatus; note: string }[][] = PERSONAS.map(() =>
-  STAGES.map(() => ({
-    status: "neutral" as CellStatus,
-    note: "Placeholder: short status note to come.",
-  })),
-);
+// Single source of truth for the Journey x Persona heat map. Swap the cell
+// `title`, `status`, and optional `desc` here when VistaXM finalizes them.
+// IMPORTANT: colors and hover text below are ILLUSTRATIVE placeholders; the
+// status colors and one-line signal descriptions are to be confirmed by
+// VistaXM. A cell with no `desc` falls back to a clearly-marked placeholder.
+const HEATMAP: {
+  stages: readonly string[];
+  personas: readonly string[];
+  cells: HeatCell[][];
+} = {
+  stages: ["Sales", "Purchase", "Onboard", "Support", "Renew"],
+  personas: ["Executive / Economic Buyer", "Procurement", "Technical", "Day-to-Day User"],
+  cells: [
+    // Executive / Economic Buyer
+    [
+      { title: "Business-Case Conviction", status: "green" },
+      { title: "Investment Confidence", status: "green" },
+      { title: "Time-to-Value Tracking", status: "yellow" },
+      { title: "Outcome Realization", status: "green" },
+      { title: "Re-Investment Conviction", status: "yellow" },
+    ],
+    // Procurement
+    [
+      { title: "Evaluation Rigor", status: "green" },
+      { title: "Terms Friction", status: "yellow" },
+      { title: "Activation Governance", status: "yellow" },
+      { title: "Vendor Accountability", status: "green" },
+      { title: "Renewal Posture", status: "red" },
+    ],
+    // Technical
+    [
+      { title: "Solution-Fit Confidence", status: "green" },
+      { title: "Diligence Gates", status: "green" },
+      { title: "Implementation Health", status: "yellow" },
+      { title: "Resolution Effectiveness", status: "yellow" },
+      { title: "Stickiness vs. Fragility", status: "red" },
+    ],
+    // Day-to-Day User
+    [
+      { title: "Adoption Foresight", status: "yellow" },
+      { title: "Voice-of-User Gap", status: "red" },
+      { title: "First-Use Experience", status: "green" },
+      { title: "Daily Friction Signal", status: "red" },
+      { title: "Loyalty & Adoption Depth", status: "yellow" },
+    ],
+  ],
+};
+
+// One-line hover copy for a cell: use the confirmed `desc` when present,
+// otherwise a clearly-labeled placeholder VistaXM can replace.
+const cellDesc = (c: HeatCell) =>
+  c.desc ?? `${c.title}: signal placeholder; VistaXM to supply final text.`;
 
 const LEGEND: { status: CellStatus; meaning: string }[] = [
   { status: "green", meaning: "Healthy" },
   { status: "yellow", meaning: "Watch" },
   { status: "red", meaning: "At risk" },
-  { status: "neutral", meaning: "Not yet scored" },
 ];
 
 export function JourneyMatrix() {
   const { ref, shown } = useReveal(0.2);
+  const { stages, personas, cells } = HEATMAP;
   return (
     <div ref={ref}>
       <div className="rounded-2xl hairline bg-white p-3 md:p-5 shadow-[var(--shadow-elevation-2)]">
@@ -2036,17 +2152,18 @@ export function JourneyMatrix() {
           </div>
           <span className="pill-light">Journey × Persona</span>
         </div>
+        {/* Narrow screens scroll horizontally rather than squashing the grid. */}
         <div className="overflow-x-auto">
-          <div className="min-w-[760px]">
-            {/* Header row */}
+          <div className="min-w-[880px]">
+            {/* Header row: stage labels across the top */}
             <div
               className="grid"
-              style={{ gridTemplateColumns: `220px repeat(${STAGES.length}, 1fr)` }}
+              style={{ gridTemplateColumns: `220px repeat(${stages.length}, 1fr)` }}
             >
               <div className="px-3 py-3 text-[0.7rem] uppercase tracking-[0.12em] text-[color:var(--ink-soft)]">
                 Persona ↓ / Stage →
               </div>
-              {STAGES.map((s, idx) => (
+              {stages.map((s, idx) => (
                 <div
                   key={s}
                   className="px-3 py-3 text-xs font-semibold text-[color:var(--navy-deep)] border-l border-[color:var(--hairline)]"
@@ -2057,51 +2174,77 @@ export function JourneyMatrix() {
               ))}
             </div>
 
-            {/* Body rows */}
-            {PERSONAS.map((p, i) => (
+            {/* Body rows: persona label down the left, one cell per stage */}
+            {personas.map((p, i) => (
               <div
                 key={p}
                 className="grid border-t border-[color:var(--hairline)]"
-                style={{ gridTemplateColumns: `220px repeat(${STAGES.length}, 1fr)` }}
+                style={{ gridTemplateColumns: `220px repeat(${stages.length}, 1fr)` }}
               >
                 <div className="px-3 py-4 text-sm font-semibold text-[color:var(--navy-deep)] flex items-center">
                   {p}
                 </div>
-                {STAGES.map((s, j) => {
-                  const cell = CELLS[i][j];
+                {stages.map((s, j) => {
+                  const cell = cells[i][j];
                   const st = STATUS_STYLES[cell.status];
-                  const delay = (i * STAGES.length + j) * 40;
+                  const note = cellDesc(cell);
+                  const delay = (i * stages.length + j) * 40;
                   return (
-                    <div key={s} className="px-2 py-3 border-l border-[color:var(--hairline)]">
-                      <div className="group/cell relative">
+                    <div
+                      key={s}
+                      className="group/flip px-2 py-3 border-l border-[color:var(--hairline)]"
+                    >
+                      {/* Flip card: front shows the title, back reveals the
+                          signal note on hover/focus. Hovering anywhere in the
+                          cell flips it. No overlay above the grid. */}
+                      <div
+                        className="rounded-lg [perspective:900px] focus-within:ring-2 focus-within:ring-[color:var(--blue-cta)] focus-within:ring-offset-1"
+                        style={{
+                          opacity: shown ? 1 : 0,
+                          transition: `opacity 500ms ease ${delay}ms`,
+                        }}
+                      >
                         <button
                           type="button"
-                          aria-label={`${p} at ${s}: ${st.label}. ${cell.note}`}
-                          className="flex h-11 w-full items-center justify-center gap-1.5 rounded-lg text-[0.7rem] font-semibold text-[color:var(--navy-deep)] transition-all duration-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--blue-cta)] focus-visible:ring-offset-1"
-                          style={{
-                            background: st.bg,
-                            boxShadow: `inset 0 0 0 1px ${st.border}`,
-                            opacity: shown ? 1 : 0,
-                            transform: shown ? "scale(1)" : "scale(0.92)",
-                            transitionDelay: `${delay}ms`,
-                          }}
+                          aria-label={`${p} at ${s}: ${cell.title}. Status: ${st.label}. ${note}`}
+                          className="relative block h-[5.75rem] w-full rounded-lg text-left transition-transform duration-500 [transform-style:preserve-3d] group-hover/flip:[transform:rotateY(180deg)] focus:[transform:rotateY(180deg)] focus:outline-none motion-reduce:transition-none"
                         >
+                          {/* Front */}
                           <span
-                            aria-hidden
-                            className="h-2 w-2 flex-none rounded-full"
-                            style={{ background: st.dot }}
-                          />
-                          {st.label}
-                        </button>
-                        <div
-                          role="tooltip"
-                          className="pointer-events-none invisible absolute bottom-full left-1/2 z-20 mb-2 w-44 -translate-x-1/2 rounded-lg bg-[color:var(--navy-deep)] px-3 py-2 text-[0.7rem] font-medium leading-snug text-white opacity-0 shadow-[var(--shadow-elevation-3)] transition-all duration-150 group-hover/cell:visible group-hover/cell:opacity-100 group-focus-within/cell:visible group-focus-within/cell:opacity-100"
-                        >
-                          <span className="mb-1 block font-semibold text-[color:var(--blue-light)]">
-                            {p} × {s}
+                            className="absolute inset-0 flex items-start gap-1.5 overflow-hidden rounded-lg px-2.5 py-2 text-[0.72rem] font-semibold leading-tight text-[color:var(--navy-deep)] [backface-visibility:hidden]"
+                            style={{
+                              background: st.bg,
+                              boxShadow: `inset 0 0 0 1px ${st.border}`,
+                            }}
+                          >
+                            <span
+                              aria-hidden
+                              className="mt-0.5 h-2 w-2 flex-none rounded-full"
+                              style={{ background: st.dot }}
+                            />
+                            <span className="min-w-0">{cell.title}</span>
                           </span>
-                          {cell.note}
-                        </div>
+                          {/* Back */}
+                          <span
+                            className="absolute inset-0 flex flex-col justify-center gap-1 overflow-hidden rounded-lg px-2.5 py-2 text-left [backface-visibility:hidden] [transform:rotateY(180deg)]"
+                            style={{
+                              background: st.bg,
+                              boxShadow: `inset 0 0 0 1px ${st.border}`,
+                            }}
+                          >
+                            <span className="flex items-center gap-1.5 text-[0.64rem] font-semibold leading-snug text-[color:var(--navy-deep)]">
+                              <span
+                                aria-hidden
+                                className="h-1.5 w-1.5 flex-none rounded-full"
+                                style={{ background: st.dot }}
+                              />
+                              {cell.title}
+                            </span>
+                            <span className="text-[0.58rem] font-medium leading-snug text-[color:var(--ink-soft)]">
+                              {note}
+                            </span>
+                          </span>
+                        </button>
                       </div>
                     </div>
                   );
@@ -2112,7 +2255,7 @@ export function JourneyMatrix() {
         </div>
       </div>
 
-      {/* Legend: Red / Yellow / Green status (cells default to neutral until scored) */}
+      {/* Legend: green Healthy, yellow Watch, red At risk */}
       <div className="mt-5 flex flex-wrap items-center gap-5 text-xs text-[color:var(--ink-soft)]">
         {LEGEND.map((item) => (
           <div key={item.status} className="flex items-center gap-2">
@@ -2126,10 +2269,13 @@ export function JourneyMatrix() {
             {item.meaning}
           </div>
         ))}
-        <span className="italic text-[color:var(--ink-soft)]/80">
-          Hover or focus a cell for detail. Status and notes to be supplied.
-        </span>
       </div>
+
+      {/* Illustrative-data caption */}
+      <p className="mt-3 text-xs italic text-[color:var(--ink-soft)]/80">
+        Illustrative colors and hover text: final signal language and status to be confirmed by
+        VistaXM. Hover or focus any cell for detail.
+      </p>
     </div>
   );
 }
@@ -2274,7 +2420,7 @@ export function ScoreVsDecision() {
         <div className="rounded-2xl hairline bg-white p-8 h-full relative overflow-hidden">
           <div className="pill-light">Before</div>
           <div className="mt-5 text-2xl md:text-3xl font-semibold text-[color:var(--navy-deep)] leading-tight">
-            A score. Not a decision.
+            A score, and nowhere to go.
           </div>
           <div className="mt-8 flex items-end gap-5">
             <div className="text-[5.5rem] leading-none font-semibold text-[color:var(--ink)] tabular-nums">
@@ -2311,7 +2457,7 @@ export function ScoreVsDecision() {
             After
           </div>
           <div className="mt-5 text-2xl md:text-3xl font-semibold !text-white leading-tight">
-            A revenue decision. Not a score.
+            A revenue decision, with the next move attached.
           </div>
           <ul className="mt-8 space-y-3 text-sm">
             {[

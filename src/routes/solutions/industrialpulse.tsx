@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { BOOK_A_CALL_URL, handleBookingClick } from "@/lib/links";
+import { BOOK_A_CALL_URL, BRIEFS, handleBookingClick } from "@/lib/links";
 import { type ReactNode } from "react";
-import { PageHero, Reveal, Section, SectionHead } from "@/components/site";
+import { GetTheBrief, PageHero, Reveal, Section, SectionHead } from "@/components/site";
 import { AmbientBand } from "@/components/media";
 import { FadeIn, Stagger, StaggerItem } from "@/components/motion";
 
@@ -12,7 +12,7 @@ export const Route = createFileRoute("/solutions/industrialpulse")({
       {
         name: "description",
         content:
-          "Revenue Channel Intelligence for industrial OEMs and distributors: the same neutral, benchmarked read on the channel, built for industrial manufacturers who sell through partners.",
+          "Revenue Channel Intelligence for industrial OEMs and distributors: customer experience analytics and customer intelligence for the industrial channel, built for manufacturers who sell through partners.",
       },
       { property: "og:title", content: "IndustrialPulse (Coming soon) | VistaXM" },
       {
@@ -144,6 +144,11 @@ function IndustrialPulse() {
             Where revenue runs through distributors, the end-customer experience lives with them.
           </AmbientBand>
         </Reveal>
+      </Section>
+
+      {/* Get the brief (coming soon; capture-interest CTA) */}
+      <Section>
+        <GetTheBrief brief={BRIEFS.industrialpulse} />
       </Section>
 
       {/* Early-pilot closing band */}

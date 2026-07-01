@@ -1,7 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { BOOK_A_CALL_URL } from "@/lib/links";
+import { BOOK_A_CALL_URL, BRIEFS } from "@/lib/links";
 import {
   CTABand,
+  GetTheBrief,
   InfluencerGapCard,
   PageHero,
   Reveal,
@@ -18,7 +19,7 @@ export const Route = createFileRoute("/solutions/brokerpulse")({
       {
         name: "description",
         content:
-          "BrokerPulse is broker experience management for insurance carriers: a neutral, benchmarked read on broker and agency experience, tied to premium retention and expansion.",
+          "BrokerPulse is broker experience management for insurance carriers: customer experience analytics and customer intelligence on broker and agency experience, tied to premium retention and customer retention.",
       },
       { property: "og:title", content: "BrokerPulse | VistaXM" },
       {
@@ -170,6 +171,11 @@ function BrokerPulse() {
             </figcaption>
           </figure>
         </FadeIn>
+      </Section>
+
+      {/* Get the brief */}
+      <Section tint>
+        <GetTheBrief brief={BRIEFS.brokerpulse} />
       </Section>
 
       <CTABand />

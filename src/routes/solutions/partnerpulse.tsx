@@ -1,6 +1,15 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { BOOK_A_CALL_URL } from "@/lib/links";
-import { CTABand, Card, NPSGauge, PageHero, Reveal, Section, SectionHead } from "@/components/site";
+import { BOOK_A_CALL_URL, BRIEFS } from "@/lib/links";
+import {
+  CTABand,
+  Card,
+  GetTheBrief,
+  NPSGauge,
+  PageHero,
+  Reveal,
+  Section,
+  SectionHead,
+} from "@/components/site";
 import { AmbientBand } from "@/components/media";
 import { FadeIn, Stagger, StaggerItem } from "@/components/motion";
 
@@ -11,7 +20,7 @@ export const Route = createFileRoute("/solutions/partnerpulse")({
       {
         name: "description",
         content:
-          "A neutral, benchmarked read on partner conviction and delivery: how your partners actually perform, and whether they are convinced enough to recommend you when it counts.",
+          "A neutral, benchmarked read on partner conviction and delivery: customer experience management and Net Promoter Score (NPS) for the channel, tied to customer retention. How your partners actually perform, and whether they are convinced enough to recommend you when it counts.",
       },
       { property: "og:title", content: "PartnerPulse | VistaXM" },
       {
@@ -187,23 +196,7 @@ function PartnerPulse() {
         primary={{ label: "Book a 30-minute call", to: BOOK_A_CALL_URL }}
       />
 
-      {/* What it measures */}
-      <Section dark>
-        <div className="grid items-center gap-12 lg:grid-cols-[1.05fr_.95fr] lg:gap-16">
-          <div>
-            <SectionHead
-              dark
-              eyebrow="What it measures"
-              title="Conviction, not just certification."
-              intro="Certification proves a partner can sell you. Conviction tells you whether they will. PartnerPulse measures the belief behind the badge, organization by organization, and benchmarks it across your channel."
-            />
-            <MeasureList />
-          </div>
-          <ConvictionGauge />
-        </div>
-      </Section>
-
-      {/* Two tracks */}
+      {/* Two tracks (sits between the hero and What it measures) */}
       <Section tint>
         <SectionHead
           eyebrow="Two tracks"
@@ -219,6 +212,22 @@ function PartnerPulse() {
             Run a world-class experience program on your own customers, fully managed, and turn the
             signal into revenue moves.
           </Card>
+        </div>
+      </Section>
+
+      {/* What it measures */}
+      <Section dark>
+        <div className="grid items-center gap-12 lg:grid-cols-[1.05fr_.95fr] lg:gap-16">
+          <div>
+            <SectionHead
+              dark
+              eyebrow="What it measures"
+              title="Conviction, not just certification."
+              intro="Certification proves a partner can sell you. Conviction tells you whether they will. PartnerPulse measures the belief behind the badge, organization by organization, and benchmarks it across your channel."
+            />
+            <MeasureList />
+          </div>
+          <ConvictionGauge />
         </div>
       </Section>
 
@@ -265,6 +274,11 @@ function PartnerPulse() {
             </figcaption>
           </figure>
         </FadeIn>
+      </Section>
+
+      {/* Get the brief */}
+      <Section>
+        <GetTheBrief brief={BRIEFS.partnerpulse} />
       </Section>
 
       <CTABand />
