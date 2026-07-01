@@ -1,6 +1,6 @@
 import { type ReactNode } from "react";
 import { createFileRoute } from "@tanstack/react-router";
-import { BOOK_A_CALL_URL } from "@/lib/links";
+import { BOOK_A_CALL_URL, handleBookingClick } from "@/lib/links";
 import { CTABand, Section, SectionHead, PageHero } from "@/components/site";
 import { FadeIn, Stagger, StaggerItem } from "@/components/motion";
 
@@ -131,6 +131,7 @@ function HowToStart() {
                   href={BOOK_A_CALL_URL}
                   target="_blank"
                   rel="noopener noreferrer"
+                  onClick={handleBookingClick}
                   className="btn-primary"
                 >
                   Start with Essentials
@@ -184,6 +185,7 @@ function HowToStart() {
                     href={BOOK_A_CALL_URL}
                     target="_blank"
                     rel="noopener noreferrer"
+                    onClick={handleBookingClick}
                     className="btn-primary"
                   >
                     Scope the program
@@ -226,11 +228,23 @@ function HowToStart() {
 
       {/* Why managed */}
       <Section>
-        <SectionHead
-          eyebrow="Why managed"
-          title="Managed, neutral, light lift."
-          intro="We bring the playbooks, the data scientists, and the technology. Your team stays focused on the customer. Better, faster, and lighter than building it yourself."
-        />
+        <div className="grid gap-12 lg:grid-cols-2 lg:items-center lg:gap-16">
+          <SectionHead
+            eyebrow="Why managed"
+            title="Managed, neutral, light lift."
+            intro="We bring the playbooks, the data scientists, and the technology. Your team stays focused on the customer. Better, faster, and lighter than building it yourself."
+          />
+          <FadeIn delay={120}>
+            <div className="img-editorial-soft img-frame aspect-[4/3] w-full">
+              <img
+                src="/images/ambient/operator-charts.jpg"
+                alt="An analyst working through charts at a workstation"
+                loading="lazy"
+                className="h-full w-full object-cover"
+              />
+            </div>
+          </FadeIn>
+        </div>
       </Section>
 
       <CTABand />

@@ -2,6 +2,7 @@ import { type ReactNode } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { BOOK_A_CALL_URL } from "@/lib/links";
 import { CTABand, Card, PageHero, Reveal, Section, SectionHead } from "@/components/site";
+import { AmbientBand } from "@/components/media";
 import { FadeIn, Stagger, StaggerItem } from "@/components/motion";
 
 export const Route = createFileRoute("/insights")({
@@ -243,6 +244,20 @@ function Insights() {
           <p className="mt-8 text-sm italic text-[color:var(--ink-soft)]">
             Selected articles migrated from the current site; new pieces added on a regular cadence.
           </p>
+        </Reveal>
+      </Section>
+
+      {/* Ambient divider: take the thinking with you */}
+      <Section>
+        <Reveal>
+          <AmbientBand
+            image="/images/ambient/reading-report.jpg"
+            alt="Reading a long-form analytical report on a laptop"
+            eyebrow="Take it with you"
+            title="Thinking you can actually use."
+          >
+            Written to be read, cited, and put to work, not gated behind a form.
+          </AmbientBand>
         </Reveal>
       </Section>
 

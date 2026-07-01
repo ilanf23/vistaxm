@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { BOOK_A_CALL_URL } from "@/lib/links";
-import { CTABand, Card, NPSGauge, PageHero, Section, SectionHead } from "@/components/site";
+import { CTABand, Card, NPSGauge, PageHero, Reveal, Section, SectionHead } from "@/components/site";
+import { AmbientBand } from "@/components/media";
 import { FadeIn, Stagger, StaggerItem } from "@/components/motion";
 
 export const Route = createFileRoute("/solutions/partnerpulse")({
@@ -219,6 +220,20 @@ function PartnerPulse() {
             signal into revenue moves.
           </Card>
         </div>
+      </Section>
+
+      {/* Ambient divider: the partner relationship */}
+      <Section>
+        <Reveal>
+          <AmbientBand
+            image="/images/ambient/partner-collaboration.jpg"
+            alt="A modern boardroom set for a channel partner meeting"
+            eyebrow="The partner relationship"
+            title="From partner conviction to your next move."
+          >
+            The belief behind the badge, read across your channel and turned into a decision.
+          </AmbientBand>
+        </Reveal>
       </Section>
 
       {/* What it informs */}

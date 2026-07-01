@@ -1,7 +1,7 @@
-import { type CSSProperties, type ReactNode } from "react";
+import { type CSSProperties, type ReactNode, useEffect, useState } from "react";
 import { useReveal, useCountUp } from "@/hooks/use-reveal";
 import { FadeIn, Floaty, Parallax, Stagger, StaggerItem } from "@/components/motion";
-import { BOOK_A_CALL_URL } from "@/lib/links";
+import { BOOK_A_CALL_URL, handleBookingClick } from "@/lib/links";
 
 /* ---------------- Primitives ---------------- */
 
@@ -15,11 +15,13 @@ export function CTAButton({
   children: ReactNode;
 }) {
   const newTab = to.startsWith("http");
+  const isBooking = to === BOOK_A_CALL_URL;
   return (
     <a
       href={to}
       className={className}
       {...(newTab ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+      {...(isBooking ? { onClick: handleBookingClick } : {})}
     >
       {children}
     </a>
@@ -823,6 +825,25 @@ const NET_CARDS: NetCard[] = [
 
 const ACTION = { x: HUB.x, y: 566 };
 
+/* ---- Orchestrated entrance timeline (seconds) ----
+   One-time, chronological reveal: the problem box appears, a dot flies down
+   into the hub, then the hub radiates a signal out to each box in turn and the
+   box only pops when its signal arrives. The action card is strictly last. */
+const POP = 0.45; // box / hub entrance duration
+const P2H_START = 0.35; // problem -> hub dot launch
+const P2H_TRAVEL = 0.45; // problem -> hub dot travel
+const HUB_REVEAL = P2H_START + P2H_TRAVEL; // hub pops when the dot arrives (~0.8s)
+const LINE = 0.35; // hub -> box connector draw + dot travel
+const STAGGER = 0.45; // gap between consecutive spokes
+const CARD_BASE = 1.25; // first spoke's line/dot launch
+const ACTION_BEAT = 0.15; // extra pause before the finale
+const ENTRANCE_MS = 5000; // when the ambient loops take over
+
+// Spoke i in 0..6 (6 == ACTION). When its connector/dot launches from the hub.
+const spokeStart = (i: number) => CARD_BASE + i * STAGGER + (i === 6 ? ACTION_BEAT : 0);
+// When the box pops: the moment its signal arrives.
+const cardReveal = (i: number) => spokeStart(i) + LINE;
+
 // design unit -> scaled length (640 design units == container inline width)
 const u = (n: number) => `calc(${n} * var(--net-u))`;
 
@@ -961,7 +982,7 @@ function MiniChart({ kind, accent }: { kind: ChartKind; accent: Accent }) {
   );
 }
 
-function NetMetricCard({ card, delay }: { card: NetCard; delay: number }) {
+function NetMetricCard({ card, delay, shown }: { card: NetCard; delay: number; shown: boolean }) {
   const c = ACCENTS[card.accent];
   return (
     <div
@@ -973,6 +994,9 @@ function NetMetricCard({ card, delay }: { card: NetCard; delay: number }) {
         // Center on the anchor point. The float animation lives on the inner
         // element so its transform does not clobber this centering.
         transform: "translate(-50%, -50%)",
+        // Entrance: stay hidden until the hub's signal reaches this box.
+        opacity: shown ? undefined : 0,
+        animation: shown ? `net-pop ${POP}s ${delay}s both` : undefined,
       }}
     >
       <div
@@ -1030,7 +1054,7 @@ function NetMetricCard({ card, delay }: { card: NetCard; delay: number }) {
 /* The problem statement at the top of the network: an orange-accented "issue"
    box that feeds the decision hub below it. Outer div centers on the anchor;
    inner div carries the float so its transform does not clobber centering. */
-function ProblemBox() {
+function ProblemBox({ shown, delay }: { shown: boolean; delay: number }) {
   return (
     <div
       className="absolute"
@@ -1039,6 +1063,9 @@ function ProblemBox() {
         top: u(PROBLEM.y),
         width: u(258),
         transform: "translate(-50%, -50%)",
+        // Entrance: the problem is the first thing to appear.
+        opacity: shown ? undefined : 0,
+        animation: shown ? `net-pop ${POP}s ${delay}s both` : undefined,
       }}
     >
       <div
@@ -1128,7 +1155,7 @@ function NextMoveArrow() {
   );
 }
 
-function NetActionCard() {
+function NetActionCard({ shown, delay }: { shown: boolean; delay: number }) {
   return (
     <div
       className="absolute"
@@ -1137,6 +1164,9 @@ function NetActionCard() {
         top: u(ACTION.y),
         width: u(200),
         transform: "translate(-50%, -50%)",
+        // Entrance: the "next best move" is the finale, revealed last.
+        opacity: shown ? undefined : 0,
+        animation: shown ? `net-pop ${POP}s ${delay}s both` : undefined,
       }}
     >
       <div
@@ -1174,8 +1204,10 @@ function NetActionCard() {
             58 days to renewal
           </span>
         </div>
-        <button
-          type="button"
+        <a
+          href={BOOK_A_CALL_URL}
+          target="_blank"
+          rel="noopener noreferrer"
           className="flex items-center justify-center font-semibold text-white transition-[transform,box-shadow] hover:brightness-110 active:scale-[0.98]"
           style={{
             marginTop: u(13),
@@ -1188,7 +1220,7 @@ function NetActionCard() {
           }}
         >
           Take action
-        </button>
+        </a>
       </div>
     </div>
   );
@@ -1197,6 +1229,21 @@ function NetActionCard() {
 export function RevenueDecisionNetwork() {
   const { ref, shown } = useReveal(0.1);
   const targets = [...NET_CARDS.map((c) => ({ x: c.x, y: c.y })), ACTION];
+
+  // Once the entrance has played, hand off to the ambient (looping) signals.
+  const [entered, setEntered] = useState(false);
+  useEffect(() => {
+    if (!shown) return;
+    if (
+      typeof window !== "undefined" &&
+      window.matchMedia?.("(prefers-reduced-motion: reduce)").matches
+    ) {
+      setEntered(true);
+      return;
+    }
+    const t = setTimeout(() => setEntered(true), ENTRANCE_MS);
+    return () => clearTimeout(t);
+  }, [shown]);
 
   return (
     <div
@@ -1279,7 +1326,8 @@ export function RevenueDecisionNetwork() {
           strokeDasharray="2 7"
         />
 
-        {/* Connector lines from hub to each card */}
+        {/* Connector lines from hub to each card. Each draws outward from the
+            hub so the line reaches the box exactly as the box pops in. */}
         {targets.map((t, i) => (
           <line
             key={i}
@@ -1289,6 +1337,14 @@ export function RevenueDecisionNetwork() {
             y2={t.y}
             stroke={`url(#conn-${i})`}
             strokeWidth="1.4"
+            pathLength={100}
+            style={{
+              strokeDasharray: 100,
+              strokeDashoffset: 100,
+              animation: shown
+                ? `draw-line ${LINE}s ${spokeStart(i)}s ease-out forwards`
+                : undefined,
+            }}
           />
         ))}
 
@@ -1300,6 +1356,14 @@ export function RevenueDecisionNetwork() {
           y2={HUB.y}
           stroke="url(#conn-problem)"
           strokeWidth="1.6"
+          pathLength={100}
+          style={{
+            strokeDasharray: 100,
+            strokeDashoffset: 100,
+            animation: shown
+              ? `draw-line ${P2H_TRAVEL}s ${P2H_START}s ease-out forwards`
+              : undefined,
+          }}
         />
 
         {/* Anchor dots on the hub ring at each connector angle.
@@ -1314,7 +1378,11 @@ export function RevenueDecisionNetwork() {
               cy={Math.round((HUB.y + Math.sin(ang) * rr) * 100) / 100}
               r="3"
               fill="#9cc4ff"
-              style={{ filter: "drop-shadow(0 0 4px rgba(103,166,255,0.9))" }}
+              style={{
+                filter: "drop-shadow(0 0 4px rgba(103,166,255,0.9))",
+                opacity: shown ? undefined : 0,
+                animation: shown ? `net-fade 0.3s ${spokeStart(i)}s both` : undefined,
+              }}
             />
           );
         })}
@@ -1324,52 +1392,109 @@ export function RevenueDecisionNetwork() {
           cy={HUB.y - 76}
           r="3"
           fill="#f9a26a"
-          style={{ filter: "drop-shadow(0 0 4px rgba(246,130,65,0.9))" }}
+          style={{
+            filter: "drop-shadow(0 0 4px rgba(246,130,65,0.9))",
+            opacity: shown ? undefined : 0,
+            animation: shown ? `net-fade 0.3s ${HUB_REVEAL}s both` : undefined,
+          }}
         />
       </svg>
 
-      {/* Travelling signal pulses (hub -> card), scaled vectors via CSS vars */}
-      {targets.map((t, i) => (
-        <span
-          key={`p${i}`}
-          className="absolute rounded-full"
-          aria-hidden
-          style={{
-            left: u(HUB.x),
-            top: u(HUB.y),
-            width: u(6),
-            height: u(6),
-            marginLeft: u(-3),
-            marginTop: u(-3),
-            background: "#bcdcff",
-            boxShadow: "0 0 8px 2px rgba(120,170,255,0.8)",
-            ["--dx" as string]: u(t.x - HUB.x),
-            ["--dy" as string]: u(t.y - HUB.y),
-            animation: `signal-travel ${3.4 + (i % 3) * 0.5}s ${i * 0.55}s ease-in-out infinite`,
-          }}
-        />
-      ))}
+      {/* Entrance (one-shot): a dot flies from the problem down into the hub,
+          then the hub fires a dot out to each box, landing as the box pops. */}
+      {!entered && (
+        <>
+          <span
+            className="absolute rounded-full"
+            aria-hidden
+            style={{
+              left: u(PROBLEM.x),
+              top: u(PROBLEM.y),
+              width: u(6),
+              height: u(6),
+              marginLeft: u(-3),
+              marginTop: u(-3),
+              background: "#ffd2b5",
+              boxShadow: "0 0 8px 2px rgba(246,130,65,0.8)",
+              opacity: 0,
+              ["--dx" as string]: u(0),
+              ["--dy" as string]: u(HUB.y - PROBLEM.y),
+              animation: shown
+                ? `signal-travel ${P2H_TRAVEL}s ${P2H_START}s ease-out 1 both`
+                : undefined,
+            }}
+          />
+          {targets.map((t, i) => (
+            <span
+              key={`ed${i}`}
+              className="absolute rounded-full"
+              aria-hidden
+              style={{
+                left: u(HUB.x),
+                top: u(HUB.y),
+                width: u(6),
+                height: u(6),
+                marginLeft: u(-3),
+                marginTop: u(-3),
+                background: "#bcdcff",
+                boxShadow: "0 0 8px 2px rgba(120,170,255,0.8)",
+                opacity: 0,
+                ["--dx" as string]: u(t.x - HUB.x),
+                ["--dy" as string]: u(t.y - HUB.y),
+                animation: shown
+                  ? `signal-travel ${LINE}s ${spokeStart(i)}s ease-out 1 both`
+                  : undefined,
+              }}
+            />
+          ))}
+        </>
+      )}
 
-      {/* Pulse travelling down from the problem into the hub (problem feeds engine) */}
-      <span
-        className="absolute rounded-full"
-        aria-hidden
-        style={{
-          left: u(PROBLEM.x),
-          top: u(PROBLEM.y),
-          width: u(6),
-          height: u(6),
-          marginLeft: u(-3),
-          marginTop: u(-3),
-          background: "#ffd2b5",
-          boxShadow: "0 0 8px 2px rgba(246,130,65,0.8)",
-          ["--dx" as string]: u(0),
-          ["--dy" as string]: u(HUB.y - PROBLEM.y),
-          animation: "signal-travel 3s 0.3s ease-in-out infinite",
-        }}
-      />
+      {/* Ambient (looping) signal pulses, once the entrance has finished. */}
+      {entered && (
+        <>
+          {targets.map((t, i) => (
+            <span
+              key={`p${i}`}
+              className="absolute rounded-full"
+              aria-hidden
+              style={{
+                left: u(HUB.x),
+                top: u(HUB.y),
+                width: u(6),
+                height: u(6),
+                marginLeft: u(-3),
+                marginTop: u(-3),
+                background: "#bcdcff",
+                boxShadow: "0 0 8px 2px rgba(120,170,255,0.8)",
+                ["--dx" as string]: u(t.x - HUB.x),
+                ["--dy" as string]: u(t.y - HUB.y),
+                animation: `signal-travel ${3.4 + (i % 3) * 0.5}s ${i * 0.55}s ease-in-out infinite`,
+              }}
+            />
+          ))}
+          <span
+            className="absolute rounded-full"
+            aria-hidden
+            style={{
+              left: u(PROBLEM.x),
+              top: u(PROBLEM.y),
+              width: u(6),
+              height: u(6),
+              marginLeft: u(-3),
+              marginTop: u(-3),
+              background: "#ffd2b5",
+              boxShadow: "0 0 8px 2px rgba(246,130,65,0.8)",
+              ["--dx" as string]: u(0),
+              ["--dy" as string]: u(HUB.y - PROBLEM.y),
+              animation: "signal-travel 3s 0.3s ease-in-out infinite",
+            }}
+          />
+        </>
+      )}
 
-      {/* Central hub */}
+      {/* Central hub. Gated as one unit so its radar rings and glow (children)
+          do not emit before the problem's dot has reached the hub. */}
       <div
         className="absolute"
         style={{
@@ -1378,6 +1503,8 @@ export function RevenueDecisionNetwork() {
           width: u(150),
           height: u(150),
           transform: "translate(-50%, -50%)",
+          opacity: shown ? undefined : 0,
+          animation: shown ? `net-pop ${POP}s ${HUB_REVEAL}s both` : undefined,
         }}
       >
         {/* expanding signal rings */}
@@ -1441,16 +1568,16 @@ export function RevenueDecisionNetwork() {
         </div>
       </div>
 
-      {/* The problem, at the top, feeding the hub */}
-      <ProblemBox />
+      {/* The problem, at the top, feeding the hub (revealed first) */}
+      <ProblemBox shown={shown} delay={0} />
 
-      {/* Metric cards */}
+      {/* Metric cards, each popping in as the hub's signal reaches it */}
       {NET_CARDS.map((card, i) => (
-        <NetMetricCard key={card.title} card={card} delay={0.3 + i * 0.35} />
+        <NetMetricCard key={card.title} card={card} delay={cardReveal(i)} shown={shown} />
       ))}
 
-      {/* Recommended action */}
-      <NetActionCard />
+      {/* Recommended action: the finale, revealed last (spoke index 6) */}
+      <NetActionCard shown={shown} delay={cardReveal(6)} />
 
       {/* Illustrative tag */}
       <div
@@ -1601,6 +1728,7 @@ function LeaderCard({
   quote,
   linkedin,
   initials,
+  photo,
   delay = 0,
 }: {
   name: string;
@@ -1609,6 +1737,7 @@ function LeaderCard({
   quote: string;
   linkedin: string;
   initials: string;
+  photo?: string;
   delay?: number;
 }) {
   const { ref, shown } = useReveal<HTMLDivElement>();
@@ -1619,13 +1748,22 @@ function LeaderCard({
         className="group relative flex h-full flex-col rounded-2xl hairline bg-white p-8 md:p-10 card-lift"
       >
         <div className="flex items-center gap-5">
-          <span
-            aria-hidden
-            className="flex h-20 w-20 flex-none items-center justify-center rounded-full bg-gradient-to-br from-[color:var(--navy-deep)] to-[color:var(--blue-cta)] text-xl font-semibold tracking-wide text-white ring-2 ring-[color:var(--blue-cta)] ring-offset-2 ring-offset-white"
-            style={{ fontFamily: "var(--font-display)" }}
-          >
-            {initials}
-          </span>
+          {photo ? (
+            <img
+              src={photo}
+              alt={name}
+              loading="lazy"
+              className="h-20 w-20 flex-none rounded-full object-cover ring-2 ring-[color:var(--blue-cta)] ring-offset-2 ring-offset-white"
+            />
+          ) : (
+            <span
+              aria-hidden
+              className="flex h-20 w-20 flex-none items-center justify-center rounded-full bg-gradient-to-br from-[color:var(--navy-deep)] to-[color:var(--blue-cta)] text-xl font-semibold tracking-wide text-white ring-2 ring-[color:var(--blue-cta)] ring-offset-2 ring-offset-white"
+              style={{ fontFamily: "var(--font-display)" }}
+            >
+              {initials}
+            </span>
+          )}
           <div>
             <h3 className="text-xl font-semibold text-[color:var(--ink)]">{name}</h3>
             <p className="mt-1 text-sm font-semibold uppercase tracking-wide text-[color:var(--blue-link)]">
@@ -1675,6 +1813,7 @@ export function TeamSection() {
           name="Erik Vogel"
           title="Founder and CEO"
           initials="EV"
+          photo="/images/team/erik-vogel.avif"
           linkedin="https://www.linkedin.com/in/erikvogel2020/"
           bio="Twenty-six years in IT services. Built the customer experience program for HPE GreenLake, then led the high-tech and telecom practice at a leading experience-management platform, advising the world's top technology brands. He founded VistaXM to bring that rigor to the channel."
           quote="Companies don't spend NPS points. They spend dollars."
@@ -1684,6 +1823,7 @@ export function TeamSection() {
           name="Bruce Coughlin"
           title="Chief Growth Officer"
           initials="BC"
+          photo="/images/team/bruce-coughlin.jpg"
           linkedin="https://www.linkedin.com/in/brucecoughlin"
           bio="Former CEO of Cloud Technology Partners, which he helped guide to its acquisition by HPE. A relationship-first channel leader who believes the experience you deliver is the only real differentiator left."
           quote="The most progressive partners create differentiation and sustain it with customer experience. That is the fundamental tenet of what is happening in the channel."
@@ -2358,9 +2498,49 @@ const FLOW_STEPS = [
   },
 ];
 
-function FlowRail({ variant }: { variant: "in" | "out" }) {
+/* Orchestrated entrance for the flow diagram (seconds). Left inputs slide in one
+   at a time, each with its connector line; the dashboard then arrives and the
+   outputs cascade in one at a time as the "result" of the flow. ~3s total. */
+const FLOW_IN_STAGGER = 0.28; // gap between each left input + its line
+const FLOW_BOX_DUR = 0.45; // input / output / dashboard entrance duration
+const FLOW_LINE_DUR = 0.4; // connector draw duration
+const FLOW_IN_HUB = 1.5; // convergence node + stub reveal (after last input)
+const FLOW_OUT_BEAT = 1.85; // dashboard arrives; first output + out-rail begin here
+const FLOW_OUT_STAGGER = 0.26; // outputs cascade one at a time, like the inputs
+const FLOW_COUNT_MS = 1000; // dashboard count-up duration
+
+const FLOW_DRIVERS = [
+  { label: "Exec engagement", value: 82 },
+  { label: "Onboarding", value: 64 },
+  { label: "Support load", value: 46 },
+];
+
+const FLOW_WATCHLIST = [
+  { name: "Cordova Health", status: "At risk", tone: "risk", amount: "$1.2M" },
+  { name: "Northwind Group", status: "Watch", tone: "watch", amount: "$480K" },
+  { name: "Apex Systems", status: "Healthy", tone: "healthy", amount: "$2.7M" },
+];
+
+const WATCH_TONE: Record<string, { bg: string; color: string }> = {
+  risk: { bg: "rgba(246,130,65,0.16)", color: "#f9a26a" },
+  watch: { bg: "rgba(234,179,8,0.18)", color: "#f2c14e" },
+  healthy: { bg: "rgba(52,211,153,0.16)", color: "#5ee0b0" },
+};
+
+function FlowRail({ variant, shown }: { variant: "in" | "out"; shown: boolean }) {
   const inYs = [28, 89, 150, 210, 271, 332];
   const outYs = [78, 152, 226, 300];
+  // Draw a path from hidden (dashoffset 100) to full over `dur`, after `delay`.
+  // pathLength normalizes the draw despite the rail's non-uniform stretch.
+  const draw = (delay: number, dur: number): CSSProperties => ({
+    strokeDasharray: 100,
+    strokeDashoffset: 100,
+    animation: shown ? `draw-line ${dur}s ${delay}s ease-out forwards` : undefined,
+  });
+  const fade = (delay: number): CSSProperties => ({
+    opacity: shown ? undefined : 0,
+    animation: shown ? `net-fade 0.3s ${delay}s both` : undefined,
+  });
   return (
     <div className="hidden lg:block lg:w-16 self-stretch shrink-0" aria-hidden>
       <svg
@@ -2370,7 +2550,7 @@ function FlowRail({ variant }: { variant: "in" | "out" }) {
       >
         {variant === "in" ? (
           <>
-            {inYs.map((y) => (
+            {inYs.map((y, i) => (
               <path
                 key={y}
                 d={`M0 ${y} C 26 ${y}, 30 180, 50 180`}
@@ -2378,16 +2558,32 @@ function FlowRail({ variant }: { variant: "in" | "out" }) {
                 stroke="currentColor"
                 strokeWidth={1.4}
                 opacity={0.55}
+                pathLength={100}
+                style={draw(i * FLOW_IN_STAGGER, FLOW_LINE_DUR)}
               />
             ))}
-            <path d="M50 180 H64" stroke="currentColor" strokeWidth={1.6} opacity={0.7} />
-            <circle cx="50" cy="180" r="3.4" fill="var(--blue-cta)" />
+            <path
+              d="M50 180 H64"
+              stroke="currentColor"
+              strokeWidth={1.6}
+              opacity={0.7}
+              pathLength={100}
+              style={draw(FLOW_IN_HUB, 0.3)}
+            />
+            <circle cx="50" cy="180" r="3.4" fill="var(--blue-cta)" style={fade(FLOW_IN_HUB)} />
           </>
         ) : (
           <>
-            <path d="M0 180 H14" stroke="currentColor" strokeWidth={1.6} opacity={0.7} />
-            <circle cx="14" cy="180" r="3.4" fill="var(--blue-cta)" />
-            {outYs.map((y) => (
+            <path
+              d="M0 180 H14"
+              stroke="currentColor"
+              strokeWidth={1.6}
+              opacity={0.7}
+              pathLength={100}
+              style={draw(FLOW_OUT_BEAT, 0.3)}
+            />
+            <circle cx="14" cy="180" r="3.4" fill="var(--blue-cta)" style={fade(FLOW_OUT_BEAT)} />
+            {outYs.map((y, i) => (
               <path
                 key={y}
                 d={`M14 180 C 36 180, 40 ${y}, 64 ${y}`}
@@ -2395,6 +2591,8 @@ function FlowRail({ variant }: { variant: "in" | "out" }) {
                 stroke="currentColor"
                 strokeWidth={1.4}
                 opacity={0.55}
+                pathLength={100}
+                style={draw(FLOW_OUT_BEAT + i * FLOW_OUT_STAGGER, FLOW_LINE_DUR)}
               />
             ))}
           </>
@@ -2409,133 +2607,261 @@ function FlowStatTile({
   children,
   foot,
   footColor,
+  delta,
+  deltaColor,
 }: {
   label: string;
   children: ReactNode;
   foot: string;
   footColor: string;
+  delta?: string;
+  deltaColor?: string;
 }) {
   return (
     <div className="rounded-xl bg-white/[0.06] border border-white/10 p-3">
       <div className="text-[0.6rem] uppercase tracking-wider text-white/55">{label}</div>
       <div className="mt-1.5">{children}</div>
-      <div className="mt-1 text-[0.65rem] font-medium" style={{ color: footColor }}>
-        {foot}
+      <div className="mt-1 flex items-center gap-1.5">
+        <span className="text-[0.65rem] font-medium" style={{ color: footColor }}>
+          {foot}
+        </span>
+        {delta ? (
+          <span
+            className="text-[0.58rem] font-semibold tabular-nums"
+            style={{ color: deltaColor ?? footColor }}
+          >
+            {delta}
+          </span>
+        ) : null}
       </div>
     </div>
   );
 }
 
-function FlowDashboard() {
-  const { ref, shown } = useReveal();
-  const health = Math.round(useCountUp(78, 1300, shown));
-  const churn = Math.round(useCountUp(12, 1300, shown));
-  const pipeline = useCountUp(2.4, 1300, shown);
+function FlowDashboard({ shown, delaySec }: { shown: boolean; delaySec: number }) {
+  // The dashboard is the "result" of the flow, so its numbers should count up
+  // when it arrives (delaySec), not when the section first scrolls into view.
+  const [go, setGo] = useState(false);
+  useEffect(() => {
+    if (!shown) return;
+    if (
+      typeof window !== "undefined" &&
+      window.matchMedia?.("(prefers-reduced-motion: reduce)").matches
+    ) {
+      setGo(true);
+      return;
+    }
+    const t = setTimeout(() => setGo(true), delaySec * 1000);
+    return () => clearTimeout(t);
+  }, [shown, delaySec]);
+
+  const health = Math.round(useCountUp(78, FLOW_COUNT_MS, go));
+  const churn = Math.round(useCountUp(12, FLOW_COUNT_MS, go));
+  const pipeline = useCountUp(2.4, FLOW_COUNT_MS, go);
   const R = 15;
   const circ = 2 * Math.PI * R;
   return (
-    <div className="flex-1 min-w-0">
+    <div
+      className="flex-1 min-w-0"
+      style={{
+        opacity: shown ? undefined : 0,
+        animation: shown ? `flow-pop ${FLOW_BOX_DUR}s ${delaySec}s both` : undefined,
+      }}
+    >
       <div
-        ref={ref}
-        className="relative h-full rounded-2xl p-6 md:p-7 text-white grain overflow-hidden shadow-[var(--shadow-elevation-3)]"
+        className="relative h-full rounded-2xl text-white grain overflow-hidden shadow-[var(--shadow-elevation-3)]"
         style={{ background: "linear-gradient(160deg, #022550 0%, #062d57 60%, #0d3f7a 100%)" }}
       >
-        <div className="relative z-10 flex items-center gap-2.5">
-          <span className="grid place-items-center w-7 h-7 rounded-lg bg-white/10 text-[color:var(--blue-light)]">
-            <svg viewBox="0 0 24 24" className="w-[15px] h-[15px]" fill="none" aria-hidden>
-              <path
-                d="M4 4l8 16 8-16"
-                stroke="currentColor"
-                strokeWidth="2.4"
-                strokeLinejoin="round"
-              />
-            </svg>
-          </span>
-          <span className="text-sm font-semibold tracking-tight">VistaXM Revenue Intelligence</span>
-        </div>
-
-        <div className="relative z-10 mt-5 grid grid-cols-3 gap-2.5">
-          <FlowStatTile label="Health Score" foot="Good" footColor="var(--blue-light)">
-            <div className="relative grid place-items-center w-[46px] h-[46px]">
-              <svg viewBox="0 0 36 36" className="w-[46px] h-[46px] -rotate-90">
-                <circle
-                  cx="18"
-                  cy="18"
-                  r={R}
-                  fill="none"
-                  stroke="rgba(255,255,255,0.14)"
-                  strokeWidth="3"
-                />
-                <circle
-                  cx="18"
-                  cy="18"
-                  r={R}
-                  fill="none"
-                  stroke="var(--blue-cta)"
-                  strokeWidth="3"
-                  strokeLinecap="round"
-                  strokeDasharray={circ}
-                  strokeDashoffset={circ * (1 - health / 100)}
-                  style={{ transition: "stroke-dashoffset 0.2s linear" }}
+        {/* window chrome: product identity + live status */}
+        <div className="relative z-10 flex items-center justify-between gap-3 border-b border-white/10 px-5 py-3.5">
+          <div className="flex items-center gap-2.5">
+            <span className="grid place-items-center w-7 h-7 rounded-lg bg-white/10 text-[color:var(--blue-light)]">
+              <svg viewBox="0 0 24 24" className="w-[15px] h-[15px]" fill="none" aria-hidden>
+                <path
+                  d="M4 4l8 16 8-16"
+                  stroke="currentColor"
+                  strokeWidth="2.4"
+                  strokeLinejoin="round"
                 />
               </svg>
-              <span className="absolute text-[0.95rem] font-semibold tabular-nums">{health}</span>
+            </span>
+            <div className="leading-tight">
+              <div className="text-sm font-semibold tracking-tight">
+                VistaXM Revenue Intelligence
+              </div>
+              <div className="text-[0.62rem] text-white/45">Account signal dashboard</div>
             </div>
-          </FlowStatTile>
-
-          <FlowStatTile label="Churn Risk" foot="At Risk" footColor="var(--orange-pop)">
-            <span
-              className="text-2xl font-semibold tabular-nums"
-              style={{ color: "var(--orange-pop)" }}
-            >
-              {churn}%
+          </div>
+          <div className="hidden sm:flex items-center gap-2 shrink-0">
+            <span className="flex items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.06] px-2 py-0.5">
+              <span
+                className="w-1.5 h-1.5 rounded-full bg-[#5ee0b0]"
+                style={{ animation: "live-pulse 2s ease-in-out infinite" }}
+              />
+              <span className="text-[0.6rem] font-medium text-white/70">Live</span>
             </span>
-          </FlowStatTile>
-
-          <FlowStatTile label="Expansion" foot="Pipeline" footColor="var(--blue-light)">
-            <span className="text-2xl font-semibold tabular-nums text-white">
-              ${pipeline.toFixed(1)}M
-            </span>
-          </FlowStatTile>
+            <span className="text-[0.6rem] text-white/40">Synced just now</span>
+          </div>
         </div>
 
-        <div className="relative z-10 mt-2.5 grid grid-cols-2 gap-2.5">
-          <div className="rounded-xl bg-white/[0.06] border border-white/10 p-3">
-            <div className="text-[0.6rem] uppercase tracking-wider text-white/55">
-              Signal Trends
-            </div>
-            <svg
-              viewBox="0 0 120 42"
-              className="mt-2 w-full h-10"
-              preserveAspectRatio="none"
-              aria-hidden
+        <div className="relative z-10 p-5 md:p-6">
+          {/* KPI tiles with period deltas */}
+          <div className="grid grid-cols-3 gap-2.5">
+            <FlowStatTile
+              label="Health Score"
+              foot="Good"
+              footColor="var(--blue-light)"
+              delta="▲ 4"
+              deltaColor="#5ee0b0"
             >
-              <polyline
-                points="2,34 22,28 42,30 62,20 82,22 102,11 118,6"
-                fill="none"
-                stroke="var(--blue-light)"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-              <circle cx="118" cy="6" r="2.6" fill="#fff" />
-            </svg>
-          </div>
-          <div className="rounded-xl bg-white/[0.06] border border-white/10 p-3">
-            <div className="text-[0.6rem] uppercase tracking-wider text-white/55">Top Drivers</div>
-            <div className="mt-2.5 space-y-2">
-              {[82, 64, 46].map((w, i) => (
-                <div key={w} className="h-1.5 rounded-full bg-white/10">
-                  <div
-                    className="h-full rounded-full"
-                    style={{
-                      width: shown ? `${w}%` : "0%",
-                      background: i === 0 ? "var(--blue-cta)" : "var(--blue-light)",
-                      transition: `width 0.9s cubic-bezier(0.22,1,0.36,1) ${i * 120}ms`,
-                    }}
+              <div className="relative grid place-items-center w-[46px] h-[46px]">
+                <svg viewBox="0 0 36 36" className="w-[46px] h-[46px] -rotate-90">
+                  <circle
+                    cx="18"
+                    cy="18"
+                    r={R}
+                    fill="none"
+                    stroke="rgba(255,255,255,0.14)"
+                    strokeWidth="3"
                   />
-                </div>
-              ))}
+                  <circle
+                    cx="18"
+                    cy="18"
+                    r={R}
+                    fill="none"
+                    stroke="var(--blue-cta)"
+                    strokeWidth="3"
+                    strokeLinecap="round"
+                    strokeDasharray={circ}
+                    strokeDashoffset={circ * (1 - health / 100)}
+                    style={{ transition: "stroke-dashoffset 0.2s linear" }}
+                  />
+                </svg>
+                <span className="absolute text-[0.95rem] font-semibold tabular-nums">{health}</span>
+              </div>
+            </FlowStatTile>
+
+            <FlowStatTile
+              label="Churn Risk"
+              foot="At Risk"
+              footColor="var(--orange-pop)"
+              delta="▲ 2 pts"
+              deltaColor="var(--orange-pop)"
+            >
+              <span
+                className="text-2xl font-semibold tabular-nums"
+                style={{ color: "var(--orange-pop)" }}
+              >
+                {churn}%
+              </span>
+            </FlowStatTile>
+
+            <FlowStatTile
+              label="Expansion"
+              foot="Pipeline"
+              footColor="var(--blue-light)"
+              delta="▲ $0.3M"
+              deltaColor="#5ee0b0"
+            >
+              <span className="text-2xl font-semibold tabular-nums text-white">
+                ${pipeline.toFixed(1)}M
+              </span>
+            </FlowStatTile>
+          </div>
+
+          {/* Signal trends + top drivers */}
+          <div className="mt-2.5 grid grid-cols-2 gap-2.5">
+            <div className="rounded-xl bg-white/[0.06] border border-white/10 p-3">
+              <div className="flex items-center justify-between">
+                <span className="text-[0.6rem] uppercase tracking-wider text-white/55">
+                  Signal Trends
+                </span>
+                <span className="text-[0.6rem] font-semibold text-[#5ee0b0]">+18%</span>
+              </div>
+              <svg
+                viewBox="0 0 120 42"
+                className="mt-2 w-full h-10"
+                preserveAspectRatio="none"
+                aria-hidden
+              >
+                <defs>
+                  <linearGradient id="flow-spark" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stopColor="rgba(103,166,255,0.35)" />
+                    <stop offset="100%" stopColor="rgba(103,166,255,0)" />
+                  </linearGradient>
+                </defs>
+                <polygon
+                  points="2,34 22,28 42,30 62,20 82,22 102,11 118,6 118,42 2,42"
+                  fill="url(#flow-spark)"
+                />
+                <polyline
+                  points="2,34 22,28 42,30 62,20 82,22 102,11 118,6"
+                  fill="none"
+                  stroke="var(--blue-light)"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+                <circle cx="118" cy="6" r="2.6" fill="#fff" />
+              </svg>
+            </div>
+            <div className="rounded-xl bg-white/[0.06] border border-white/10 p-3">
+              <div className="text-[0.6rem] uppercase tracking-wider text-white/55">
+                Top Drivers
+              </div>
+              <div className="mt-2 space-y-1.5">
+                {FLOW_DRIVERS.map((d, i) => (
+                  <div key={d.label}>
+                    <div className="mb-1 flex items-center justify-between text-[0.62rem]">
+                      <span className="text-white/70">{d.label}</span>
+                      <span className="tabular-nums text-white/50">{d.value}</span>
+                    </div>
+                    <div className="h-1 rounded-full bg-white/10">
+                      <div
+                        className="h-full rounded-full"
+                        style={{
+                          width: go ? `${d.value}%` : "0%",
+                          background: i === 0 ? "var(--blue-cta)" : "var(--blue-light)",
+                          transition: `width 0.9s cubic-bezier(0.22,1,0.36,1) ${i * 120}ms`,
+                        }}
+                      />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Account watchlist: the realistic "what to act on" layer */}
+          <div className="mt-2.5 rounded-xl bg-white/[0.06] border border-white/10 p-3">
+            <div className="flex items-center justify-between">
+              <span className="text-[0.6rem] uppercase tracking-wider text-white/55">
+                Account Watchlist
+              </span>
+              <span className="text-[0.6rem] text-white/40">3 flagged</span>
+            </div>
+            <div className="mt-2 space-y-1.5">
+              {FLOW_WATCHLIST.map((a) => {
+                const tone = WATCH_TONE[a.tone];
+                return (
+                  <div key={a.name} className="flex items-center justify-between gap-2">
+                    <span className="min-w-0 truncate text-xs font-medium text-white/85">
+                      {a.name}
+                    </span>
+                    <span className="flex items-center gap-2 shrink-0">
+                      <span
+                        className="rounded-full px-1.5 py-0.5 text-[0.58rem] font-semibold"
+                        style={{ background: tone.bg, color: tone.color }}
+                      >
+                        {a.status}
+                      </span>
+                      <span className="w-12 text-right text-[0.68rem] tabular-nums text-white/70">
+                        {a.amount}
+                      </span>
+                    </span>
+                  </div>
+                );
+              })}
             </div>
           </div>
         </div>
@@ -2551,35 +2877,55 @@ function FlowDashboard() {
 }
 
 export function RevenueIntelligenceFlow() {
+  // Drive the orchestration off a single in-view trigger (not the shared
+  // <Reveal>, which would fade the whole block in at once and defeat the
+  // per-element sequencing). Entrance transforms live on outer wrappers so the
+  // inner boxes keep their card-lift hover transform.
+  const { ref, shown } = useReveal(0.15);
   return (
     <div>
-      <Reveal>
-        <div className="flex flex-col lg:flex-row lg:items-stretch gap-6 lg:gap-0">
-          {/* Inputs */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 lg:flex lg:flex-col lg:justify-between lg:w-[190px] lg:shrink-0">
-            {FLOW_INPUTS.map((it) => (
-              <div
-                key={it.label}
-                className="flex items-center gap-2.5 rounded-xl bg-white hairline px-3.5 py-3 card-lift text-[color:var(--navy-deep)]"
-              >
+      <div ref={ref} className="flex flex-col lg:flex-row lg:items-stretch gap-6 lg:gap-0">
+        {/* Inputs: slide in one at a time */}
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 lg:flex lg:flex-col lg:justify-between lg:w-[190px] lg:shrink-0">
+          {FLOW_INPUTS.map((it, i) => (
+            <div
+              key={it.label}
+              style={{
+                opacity: shown ? undefined : 0,
+                animation: shown
+                  ? `flow-in-left ${FLOW_BOX_DUR}s ${i * FLOW_IN_STAGGER}s both`
+                  : undefined,
+              }}
+            >
+              <div className="flex items-center gap-2.5 rounded-xl bg-white hairline px-3.5 py-3 card-lift text-[color:var(--navy-deep)]">
                 <span className="grid place-items-center w-8 h-8 rounded-lg bg-[color:var(--blue-tint)] text-[color:var(--blue-cta)] shrink-0">
                   <Glyph name={it.icon} />
                 </span>
                 <span className="text-sm font-medium leading-tight">{it.label}</span>
               </div>
-            ))}
-          </div>
+            </div>
+          ))}
+        </div>
 
-          <FlowRail variant="in" />
+        <FlowRail variant="in" shown={shown} />
 
-          <FlowDashboard />
+        <FlowDashboard shown={shown} delaySec={FLOW_OUT_BEAT} />
 
-          <FlowRail variant="out" />
+        <FlowRail variant="out" shown={shown} />
 
-          {/* Outputs */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 lg:flex lg:flex-col lg:justify-between lg:w-[235px] lg:shrink-0">
-            {FLOW_OUTPUTS.map((it) => (
-              <div key={it.title} className="rounded-xl bg-white hairline p-3.5 card-lift">
+        {/* Outputs: arrive together as the flow's result */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 lg:flex lg:flex-col lg:justify-between lg:w-[235px] lg:shrink-0">
+          {FLOW_OUTPUTS.map((it, i) => (
+            <div
+              key={it.title}
+              style={{
+                opacity: shown ? undefined : 0,
+                animation: shown
+                  ? `flow-in-right ${FLOW_BOX_DUR}s ${FLOW_OUT_BEAT + i * FLOW_OUT_STAGGER}s both`
+                  : undefined,
+              }}
+            >
+              <div className="rounded-xl bg-white hairline p-3.5 card-lift">
                 <div className="flex items-center gap-2">
                   <span
                     className="grid place-items-center w-7 h-7 rounded-lg shrink-0"
@@ -2598,10 +2944,10 @@ export function RevenueIntelligenceFlow() {
                   {it.desc}
                 </p>
               </div>
-            ))}
-          </div>
+            </div>
+          ))}
         </div>
-      </Reveal>
+      </div>
 
       {/* Three steps */}
       <div className="mt-10 grid gap-5 md:grid-cols-3">

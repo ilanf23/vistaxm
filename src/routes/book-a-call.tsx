@@ -209,11 +209,23 @@ function BookACall() {
       {/* Contact band */}
       <Section tint>
         <div className="grid gap-12 lg:grid-cols-[.8fr_1.2fr] lg:items-center">
-          <SectionHead
-            eyebrow="Reach us directly"
-            title="Prefer to start a conversation another way?"
-            intro="Email or call. A real person on our team will pick it up."
-          />
+          <div>
+            <SectionHead
+              eyebrow="Reach us directly"
+              title="Prefer to start a conversation another way?"
+              intro="Email or call. A real person on our team will pick it up."
+            />
+            <Reveal delay={80}>
+              <div className="img-editorial-soft img-frame mt-8 aspect-[4/3] w-full">
+                <img
+                  src="/images/ambient/on-a-call.jpg"
+                  alt="A member of the team taking a call at their desk"
+                  loading="lazy"
+                  className="h-full w-full object-cover"
+                />
+              </div>
+            </Reveal>
+          </div>
 
           <Reveal delay={120}>
             <div className="rounded-2xl hairline bg-white p-7 shadow-[var(--shadow-elevation-2)] md:p-9">

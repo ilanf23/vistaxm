@@ -1,7 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { BOOK_A_CALL_URL } from "@/lib/links";
+import { BOOK_A_CALL_URL, handleBookingClick } from "@/lib/links";
 import { type ReactNode } from "react";
-import { PageHero, Section, SectionHead } from "@/components/site";
+import { PageHero, Reveal, Section, SectionHead } from "@/components/site";
+import { AmbientBand } from "@/components/media";
 import { FadeIn, Stagger, StaggerItem } from "@/components/motion";
 
 export const Route = createFileRoute("/solutions/industrialpulse")({
@@ -36,11 +37,13 @@ function CTALink({
   children: ReactNode;
 }) {
   const newTab = to.startsWith("http");
+  const isBooking = to === BOOK_A_CALL_URL;
   return (
     <a
       href={to}
       className={className}
       {...(newTab ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+      {...(isBooking ? { onClick: handleBookingClick } : {})}
     >
       {children}
     </a>
@@ -127,6 +130,20 @@ function IndustrialPulse() {
             </div>
           </StaggerItem>
         </Stagger>
+      </Section>
+
+      {/* Ambient divider: built for the industrial channel */}
+      <Section tint>
+        <Reveal>
+          <AmbientBand
+            image="/images/ambient/warehouse-floor.jpg"
+            alt="An industrial distribution warehouse with pallet racking"
+            eyebrow="Built for the channel"
+            title="The same read, tuned for industrial distribution."
+          >
+            Where revenue runs through distributors, the end-customer experience lives with them.
+          </AmbientBand>
+        </Reveal>
       </Section>
 
       {/* Early-pilot closing band */}

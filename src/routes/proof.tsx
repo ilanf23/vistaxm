@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { BOOK_A_CALL_URL } from "@/lib/links";
 import { CTABand, NPSGauge, PageHero, Reveal, Section, SectionHead } from "@/components/site";
+import { AmbientBand } from "@/components/media";
 import { FadeIn, Stagger, StaggerItem } from "@/components/motion";
 
 export const Route = createFileRoute("/proof")({
@@ -303,6 +304,20 @@ function Proof() {
             </p>
           </div>
         </FadeIn>
+      </Section>
+
+      {/* Ambient divider: behind the numbers */}
+      <Section>
+        <Reveal>
+          <AmbientBand
+            image="/images/ambient/reviewing-results.jpg"
+            alt="A team reviewing printed performance charts around a table"
+            eyebrow="Behind the numbers"
+            title="A result is a decision, made earlier."
+          >
+            Every outcome above started as a signal someone acted on in time.
+          </AmbientBand>
+        </Reveal>
       </Section>
 
       {/* Testimonial */}

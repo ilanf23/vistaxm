@@ -12,6 +12,7 @@ import {
   Section,
   SectionHead,
 } from "@/components/site";
+import { AmbientBand } from "@/components/media";
 import { FadeIn } from "@/components/motion";
 
 export const Route = createFileRoute("/the-model")({
@@ -113,6 +114,20 @@ function TheModel() {
         <div className="mt-14">
           <RevenueIntelligenceFlow />
         </div>
+      </Section>
+
+      {/* Ambient divider: from reading to deciding */}
+      <Section>
+        <Reveal>
+          <AmbientBand
+            image="/images/ambient/whiteboard-mapping.jpg"
+            alt="A small team mapping accounts together at a whiteboard"
+            eyebrow="From reading to deciding"
+            title="A read is only useful when it changes a decision."
+          >
+            We do the listening and the analysis. What reaches you is the move worth making.
+          </AmbientBand>
+        </Reveal>
       </Section>
 
       {/* From signal to decision */}

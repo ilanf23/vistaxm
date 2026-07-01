@@ -13,7 +13,7 @@ import { MotionConfig } from "motion/react";
 import appCss from "../styles.css?url";
 import logoAsset from "../assets/vistaxm-logo.svg.asset.json";
 import { reportLovableError } from "../lib/lovable-error-reporting";
-import { BOOK_A_CALL_URL } from "../lib/links";
+import { BOOK_A_CALL_URL, handleBookingClick } from "../lib/links";
 
 function NotFoundComponent() {
   return (
@@ -110,7 +110,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
         rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap",
+        href: "https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..700&family=Roboto:wght@400;500;700;900&display=swap",
       },
     ],
   }),
@@ -170,7 +170,10 @@ const navAfterSolutions = [
 ] as const;
 
 const navLinkClass =
-  "text-white/70 hover:text-white transition-colors tracking-tight whitespace-nowrap";
+  "relative text-white/70 hover:text-white transition-colors tracking-tight whitespace-nowrap " +
+  "after:pointer-events-none after:absolute after:inset-x-0 after:-bottom-1 after:h-[2px] " +
+  "after:origin-left after:scale-x-0 after:rounded-full after:bg-[color:var(--blue-light)] " +
+  "after:transition-transform after:duration-300 after:ease-out hover:after:scale-x-100";
 
 const footerLinkClass = "text-white/65 hover:text-[color:var(--blue-light)] transition-colors";
 
@@ -251,7 +254,7 @@ function Header() {
               </svg>
             </button>
             <div className="invisible absolute left-1/2 top-full z-50 w-64 -translate-x-1/2 pt-3 opacity-0 transition-all duration-200 group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100">
-              <div className="overflow-hidden rounded-2xl border border-white/10 bg-[color:var(--navy-deep)]/95 p-2 shadow-[var(--shadow-elevation-3)] backdrop-blur-lg">
+              <div className="overflow-hidden rounded-2xl border border-white/10 bg-[color:var(--navy-deep)] p-2 shadow-[var(--shadow-elevation-3)]">
                 {industries.map((ind) => (
                   <Link
                     key={ind.label}
@@ -287,7 +290,7 @@ function Header() {
               </svg>
             </button>
             <div className="invisible absolute left-1/2 top-full z-50 w-72 -translate-x-1/2 pt-3 opacity-0 transition-all duration-200 group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100">
-              <div className="overflow-hidden rounded-2xl border border-white/10 bg-[color:var(--navy-deep)]/95 p-2 shadow-[var(--shadow-elevation-3)] backdrop-blur-lg">
+              <div className="overflow-hidden rounded-2xl border border-white/10 bg-[color:var(--navy-deep)] p-2 shadow-[var(--shadow-elevation-3)]">
                 {solutions.map((s) => (
                   <Link
                     key={s.to}
@@ -319,6 +322,7 @@ function Header() {
             href={BOOK_A_CALL_URL}
             target="_blank"
             rel="noopener noreferrer"
+            onClick={handleBookingClick}
             className="btn-primary text-sm"
           >
             Book a call
@@ -396,7 +400,10 @@ function Header() {
               href={BOOK_A_CALL_URL}
               target="_blank"
               rel="noopener noreferrer"
-              onClick={() => setOpen(false)}
+              onClick={(e) => {
+                setOpen(false);
+                handleBookingClick(e);
+              }}
               className="btn-primary mt-2 self-start"
             >
               Book a call
@@ -431,6 +438,7 @@ function Footer() {
             href={BOOK_A_CALL_URL}
             target="_blank"
             rel="noopener noreferrer"
+            onClick={handleBookingClick}
             className="btn-primary mt-7 text-sm"
           >
             Book a 30-minute conversation

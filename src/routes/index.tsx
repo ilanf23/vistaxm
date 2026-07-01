@@ -17,6 +17,7 @@ import {
   SpendByCohort,
   TeamSection,
 } from "@/components/site";
+import { AmbientBand } from "@/components/media";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -119,6 +120,20 @@ function Home() {
             competition with real customer and partner data.
           </Card>
         </div>
+      </Section>
+
+      {/* Ambient divider: the work behind the signal */}
+      <Section>
+        <Reveal>
+          <AmbientBand
+            image="/images/ambient/analytics-dashboard.jpg"
+            alt="Two colleagues reviewing an analytics dashboard on a laptop"
+            eyebrow="Where revenue actually moves"
+            title="The next decision hides in the day-to-day."
+          >
+            Not in the headline score, but in how the people closest to the work actually feel.
+          </AmbientBand>
+        </Reveal>
       </Section>
 
       {/* The partner shadow */}

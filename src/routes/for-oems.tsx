@@ -211,11 +211,23 @@ function ForOems() {
 
       {/* 5. Why a neutral third party */}
       <Section tint>
-        <SectionHead
-          eyebrow="Why a neutral third party"
-          title="Why your partners will tell us what they will not tell you."
-          intro="Partners hear your surveys as performance reviews. They tell a confidential neutral third party what they will never put in writing to you. Independence is structural, and it is not something the program being evaluated can replicate."
-        />
+        <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
+          <SectionHead
+            eyebrow="Why a neutral third party"
+            title="Why your partners will tell us what they will not tell you."
+            intro="Partners hear your surveys as performance reviews. They tell a confidential neutral third party what they will never put in writing to you. Independence is structural, and it is not something the program being evaluated can replicate."
+          />
+          <Reveal delay={120}>
+            <div className="img-editorial-soft img-frame aspect-[4/3] w-full">
+              <img
+                src="/images/ambient/partner-conversation.jpg"
+                alt="Two partners in a candid, confidential conversation"
+                loading="lazy"
+                className="h-full w-full object-cover"
+              />
+            </div>
+          </Reveal>
+        </div>
       </Section>
 
       {/* 6. The light-touch pilot */}

@@ -8,6 +8,7 @@ import {
   Section,
   SectionHead,
 } from "@/components/site";
+import { AmbientBand } from "@/components/media";
 import { FadeIn, Stagger, StaggerItem } from "@/components/motion";
 
 export const Route = createFileRoute("/solutions/brokerpulse")({
@@ -134,6 +135,20 @@ function BrokerPulse() {
           intro="Each signal points to a decision about your network: where the relationship is headed, and the move that changes it."
         />
         <InformsList />
+      </Section>
+
+      {/* Ambient divider: the broker relationship */}
+      <Section>
+        <Reveal>
+          <AmbientBand
+            image="/images/ambient/broker-portfolio.jpg"
+            alt="An insurance broker reviewing an account portfolio at a desk"
+            eyebrow="The broker relationship"
+            title="See the book the way your agencies feel it."
+          >
+            The experience behind the premium, read across your whole network.
+          </AmbientBand>
+        </Reveal>
       </Section>
 
       {/* Custom graphic slot (placeholder, correct aspect ratio) */}

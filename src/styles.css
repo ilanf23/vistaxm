@@ -12,7 +12,7 @@
   --radius-2xl: 1rem;
 
   --font-sans: "Roboto", ui-sans-serif, system-ui, sans-serif;
-  --font-display: "Roboto", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Fraunces", "Roboto", ui-serif, Georgia, serif;
 
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -585,6 +585,67 @@
 
 /* ---------------- Revenue decision network (hero right visual) ---------------- */
 
+/* Orchestrated entrance: a box pops in when the hub's signal reaches it. The
+   card/box wrappers center via translate(-50%,-50%), so preserve that here. */
+@keyframes net-pop {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.92);
+  }
+  60% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+/* Opacity-only entrance for SVG dots (they carry their own transforms). */
+@keyframes net-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Revenue-intelligence flow: inputs slide in from the left one at a time; the
+   dashboard and outputs then arrive as a single culminating beat. */
+@keyframes flow-in-left {
+  from {
+    opacity: 0;
+    transform: translateX(-14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes flow-in-right {
+  from {
+    opacity: 0;
+    transform: translateX(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes flow-pop {
+  from {
+    opacity: 0;
+    transform: scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
 /* A signal pulse travelling from the hub out to a card. Each dot carries its own
    --dx/--dy vector (in scaled units) so one keyframe drives every connector. */
 @keyframes signal-travel {
@@ -690,4 +751,75 @@
     animation-iteration-count: 1 !important;
     animation-delay: 0ms !important;
   }
+}
+
+/* ---------------- Editorial photography treatment ----------------
+   Turns ordinary (even stock) business photography into on-brand,
+   bespoke imagery so it never reads as generic stock: desaturated
+   base + navy duotone grade + a subtle blue highlight lift.
+   Role discipline: use for AMBIENT texture / atmosphere only, never
+   as a stand-in for real proof (customers, testimonials, results). */
+
+/* Heavy grade: photo sits BEHIND copy as a full-bleed band. */
+@utility img-editorial {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  & img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: grayscale(1) contrast(1.06) brightness(1.02);
+  }
+  /* navy grade weighted into the shadows */
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(180deg, rgba(6, 45, 87, 0.42), rgba(2, 37, 80, 0.84));
+    mix-blend-mode: multiply;
+  }
+  /* cool highlight lift so it reads two-tone, not flat grey */
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background: radial-gradient(125% 85% at 50% 0%, rgba(103, 166, 255, 0.22), transparent 62%);
+    mix-blend-mode: screen;
+  }
+}
+
+/* Soft grade: photo READS clearly as a standalone panel/portrait, but
+   is tinted into the brand so it does not clash with the navy system. */
+@utility img-editorial-soft {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  & img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: grayscale(0.55) contrast(1.04) saturate(0.9);
+  }
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(180deg, rgba(49, 133, 252, 0.1), rgba(2, 37, 80, 0.28));
+    mix-blend-mode: multiply;
+  }
+}
+
+/* Editorial framing: a hairline + tinted elevation for standalone photos. */
+@utility img-frame {
+  border-radius: 1rem;
+  border: 1px solid var(--hairline);
+  box-shadow: var(--shadow-elevation-2);
+  overflow: hidden;
 }
