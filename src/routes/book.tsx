@@ -127,34 +127,35 @@ function BookingLaunch() {
         </span>
       </div>
 
-      <div className="px-6 py-10 md:px-9 md:py-12">
-        <p className="text-lg font-semibold text-[color:var(--navy-deep)]">
-          Grab a 30-minute slot that works for you.
-        </p>
-        <p className="mt-2 max-w-prose text-[color:var(--ink-soft)]">
-          Our live scheduling calendar opens in a new tab so you keep your place here. Pick a time,
-          add your details, and you are booked. No marketing list, no obligation.
-        </p>
+      <div className="bg-white">
+        <iframe
+          src={BOOK_A_CALL_URL}
+          title="VistaXM booking calendar"
+          className="block h-[900px] w-full border-0"
+          loading="lazy"
+          referrerPolicy="no-referrer-when-downgrade"
+        />
+      </div>
 
-        <a
-          href={BOOK_A_CALL_URL}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="btn-primary mt-7"
-        >
-          Open the booking calendar
-        </a>
-
-        <div className="mt-6 flex items-center gap-2.5 rounded-xl bg-[color:var(--blue-tint)] px-4 py-3 text-sm font-medium text-[color:var(--navy-deep)]">
+      <div className="flex flex-wrap items-center justify-between gap-3 border-t border-[color:var(--hairline)] bg-[color:var(--blue-tint)] px-5 py-3 text-sm font-medium text-[color:var(--navy-deep)] md:px-7">
+        <span className="inline-flex items-center gap-2">
           <CheckGlyph className="h-4 w-4 flex-none text-[color:var(--blue-cta)]" />
-          Prefer email? Write us at{" "}
+          Calendar not loading? {" "}
           <a
-            href="mailto:sales@vistaxm.com"
+            href={BOOK_A_CALL_URL}
+            target="_blank"
+            rel="noopener noreferrer"
             className="font-semibold text-[color:var(--blue-link)] transition-colors hover:text-[color:var(--blue-cta)]"
           >
-            sales@vistaxm.com
+            Open it in a new tab
           </a>
-        </div>
+        </span>
+        <a
+          href="mailto:sales@vistaxm.com"
+          className="font-semibold text-[color:var(--blue-link)] transition-colors hover:text-[color:var(--blue-cta)]"
+        >
+          sales@vistaxm.com
+        </a>
       </div>
     </div>
   );
