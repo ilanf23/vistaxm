@@ -1,7 +1,7 @@
 import { type CSSProperties, type ReactNode, useEffect, useState } from "react";
 import { useReveal, useCountUp } from "@/hooks/use-reveal";
 import { FadeIn, Floaty, Parallax, Stagger, StaggerItem } from "@/components/motion";
-import { BOOK_A_CALL_URL, handleBookingClick, type Brief } from "@/lib/links";
+import { BOOK_PATH, type Brief } from "@/lib/links";
 
 /* ---------------- Primitives ---------------- */
 
@@ -15,13 +15,11 @@ export function CTAButton({
   children: ReactNode;
 }) {
   const newTab = to.startsWith("http");
-  const isBooking = to === BOOK_A_CALL_URL;
   return (
     <a
       href={to}
       className={className}
       {...(newTab ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-      {...(isBooking ? { onClick: handleBookingClick } : {})}
     >
       {children}
     </a>
@@ -1205,9 +1203,7 @@ function NetActionCard({ shown, delay }: { shown: boolean; delay: number }) {
           </span>
         </div>
         <a
-          href={BOOK_A_CALL_URL}
-          target="_blank"
-          rel="noopener noreferrer"
+          href={BOOK_PATH}
           className="flex items-center justify-center font-semibold text-white transition-[transform,box-shadow] hover:brightness-110 active:scale-[0.98]"
           style={{
             marginTop: u(13),
@@ -1905,10 +1901,7 @@ export function GetTheBrief({ brief }: { brief: Brief }) {
                 {brief.learnMore.label} &rarr;
               </a>
             )}
-            <CTAButton
-              to={BOOK_A_CALL_URL}
-              className="btn-secondary inline-flex items-center gap-2"
-            >
+            <CTAButton to={BOOK_PATH} className="btn-secondary inline-flex items-center gap-2">
               {brief.comingSoon ? "Talk to us about an early pilot" : "Book a 30-minute call"}
             </CTAButton>
           </div>
@@ -1943,7 +1936,7 @@ export function CTABand() {
           </div>
         </Reveal>
         <Reveal delay={120}>
-          <CTAButton to={BOOK_A_CALL_URL} className="btn-primary">
+          <CTAButton to={BOOK_PATH} className="btn-primary">
             Book a 30-minute conversation
           </CTAButton>
         </Reveal>
@@ -3340,7 +3333,7 @@ export function PageHero({
   badge,
   title,
   subtitle,
-  primary = { label: "Book a 30-minute call", to: BOOK_A_CALL_URL },
+  primary = { label: "Book a 30-minute call", to: BOOK_PATH },
   secondary,
   trust,
   visual,

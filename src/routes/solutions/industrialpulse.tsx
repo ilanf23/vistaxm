@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { BOOK_A_CALL_URL, BRIEFS, handleBookingClick } from "@/lib/links";
+import { BOOK_PATH, BRIEFS } from "@/lib/links";
 import { type ReactNode } from "react";
 import {
   GetTheBrief,
@@ -45,13 +45,11 @@ function CTALink({
   children: ReactNode;
 }) {
   const newTab = to.startsWith("http");
-  const isBooking = to === BOOK_A_CALL_URL;
   return (
     <a
       href={to}
       className={className}
       {...(newTab ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-      {...(isBooking ? { onClick: handleBookingClick } : {})}
     >
       {children}
     </a>
@@ -93,7 +91,7 @@ function IndustrialPulse() {
         badge="Coming soon"
         title="Revenue Channel Intelligence for industrial OEMs and distributors."
         subtitle="The same neutral, benchmarked read on the channel, built for industrial manufacturers and distributors who sell through partners."
-        primary={{ label: "Talk to us about an early pilot", to: BOOK_A_CALL_URL }}
+        primary={{ label: "Talk to us about an early pilot", to: BOOK_PATH }}
         visual={
           <RevenueSignalCard
             account="Atlas Industrial Supply"
@@ -208,7 +206,7 @@ function IndustrialPulse() {
             </div>
           </FadeIn>
           <FadeIn delay={120}>
-            <CTALink to={BOOK_A_CALL_URL} className="btn-primary">
+            <CTALink to={BOOK_PATH} className="btn-primary">
               Talk to us
             </CTALink>
           </FadeIn>

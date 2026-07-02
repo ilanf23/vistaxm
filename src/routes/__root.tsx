@@ -13,7 +13,6 @@ import { MotionConfig } from "motion/react";
 import appCss from "../styles.css?url";
 import logoAsset from "../assets/vistaxm-logo.svg.asset.json";
 import { reportLovableError } from "../lib/lovable-error-reporting";
-import { BOOK_A_CALL_URL, handleBookingClick } from "../lib/links";
 
 function NotFoundComponent() {
   return (
@@ -322,15 +321,9 @@ function Header() {
           ))}
         </nav>
         <div className="hidden lg:block">
-          <a
-            href={BOOK_A_CALL_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={handleBookingClick}
-            className="btn-primary text-sm"
-          >
+          <Link to="/book" className="btn-primary text-sm">
             Book a call
-          </a>
+          </Link>
         </div>
         <button
           className="lg:hidden p-2 -mr-2"
@@ -400,18 +393,9 @@ function Header() {
                 {n.label}
               </Link>
             ))}
-            <a
-              href={BOOK_A_CALL_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={(e) => {
-                setOpen(false);
-                handleBookingClick(e);
-              }}
-              className="btn-primary mt-2 self-start"
-            >
+            <Link to="/book" onClick={() => setOpen(false)} className="btn-primary mt-2 self-start">
               Book a call
-            </a>
+            </Link>
           </div>
         </div>
       )}
@@ -438,15 +422,9 @@ function Footer() {
             Revenue Channel Intelligence. We turn partner and broker experience into the
             account-level signal of where revenue is about to grow or walk.
           </p>
-          <a
-            href={BOOK_A_CALL_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={handleBookingClick}
-            className="btn-primary mt-7 text-sm"
-          >
+          <Link to="/book" className="btn-primary mt-7 text-sm">
             Book a 30-minute conversation
-          </a>
+          </Link>
         </div>
         <div className="md:col-span-2">
           <div className="eyebrow !text-[color:var(--blue-light)] !text-[0.7rem] mb-4">

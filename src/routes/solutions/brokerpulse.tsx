@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { BOOK_A_CALL_URL, BRIEFS } from "@/lib/links";
+import { BOOK_PATH, BRIEFS } from "@/lib/links";
 import {
   CTABand,
   GetTheBrief,
@@ -109,7 +109,7 @@ function BrokerPulse() {
         eyebrow="Solutions / BrokerPulse"
         title="Know which agencies are quietly at risk, before production drops."
         subtitle="Brokers drive most of your premium, yet you cannot see the experience behind it. BrokerPulse gives carriers a neutral, benchmarked read on broker and agency experience, tied to premium."
-        primary={{ label: "Book a 30-minute call", to: BOOK_A_CALL_URL }}
+        primary={{ label: "Book a 30-minute call", to: BOOK_PATH }}
         visual={
           <RevenueSignalCard
             account="Ridgeline Brokers"

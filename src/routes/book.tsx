@@ -1,9 +1,10 @@
 import { type ReactNode } from "react";
 import { createFileRoute } from "@tanstack/react-router";
-import { PageHero, Section, SectionHead, SchedulingEmbed, Reveal } from "@/components/site";
+import { BOOK_A_CALL_URL } from "@/lib/links";
+import { PageHero, Section, SectionHead, Reveal } from "@/components/site";
 import { FadeIn, Stagger, StaggerItem } from "@/components/motion";
 
-export const Route = createFileRoute("/book-a-call")({
+export const Route = createFileRoute("/book")({
   head: () => ({
     meta: [
       { title: "Book a Call | VistaXM" },
@@ -38,6 +39,24 @@ function CheckGlyph({ className = "" }: { className?: string }) {
       aria-hidden="true"
     >
       <path d="m4.5 10.5 3.5 3.5 7.5-8" />
+    </svg>
+  );
+}
+
+function ClockGlyph({ className = "" }: { className?: string }) {
+  return (
+    <svg
+      className={className}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.75"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <circle cx="12" cy="12" r="9" />
+      <path d="M12 7v5l3 2" />
     </svg>
   );
 }
@@ -86,6 +105,58 @@ function ExpectationList() {
         </StaggerItem>
       ))}
     </Stagger>
+  );
+}
+
+/* The live scheduler (Microsoft Bookings) blocks third-party iframe embedding
+   via a frame-ancestors CSP, so we hand off to it in a new tab rather than
+   showing a blank inline calendar. */
+function BookingLaunch() {
+  return (
+    <div className="overflow-hidden rounded-2xl hairline bg-white shadow-[var(--shadow-elevation-2)]">
+      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[color:var(--hairline)] px-5 py-4 md:px-7">
+        <div className="flex items-center gap-2.5 text-sm font-semibold text-[color:var(--navy-deep)]">
+          <span className="flex h-7 w-7 items-center justify-center rounded-full bg-[color:var(--blue-tint)] text-[color:var(--blue-link)]">
+            <ClockGlyph className="h-4 w-4" />
+          </span>
+          Pick a time
+        </div>
+        <span className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-[0.12em] text-[color:var(--ink-soft)]/60">
+          <span className="h-2 w-2 rounded-full bg-[color:var(--blue-cta)]" />
+          30 minutes
+        </span>
+      </div>
+
+      <div className="px-6 py-10 md:px-9 md:py-12">
+        <p className="text-lg font-semibold text-[color:var(--navy-deep)]">
+          Grab a 30-minute slot that works for you.
+        </p>
+        <p className="mt-2 max-w-prose text-[color:var(--ink-soft)]">
+          Our live scheduling calendar opens in a new tab so you keep your place here. Pick a time,
+          add your details, and you are booked. No marketing list, no obligation.
+        </p>
+
+        <a
+          href={BOOK_A_CALL_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="btn-primary mt-7"
+        >
+          Open the booking calendar
+        </a>
+
+        <div className="mt-6 flex items-center gap-2.5 rounded-xl bg-[color:var(--blue-tint)] px-4 py-3 text-sm font-medium text-[color:var(--navy-deep)]">
+          <CheckGlyph className="h-4 w-4 flex-none text-[color:var(--blue-cta)]" />
+          Prefer email? Write us at{" "}
+          <a
+            href="mailto:sales@vistaxm.com"
+            className="font-semibold text-[color:var(--blue-link)] transition-colors hover:text-[color:var(--blue-cta)]"
+          >
+            sales@vistaxm.com
+          </a>
+        </div>
+      </div>
+    </div>
   );
 }
 
@@ -201,7 +272,7 @@ function BookACall() {
           </div>
 
           <FadeIn delay={120}>
-            <SchedulingEmbed />
+            <BookingLaunch />
           </FadeIn>
         </div>
       </Section>

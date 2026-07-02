@@ -12,7 +12,7 @@ import {
   Download,
   ArrowRight,
 } from "lucide-react";
-import { BOOK_A_CALL_URL } from "@/lib/links";
+import { BOOK_PATH } from "@/lib/links";
 import {
   CTAButton,
   PageHero,
@@ -749,7 +749,7 @@ function FinalCTA() {
               A 30-minute conversation. No deck. We show you the signal in your own accounts.
             </p>
             <div className="mt-8 flex justify-center">
-              <CTAButton to={BOOK_A_CALL_URL} className="btn-primary">
+              <CTAButton to={BOOK_PATH} className="btn-primary">
                 Book a 30-minute call
               </CTAButton>
             </div>
@@ -782,7 +782,7 @@ function CRNLanding() {
           </>
         }
         subtitle="Top performers grow net revenue retention, expand accounts, and walk into renewals with confidence, not because they try harder, but because they see what is happening in every account before it shows up in the numbers. VistaXM runs that program for you, fully managed."
-        primary={{ label: "Book a 30-minute call", to: BOOK_A_CALL_URL }}
+        primary={{ label: "Book a 30-minute call", to: BOOK_PATH }}
         secondary={{ label: "Choose your path", to: "#chooser" }}
         visual={
           <>

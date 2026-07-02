@@ -1,6 +1,6 @@
 import { type ReactNode } from "react";
 import { createFileRoute } from "@tanstack/react-router";
-import { BOOK_A_CALL_URL, handleBookingClick } from "@/lib/links";
+import { BOOK_PATH } from "@/lib/links";
 import { CTABand, Section, SectionHead, PageHero } from "@/components/site";
 import { FadeIn, Stagger, StaggerItem } from "@/components/motion";
 
@@ -88,7 +88,7 @@ function HowToStart() {
         eyebrow="How to start"
         title="Start small. Scale when it works."
         subtitle="Two ways in, both fully managed. Prove the signal exists and that it changes a decision, then expand into the ongoing program."
-        primary={{ label: "Book a 30-minute call", to: BOOK_A_CALL_URL }}
+        primary={{ label: "Book a 30-minute call", to: BOOK_PATH }}
       />
 
       {/* The two entry paths */}
@@ -127,13 +127,7 @@ function HowToStart() {
               </div>
 
               <div className="mt-auto pt-7">
-                <a
-                  href={BOOK_A_CALL_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={handleBookingClick}
-                  className="btn-primary"
-                >
+                <a href={BOOK_PATH} className="btn-primary">
                   Start with Essentials
                 </a>
               </div>
@@ -181,13 +175,7 @@ function HowToStart() {
                 </Stagger>
 
                 <div className="mt-auto pt-7">
-                  <a
-                    href={BOOK_A_CALL_URL}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onClick={handleBookingClick}
-                    className="btn-primary"
-                  >
+                  <a href={BOOK_PATH} className="btn-primary">
                     Scope the program
                   </a>
                 </div>

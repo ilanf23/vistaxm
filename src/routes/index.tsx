@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { BOOK_A_CALL_URL } from "@/lib/links";
+import { BOOK_PATH } from "@/lib/links";
 import {
   CTABand,
   CTAButton,
@@ -46,7 +46,7 @@ function Home() {
         eyebrow="Revenue Channel Intelligence"
         title="Know which accounts are about to grow or walk, while you can still do something about it."
         subtitle="VistaXM turns customer and partner experience into the revenue moves IT solution providers and MSPs make every week. Not another score. The next decision."
-        primary={{ label: "Book a 30-minute call", to: BOOK_A_CALL_URL }}
+        primary={{ label: "Book a 30-minute call", to: BOOK_PATH }}
         secondary={{ label: "See how it works", to: "#model" }}
       />
 

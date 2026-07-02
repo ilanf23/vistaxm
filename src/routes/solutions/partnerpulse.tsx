@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { BOOK_A_CALL_URL, BRIEFS } from "@/lib/links";
+import { BOOK_PATH, BRIEFS } from "@/lib/links";
 import {
   CTABand,
   Card,
@@ -196,7 +196,7 @@ function PartnerPulse() {
         eyebrow="Solutions / PartnerPulse"
         title="See your channel the way your customers do."
         subtitle="A neutral, benchmarked read on how your partners actually deliver, and whether they are convinced enough to recommend you when it counts."
-        primary={{ label: "Book a 30-minute call", to: BOOK_A_CALL_URL }}
+        primary={{ label: "Book a 30-minute call", to: BOOK_PATH }}
         visual={
           <RevenueSignalCard
             account="Belmont IT"

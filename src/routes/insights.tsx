@@ -1,6 +1,6 @@
 import { type ReactNode } from "react";
 import { createFileRoute } from "@tanstack/react-router";
-import { BOOK_A_CALL_URL } from "@/lib/links";
+import { BOOK_PATH } from "@/lib/links";
 import { CTABand, PageHero, Reveal, Section, SectionHead } from "@/components/site";
 import { AmbientBand } from "@/components/media";
 import { FadeIn, Stagger, StaggerItem } from "@/components/motion";
@@ -500,7 +500,7 @@ function Insights() {
         eyebrow="Insights"
         title="The point of view on Revenue Channel Intelligence."
         subtitle="Our thinking is public: articles, press, whitepapers, and video on customer experience management, customer retention, and the voice of the customer across the channel. Read it, use it, bring questions, not budget."
-        primary={{ label: "Book a 30-minute call", to: BOOK_A_CALL_URL }}
+        primary={{ label: "Book a 30-minute call", to: BOOK_PATH }}
       />
 
       {/* Featured report */}

@@ -15,7 +15,7 @@ import { Route as InsightsRouteImport } from './routes/insights'
 import { Route as HowToStartRouteImport } from './routes/how-to-start'
 import { Route as ForOemsRouteImport } from './routes/for-oems'
 import { Route as CrnRouteImport } from './routes/crn'
-import { Route as BookACallRouteImport } from './routes/book-a-call'
+import { Route as BookRouteImport } from './routes/book'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as SolutionsPartnerpulseRouteImport } from './routes/solutions/partnerpulse'
@@ -52,9 +52,9 @@ const CrnRoute = CrnRouteImport.update({
   path: '/crn',
   getParentRoute: () => rootRouteImport,
 } as any)
-const BookACallRoute = BookACallRouteImport.update({
-  id: '/book-a-call',
-  path: '/book-a-call',
+const BookRoute = BookRouteImport.update({
+  id: '/book',
+  path: '/book',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AboutRoute = AboutRouteImport.update({
@@ -87,7 +87,7 @@ const SolutionsBrokerpulseRoute = SolutionsBrokerpulseRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
-  '/book-a-call': typeof BookACallRoute
+  '/book': typeof BookRoute
   '/crn': typeof CrnRoute
   '/for-oems': typeof ForOemsRoute
   '/how-to-start': typeof HowToStartRoute
@@ -101,7 +101,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
-  '/book-a-call': typeof BookACallRoute
+  '/book': typeof BookRoute
   '/crn': typeof CrnRoute
   '/for-oems': typeof ForOemsRoute
   '/how-to-start': typeof HowToStartRoute
@@ -116,7 +116,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
-  '/book-a-call': typeof BookACallRoute
+  '/book': typeof BookRoute
   '/crn': typeof CrnRoute
   '/for-oems': typeof ForOemsRoute
   '/how-to-start': typeof HowToStartRoute
@@ -132,7 +132,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/about'
-    | '/book-a-call'
+    | '/book'
     | '/crn'
     | '/for-oems'
     | '/how-to-start'
@@ -146,7 +146,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/about'
-    | '/book-a-call'
+    | '/book'
     | '/crn'
     | '/for-oems'
     | '/how-to-start'
@@ -160,7 +160,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/about'
-    | '/book-a-call'
+    | '/book'
     | '/crn'
     | '/for-oems'
     | '/how-to-start'
@@ -175,7 +175,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
-  BookACallRoute: typeof BookACallRoute
+  BookRoute: typeof BookRoute
   CrnRoute: typeof CrnRoute
   ForOemsRoute: typeof ForOemsRoute
   HowToStartRoute: typeof HowToStartRoute
@@ -231,11 +231,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CrnRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/book-a-call': {
-      id: '/book-a-call'
-      path: '/book-a-call'
-      fullPath: '/book-a-call'
-      preLoaderRoute: typeof BookACallRouteImport
+    '/book': {
+      id: '/book'
+      path: '/book'
+      fullPath: '/book'
+      preLoaderRoute: typeof BookRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/about': {
@@ -279,7 +279,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
-  BookACallRoute: BookACallRoute,
+  BookRoute: BookRoute,
   CrnRoute: CrnRoute,
   ForOemsRoute: ForOemsRoute,
   HowToStartRoute: HowToStartRoute,

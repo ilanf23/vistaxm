@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { BOOK_A_CALL_URL } from "@/lib/links";
+import { BOOK_PATH } from "@/lib/links";
 import { CTABand, NPSGauge, PageHero, Reveal, Section, SectionHead } from "@/components/site";
 import { AmbientBand } from "@/components/media";
 import { FadeIn, Stagger, StaggerItem } from "@/components/motion";
@@ -211,7 +211,7 @@ function Proof() {
         eyebrow="Proof"
         title="The only certified NPS your competitors cannot print for themselves."
         subtitle="Third-party verified, benchmarked against the channel. Real results below."
-        primary={{ label: "Book a 30-minute call", to: BOOK_A_CALL_URL }}
+        primary={{ label: "Book a 30-minute call", to: BOOK_PATH }}
       />
 
       {/* Featured proof: ePlus independent validation */}
