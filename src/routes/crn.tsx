@@ -416,9 +416,24 @@ const HEAT_GRID: Health[][] = [
 ];
 // Brand status language (matches JourneyMatrix STATUS_STYLES).
 const HEALTH_STYLE: Record<Health, { bg: string; border: string; dot: string; label: string }> = {
-  healthy: { bg: "rgba(22,163,74,0.10)", border: "rgba(22,163,74,0.45)", dot: "#16a34a", label: "Healthy" },
-  watch: { bg: "rgba(234,179,8,0.14)", border: "rgba(202,138,4,0.5)", dot: "#ca8a04", label: "Watch" },
-  risk: { bg: "rgba(220,38,38,0.10)", border: "rgba(220,38,38,0.45)", dot: "#dc2626", label: "At risk" },
+  healthy: {
+    bg: "rgba(22,163,74,0.10)",
+    border: "rgba(22,163,74,0.45)",
+    dot: "#16a34a",
+    label: "Healthy",
+  },
+  watch: {
+    bg: "rgba(234,179,8,0.14)",
+    border: "rgba(202,138,4,0.5)",
+    dot: "#ca8a04",
+    label: "Watch",
+  },
+  risk: {
+    bg: "rgba(220,38,38,0.10)",
+    border: "rgba(220,38,38,0.45)",
+    dot: "#dc2626",
+    label: "At risk",
+  },
 };
 
 function SignalMap() {
@@ -472,7 +487,11 @@ function SignalMap() {
                     style={{ background: st.bg, boxShadow: `inset 0 0 0 1px ${st.border}` }}
                     aria-label={`${HEAT_PERSONAS[r]}, ${HEAT_STAGES[c]}: ${st.label}`}
                   >
-                    <span className="h-2 w-2 rounded-full" style={{ background: st.dot }} aria-hidden />
+                    <span
+                      className="h-2 w-2 rounded-full"
+                      style={{ background: st.dot }}
+                      aria-hidden
+                    />
                   </div>
                 );
               })}
@@ -487,7 +506,10 @@ function SignalMap() {
           <span key={k} className="flex items-center gap-2">
             <span
               className="h-3 w-3 rounded-sm"
-              style={{ background: HEALTH_STYLE[k].bg, boxShadow: `inset 0 0 0 1px ${HEALTH_STYLE[k].border}` }}
+              style={{
+                background: HEALTH_STYLE[k].bg,
+                boxShadow: `inset 0 0 0 1px ${HEALTH_STYLE[k].border}`,
+              }}
             />
             {HEALTH_STYLE[k].label}
           </span>
@@ -604,7 +626,10 @@ function Proof() {
 
       <Reveal delay={160}>
         <figure className="relative mt-8 overflow-hidden rounded-2xl bg-white p-8 shadow-[var(--shadow-elevation-2)] md:p-10">
-          <span aria-hidden className="absolute inset-y-0 left-0 w-1 bg-[color:var(--orange-pop)]" />
+          <span
+            aria-hidden
+            className="absolute inset-y-0 left-0 w-1 bg-[color:var(--orange-pop)]"
+          />
           <span
             aria-hidden
             className="absolute left-7 top-4 text-6xl leading-none text-[color:var(--orange-pop)]/25"
@@ -620,8 +645,8 @@ function Proof() {
             readout coming from the VistaXM team, is critical to our mission.
           </blockquote>
           <figcaption className="relative mt-5 pl-4 text-sm text-[color:var(--ink-soft)]">
-            <span className="font-semibold text-[color:var(--navy-deep)]">Deanna Davenport</span>, VP
-            of Customer Experience, ePlus · quoted in CRN, April 2026.
+            <span className="font-semibold text-[color:var(--navy-deep)]">Deanna Davenport</span>,
+            VP of Customer Experience, ePlus · quoted in CRN, April 2026.
           </figcaption>
         </figure>
       </Reveal>

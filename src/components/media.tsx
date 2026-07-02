@@ -98,7 +98,13 @@ export function Quote({
   initials?: string;
   className?: string;
 }) {
-  const fallback = initials ?? name.split(" ").map((w) => w[0]).join("").slice(0, 2);
+  const fallback =
+    initials ??
+    name
+      .split(" ")
+      .map((w) => w[0])
+      .join("")
+      .slice(0, 2);
   return (
     <figure
       className={cn(
@@ -170,7 +176,12 @@ export function DeviceFrame({
       </div>
       <div className="relative">
         {image ? (
-          <img src={image} alt={alt ?? "VistaXM product view"} loading="lazy" className="block w-full" />
+          <img
+            src={image}
+            alt={alt ?? "VistaXM product view"}
+            loading="lazy"
+            className="block w-full"
+          />
         ) : (
           children
         )}
