@@ -2008,6 +2008,43 @@ function CountStat({
   );
 }
 
+/* Lead proof chip: the named, independently validated ePlus NPS. Links to /proof. */
+function EPlusNPSStat() {
+  const { ref, shown } = useReveal<HTMLAnchorElement>(0.4);
+  const v = useCountUp(74, 1600, shown);
+  return (
+    <a
+      href="/proof"
+      ref={ref}
+      className="group relative block pt-6"
+      aria-label="NPS 74, independently validated for ePlus. See the proof."
+      style={{
+        opacity: shown ? 1 : 0,
+        transform: shown ? "translateY(0)" : "translateY(16px)",
+        transition:
+          "opacity .7s cubic-bezier(.22,1,.36,1), transform .7s cubic-bezier(.22,1,.36,1)",
+      }}
+    >
+      <span
+        aria-hidden
+        className="absolute left-0 top-0 h-[2px] w-10 bg-gradient-to-r from-[color:var(--orange-pop)] to-[color:var(--blue-cta)] transition-all duration-500 group-hover:w-16"
+      />
+      <div
+        className="text-5xl md:text-6xl font-semibold text-[color:var(--navy-deep)] tracking-tight tabular-nums"
+        style={{ fontFamily: "var(--font-display)" }}
+      >
+        {Math.round(v)}
+      </div>
+      <div className="mt-3 text-sm text-[color:var(--ink-soft)] leading-relaxed max-w-[22ch]">
+        NPS, independently validated
+        <span className="mt-1.5 flex items-center gap-1 text-xs font-semibold uppercase tracking-[0.12em] text-[color:var(--blue-link)]">
+          ePlus
+        </span>
+      </div>
+    </a>
+  );
+}
+
 export function ProvenResults() {
   return (
     <Section>
@@ -2021,7 +2058,8 @@ export function ProvenResults() {
           </>
         }
       />
-      <div className="mt-10 grid grid-cols-2 gap-x-8 gap-y-12 md:grid-cols-3 lg:grid-cols-5">
+      <div className="mt-10 grid grid-cols-2 gap-x-8 gap-y-12 md:grid-cols-3 lg:grid-cols-6">
+        <EPlusNPSStat />
         {RESULTS.map((r, i) => (
           <CountStat
             key={r.label}
@@ -2029,7 +2067,7 @@ export function ProvenResults() {
             prefix={r.prefix}
             suffix={r.suffix}
             label={r.label}
-            delay={i * 120}
+            delay={(i + 1) * 120}
           />
         ))}
       </div>

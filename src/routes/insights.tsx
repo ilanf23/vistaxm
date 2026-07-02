@@ -209,6 +209,15 @@ type LinkItem = {
 // third-party article or press-release body text. Ordered newest first.
 const NEWSROOM: LinkItem[] = [
   {
+    type: "Press release",
+    title: "ePlus Surpasses Industry Benchmarks with an Outstanding NPS",
+    summary:
+      "ePlus, a NASDAQ-listed solutions provider, announced that an independent survey conducted by VistaXM measured a Net Promoter Score of 74 across more than 1,400 of its customers, well above the technology industry average.",
+    source: "ePlus Investor Relations",
+    date: "Jul 2026",
+    href: "https://www.eplus.com/who-we-are/investor-relations/press-releases/2026/07/eplus-surpasses-industry-benchmarks-with-outstanding-net-promoter-score-in-independent-survey",
+  },
+  {
     type: "In the news",
     title: "VistaXM Is Powering a Customer Experience Partner Revolution",
     summary:
@@ -252,12 +261,6 @@ const NEWSROOM: LinkItem[] = [
     source: "EIN Presswire",
     date: "Nov 2025",
     href: "https://www.einpresswire.com/article/866359864/vistaxm-launches-broker-experience-management-bxm-the-missing-link-between-broker-loyalty-and-retention",
-  },
-  {
-    type: "Press release",
-    title: "ePlus press release",
-    href: "#",
-    comingSoon: true,
   },
 ];
 

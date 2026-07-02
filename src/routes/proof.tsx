@@ -214,6 +214,102 @@ function Proof() {
         primary={{ label: "Book a 30-minute call", to: BOOK_A_CALL_URL }}
       />
 
+      {/* Featured proof: ePlus independent validation */}
+      <Section>
+        <div className="grid items-center gap-12 lg:grid-cols-[1fr_1.3fr] lg:gap-16">
+          <Reveal className="h-full">
+            <div className="relative flex h-full flex-col overflow-hidden rounded-[1.75rem] hairline bg-[color:var(--blue-tint)] p-9 md:p-12">
+              <span
+                aria-hidden
+                className="absolute inset-x-0 top-0 h-[3px] bg-gradient-to-r from-[color:var(--blue-cta)] to-[color:var(--orange-pop)]"
+              />
+              <div className="flex items-center justify-between gap-4">
+                <span className="text-sm font-semibold uppercase tracking-[0.12em] text-[color:var(--blue-link)]">
+                  ePlus
+                </span>
+                {/* Placeholder slot for the ePlus logo; do not hotlink an ePlus image */}
+                <span className="flex h-9 items-center rounded-lg border border-dashed border-[color:var(--gray-line)] px-3 text-[0.65rem] font-semibold uppercase tracking-[0.12em] text-[color:var(--ink-soft)]">
+                  Logo to add
+                </span>
+              </div>
+              <div
+                className="mt-8 text-[6rem] font-semibold leading-none tracking-tight tabular-nums text-[color:var(--navy-deep)] md:text-[7.5rem]"
+                style={{ fontFamily: "var(--font-display)" }}
+              >
+                74
+              </div>
+              <div className="mt-4 text-lg font-semibold text-[color:var(--navy-deep)]">
+                Net Promoter Score
+              </div>
+              <div className="mt-1 text-sm leading-relaxed text-[color:var(--ink-soft)]">
+                vs the 40 to 55 technology industry average
+              </div>
+            </div>
+          </Reveal>
+
+          <div>
+            <FadeIn>
+              <span className="eyebrow">Independently validated</span>
+              <p className="mt-5 text-base leading-relaxed text-[color:var(--ink-soft)] md:text-lg">
+                In an independent survey of more than 1,400 ePlus customers, conducted by VistaXM as
+                a neutral third party, ePlus scored a Net Promoter Score of 74. ePlus, a
+                NASDAQ-listed solutions provider, published the result in its own investor
+                communications. This is what the independent, certified NPS standard for the channel
+                looks like: confirmed in public, by the customer, not by us.
+              </p>
+            </FadeIn>
+
+            <Stagger className="mt-8 grid gap-4" stagger={0.1}>
+              <StaggerItem>
+                <figure className="rounded-2xl hairline bg-white p-6 md:p-7">
+                  <blockquote className="text-[0.95rem] font-medium leading-relaxed text-[color:var(--navy-deep)]">
+                    &ldquo;An NPS of 74, validated by an independent body and drawn from more than
+                    1,400 voices, tells us that we are not just meeting expectations, we are
+                    consistently exceeding them.&rdquo;
+                  </blockquote>
+                  <figcaption className="mt-4 text-sm font-semibold text-[color:var(--navy-deep)]">
+                    Deanna Davenport
+                    <span className="mt-0.5 block text-xs font-normal text-[color:var(--ink-soft)]">
+                      Vice President of Customer Experience, ePlus
+                    </span>
+                  </figcaption>
+                </figure>
+              </StaggerItem>
+              <StaggerItem>
+                <figure className="rounded-2xl hairline bg-white p-6 md:p-7">
+                  <blockquote className="text-[0.95rem] font-medium leading-relaxed text-[color:var(--navy-deep)]">
+                    &ldquo;An NPS of 74 is exceptionally strong for an IT services company. Scores
+                    like this do not happen by accident; they reflect a sustained, organization-wide
+                    commitment to the customer relationship.&rdquo;
+                  </blockquote>
+                  <figcaption className="mt-4 text-sm font-semibold text-[color:var(--navy-deep)]">
+                    Dr. Howard Lax
+                    <span className="mt-0.5 block text-xs font-normal text-[color:var(--ink-soft)]">
+                      Principal Strategist, Experience Management and Data Science, VistaXM
+                    </span>
+                  </figcaption>
+                </figure>
+              </StaggerItem>
+            </Stagger>
+
+            <FadeIn delay={160} className="mt-8">
+              <a
+                href="https://www.eplus.com/who-we-are/investor-relations/press-releases/2026/07/eplus-surpasses-industry-benchmarks-with-outstanding-net-promoter-score-in-independent-survey"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-secondary"
+              >
+                Read the ePlus announcement
+              </a>
+              <p className="mt-3 text-xs leading-relaxed text-[color:var(--ink-soft)]">
+                The announcement also drew endorsements from several of ePlus&rsquo;s major
+                technology partners.
+              </p>
+            </FadeIn>
+          </div>
+        </div>
+      </Section>
+
       {/* The certified NPS */}
       <Section dark>
         <div className="grid items-center gap-14 lg:grid-cols-[1.2fr_1fr]">
@@ -318,45 +414,6 @@ function Proof() {
             Every outcome above started as a signal someone acted on in time.
           </AmbientBand>
         </Reveal>
-      </Section>
-
-      {/* Testimonial */}
-      <Section tint>
-        <FadeIn>
-          <figure className="relative mx-auto max-w-4xl rounded-[1.75rem] hairline bg-white p-9 shadow-[0_30px_80px_-40px_rgba(2,37,80,.35)] md:p-14">
-            <span
-              aria-hidden
-              className="absolute left-7 top-3 text-7xl leading-none text-[color:var(--orange-pop)]/25 md:left-10"
-              style={{ fontFamily: "var(--font-display)" }}
-            >
-              &ldquo;
-            </span>
-            <blockquote
-              className="relative text-xl font-semibold leading-snug text-[color:var(--navy-deep)] md:text-[1.625rem]"
-              style={{ fontFamily: "var(--font-display)" }}
-            >
-              They bring an agnostic viewpoint into the data we are gathering and help us break down
-              the results to highlight where we are doing well and where we need to make
-              adjustments. Having that unbiased filter, with the readout coming from the VistaXM
-              team, is critical to our mission.
-            </blockquote>
-            <figcaption className="mt-7 flex items-center gap-3 text-sm">
-              <span
-                aria-hidden
-                className="flex h-12 w-12 flex-none items-center justify-center rounded-full bg-gradient-to-br from-[color:var(--navy-deep)] to-[color:var(--blue-cta)] font-semibold text-white"
-                style={{ fontFamily: "var(--font-display)" }}
-              >
-                DD
-              </span>
-              <span className="font-semibold text-[color:var(--navy-deep)]">
-                Deanna Davenport, VP of Customer Experience, ePlus
-                <span className="mt-0.5 block text-xs font-normal text-[color:var(--ink-soft)]">
-                  Quoted in CRN, April 2026
-                </span>
-              </span>
-            </figcaption>
-          </figure>
-        </FadeIn>
       </Section>
 
       {/* Sample deliverables */}
