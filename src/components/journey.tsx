@@ -70,3 +70,51 @@ export function WaveMiniChart({ className }: { className?: string }) {
     </div>
   );
 }
+
+/* The scroll-drawn vertical line that connects the page's sections. Renders
+   only at xl+ where the 1240px container is centered, so the gutter math
+   (50% - 596px = the container's inner left edge) holds. */
+export function JourneyRail({ children, className }: { children: ReactNode; className?: string }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start 0.7", "end 0.9"],
+  });
+  const drawn = useSpring(scrollYProgress, { stiffness: 90, damping: 26, mass: 0.4 });
+  return (
+    <div ref={ref} className={cn("relative", className)}>
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-y-0 z-10 hidden xl:block"
+        style={{ left: "calc(50% - 596px)" }}
+      >
+        <motion.div
+          className="journey-rail-line h-full w-[2px] origin-top rounded-full opacity-45"
+          style={{
+            scaleY: drawn,
+            backgroundImage: "linear-gradient(to bottom, var(--orange-pop), var(--blue-cta))",
+          }}
+        />
+      </div>
+      {children}
+    </div>
+  );
+}
+
+/* Section marker that sits on the rail. Place as the first child of a
+   section content wrapper that has className="relative xl:pl-14". */
+export function RailNode({ className }: { className?: string }) {
+  return (
+    <motion.span
+      aria-hidden
+      initial={{ scale: 0, opacity: 0 }}
+      whileInView={{ scale: 1, opacity: 1 }}
+      viewport={VIEWPORT}
+      transition={{ duration: 0.45, ease: EASE }}
+      className={cn(
+        "absolute left-0 top-2 z-20 hidden h-3 w-3 -translate-x-[calc(50%-1px)] rounded-full border-2 border-[color:var(--orange-pop)] bg-white xl:block",
+        className,
+      )}
+    />
+  );
+}

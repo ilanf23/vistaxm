@@ -826,3 +826,15 @@
   box-shadow: var(--shadow-elevation-2);
   overflow: hidden;
 }
+
+/* Scroll-drawn SVG strokes render fully drawn for reduced-motion users.
+   !important is required to beat motion's inline stroke-dasharray. */
+@media (prefers-reduced-motion: reduce) {
+  .journey-draw {
+    stroke-dasharray: none !important;
+    stroke-dashoffset: 0 !important;
+  }
+  .journey-rail-line {
+    transform: none !important;
+  }
+}
