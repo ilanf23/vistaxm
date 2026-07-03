@@ -101,6 +101,64 @@ export function JourneyRail({ children, className }: { children: ReactNode; clas
   );
 }
 
+/* Numbered timeline list: replaces circle-check bullets. The connector line
+   visually echoes the rail. */
+export function TimelineList({ eyebrow, items }: { eyebrow: string; items: string[] }) {
+  return (
+    <div>
+      <div className="eyebrow mb-5">{eyebrow}</div>
+      <Stagger className="relative" stagger={0.1}>
+        <span
+          aria-hidden
+          className="absolute bottom-4 left-[11px] top-4 w-px bg-gradient-to-b from-[color:var(--orange-pop)] to-[color:var(--blue-cta)] opacity-30"
+        />
+        {items.map((item, i) => (
+          <StaggerItem key={item} className="relative flex items-start gap-4 py-3">
+            <span className="relative z-10 flex h-6 w-6 flex-none items-center justify-center rounded-full border border-[color:var(--blue-cta)]/30 bg-white text-[11px] font-semibold tabular-nums text-[color:var(--blue-cta)]">
+              {i + 1}
+            </span>
+            <span className="pt-0.5 text-[15px] leading-relaxed text-[color:var(--ink-soft)]">
+              {item}
+            </span>
+          </StaggerItem>
+        ))}
+      </Stagger>
+    </div>
+  );
+}
+
+/* The three program tiers as ascending steps: each step wider than the last,
+   stepping out to the left, with a gradient edge that brightens per tier. */
+export function TierSteps({
+  tiers,
+}: {
+  tiers: { size: string; headline: string; desc: string }[];
+}) {
+  const widths = ["xl:w-[76%]", "xl:w-[88%]", "xl:w-full"];
+  return (
+    <Stagger className="flex flex-col items-end gap-3" stagger={0.14}>
+      {tiers.map((tier, i) => (
+        <StaggerItem key={tier.size} className={cn("w-full", widths[i])}>
+          <div className="relative overflow-hidden rounded-xl border border-white/10 bg-white/[0.04] p-5 pl-6 transition-colors duration-300 hover:border-white/25 hover:bg-white/[0.07]">
+            <span
+              aria-hidden
+              className="absolute inset-y-0 left-0 w-[3px] bg-gradient-to-b from-[color:var(--orange-pop)] to-[color:var(--blue-cta)]"
+              style={{ opacity: 0.35 + i * 0.3 }}
+            />
+            <div className="flex items-center justify-between gap-4">
+              <span className="text-sm font-semibold text-white">{tier.size}</span>
+              <span className="text-xs font-semibold uppercase tracking-[0.12em] text-[color:var(--blue-light)]">
+                {tier.headline}
+              </span>
+            </div>
+            <p className="mt-2 text-[13.5px] leading-relaxed text-white/65">{tier.desc}</p>
+          </div>
+        </StaggerItem>
+      ))}
+    </Stagger>
+  );
+}
+
 /* Section marker that sits on the rail. Place as the first child of a
    section content wrapper that has className="relative xl:pl-14". */
 export function RailNode({ className }: { className?: string }) {
