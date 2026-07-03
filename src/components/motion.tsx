@@ -17,7 +17,7 @@ import { motion, useScroll, useTransform, type MotionStyle } from "motion/react"
 
 // Matches the cubic-bezier used by the CSS `reveal` utility for a consistent feel.
 const EASE = [0.22, 1, 0.36, 1] as const;
-const VIEWPORT = { once: true, margin: "0px 0px -10% 0px" } as const;
+const VIEWPORT = { once: true, margin: "0px 0px 15% 0px" } as const;
 
 /** Single element that fades + rises into view once when scrolled to. */
 export function FadeIn({
