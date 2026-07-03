@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { BOOK_PATH } from "@/lib/links";
 import { CTABand, Section, SectionHead, PageHero } from "@/components/site";
-import { FadeIn } from "@/components/motion";
+import { FadeIn, Parallax } from "@/components/motion";
 import {
   BriefDoc,
   JourneyRail,
@@ -166,16 +166,18 @@ function HowToStart() {
                 title="Managed, neutral, light lift."
                 intro="We bring the playbooks, the data scientists, and the technology. Your team stays focused on the customer. Better, faster, and lighter than building it yourself."
               />
-              <FadeIn delay={120}>
-                <div className="img-editorial-soft img-frame aspect-[4/3] w-full">
-                  <img
-                    src="/images/ambient/operator-charts.jpg"
-                    alt="An analyst working through charts at a workstation"
-                    loading="lazy"
-                    className="h-full w-full object-cover"
-                  />
-                </div>
-              </FadeIn>
+              <Parallax distance={28}>
+                <FadeIn delay={120}>
+                  <div className="img-editorial-soft img-frame aspect-[4/3] w-full">
+                    <img
+                      src="/images/ambient/operator-charts.jpg"
+                      alt="An analyst working through charts at a workstation"
+                      loading="lazy"
+                      className="h-full w-full object-cover"
+                    />
+                  </div>
+                </FadeIn>
+              </Parallax>
             </div>
           </div>
         </Section>

@@ -26,11 +26,13 @@
 ### Task 1: Baseline word capture + global reveal-timing fix
 
 **Files:**
+
 - Modify: `src/components/motion.tsx:20`
 - Modify: `src/hooks/use-reveal.ts:3-29`
 - Create (scratch, not committed): `<scratchpad>/how-to-start-before.txt`
 
 **Interfaces:**
+
 - Produces: `VIEWPORT` in `motion.tsx` becomes `{ once: true, margin: "0px 0px 15% 0px" }` (used verbatim by Task 5's `BriefDoc`).
 
 - [ ] **Step 1: Capture the word baseline from the current preview build**
@@ -107,10 +109,12 @@ Co-Authored-By: Claude Fable 5 <noreply@anthropic.com>"
 ### Task 2: `journey.tsx` scaffold + `WaveMiniChart` hero visual
 
 **Files:**
+
 - Create: `src/components/journey.tsx`
 - Modify: `src/routes/how-to-start.tsx` (PageHero call, lines 87-92)
 
 **Interfaces:**
+
 - Consumes: `PageHero`'s existing `visual?: ReactNode` prop (it already wraps the visual in `FadeIn` + `Floaty`).
 - Produces: `WaveMiniChart({ className? })`, plus module-level `EASE` and `VIEWPORT` constants reused by later tasks in this file.
 
@@ -202,13 +206,13 @@ import { WaveMiniChart } from "@/components/journey";
 ```
 
 ```tsx
-      <PageHero
-        eyebrow="How to start"
-        title="Start small. Scale when it works."
-        subtitle="Two ways in, both fully managed. Prove the signal exists and that it changes a decision, then expand into the ongoing program."
-        primary={{ label: "Book a 30-minute call", to: BOOK_PATH }}
-        visual={<WaveMiniChart />}
-      />
+<PageHero
+  eyebrow="How to start"
+  title="Start small. Scale when it works."
+  subtitle="Two ways in, both fully managed. Prove the signal exists and that it changes a decision, then expand into the ongoing program."
+  primary={{ label: "Book a 30-minute call", to: BOOK_PATH }}
+  visual={<WaveMiniChart />}
+/>
 ```
 
 - [ ] **Step 3: Verify**
@@ -233,11 +237,13 @@ Co-Authored-By: Claude Fable 5 <noreply@anthropic.com>"
 ### Task 3: `JourneyRail` + `RailNode` + reduced-motion CSS
 
 **Files:**
+
 - Modify: `src/components/journey.tsx` (append)
 - Modify: `src/styles.css` (append at end)
 - Modify: `src/routes/how-to-start.tsx` (wrap sections)
 
 **Interfaces:**
+
 - Produces: `JourneyRail({ children, className? })` and `RailNode({ className? })`. Contract for later tasks: every section that should sit on the rail wraps its content in `<div className="relative xl:pl-14">` with a `<RailNode />` as first child. The rail line sits at the container's inner left edge (`calc(50% - 596px)`, valid because `container-x` is 1240px max with 1.5rem padding and the rail only renders at `xl` (1280px+)).
 
 - [ ] **Step 1: Append rail components to `src/components/journey.tsx`**
@@ -246,13 +252,7 @@ Co-Authored-By: Claude Fable 5 <noreply@anthropic.com>"
 /* The scroll-drawn vertical line that connects the page's sections. Renders
    only at xl+ where the 1240px container is centered, so the gutter math
    (50% - 596px = the container's inner left edge) holds. */
-export function JourneyRail({
-  children,
-  className,
-}: {
-  children: ReactNode;
-  className?: string;
-}) {
+export function JourneyRail({ children, className }: { children: ReactNode; className?: string }) {
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -273,7 +273,14 @@ export function JourneyRail({
           aria-hidden
         >
           <defs>
-            <linearGradient id="rail-grad" x1="0" y1="0" x2="0" y2="100" gradientUnits="userSpaceOnUse">
+            <linearGradient
+              id="rail-grad"
+              x1="0"
+              y1="0"
+              x2="0"
+              y2="100"
+              gradientUnits="userSpaceOnUse"
+            >
               <stop offset="0" stopColor="var(--orange-pop)" />
               <stop offset="1" stopColor="var(--blue-cta)" />
             </linearGradient>
@@ -381,10 +388,12 @@ Co-Authored-By: Claude Fable 5 <noreply@anthropic.com>"
 ### Task 4: Restructure "Two ways in" (Essentials timeline + tier steps)
 
 **Files:**
+
 - Modify: `src/components/journey.tsx` (append `TimelineList`, `TierSteps`)
 - Modify: `src/routes/how-to-start.tsx` (replace the whole "Two ways in" `<Section>`; delete `Check`, `GetItem`, and the two-card grid)
 
 **Interfaces:**
+
 - Consumes: `TIERS` and the deliverable strings already defined in the route file; `Stagger`/`StaggerItem` from `@/components/motion`.
 - Produces: `TimelineList({ eyebrow, items })` and `TierSteps({ tiers })` where `tiers: { size: string; headline: string; desc: string }[]`.
 
@@ -455,90 +464,94 @@ export function TierSteps({
 Delete the `Check` and `GetItem` components (lines 27-56) and the `DELIVERABLES`-adjacent two-card grid. The section becomes two full-width beats inside the rail. Exact copy is preserved word for word:
 
 ```tsx
-      {/* The two entry paths: Essentials first, then the program */}
-      <Section>
-        <div className="relative xl:pl-14">
-          <RailNode />
-          <SectionHead
-            eyebrow="Two ways in"
-            title="Pick the entry that fits where you are."
-            intro="Both paths are fully managed by us. Start with a fixed first wave, or step straight into the ongoing program. Either way, you act on the signal, not the setup."
-          />
+{
+  /* The two entry paths: Essentials first, then the program */
+}
+<Section>
+  <div className="relative xl:pl-14">
+    <RailNode />
+    <SectionHead
+      eyebrow="Two ways in"
+      title="Pick the entry that fits where you are."
+      intro="Both paths are fully managed by us. Start with a fixed first wave, or step straight into the ongoing program. Either way, you act on the signal, not the setup."
+    />
 
-          <div className="mt-14 grid gap-10 lg:grid-cols-[1fr_1.05fr] lg:gap-16">
-            <FadeIn>
-              <span className="pill-light w-fit">Start here</span>
-              <h3 className="mt-4 !text-2xl">Essentials.</h3>
-              <p className="mt-3 max-w-[48ch] leading-relaxed text-[color:var(--ink-soft)]">
-                A fixed, fast first wave. We stand up your program, deliver your certified NPS and
-                your first account-level revenue signals, and hand you a prioritized list of moves.
-                Sized to a director-level budget.
-              </p>
-              <div className="mt-8">
-                <a href={BOOK_PATH} className="btn-primary">
-                  Start with Essentials
-                </a>
-              </div>
-            </FadeIn>
-            <FadeIn delay={120}>
-              <TimelineList
-                eyebrow="What you get"
-                items={[
-                  "Certified NPS",
-                  "Benchmarked indexes (when available)",
-                  "The Decision Maker to Influencer gap",
-                  "A named at-risk and expansion account list",
-                  "First insight in about 90 days",
-                ]}
-              />
-            </FadeIn>
-          </div>
+    <div className="mt-14 grid gap-10 lg:grid-cols-[1fr_1.05fr] lg:gap-16">
+      <FadeIn>
+        <span className="pill-light w-fit">Start here</span>
+        <h3 className="mt-4 !text-2xl">Essentials.</h3>
+        <p className="mt-3 max-w-[48ch] leading-relaxed text-[color:var(--ink-soft)]">
+          A fixed, fast first wave. We stand up your program, deliver your certified NPS and your
+          first account-level revenue signals, and hand you a prioritized list of moves. Sized to a
+          director-level budget.
+        </p>
+        <div className="mt-8">
+          <a href={BOOK_PATH} className="btn-primary">
+            Start with Essentials
+          </a>
         </div>
-      </Section>
+      </FadeIn>
+      <FadeIn delay={120}>
+        <TimelineList
+          eyebrow="What you get"
+          items={[
+            "Certified NPS",
+            "Benchmarked indexes (when available)",
+            "The Decision Maker to Influencer gap",
+            "A named at-risk and expansion account list",
+            "First insight in about 90 days",
+          ]}
+        />
+      </FadeIn>
+    </div>
+  </div>
+</Section>;
 
-      {/* Scale beat: the program on dark */}
-      <Section dark>
-        <div className="relative xl:pl-14">
-          <RailNode className="border-[color:var(--blue-light)] bg-[color:var(--navy-deep)]" />
-          <FadeIn>
-            <span className="pill w-fit !text-[color:var(--blue-light)]">Scale when it works</span>
-          </FadeIn>
-          <div className="mt-6 grid gap-10 lg:grid-cols-[1fr_1.05fr] lg:items-center lg:gap-16">
-            <FadeIn delay={80}>
-              <h3 className="!text-2xl !text-white">The Fully Managed Program.</h3>
-              <p className="mt-3 max-w-[48ch] leading-relaxed text-white/75">
-                The ongoing program that keeps finding and protecting revenue, wave after wave.
-                Choose the scope that fits your book. Continuous signal, benchmark tracking, and
-                quarterly reviews, all run by us.
-              </p>
-              <div className="mt-8">
-                <a href={BOOK_PATH} className="btn-primary">
-                  Scope the program
-                </a>
-              </div>
-            </FadeIn>
-            <TierSteps
-              tiers={[
-                {
-                  size: "Standard",
-                  headline: "A focused book.",
-                  desc: "Continuous signal across a defined set of priority accounts, with the core benchmark and quarterly review.",
-                },
-                {
-                  size: "Advanced",
-                  headline: "A growing portfolio.",
-                  desc: "Wider coverage across segments and personas, deeper benchmark tracking, and a faster cadence of waves.",
-                },
-                {
-                  size: "Strategic",
-                  headline: "The full channel.",
-                  desc: "Program-wide measurement across the channel, peer-group benchmarking, and executive reporting end to end.",
-                },
-              ]}
-            />
-          </div>
+{
+  /* Scale beat: the program on dark */
+}
+<Section dark>
+  <div className="relative xl:pl-14">
+    <RailNode className="border-[color:var(--blue-light)] bg-[color:var(--navy-deep)]" />
+    <FadeIn>
+      <span className="pill w-fit !text-[color:var(--blue-light)]">Scale when it works</span>
+    </FadeIn>
+    <div className="mt-6 grid gap-10 lg:grid-cols-[1fr_1.05fr] lg:items-center lg:gap-16">
+      <FadeIn delay={80}>
+        <h3 className="!text-2xl !text-white">The Fully Managed Program.</h3>
+        <p className="mt-3 max-w-[48ch] leading-relaxed text-white/75">
+          The ongoing program that keeps finding and protecting revenue, wave after wave. Choose the
+          scope that fits your book. Continuous signal, benchmark tracking, and quarterly reviews,
+          all run by us.
+        </p>
+        <div className="mt-8">
+          <a href={BOOK_PATH} className="btn-primary">
+            Scope the program
+          </a>
         </div>
-      </Section>
+      </FadeIn>
+      <TierSteps
+        tiers={[
+          {
+            size: "Standard",
+            headline: "A focused book.",
+            desc: "Continuous signal across a defined set of priority accounts, with the core benchmark and quarterly review.",
+          },
+          {
+            size: "Advanced",
+            headline: "A growing portfolio.",
+            desc: "Wider coverage across segments and personas, deeper benchmark tracking, and a faster cadence of waves.",
+          },
+          {
+            size: "Strategic",
+            headline: "The full channel.",
+            desc: "Program-wide measurement across the channel, peer-group benchmarking, and executive reporting end to end.",
+          },
+        ]}
+      />
+    </div>
+  </div>
+</Section>;
 ```
 
 Keep the module-level `TIERS` array only if still referenced; if the tiers are inlined as above, delete `TIERS` (and keep `DELIVERABLES` for Task 5). Update imports: remove `type ReactNode` if now unused, add `TimelineList, TierSteps` to the journey import, keep `FadeIn` and drop `Stagger, StaggerItem` from the motion import if no longer used in the route.
@@ -568,10 +581,12 @@ Co-Authored-By: Claude Fable 5 <noreply@anthropic.com>"
 ### Task 5: `BriefDoc` deliverable section
 
 **Files:**
+
 - Modify: `src/components/journey.tsx` (append `BriefDoc`)
 - Modify: `src/routes/how-to-start.tsx` (replace the "What lands on your desk" card)
 
 **Interfaces:**
+
 - Consumes: `DELIVERABLES` string array already in the route; `VIEWPORT`/`EASE` from `journey.tsx`.
 - Produces: `BriefDoc({ items, footer })` with `items: string[]`, `footer: ReactNode`.
 
@@ -624,23 +639,25 @@ export function BriefDoc({ items, footer }: { items: string[]; footer: ReactNode
 - [ ] **Step 2: Replace the deliverable section in the route**
 
 ```tsx
-      {/* What lands on your desk */}
-      <Section tint>
-        <div className="relative xl:pl-14">
-          <RailNode />
-          <SectionHead
-            eyebrow="The deliverable"
-            title="What lands on your desk."
-            intro="Not a dashboard to interpret. A short, ranked brief you can act on the day it arrives."
-          />
-          <div className="mt-12">
-            <BriefDoc
-              items={DELIVERABLES}
-              footer="A sample deliverable, clearly labeled as a sample, is available on request."
-            />
-          </div>
-        </div>
-      </Section>
+{
+  /* What lands on your desk */
+}
+<Section tint>
+  <div className="relative xl:pl-14">
+    <RailNode />
+    <SectionHead
+      eyebrow="The deliverable"
+      title="What lands on your desk."
+      intro="Not a dashboard to interpret. A short, ranked brief you can act on the day it arrives."
+    />
+    <div className="mt-12">
+      <BriefDoc
+        items={DELIVERABLES}
+        footer="A sample deliverable, clearly labeled as a sample, is available on request."
+      />
+    </div>
+  </div>
+</Section>;
 ```
 
 Add `BriefDoc` to the journey import. The old `FadeIn`-wrapped white card with check rows is deleted.
@@ -667,39 +684,43 @@ Co-Authored-By: Claude Fable 5 <noreply@anthropic.com>"
 ### Task 6: Why-managed parallax + full-page verification
 
 **Files:**
+
 - Modify: `src/routes/how-to-start.tsx` (why-managed section)
 
 **Interfaces:**
+
 - Consumes: `Parallax` from `@/components/motion`.
 
 - [ ] **Step 1: Add the rail node and parallax to the why-managed section**
 
 ```tsx
-      {/* Why managed */}
-      <Section>
-        <div className="relative xl:pl-14">
-          <RailNode />
-          <div className="grid gap-12 lg:grid-cols-2 lg:items-center lg:gap-16">
-            <SectionHead
-              eyebrow="Why managed"
-              title="Managed, neutral, light lift."
-              intro="We bring the playbooks, the data scientists, and the technology. Your team stays focused on the customer. Better, faster, and lighter than building it yourself."
+{
+  /* Why managed */
+}
+<Section>
+  <div className="relative xl:pl-14">
+    <RailNode />
+    <div className="grid gap-12 lg:grid-cols-2 lg:items-center lg:gap-16">
+      <SectionHead
+        eyebrow="Why managed"
+        title="Managed, neutral, light lift."
+        intro="We bring the playbooks, the data scientists, and the technology. Your team stays focused on the customer. Better, faster, and lighter than building it yourself."
+      />
+      <Parallax distance={28}>
+        <FadeIn delay={120}>
+          <div className="img-editorial-soft img-frame aspect-[4/3] w-full">
+            <img
+              src="/images/ambient/operator-charts.jpg"
+              alt="An analyst working through charts at a workstation"
+              loading="lazy"
+              className="h-full w-full object-cover"
             />
-            <Parallax distance={28}>
-              <FadeIn delay={120}>
-                <div className="img-editorial-soft img-frame aspect-[4/3] w-full">
-                  <img
-                    src="/images/ambient/operator-charts.jpg"
-                    alt="An analyst working through charts at a workstation"
-                    loading="lazy"
-                    className="h-full w-full object-cover"
-                  />
-                </div>
-              </FadeIn>
-            </Parallax>
           </div>
-        </div>
-      </Section>
+        </FadeIn>
+      </Parallax>
+    </div>
+  </div>
+</Section>;
 ```
 
 Add `Parallax` to the motion import in the route.
