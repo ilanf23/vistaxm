@@ -3,6 +3,7 @@ import { BOOK_PATH } from "@/lib/links";
 import { CTABand, NPSGauge, PageHero, Reveal, Section, SectionHead } from "@/components/site";
 import { AmbientBand } from "@/components/media";
 import { FadeIn, Stagger, StaggerItem } from "@/components/motion";
+import { useCountUp, useReveal } from "@/hooks/use-reveal";
 
 export const Route = createFileRoute("/proof")({
   head: () => ({
@@ -204,48 +205,250 @@ function SampleDeliverable({
   );
 }
 
+/* ---------------- Local: certified-NPS credential seal (hero visual) ---------------- */
+
+function SealMark({ className }: { className?: string }) {
+  // A rosette / verified badge: notched outer ring with an inner check.
+  return (
+    <svg viewBox="0 0 48 48" fill="none" aria-hidden className={className}>
+      <path
+        d="M24 3.5l4.6 2.9 5.4-.7 2.2 5 4.6 3-1.4 5.3 1.4 5.3-4.6 3-2.2 5-5.4-.7L24 44.5l-4.6-2.9-5.4.7-2.2-5-4.6-3 1.4-5.3L7.2 18l4.6-3 2.2-5 5.4.7L24 3.5z"
+        fill="rgba(103,166,255,0.14)"
+        stroke="#67a6ff"
+        strokeWidth="1.4"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M17.5 24.2l4.4 4.3 8.6-9"
+        stroke="#67a6ff"
+        strokeWidth="2.2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+function BenchmarkBar({
+  label,
+  score,
+  fill,
+  accent,
+  shown,
+  delay,
+}: {
+  label: string;
+  score: number;
+  fill: number; // 0-100 width of the bar
+  accent: boolean;
+  shown: boolean;
+  delay: number;
+}) {
+  const value = useCountUp(score, 1100, shown);
+  return (
+    <div>
+      <div className="flex items-baseline justify-between">
+        <span className="text-[0.8rem] font-medium text-[#bcd6f5]">{label}</span>
+        <span
+          className="text-[0.95rem] font-semibold tabular-nums text-white"
+          style={{ fontFamily: "var(--font-display)" }}
+        >
+          {Math.round(value)}
+          {accent ? "+" : ""}
+        </span>
+      </div>
+      <div className="mt-2 h-2.5 overflow-hidden rounded-full bg-white/[0.06]">
+        <div
+          className="h-full rounded-full"
+          style={{
+            width: shown ? `${fill}%` : "0%",
+            transition: `width 1100ms cubic-bezier(0.22,1,0.36,1) ${delay}ms`,
+            background: accent
+              ? "linear-gradient(90deg, var(--blue-cta), var(--blue-light))"
+              : "rgba(159,192,232,0.4)",
+          }}
+        />
+      </div>
+    </div>
+  );
+}
+
+function CertifiedSeal() {
+  const { ref, shown } = useReveal<HTMLDivElement>();
+  return (
+    <div ref={ref} className="glass relative overflow-hidden p-7 md:p-8">
+      <span
+        aria-hidden
+        className="absolute inset-x-0 top-0 h-[3px] bg-gradient-to-r from-[color:var(--blue-cta)] to-[color:var(--orange-pop)]"
+      />
+
+      {/* Seal header */}
+      <div className="flex items-start justify-between gap-4">
+        <div className="flex items-center gap-3">
+          <SealMark className="h-11 w-11 flex-none" />
+          <div>
+            <div className="text-[0.72rem] font-semibold uppercase tracking-[0.16em] text-[#67a6ff]">
+              Certified NPS
+            </div>
+            <div className="mt-1 text-[0.95rem] font-semibold leading-tight text-white">
+              The channel standard
+            </div>
+          </div>
+        </div>
+        <span className="inline-flex flex-none items-center gap-1.5 rounded-full border border-[rgba(246,130,65,0.35)] bg-[rgba(246,130,65,0.14)] px-2.5 py-1 text-[0.68rem] font-semibold text-[#ffd2b5]">
+          <span className="h-1.5 w-1.5 rounded-full bg-[color:var(--orange-pop)]" />
+          Independently verified
+        </span>
+      </div>
+
+      {/* Benchmark strip */}
+      <div className="mt-8 space-y-5">
+        <BenchmarkBar
+          label="Top-quartile certified"
+          score={70}
+          fill={100}
+          accent
+          shown={shown}
+          delay={80}
+        />
+        <BenchmarkBar
+          label="Technology industry average"
+          score={55}
+          fill={62}
+          accent={false}
+          shown={shown}
+          delay={220}
+        />
+      </div>
+
+      {/* Footer */}
+      <div className="mt-8 flex items-center gap-2 border-t border-[color:var(--hairline-dark)] pt-4 text-[0.72rem] font-medium text-[#9fc0e8]">
+        <ProofIcon name="shield" className="h-4 w-4 flex-none text-[#67a6ff]" />
+        Third-party audited, benchmarked against the channel
+      </div>
+    </div>
+  );
+}
+
+/* ---------------- Local: featured ePlus NPS benchmark card ---------------- */
+
+function EPlusBenchmarkCard() {
+  const { ref, shown } = useReveal(0.4);
+  const v = useCountUp(74, 1600, shown);
+  return (
+    <Reveal className="h-full">
+      <div
+        ref={ref}
+        className="relative flex h-full flex-col overflow-hidden rounded-[1.75rem] hairline bg-[color:var(--blue-tint)] p-9 md:p-12"
+      >
+        <span
+          aria-hidden
+          className="absolute inset-x-0 top-0 h-[3px] bg-gradient-to-r from-[color:var(--blue-cta)] to-[color:var(--orange-pop)]"
+        />
+
+        {/* Attribution + certified chip */}
+        <div className="flex items-center justify-between gap-4">
+          <span className="text-sm font-semibold uppercase tracking-[0.12em] text-[color:var(--blue-link)]">
+            ePlus
+          </span>
+          <span className="inline-flex items-center gap-1.5 rounded-full border border-[color:var(--blue-pale)] bg-white px-2.5 py-1 text-[0.625rem] font-bold uppercase tracking-[0.1em] text-[color:var(--navy-mid)]">
+            <ProofIcon name="shield" className="h-3 w-3 text-[color:var(--blue-cta)]" />
+            Independently certified
+          </span>
+        </div>
+
+        {/* The score */}
+        <div className="mt-7 flex items-start gap-3">
+          <span
+            className="text-[6rem] font-semibold leading-[0.85] tracking-tight tabular-nums text-[color:var(--navy-deep)] md:text-[7rem]"
+            style={{ fontFamily: "var(--font-display)" }}
+          >
+            {Math.round(v)}
+          </span>
+          <span className="mt-3 text-xl font-semibold text-[color:var(--ink-soft)] opacity-[0.55]">
+            /100
+          </span>
+        </div>
+        <div className="mt-3 text-lg font-semibold text-[color:var(--navy-deep)]">
+          Net Promoter Score
+        </div>
+
+        {/* Benchmark scale: 40–55 industry band vs the 74 marker */}
+        <div className="mt-8">
+          <div className="flex items-baseline justify-between text-[0.6875rem] font-semibold uppercase tracking-[0.06em] text-[color:var(--ink-soft)]">
+            <span>vs. technology industry</span>
+            <span className="text-[color:var(--orange-pop)]">+19 above the industry ceiling</span>
+          </div>
+          <div className="relative mt-9 h-3 rounded-full bg-[rgba(2,37,80,0.07)]">
+            {/* Industry average band (40 to 55 on a 0 to 100 scale) */}
+            <span
+              aria-hidden
+              className="absolute inset-y-0 rounded bg-[color:var(--blue-pale)] transition-opacity duration-700"
+              style={{ left: "40%", width: "15%", opacity: shown ? 1 : 0 }}
+            />
+            <span
+              className="absolute top-[18px] -translate-x-1/2 whitespace-nowrap text-[0.6875rem] font-semibold text-[color:var(--navy-mid)]"
+              style={{ left: "47.5%" }}
+            >
+              Industry avg 40&ndash;55
+            </span>
+            {/* ePlus marker at 74 */}
+            <span
+              aria-hidden
+              className="absolute top-1/2 z-10 h-5 w-5 -translate-x-1/2 -translate-y-1/2 rounded-full border-[3px] border-white bg-[color:var(--orange-pop)] shadow-[0_2px_8px_rgba(246,130,65,0.5)]"
+              style={{
+                left: shown ? "74%" : "0%",
+                transition: "left 1.1s cubic-bezier(0.22,1,0.36,1)",
+              }}
+            />
+            <span
+              className="absolute -top-[30px] -translate-x-1/2 whitespace-nowrap text-xs font-bold text-[color:var(--navy-deep)] transition-opacity duration-700"
+              style={{ left: "74%", opacity: shown ? 1 : 0 }}
+            >
+              ePlus &middot; 74
+            </span>
+          </div>
+          <div className="mt-11 flex justify-between text-[0.6875rem] tabular-nums text-[color:var(--ink-soft)] opacity-70">
+            <span>0</span>
+            <span>50</span>
+            <span>100</span>
+          </div>
+        </div>
+
+        {/* Verified-for lockup, replacing the logo placeholder */}
+        <div className="mt-auto flex items-center gap-3 border-t border-[color:var(--gray-line)] pt-6">
+          <span className="flex h-9 w-9 flex-none items-center justify-center rounded-[10px] bg-[color:var(--navy-deep)] text-white">
+            <ProofIcon name="shield" className="h-5 w-5" />
+          </span>
+          <span>
+            <span className="block text-sm font-bold text-[color:var(--navy-deep)]">
+              Verified for ePlus
+            </span>
+            <span className="block text-xs text-[color:var(--ink-soft)]">
+              1,400+ customers surveyed &middot; published on NASDAQ
+            </span>
+          </span>
+        </div>
+      </div>
+    </Reveal>
+  );
+}
+
 function Proof() {
   return (
     <>
       <PageHero
         eyebrow="Proof"
         title="The only certified NPS your competitors cannot print for themselves."
-        subtitle="Third-party verified, benchmarked against the channel. Real results below."
+        subtitle="Third-party verified and benchmarked against the channel, evidence you can put in a proposal."
         primary={{ label: "Book a 30-minute call", to: BOOK_PATH }}
+        visual={<CertifiedSeal />}
       />
 
       {/* Featured proof: ePlus independent validation */}
       <Section>
         <div className="grid items-center gap-12 lg:grid-cols-[1fr_1.3fr] lg:gap-16">
-          <Reveal className="h-full">
-            <div className="relative flex h-full flex-col overflow-hidden rounded-[1.75rem] hairline bg-[color:var(--blue-tint)] p-9 md:p-12">
-              <span
-                aria-hidden
-                className="absolute inset-x-0 top-0 h-[3px] bg-gradient-to-r from-[color:var(--blue-cta)] to-[color:var(--orange-pop)]"
-              />
-              <div className="flex items-center justify-between gap-4">
-                <span className="text-sm font-semibold uppercase tracking-[0.12em] text-[color:var(--blue-link)]">
-                  ePlus
-                </span>
-                {/* Placeholder slot for the ePlus logo; do not hotlink an ePlus image */}
-                <span className="flex h-9 items-center rounded-lg border border-dashed border-[color:var(--gray-line)] px-3 text-[0.65rem] font-semibold uppercase tracking-[0.12em] text-[color:var(--ink-soft)]">
-                  Logo to add
-                </span>
-              </div>
-              <div
-                className="mt-8 text-[6rem] font-semibold leading-none tracking-tight tabular-nums text-[color:var(--navy-deep)] md:text-[7.5rem]"
-                style={{ fontFamily: "var(--font-display)" }}
-              >
-                74
-              </div>
-              <div className="mt-4 text-lg font-semibold text-[color:var(--navy-deep)]">
-                Net Promoter Score
-              </div>
-              <div className="mt-1 text-sm leading-relaxed text-[color:var(--ink-soft)]">
-                vs the 40 to 55 technology industry average
-              </div>
-            </div>
-          </Reveal>
+          <EPlusBenchmarkCard />
 
           <div>
             <FadeIn>
