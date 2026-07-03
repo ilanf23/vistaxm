@@ -5,10 +5,10 @@ import { FadeIn, Parallax } from "@/components/motion";
 import {
   BriefDoc,
   JourneyRail,
+  NinetyDayPlan,
+  ProgramArcChart,
   RailNode,
   TierSteps,
-  TimelineList,
-  WaveMiniChart,
 } from "@/components/journey";
 
 export const Route = createFileRoute("/how-to-start")({
@@ -30,6 +30,24 @@ export const Route = createFileRoute("/how-to-start")({
   }),
   component: HowToStart,
 });
+
+/* Local check glyph for the compact "What you get" list. */
+function Check({ className }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      className={className}
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden
+    >
+      <path d="M5 12.5l4 4 10-10" />
+    </svg>
+  );
+}
 
 const TIERS = [
   {
@@ -57,13 +75,30 @@ const ESSENTIALS_GETS = [
   "First insight in about 90 days",
 ];
 
-const DELIVERABLES = [
-  "Named accounts and the dollars at stake",
-  "The reason behind each one",
-  "The recommended move and the window to act",
-  "Benchmarks against your peer group",
-  "The certified NPS you can put in proposals and RFPs",
+const DELIVERABLE_ROWS = [
+  {
+    text: "Named accounts and the dollars at stake",
+    note: "Your call list, ranked by revenue at risk.",
+  },
+  {
+    text: "The reason behind each one",
+    note: "The driver behind the score, not just a number.",
+  },
+  {
+    text: "The recommended move and the window to act",
+    note: "What to do, and by when.",
+  },
+  {
+    text: "Benchmarks against your peer group",
+    note: "Where you stand against the channel.",
+  },
+  {
+    text: "The certified NPS you can put in proposals and RFPs",
+    note: "The number you can publish in front of buyers.",
+  },
 ];
+
+const SECTION_Y = "!py-14 md:!py-24";
 
 function HowToStart() {
   return (
@@ -73,60 +108,88 @@ function HowToStart() {
         title="Start small. Scale when it works."
         subtitle="Two ways in, both fully managed. Prove the signal exists and that it changes a decision, then expand into the ongoing program."
         primary={{ label: "Book a 30-minute call", to: BOOK_PATH }}
-        visual={<WaveMiniChart />}
+        visual={<ProgramArcChart />}
       />
 
       <JourneyRail>
         {/* The two entry paths: Essentials first, then the program */}
-        <Section>
+        <Section className={SECTION_Y}>
           <div className="relative xl:pl-14">
-            <RailNode />
+            <RailNode step={1} />
             <SectionHead
               eyebrow="Two ways in"
               title="Pick the entry that fits where you are."
-              intro="Both paths are fully managed by us. Start with a fixed first wave, or step straight into the ongoing program. Either way, you act on the signal, not the setup."
+              intro={
+                <>
+                  Both paths are fully managed by us. Start with a fixed first wave, or step
+                  straight into the ongoing program. Either way,{" "}
+                  <span className="font-semibold text-[color:var(--navy-deep)]">
+                    you act on the signal, not the setup.
+                  </span>
+                </>
+              }
             />
 
-            <div className="mt-14 grid gap-10 lg:grid-cols-[1fr_1.05fr] lg:gap-16">
+            <div className="mt-10 grid gap-10 lg:grid-cols-[1fr_1.05fr] lg:gap-14">
               <FadeIn>
                 <span className="pill-light w-fit">Start here</span>
                 <h3 className="mt-4 !text-2xl">Essentials.</h3>
-                <p className="mt-3 max-w-[48ch] leading-relaxed text-[color:var(--ink-soft)]">
+                <p className="mt-3 max-w-[52ch] leading-relaxed text-[color:var(--ink-soft)]">
                   A fixed, fast first wave. We stand up your program, deliver your certified NPS and
                   your first account-level revenue signals, and hand you a prioritized list of
                   moves. Sized to a director-level budget.
                 </p>
-                <div className="mt-8">
+                <div className="mt-6">
+                  <div className="eyebrow mb-3">What you get</div>
+                  <ul className="space-y-2">
+                    {ESSENTIALS_GETS.map((item) => (
+                      <li key={item} className="flex items-start gap-2.5">
+                        <span className="mt-[3px] flex h-4.5 w-4.5 flex-none items-center justify-center rounded-full bg-[color:var(--blue-tint)] text-[color:var(--blue-cta)]">
+                          <Check className="h-3 w-3" />
+                        </span>
+                        <span className="text-[14.5px] leading-relaxed text-[color:var(--ink-soft)]">
+                          {item}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <div className="mt-7">
                   <a href={BOOK_PATH} className="btn-primary">
                     Start with Essentials
                   </a>
                 </div>
               </FadeIn>
               <FadeIn delay={120}>
-                <TimelineList eyebrow="What you get" items={ESSENTIALS_GETS} />
+                <NinetyDayPlan />
               </FadeIn>
             </div>
           </div>
         </Section>
 
         {/* Scale beat: the program on dark */}
-        <Section dark>
+        <Section dark className={SECTION_Y}>
           <div className="relative xl:pl-14">
-            <RailNode className="border-[color:var(--blue-light)] bg-[color:var(--navy-deep)]" />
+            <RailNode
+              step={2}
+              className="border-[color:var(--blue-light)]/60 bg-[color:var(--navy-deep)] !text-[color:var(--blue-light)]"
+            />
             <FadeIn>
               <span className="pill w-fit !text-[color:var(--blue-light)]">
                 Scale when it works
               </span>
             </FadeIn>
-            <div className="mt-6 grid gap-10 lg:grid-cols-[1fr_1.05fr] lg:items-center lg:gap-16">
+            <div className="mt-5 grid gap-10 lg:grid-cols-[1fr_1.05fr] lg:items-center lg:gap-14">
               <FadeIn delay={80}>
                 <h3 className="!text-2xl !text-white">The Fully Managed Program.</h3>
-                <p className="mt-3 max-w-[48ch] leading-relaxed text-white/75">
-                  The ongoing program that keeps finding and protecting revenue, wave after wave.
-                  Choose the scope that fits your book. Continuous signal, benchmark tracking, and
-                  quarterly reviews, all run by us.
+                <p className="mt-3 max-w-[52ch] leading-relaxed text-white/75">
+                  The ongoing program that keeps finding and protecting revenue, wave after wave.{" "}
+                  <span className="font-semibold text-white">
+                    Choose the scope that fits your book.
+                  </span>{" "}
+                  Continuous signal, benchmark tracking, and quarterly reviews, all run by us.
                 </p>
-                <div className="mt-8">
+                <div className="mt-7">
                   <a href={BOOK_PATH} className="btn-primary">
                     Scope the program
                   </a>
@@ -138,18 +201,25 @@ function HowToStart() {
         </Section>
 
         {/* What lands on your desk */}
-        <Section tint>
+        <Section tint className={SECTION_Y}>
           <div className="relative xl:pl-14">
-            <RailNode />
-            <SectionHead
-              eyebrow="The deliverable"
-              title="What lands on your desk."
-              intro="Not a dashboard to interpret. A short, ranked brief you can act on the day it arrives."
-            />
-
-            <div className="mt-12">
+            <RailNode step={3} />
+            <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-center lg:gap-14">
+              <SectionHead
+                eyebrow="The deliverable"
+                title="What lands on your desk."
+                intro={
+                  <>
+                    Not a dashboard to interpret.{" "}
+                    <span className="font-semibold text-[color:var(--navy-deep)]">
+                      A short, ranked brief
+                    </span>{" "}
+                    you can act on the day it arrives.
+                  </>
+                }
+              />
               <BriefDoc
-                items={DELIVERABLES}
+                items={DELIVERABLE_ROWS}
                 footer="A sample deliverable, clearly labeled as a sample, is available on request."
               />
             </div>
@@ -157,15 +227,29 @@ function HowToStart() {
         </Section>
 
         {/* Why managed */}
-        <Section>
+        <Section className={SECTION_Y}>
           <div className="relative xl:pl-14">
-            <RailNode />
+            <RailNode step={4} />
             <div className="grid gap-12 lg:grid-cols-2 lg:items-center lg:gap-16">
-              <SectionHead
-                eyebrow="Why managed"
-                title="Managed, neutral, light lift."
-                intro="We bring the playbooks, the data scientists, and the technology. Your team stays focused on the customer. Better, faster, and lighter than building it yourself."
-              />
+              <div>
+                <SectionHead
+                  eyebrow="Why managed"
+                  title="Managed, neutral, light lift."
+                  intro="We bring the playbooks, the data scientists, and the technology. Your team stays focused on the customer. Better, faster, and lighter than building it yourself."
+                />
+                <FadeIn delay={100}>
+                  <div className="mt-7 flex flex-wrap gap-2.5">
+                    {["The playbooks", "The data scientists", "The technology"].map((chip) => (
+                      <span
+                        key={chip}
+                        className="rounded-full border border-[color:var(--hairline)] bg-white px-3.5 py-1.5 text-[13px] font-semibold text-[color:var(--navy-deep)] shadow-[var(--shadow-elevation-1)]"
+                      >
+                        {chip}
+                      </span>
+                    ))}
+                  </div>
+                </FadeIn>
+              </div>
               <Parallax distance={28}>
                 <FadeIn delay={120}>
                   <div className="img-editorial-soft img-frame aspect-[4/3] w-full">
