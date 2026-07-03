@@ -493,6 +493,130 @@ function VideoCard({
   );
 }
 
+/* ---------------- Local: library-at-a-glance hero visual ---------------- */
+
+function LibraryGlyph({ kind, className = "h-4 w-4" }: { kind: string; className?: string }) {
+  const strokes = {
+    strokeWidth: 1.75,
+    strokeLinecap: "round",
+    strokeLinejoin: "round",
+  } as const;
+  switch (kind) {
+    case "article":
+      return (
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          aria-hidden
+          className={className}
+          {...strokes}
+        >
+          <rect x="4" y="3.5" width="16" height="17" rx="2.5" />
+          <path d="M8 8.5h8M8 12h8M8 15.5h5" />
+        </svg>
+      );
+    case "press":
+      return (
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          aria-hidden
+          className={className}
+          {...strokes}
+        >
+          <path d="M3.5 17.5v-9a2 2 0 0 1 2-2h11a2 2 0 0 1 2 2v9" />
+          <path d="M3.5 17.5h17a2 2 0 0 1-2 2h-13a2 2 0 0 1-2-2zM7.5 10h4v3.5h-4zM14.5 10h2.5M14.5 13.5h2.5" />
+        </svg>
+      );
+    case "whitepaper":
+      return (
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          aria-hidden
+          className={className}
+          {...strokes}
+        >
+          <path d="M6 3.5h8.5L19 8v10a2.5 2.5 0 0 1-2.5 2.5h-9A2.5 2.5 0 0 1 5 18V6a2.5 2.5 0 0 1 1-2.5z" />
+          <path d="M14 3.5V8h4.5M9 13h6M9 16.5h4" />
+        </svg>
+      );
+    default:
+      return (
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          aria-hidden
+          className={className}
+          {...strokes}
+        >
+          <rect x="3.5" y="5" width="17" height="14" rx="3" />
+          <path d="M10.5 9.5l4.5 2.5-4.5 2.5z" fill="currentColor" stroke="none" />
+        </svg>
+      );
+  }
+}
+
+const LIBRARY_TILES: { kind: string; label: string; note: string; accent?: boolean }[] = [
+  { kind: "article", label: "Articles", note: "Thinking you can use" },
+  { kind: "press", label: "Press", note: "News and announcements" },
+  { kind: "whitepaper", label: "Whitepapers", note: "Business cases in depth", accent: true },
+  { kind: "video", label: "Video", note: "Watch the thinking" },
+];
+
+function LibraryCard() {
+  return (
+    <div className="glass relative overflow-hidden p-6 md:p-7">
+      <span
+        aria-hidden
+        className="absolute inset-x-0 top-0 h-[3px] bg-gradient-to-r from-[color:var(--blue-cta)] to-[color:var(--orange-pop)]"
+      />
+
+      <div className="flex items-center justify-between gap-3">
+        <span className="text-[0.72rem] font-semibold uppercase tracking-[0.16em] text-[#67a6ff]">
+          The library
+        </span>
+        <span className="text-[0.72rem] font-semibold uppercase tracking-[0.12em] text-[#7fa3cf]">
+          All public
+        </span>
+      </div>
+
+      <div className="mt-5 grid grid-cols-2 gap-3">
+        {LIBRARY_TILES.map((tile) => (
+          <div
+            key={tile.kind}
+            className={`rounded-xl border p-4 ${
+              tile.accent
+                ? "border-[rgba(246,130,65,0.35)] bg-[rgba(246,130,65,0.10)]"
+                : "border-white/[0.09] bg-white/[0.04]"
+            }`}
+          >
+            <span
+              className={`flex h-8 w-8 items-center justify-center rounded-lg ${
+                tile.accent
+                  ? "bg-[rgba(246,130,65,0.18)] text-[#ffd2b5]"
+                  : "bg-[#0a3a6b] text-[#67a6ff]"
+              }`}
+            >
+              <LibraryGlyph kind={tile.kind} />
+            </span>
+            <div className="mt-3 text-[0.9rem] font-semibold text-white">{tile.label}</div>
+            <div className="mt-0.5 text-[0.75rem] leading-snug text-[#9fc0e8]">{tile.note}</div>
+          </div>
+        ))}
+      </div>
+
+      <div className="mt-5 border-t border-white/[0.08] pt-4 text-[0.82rem] text-[#bcd6f5]">
+        No gates, no forms. Read it, use it, bring questions.
+      </div>
+    </div>
+  );
+}
+
 /* ---------------- Page ---------------- */
 
 function Insights() {
@@ -503,6 +627,7 @@ function Insights() {
         title="The point of view on Revenue Channel Intelligence."
         subtitle="Our thinking is public: articles, press, whitepapers, and video on customer experience management, customer retention, and the voice of the customer across the channel. Read it, use it, bring questions, not budget."
         primary={{ label: "Book a 30-minute call", to: BOOK_PATH }}
+        visual={<LibraryCard />}
       />
 
       {/* Featured report */}

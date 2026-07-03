@@ -10,6 +10,7 @@ import {
   PageHero,
   Reveal,
   RevenueIntelligenceFlow,
+  RevenueSignalCard,
   ScoreVsDecision,
   Section,
   SectionHead,
@@ -66,6 +67,19 @@ function TheModel() {
         subtitle="Every account is sending signals about where revenue is headed. We make those signals legible, account by account, and tie each one to a decision you can act on."
         primary={{ label: "Book a 30-minute call", to: BOOK_PATH }}
         secondary={{ label: "See the proof", to: "/proof" }}
+        visual={
+          <div className="mx-auto w-full max-w-[440px]">
+            <RevenueSignalCard
+              account="Meridian Manufacturing"
+              amountLabel="$940K"
+              reason="The survey score looks fine, but the people who influence the renewal have stopped engaging. That is the signal."
+              action="Get in front of the influencers this quarter"
+              daysToRenewal={112}
+              index={2}
+              total={5}
+            />
+          </div>
+        }
       />
 
       {/* What it is */}

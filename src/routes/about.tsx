@@ -372,6 +372,88 @@ function AdvisorCard({
   );
 }
 
+/* ---------------- Local: operating-record hero visual ---------------- */
+
+const OPERATING_RECORD: { stage: string; title: string; detail: string; accent?: boolean }[] = [
+  {
+    stage: "Inside the vendor",
+    title: "Ran the CX program at enterprise scale",
+    detail: "Built customer experience for a global technology vendor as it moved to services.",
+  },
+  {
+    stage: "Inside the platform",
+    title: "Saw how the leaders do it",
+    detail: "Led high-tech and telecom at a leading experience-management platform.",
+  },
+  {
+    stage: "Inside your corner",
+    title: "Became the team",
+    detail: "VistaXM runs the same playbook for the channel, fully managed.",
+    accent: true,
+  },
+];
+
+function OperatingRecordCard() {
+  return (
+    <div className="glass relative overflow-hidden p-6 md:p-7">
+      <span
+        aria-hidden
+        className="absolute inset-x-0 top-0 h-[3px] bg-gradient-to-r from-[color:var(--blue-cta)] to-[color:var(--orange-pop)]"
+      />
+
+      <div className="text-[0.72rem] font-semibold uppercase tracking-[0.16em] text-[#67a6ff]">
+        The operating record
+      </div>
+
+      <div className="relative mt-5">
+        {/* Connector */}
+        <span
+          aria-hidden
+          className="absolute bottom-4 left-[9px] top-2 w-px bg-gradient-to-b from-[#2a5183] via-[#2a5183] to-[color:var(--orange-pop)]/60"
+        />
+        <div className="space-y-6">
+          {OPERATING_RECORD.map((stop) => (
+            <div key={stop.stage} className="relative flex gap-4">
+              <span
+                className={`relative z-10 mt-1 flex h-[19px] w-[19px] flex-none items-center justify-center rounded-full border ${
+                  stop.accent
+                    ? "border-[color:var(--orange-pop)] bg-[rgba(246,130,65,0.18)]"
+                    : "border-[#2a5183] bg-[#0a3a6b]"
+                }`}
+                aria-hidden
+              >
+                <span
+                  className={`h-[7px] w-[7px] rounded-full ${
+                    stop.accent ? "bg-[color:var(--orange-pop)]" : "bg-[#67a6ff]"
+                  }`}
+                />
+              </span>
+              <div>
+                <div
+                  className={`text-[0.7rem] font-semibold uppercase tracking-[0.14em] ${
+                    stop.accent ? "text-[#ffd2b5]" : "text-[#7fa3cf]"
+                  }`}
+                >
+                  {stop.stage}
+                </div>
+                <div className="mt-1 text-[0.95rem] font-semibold leading-snug text-white">
+                  {stop.title}
+                </div>
+                <p className="mt-1 text-[0.82rem] leading-relaxed text-[#9fc0e8]">{stop.detail}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="mt-6 border-t border-white/[0.08] pt-4 text-[0.82rem] text-[#bcd6f5]">
+        The pattern was clear: the leaders tie every point of experience to dollars. Now the channel
+        can too.
+      </div>
+    </div>
+  );
+}
+
 function About() {
   return (
     <>
@@ -379,6 +461,7 @@ function About() {
         eyebrow="About"
         title="Built by operators who lived this problem."
         subtitle="We ran customer experience inside the companies you know. We built VistaXM because the mid-market and the channel could not get the same results without the same team. So we became the team."
+        visual={<OperatingRecordCard />}
       />
 
       {/* The story */}

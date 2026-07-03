@@ -11,6 +11,7 @@ import {
   Stat,
 } from "@/components/site";
 import { FadeIn, Stagger, StaggerItem } from "@/components/motion";
+import { useReveal } from "@/hooks/use-reveal";
 
 export const Route = createFileRoute("/for-oems")({
   head: () => ({
@@ -163,6 +164,121 @@ function PilotSteps() {
   );
 }
 
+/* ---------------- Local: sell vs. serve hero visual ----------------
+   Two columns per partner: sell-through you already track, and the serve
+   side you cannot see until VistaXM reads it. The right column resolves
+   from unknown to a benchmarked score on reveal. */
+
+const SELL_SERVE_ROWS = [
+  { name: "Apex Data Systems", sell: 92, serve: 71, risk: false },
+  { name: "Northgate Integration", sell: 84, serve: 24, risk: true },
+  { name: "Cobalt Networks", sell: 63, serve: 66, risk: false },
+];
+
+function SellServeCard() {
+  const { ref, shown } = useReveal<HTMLDivElement>(0.2);
+  return (
+    <div ref={ref} className="glass relative overflow-hidden p-6 md:p-7">
+      <span
+        aria-hidden
+        className="absolute inset-x-0 top-0 h-[3px] bg-gradient-to-r from-[color:var(--blue-cta)] to-[color:var(--orange-pop)]"
+      />
+
+      {/* Column headers */}
+      <div className="grid grid-cols-[1.2fr_1fr_1fr] items-end gap-3">
+        <span className="text-[0.72rem] font-semibold uppercase tracking-[0.14em] text-[#7fa3cf]">
+          Partner
+        </span>
+        <span className="text-[0.72rem] font-semibold uppercase tracking-[0.14em] text-[#67a6ff]">
+          How they sell
+        </span>
+        <span className="text-right text-[0.72rem] font-semibold uppercase tracking-[0.14em] text-[color:var(--orange-pop)]">
+          How they serve
+        </span>
+      </div>
+
+      <div className="mt-4 space-y-4">
+        {SELL_SERVE_ROWS.map((row, i) => (
+          <div
+            key={row.name}
+            className="grid grid-cols-[1.2fr_1fr_1fr] items-center gap-3 border-b border-white/[0.06] pb-4 last:border-0 last:pb-0"
+          >
+            <span className="truncate text-[0.85rem] font-medium text-white">{row.name}</span>
+
+            {/* Sell-through: the bar you already have */}
+            <div className="flex items-center gap-2">
+              <div className="h-2 flex-1 overflow-hidden rounded-full bg-white/[0.08]">
+                <div
+                  className="h-full rounded-full bg-gradient-to-r from-[color:var(--blue-cta)] to-[#67a6ff]"
+                  style={{
+                    width: shown ? `${row.sell}%` : "0%",
+                    transition: `width 900ms cubic-bezier(0.22,1,0.36,1) ${i * 120}ms`,
+                  }}
+                />
+              </div>
+              <span className="w-7 text-right text-[0.8rem] font-semibold tabular-nums text-[#bcd6f5]">
+                {row.sell}
+              </span>
+            </div>
+
+            {/* Serve: unknown until the read comes in */}
+            <div className="flex items-center justify-end">
+              <span className="relative inline-flex h-7 min-w-[54px] items-center justify-center overflow-hidden rounded-full">
+                <span
+                  className="absolute inset-0 rounded-full border border-dashed border-white/25 text-center"
+                  style={{
+                    opacity: shown ? 0 : 1,
+                    transition: `opacity 500ms ease ${500 + i * 160}ms`,
+                  }}
+                />
+                <span
+                  className="absolute inset-0 flex items-center justify-center text-[0.85rem] font-semibold text-white/35"
+                  style={{
+                    opacity: shown ? 0 : 1,
+                    transition: `opacity 500ms ease ${500 + i * 160}ms`,
+                  }}
+                >
+                  ?
+                </span>
+                <span
+                  className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[0.8rem] font-semibold tabular-nums ${
+                    row.risk
+                      ? "bg-[rgba(246,130,65,0.16)] text-[#ffd2b5]"
+                      : "bg-[rgba(103,166,255,0.14)] text-[#cfe3ff]"
+                  }`}
+                  style={{
+                    opacity: shown ? 1 : 0,
+                    transform: shown ? "scale(1)" : "scale(0.85)",
+                    transition: `opacity 500ms ease ${560 + i * 160}ms, transform 500ms cubic-bezier(0.22,1,0.36,1) ${560 + i * 160}ms`,
+                  }}
+                >
+                  {row.risk && (
+                    <span
+                      className="h-1.5 w-1.5 rounded-full bg-[color:var(--orange-pop)]"
+                      aria-hidden
+                    />
+                  )}
+                  {row.serve}
+                </span>
+              </span>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div className="mt-5 flex items-center justify-between gap-3">
+        <p className="text-[0.8rem] leading-snug text-[#9fc0e8]">
+          VistaXM fills in the column your dashboards cannot.
+        </p>
+        <span className="flex items-center gap-1.5 whitespace-nowrap text-[0.68rem] font-semibold uppercase tracking-[0.12em] text-[#7fa3cf]">
+          <span className="h-1 w-1 rounded-full bg-[#7fa3cf]" aria-hidden />
+          Illustrative
+        </span>
+      </div>
+    </div>
+  );
+}
+
 /* ---------------- Page ---------------- */
 
 function ForOems() {
@@ -179,6 +295,7 @@ function ForOems() {
         }
         subtitle="Your brand is on the box, but the end-customer experience lives with the partner. VistaXM gives you a neutral, benchmarked view of how your channel is really performing, before it shows up in revenue."
         trust="Already live with a major OEM."
+        visual={<SellServeCard />}
       />
 
       {/* 2. The partner shadow */}

@@ -252,6 +252,93 @@ function ContactRow({
   );
 }
 
+/* ---------------- Local: thirty-minutes-mapped hero visual ---------------- */
+
+const AGENDA: { window: string; minutes: number; title: string; note: string }[] = [
+  {
+    window: "0-10",
+    minutes: 10,
+    title: "Your channel today",
+    note: "Where your revenue decisions get made now, and on what evidence.",
+  },
+  {
+    window: "10-25",
+    minutes: 15,
+    title: "The signal, live",
+    note: "What Revenue Channel Intelligence looks like in accounts like yours.",
+  },
+  {
+    window: "25-30",
+    minutes: 5,
+    title: "Fit, or an honest no",
+    note: "A clear next step if it makes sense. A straight answer if it does not.",
+  },
+];
+
+function AgendaCard() {
+  return (
+    <div className="glass relative overflow-hidden p-6 md:p-7">
+      <span
+        aria-hidden
+        className="absolute inset-x-0 top-0 h-[3px] bg-gradient-to-r from-[color:var(--blue-cta)] to-[color:var(--orange-pop)]"
+      />
+
+      <div className="flex items-center justify-between gap-3">
+        <div className="flex items-center gap-2.5">
+          <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#0a3a6b] text-[#67a6ff]">
+            <ClockGlyph className="h-4 w-4" />
+          </span>
+          <span className="text-[0.9rem] font-semibold text-white">Thirty minutes, mapped</span>
+        </div>
+        <span className="text-[0.72rem] font-semibold uppercase tracking-[0.14em] text-[#7fa3cf]">
+          No deck
+        </span>
+      </div>
+
+      {/* Minute-weighted progress strip */}
+      <div className="mt-5 flex h-2 gap-1 overflow-hidden rounded-full" aria-hidden>
+        {AGENDA.map((slot, i) => (
+          <span
+            key={slot.window}
+            className={`h-full rounded-full ${
+              i === 1
+                ? "bg-gradient-to-r from-[color:var(--blue-cta)] to-[#67a6ff]"
+                : i === 2
+                  ? "bg-[color:var(--orange-pop)]/80"
+                  : "bg-white/[0.18]"
+            }`}
+            style={{ flexGrow: slot.minutes }}
+          />
+        ))}
+      </div>
+
+      <div className="mt-5 space-y-4">
+        {AGENDA.map((slot) => (
+          <div key={slot.window} className="flex gap-3.5">
+            <span
+              className="mt-0.5 inline-flex h-6 min-w-[52px] flex-none items-center justify-center rounded-full bg-white/[0.08] text-[0.72rem] font-semibold tabular-nums text-[#bcd6f5]"
+              style={{ fontFamily: "var(--font-display)" }}
+            >
+              {slot.window}
+            </span>
+            <div>
+              <div className="text-[0.9rem] font-semibold leading-snug text-white">
+                {slot.title}
+              </div>
+              <p className="mt-1 text-[0.82rem] leading-relaxed text-[#9fc0e8]">{slot.note}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div className="mt-5 flex items-center gap-2 border-t border-white/[0.08] pt-4 text-[0.82rem] text-[#bcd6f5]">
+        <CheckGlyph className="h-4 w-4 flex-none text-[#67a6ff]" />
+        You leave with the read either way. No obligation.
+      </div>
+    </div>
+  );
+}
+
 function BookACall() {
   return (
     <>
@@ -260,6 +347,7 @@ function BookACall() {
         title="See where your revenue is hiding."
         subtitle="Thirty minutes. We will show you what the signal looks like in your accounts, and whether there is a fit. No obligation."
         primary={null}
+        visual={<AgendaCard />}
       />
 
       {/* What to expect + scheduling */}
