@@ -1874,7 +1874,7 @@ export function GetTheBrief({ brief }: { brief: Brief }) {
             {brief.comingSoon || !brief.pdfHref ? (
               <span
                 aria-disabled="true"
-                className="btn-secondary inline-flex cursor-not-allowed items-center gap-2 opacity-60"
+                className="btn-secondary-dark inline-flex cursor-not-allowed items-center gap-2 opacity-60"
               >
                 <DownloadIcon />
                 Brief coming soon
