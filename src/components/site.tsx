@@ -1901,7 +1901,7 @@ export function GetTheBrief({ brief }: { brief: Brief }) {
                 {brief.learnMore.label} &rarr;
               </a>
             )}
-            <CTAButton to={BOOK_PATH} className="btn-secondary inline-flex items-center gap-2">
+            <CTAButton to={BOOK_PATH} className="btn-secondary-dark inline-flex items-center gap-2">
               {brief.comingSoon ? "Talk to us about an early pilot" : "Book a 30-minute call"}
             </CTAButton>
           </div>
