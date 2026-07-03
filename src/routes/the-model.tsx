@@ -1,8 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { BOOK_PATH } from "@/lib/links";
+import { canonicalLink, faqJsonLd, type Faq } from "@/lib/seo";
 import {
   CTABand,
   Card,
+  FAQSection,
   InfluencerGapCard,
   JourneyMatrix,
   PageHero,
@@ -15,22 +17,42 @@ import {
 import { AmbientBand } from "@/components/media";
 import { FadeIn } from "@/components/motion";
 
+const FAQS: Faq[] = [
+  {
+    question: "What is Revenue Channel Intelligence?",
+    answer:
+      "Revenue Channel Intelligence is the practice of turning partner and broker customer experience into account-level signals of revenue risk and growth. VistaXM runs it as a fully managed, neutral third-party program that measures experience across five journey stages and four personas, then ties each signal to retention, expansion, and churn.",
+  },
+  {
+    question: "How is it different from NPS or CX software?",
+    answer:
+      "NPS gives you a single score, and CX software gives you a tool to run surveys. Revenue Channel Intelligence gives you the managed program, the analysis, and the workflow that turn experience into revenue decisions, delivered by a neutral third party rather than built in-house.",
+  },
+  {
+    question: "What is the Decision-Maker to Influencer gap?",
+    answer:
+      "The Decision-Maker to Influencer gap is the difference between how executives and how day-to-day contacts rate the same relationship. It is the most reliable leading indicator of renewal risk, and it is invisible to a single account-level score.",
+  },
+];
+
 export const Route = createFileRoute("/the-model")({
   head: () => ({
     meta: [
-      { title: "The Model: Revenue Channel Intelligence | VistaXM" },
+      { title: "What Is Revenue Channel Intelligence | VistaXM" },
       {
         name: "description",
         content:
-          "Revenue Channel Intelligence maps every account across five journey stages and four personas, then turns each signal into a revenue decision. Customer experience analytics and customer intelligence, tied to Net Promoter Score (NPS) and customer retention: who is about to grow, who is about to churn, and the move that changes it.",
+          "Revenue Channel Intelligence turns customer experience into account-level revenue signals across five journey stages and four personas. See how the model works.",
       },
-      { property: "og:title", content: "The Model: Revenue Channel Intelligence | VistaXM" },
+      { property: "og:title", content: "What Is Revenue Channel Intelligence | VistaXM" },
       {
         property: "og:description",
         content:
           "A score tells you what happened. We tell you what to do about it. See how Revenue Channel Intelligence works.",
       },
     ],
+    links: [canonicalLink("/the-model")],
+    scripts: [faqJsonLd(FAQS)],
   }),
   component: TheModel,
 });
@@ -156,6 +178,8 @@ function TheModel() {
           </Card>
         </div>
       </Section>
+
+      <FAQSection items={FAQS} />
 
       <CTABand />
     </>

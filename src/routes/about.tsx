@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { canonicalLink } from "@/lib/seo";
 import { CTABand, PageHero, Section, SectionHead } from "@/components/site";
 import { FadeIn } from "@/components/motion";
 import {
@@ -13,19 +14,20 @@ import {
 export const Route = createFileRoute("/about")({
   head: () => ({
     meta: [
-      { title: "About | VistaXM" },
+      { title: "About VistaXM | Revenue Channel Intelligence" },
       {
         name: "description",
         content:
-          "VistaXM was built by operators who ran customer experience at scale inside the companies you know, then brought that playbook, fully managed, to the channel.",
+          "VistaXM is a Revenue Channel Intelligence company led by Erik Vogel (formerly Qualtrics, HPE, Cisco). Meet the team turning customer experience into revenue.",
       },
-      { property: "og:title", content: "About | VistaXM" },
+      { property: "og:title", content: "About VistaXM | Revenue Channel Intelligence" },
       {
         property: "og:description",
         content:
           "Operators who built customer experience at scale. We became the team the mid-market and the channel never had.",
       },
     ],
+    links: [canonicalLink("/about")],
   }),
   component: About,
 });

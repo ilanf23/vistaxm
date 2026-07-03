@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { BOOK_PATH } from "@/lib/links";
+import { canonicalLink } from "@/lib/seo";
 import {
   CTABand,
   CTAButton,
@@ -35,6 +36,7 @@ export const Route = createFileRoute("/")({
           "Turn partner and broker experience into the account-level signal of where revenue is about to grow or walk.",
       },
     ],
+    links: [canonicalLink("/")],
   }),
   component: Home,
 });
@@ -50,7 +52,7 @@ function Home() {
         secondary={{ label: "See how it works", to: "#model" }}
       />
 
-      {/* Proven results — aggregate outcomes */}
+      {/* Proven results: aggregate outcomes */}
       <ProvenResults />
 
       {/* Why a single score fails: signals to revenue intelligence */}

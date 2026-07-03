@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /crn
+
+Sitemap: https://www.vistaxm.com/sitemap.xml

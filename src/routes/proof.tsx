@@ -1,26 +1,45 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { BOOK_PATH } from "@/lib/links";
-import { CTABand, NPSGauge, PageHero, Reveal, Section, SectionHead } from "@/components/site";
+import { canonicalLink, faqJsonLd, type Faq } from "@/lib/seo";
+import {
+  CTABand,
+  FAQSection,
+  NPSGauge,
+  PageHero,
+  Reveal,
+  Section,
+  SectionHead,
+} from "@/components/site";
 import { AmbientBand } from "@/components/media";
 import { FadeIn, Stagger, StaggerItem } from "@/components/motion";
 import { useCountUp, useReveal } from "@/hooks/use-reveal";
 
+const FAQS: Faq[] = [
+  {
+    question: "Is VistaXM's NPS independent and certified?",
+    answer:
+      "Yes. VistaXM runs surveys as a neutral third party and produces an independent, certified NPS standard for the channel. ePlus, a NASDAQ-listed solutions provider, publicly reported an NPS of 74 from an independent survey conducted by VistaXM across more than 1,400 customers, well above the 40 to 55 technology industry average.",
+  },
+];
+
 export const Route = createFileRoute("/proof")({
   head: () => ({
     meta: [
-      { title: "Proof | VistaXM" },
+      { title: "Proof: Certified NPS and Revenue Results | VistaXM" },
       {
         name: "description",
         content:
-          "A third-party certified NPS and real channel results. Verified evidence you can put in proposals, RFPs, and marketing, with outcomes from named programs.",
+          "Independent, certified NPS results, including ePlus at 74 versus the 40 to 55 industry average. See how VistaXM protects and grows channel revenue.",
       },
-      { property: "og:title", content: "Proof | VistaXM" },
+      { property: "og:title", content: "Proof: Certified NPS and Revenue Results | VistaXM" },
       {
         property: "og:description",
         content:
           "Third-party certified NPS, benchmarked against the channel, plus real results: retention, expansion, and revenue protected.",
       },
     ],
+    links: [canonicalLink("/proof")],
+    scripts: [faqJsonLd(FAQS)],
   }),
   component: Proof,
 });
@@ -139,66 +158,96 @@ function ResultCard({
 
 function SampleDeliverable({
   account,
+  signal,
   title,
-  rows,
+  hero,
+  metric,
+  move,
 }: {
   account: string;
+  signal: "risk" | "upside";
   title: string;
-  rows: { label: string; value: string; accent?: boolean }[];
+  hero: { value: string; label: string };
+  metric: { label: string; value: string; fill: number };
+  move: string;
 }) {
+  // One hot accent, reserved for the account at risk; upside stays calm navy.
+  const sig = signal === "risk" ? "var(--orange-pop)" : "var(--navy-deep)";
   return (
-    <div
-      className="overflow-hidden rounded-[14px]"
-      style={{
-        background: "#06294e",
-        border: "0.5px solid #1f4878",
-        borderLeft: "3px solid #67a6ff",
-      }}
-    >
-      <div
-        className="flex items-center justify-between px-4 py-3"
-        style={{ borderBottom: "1px solid rgba(255,255,255,.08)" }}
-      >
-        <div className="flex items-center gap-2.5">
-          <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-[#0a3a6b]">
-            <ProofIcon name="doc" className="h-4 w-4 text-[#67a6ff]" />
+    <div className="flex flex-col gap-4 rounded-2xl hairline bg-[color:var(--blue-tint)] p-5 md:p-[22px]">
+      {/* Header: source + named account */}
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-2">
+          <span className="flex h-6 w-6 items-center justify-center rounded-[7px] hairline bg-white text-[color:var(--blue-link)]">
+            <ProofIcon name="doc" className="h-[13px] w-[13px]" />
           </span>
-          <span className="text-[0.8rem] font-semibold text-white">Account readout</span>
+          <span className="text-[0.65rem] font-bold uppercase tracking-[0.1em] text-[color:var(--ink-soft)] opacity-70">
+            Account readout
+          </span>
         </div>
-        <span className="text-[0.72rem] font-semibold text-[#7fa3cf]">{account}</span>
+        <span className="text-[0.85rem] font-bold text-[color:var(--navy-deep)]">{account}</span>
       </div>
 
-      <div className="px-4 py-4">
-        <div
-          className="text-[15px] font-bold leading-snug text-white"
-          style={{ fontFamily: "var(--font-display)" }}
+      {/* The finding */}
+      <div className="text-[17px] font-bold leading-snug text-[color:var(--navy-deep)]">
+        {title}
+      </div>
+
+      {/* Dollars in play: the hero figure */}
+      <div className="flex items-baseline gap-2.5">
+        <span
+          className="text-[2.5rem] font-bold leading-[0.9] tracking-tight tabular-nums"
+          style={{ fontFamily: "var(--font-display)", color: sig }}
         >
-          {title}
+          {hero.value}
+        </span>
+        <span className="text-[0.6875rem] font-semibold uppercase tracking-[0.04em] text-[color:var(--ink-soft)] opacity-75">
+          {hero.label}
+        </span>
+      </div>
+
+      {/* Supporting signal */}
+      <div className="flex flex-col gap-2">
+        <div className="flex items-baseline justify-between">
+          <span className="text-[12.5px] text-[color:var(--ink-soft)]">{metric.label}</span>
+          <span className="text-[13px] font-bold tabular-nums text-[color:var(--navy-deep)]">
+            {metric.value}
+          </span>
         </div>
-        <div className="mt-3.5 space-y-2.5">
-          {rows.map((r) => (
-            <div
-              key={r.label}
-              className="flex items-baseline justify-between border-b border-white/10 pb-2.5 last:border-0 last:pb-0"
-            >
-              <span className="text-[12.5px] text-[#cfe0f7]">{r.label}</span>
-              <span
-                className="text-[12.5px] font-semibold tabular-nums"
-                style={{ color: r.accent ? "#f68241" : "#ffffff" }}
-              >
-                {r.value}
-              </span>
-            </div>
-          ))}
+        <div className="h-[5px] overflow-hidden rounded-full bg-[rgba(2,37,80,0.08)]">
+          <span
+            className="block h-full rounded-full"
+            style={{ width: `${metric.fill}%`, background: sig }}
+          />
+        </div>
+      </div>
+
+      {/* The move that changes the outcome */}
+      <div className="flex flex-col gap-1.5">
+        <span className="text-[10px] font-bold uppercase tracking-[0.13em] text-[color:var(--ink-soft)] opacity-60">
+          Recommended move
+        </span>
+        <div className="flex items-center gap-2.5">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth={2.4}
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="h-[17px] w-[17px] shrink-0"
+            style={{ color: sig }}
+            aria-hidden
+          >
+            <path d="M5 12h14M13 6l6 6-6 6" />
+          </svg>
+          <span className="text-[15px] font-bold text-[color:var(--navy-deep)]">{move}</span>
         </div>
       </div>
 
       {/* Visible sample tag: never a real client */}
-      <div
-        className="flex items-center gap-1.5 px-4 py-3 text-[0.68rem] font-semibold uppercase tracking-[0.12em] text-[#7fa3cf]"
-        style={{ background: "#08305c", borderTop: "1px solid rgba(255,255,255,.08)" }}
-      >
-        <span className="h-1 w-1 rounded-full bg-[#7fa3cf]" aria-hidden />
+      <div className="flex items-center gap-1.5 border-t border-[color:var(--gray-line)] pt-3.5 text-[10px] font-bold uppercase tracking-[0.12em] text-[color:var(--ink-soft)] opacity-55">
+        <span className="h-1 w-1 rounded-full bg-current" aria-hidden />
         Sample, not a real client
       </div>
     </div>
@@ -631,26 +680,26 @@ function Proof() {
             <div className="grid gap-4 sm:grid-cols-2">
               <SampleDeliverable
                 account="Zynaptic"
+                signal="risk"
                 title="A renewal is drifting toward risk."
-                rows={[
-                  { label: "Revenue at risk", value: "$1.4M", accent: true },
-                  { label: "Detractor gap", value: "44 pts", accent: true },
-                  { label: "Recommended move", value: "Re-engage users" },
-                ]}
+                hero={{ value: "$1.4M", label: "revenue at risk" }}
+                metric={{ label: "Detractor gap", value: "44 pts", fill: 44 }}
+                move="Re-engage users"
               />
               <SampleDeliverable
                 account="Meridian"
+                signal="upside"
                 title="Expansion is sitting unused."
-                rows={[
-                  { label: "Latent expansion", value: "$2.1M" },
-                  { label: "Promoter strength", value: "Strong" },
-                  { label: "Recommended move", value: "Open the play" },
-                ]}
+                hero={{ value: "$2.1M", label: "latent expansion" }}
+                metric={{ label: "Promoter strength", value: "Strong", fill: 82 }}
+                move="Open the play"
               />
             </div>
           </FadeIn>
         </div>
       </Section>
+
+      <FAQSection items={FAQS} />
 
       <CTABand />
     </>

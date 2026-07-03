@@ -12,7 +12,7 @@ also wants ambient "business" photography, which carries a stock-photo risk that
 
 ## Asset reality (drives the plan)
 
-- Real team photos: in progress (real). 
+- Real team photos: in progress (real).
 - Named quotes + headshots: attainable, easy.
 - Product screenshots: none; AI-generated mockups viable.
 - Customer logos: NOT available. No logo-wall credibility crutch.

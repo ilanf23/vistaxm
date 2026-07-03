@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { canonicalLink } from "@/lib/seo";
 import {
   CTABand,
   InfluencerGapCard,
@@ -14,19 +15,20 @@ import { FadeIn, Stagger, StaggerItem } from "@/components/motion";
 export const Route = createFileRoute("/for-oems")({
   head: () => ({
     meta: [
-      { title: "For OEMs and Distributors | VistaXM" },
+      { title: "Partner Experience Management for OEMs | VistaXM" },
       {
         name: "description",
         content:
-          "A neutral, benchmarked view of how your channel is really performing. See partner conviction, the conviction gap, and where alternatives are gaining traction, before it shows up in revenue.",
+          "See how your partners deliver customer experience before it shows up in revenue. Neutral, benchmarked partner-experience measurement for OEMs and distributors.",
       },
-      { property: "og:title", content: "For OEMs and Distributors | VistaXM" },
+      { property: "og:title", content: "Partner Experience Management for OEMs | VistaXM" },
       {
         property: "og:description",
         content:
           "You can see how your partners sell. You cannot see how they serve. VistaXM gives OEMs and distributors a neutral read on the whole channel.",
       },
     ],
+    links: [canonicalLink("/for-oems")],
   }),
   component: ForOems,
 });

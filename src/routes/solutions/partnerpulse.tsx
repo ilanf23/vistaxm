@@ -1,8 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { BOOK_PATH, BRIEFS } from "@/lib/links";
+import { canonicalLink, faqJsonLd, type Faq } from "@/lib/seo";
 import {
   CTABand,
   Card,
+  FAQSection,
   GetTheBrief,
   NPSGauge,
   PageHero,
@@ -16,22 +18,32 @@ import { ConvictionMap } from "@/components/solutions-viz";
 import { AmbientBand } from "@/components/media";
 import { FadeIn, Stagger, StaggerItem } from "@/components/motion";
 
+const FAQS: Faq[] = [
+  {
+    question: "What is PartnerPulse?",
+    answer:
+      "PartnerPulse is VistaXM's program for OEMs and distributors. It gives them a neutral, benchmarked view of how their partners deliver customer experience across the journey, so they can see where revenue is at risk before it shows up in the numbers.",
+  },
+];
+
 export const Route = createFileRoute("/solutions/partnerpulse")({
   head: () => ({
     meta: [
-      { title: "PartnerPulse | VistaXM" },
+      { title: "PartnerPulse: Partner Experience Management | VistaXM" },
       {
         name: "description",
         content:
-          "A neutral, benchmarked read on partner conviction and delivery: customer experience management and Net Promoter Score (NPS) for the channel, tied to customer retention. How your partners actually perform, and whether they are convinced enough to recommend you when it counts.",
+          "PartnerPulse gives OEMs and distributors a neutral, benchmarked view of partner-delivered customer experience across the journey. See where revenue is hiding.",
       },
-      { property: "og:title", content: "PartnerPulse | VistaXM" },
+      { property: "og:title", content: "PartnerPulse: Partner Experience Management | VistaXM" },
       {
         property: "og:description",
         content:
           "See your channel the way your customers do. PartnerPulse measures partner conviction, active recommendation, and where alternatives are gaining traction.",
       },
     ],
+    links: [canonicalLink("/solutions/partnerpulse")],
+    scripts: [faqJsonLd(FAQS)],
   }),
   component: PartnerPulse,
 });
@@ -299,6 +311,8 @@ function PartnerPulse() {
       <Section>
         <GetTheBrief brief={BRIEFS.partnerpulse} />
       </Section>
+
+      <FAQSection items={FAQS} />
 
       <CTABand />
     </>

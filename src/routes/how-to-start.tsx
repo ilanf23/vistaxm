@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { BOOK_PATH } from "@/lib/links";
-import { CTABand, Section, SectionHead, PageHero } from "@/components/site";
+import { canonicalLink, faqJsonLd, type Faq } from "@/lib/seo";
+import { CTABand, FAQSection, Section, SectionHead, PageHero } from "@/components/site";
 import { FadeIn, Parallax } from "@/components/motion";
 import {
   BriefDoc,
@@ -11,22 +12,35 @@ import {
   TierSteps,
 } from "@/components/journey";
 
+const FAQS: Faq[] = [
+  {
+    question: "How long until we see results, and do we need a CX team?",
+    answer:
+      "First insight typically comes in about 90 days, and you do not need to build a CX team. VistaXM designs, runs, and analyzes the program for you as a fully managed service.",
+  },
+];
+
 export const Route = createFileRoute("/how-to-start")({
   head: () => ({
     meta: [
-      { title: "How to Start | VistaXM" },
+      { title: "How to Start | Managed Revenue Channel Intelligence | VistaXM" },
       {
         name: "description",
         content:
-          "Two ways into Revenue Channel Intelligence, both fully managed. Start with Essentials, a fixed first wave, then expand into the Fully Managed Program sized Small, Medium, or Large.",
+          "Start with Essentials or a fully managed program. NPS and voice-of-the-customer measurement, run for you, first insight in about 90 days. No CX team required.",
       },
-      { property: "og:title", content: "How to Start | VistaXM" },
+      {
+        property: "og:title",
+        content: "How to Start | Managed Revenue Channel Intelligence | VistaXM",
+      },
       {
         property: "og:description",
         content:
           "Start small. Scale when it works. Prove the signal exists and that it changes a decision, then expand into the ongoing program.",
       },
     ],
+    links: [canonicalLink("/how-to-start")],
+    scripts: [faqJsonLd(FAQS)],
   }),
   component: HowToStart,
 });
@@ -266,6 +280,8 @@ function HowToStart() {
           </div>
         </Section>
       </JourneyRail>
+
+      <FAQSection items={FAQS} />
 
       <CTABand />
     </>

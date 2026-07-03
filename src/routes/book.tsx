@@ -1,6 +1,7 @@
 import { type ReactNode } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { BOOK_A_CALL_URL } from "@/lib/links";
+import { canonicalLink } from "@/lib/seo";
 import { PageHero, Section, SectionHead, Reveal } from "@/components/site";
 import { FadeIn, Stagger, StaggerItem } from "@/components/motion";
 
@@ -20,6 +21,7 @@ export const Route = createFileRoute("/book")({
           "A thirty-minute conversation: how Revenue Channel Intelligence applies to your book of business, a sample readout, and a clear next step.",
       },
     ],
+    links: [canonicalLink("/book")],
   }),
   component: BookACall,
 });
@@ -140,7 +142,7 @@ function BookingLaunch() {
       <div className="flex flex-wrap items-center justify-between gap-3 border-t border-[color:var(--hairline)] bg-[color:var(--blue-tint)] px-5 py-3 text-sm font-medium text-[color:var(--navy-deep)] md:px-7">
         <span className="inline-flex items-center gap-2">
           <CheckGlyph className="h-4 w-4 flex-none text-[color:var(--blue-cta)]" />
-          Calendar not loading? {" "}
+          Calendar not loading?{" "}
           <a
             href={BOOK_A_CALL_URL}
             target="_blank"

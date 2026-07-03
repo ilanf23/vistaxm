@@ -1,6 +1,7 @@
 import { type ReactNode } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { BOOK_PATH } from "@/lib/links";
+import { canonicalLink } from "@/lib/seo";
 import { CTABand, PageHero, Reveal, Section, SectionHead } from "@/components/site";
 import { AmbientBand } from "@/components/media";
 import { FadeIn, Stagger, StaggerItem } from "@/components/motion";
@@ -8,19 +9,20 @@ import { FadeIn, Stagger, StaggerItem } from "@/components/motion";
 export const Route = createFileRoute("/insights")({
   head: () => ({
     meta: [
-      { title: "Insights and Resources: Customer Experience Management | VistaXM" },
+      { title: "Insights: Revenue Channel Intelligence | VistaXM" },
       {
         name: "description",
         content:
-          "The public point of view on Revenue Channel Intelligence: articles, press, and whitepapers on customer experience management, customer retention, and the voice of the customer across the channel. Ungated, optimized for search and AI answers.",
+          "Research, press, and the State of Revenue Channel Intelligence. Customer intelligence and CX analytics for the IT channel and insurance.",
       },
-      { property: "og:title", content: "Insights and Resources | VistaXM" },
+      { property: "og:title", content: "Insights: Revenue Channel Intelligence | VistaXM" },
       {
         property: "og:description",
         content:
           "Our thinking is public. Read it, use it, bring questions, not budget. Articles, reports, and resources on Revenue Channel Intelligence.",
       },
     ],
+    links: [canonicalLink("/insights")],
   }),
   component: Insights,
 });

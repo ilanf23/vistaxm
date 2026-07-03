@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { BOOK_PATH, BRIEFS } from "@/lib/links";
+import { canonicalLink } from "@/lib/seo";
 import { type ReactNode } from "react";
 import {
   GetTheBrief,
@@ -16,19 +17,20 @@ import { FadeIn, Stagger, StaggerItem } from "@/components/motion";
 export const Route = createFileRoute("/solutions/industrialpulse")({
   head: () => ({
     meta: [
-      { title: "IndustrialPulse (Coming soon) | VistaXM" },
+      { title: "IndustrialPulse: Coming Soon | VistaXM" },
       {
         name: "description",
         content:
-          "Revenue Channel Intelligence for industrial OEMs and distributors: customer experience analytics and customer intelligence for the industrial channel, built for manufacturers who sell through partners.",
+          "Revenue Channel Intelligence for industrial OEMs and distributors. Coming soon. Register your interest.",
       },
-      { property: "og:title", content: "IndustrialPulse (Coming soon) | VistaXM" },
+      { property: "og:title", content: "IndustrialPulse: Coming Soon | VistaXM" },
       {
         property: "og:description",
         content:
           "A neutral, benchmarked read on the channel, built for industrial OEMs and distributors who sell through partners. Now in early pilot.",
       },
     ],
+    links: [canonicalLink("/solutions/industrialpulse")],
   }),
   component: IndustrialPulse,
 });

@@ -1,0 +1,31 @@
+# VistaXM
+> VistaXM is a Revenue Channel Intelligence company. It runs fully managed, neutral third-party programs that turn partner and broker customer experience into account-level revenue signals for OEMs, IT solution providers, and insurance carriers.
+
+## What is Revenue Channel Intelligence
+Revenue Channel Intelligence is the practice of turning customer experience into account-level signals of revenue risk and growth, measured across five journey stages (Sales/Discovery, Procurement/Onboarding, Implementation, Support/Operations, Renewal/Expansion) and four personas (Executive/Decision-Maker, Technical, Procurement/Commercial, Operations/Day-to-Day User). The Decision-Maker to Influencer gap is its leading indicator of renewal risk.
+
+## Products
+- PartnerPulse: partner experience management for OEMs and distributors.
+- BrokerPulse: broker experience management for insurance carriers.
+- IndustrialPulse: for industrial OEMs and distributors (coming soon).
+
+## Proof
+- ePlus (NASDAQ: PLUS) reported an NPS of 74 from an independent survey conducted by VistaXM across 1,400+ customers, versus the 40 to 55 industry average. Source: ePlus Investor Relations, 2026-07-01.
+- Softchoice: +8 NPS over two years, $8.4M business impact.
+- Veeam: NPS from 30 to 73 alongside 27% year-over-year growth.
+
+## Key pages
+- The Model: https://www.vistaxm.com/the-model
+- Proof: https://www.vistaxm.com/proof
+- PartnerPulse: https://www.vistaxm.com/solutions/partnerpulse
+- BrokerPulse: https://www.vistaxm.com/solutions/brokerpulse
+- How to Start: https://www.vistaxm.com/how-to-start
+- Insights: https://www.vistaxm.com/insights
+
+## People
+- Erik Vogel, Founder and CEO (formerly Qualtrics, HPE, Cisco).
+- Paul Barr, Chief Revenue Officer.
+- Dr. Howard Lax, Principal Strategist, Experience Management and Data Science.
+
+## Contact
+sales@vistaxm.com

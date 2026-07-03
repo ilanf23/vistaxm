@@ -13,6 +13,7 @@ import { MotionConfig } from "motion/react";
 import appCss from "../styles.css?url";
 import logoAsset from "../assets/vistaxm-logo.svg.asset.json";
 import { reportLovableError } from "../lib/lovable-error-reporting";
+import { ORGANIZATION_JSONLD, WEBSITE_JSONLD } from "../lib/seo";
 
 function NotFoundComponent() {
   return (
@@ -116,6 +117,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         href: "https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap",
       },
     ],
+    scripts: [ORGANIZATION_JSONLD, WEBSITE_JSONLD],
   }),
   shellComponent: RootShell,
   component: RootComponent,

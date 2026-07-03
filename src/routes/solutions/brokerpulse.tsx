@@ -1,7 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { BOOK_PATH, BRIEFS } from "@/lib/links";
+import { canonicalLink, faqJsonLd, type Faq } from "@/lib/seo";
 import {
   CTABand,
+  FAQSection,
   GetTheBrief,
   InfluencerGapCard,
   PageHero,
@@ -15,22 +17,32 @@ import { BrokerBookMap } from "@/components/solutions-viz";
 import { AmbientBand } from "@/components/media";
 import { Stagger, StaggerItem } from "@/components/motion";
 
+const FAQS: Faq[] = [
+  {
+    question: "What is BrokerPulse?",
+    answer:
+      "BrokerPulse is VistaXM's program for insurance carriers. It measures broker experience, quantifies the premium at risk, and produces a Broker Advocacy Index, so carriers can see why some brokers sell more, stay longer, and advocate.",
+  },
+];
+
 export const Route = createFileRoute("/solutions/brokerpulse")({
   head: () => ({
     meta: [
-      { title: "BrokerPulse | VistaXM" },
+      { title: "BrokerPulse: Broker Experience Management | VistaXM" },
       {
         name: "description",
         content:
-          "BrokerPulse is broker experience management for insurance carriers: customer experience analytics and customer intelligence on broker and agency experience, tied to premium retention and customer retention.",
+          "BrokerPulse quantifies broker experience and the premium at risk for insurance carriers, with the Broker Advocacy Index and journey-stage measurement.",
       },
-      { property: "og:title", content: "BrokerPulse | VistaXM" },
+      { property: "og:title", content: "BrokerPulse: Broker Experience Management | VistaXM" },
       {
         property: "og:description",
         content:
           "Know which agencies are quietly at risk, before production drops. BrokerPulse gives carriers a neutral read on broker and agency experience, tied to premium.",
       },
     ],
+    links: [canonicalLink("/solutions/brokerpulse")],
+    scripts: [faqJsonLd(FAQS)],
   }),
   component: BrokerPulse,
 });
@@ -186,6 +198,8 @@ function BrokerPulse() {
       <Section tint>
         <GetTheBrief brief={BRIEFS.brokerpulse} />
       </Section>
+
+      <FAQSection items={FAQS} tint={false} />
 
       <CTABand />
     </>

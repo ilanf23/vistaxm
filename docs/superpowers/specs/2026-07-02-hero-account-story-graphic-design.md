@@ -39,11 +39,11 @@ story: **orange (problem) -> blue (clarity) -> green (resolved)**.
 
 ### The three beats
 
-| Beat | Eyebrow | Headline | Data | Accent |
-|---|---|---|---|---|
-| 1 Signal | SIGNAL | "The partner went quiet" | NPS 71 -> 42, falling sparkline; support "day-to-day contact - last 90 days" | orange |
-| 2 Read | THE READ | "Cordova Health is about to walk" | "$1.2M at risk" (count-up), "61% renewal confidence" (progress bar); account line "Renewals - Cordova Health" | blue |
-| 3 Move | NEXT MOVE | "Re-engage the day-to-day team now" | "58 days to renewal"; "Take action" CTA to BOOK_PATH | green -> blue |
+| Beat     | Eyebrow   | Headline                            | Data                                                                                                          | Accent        |
+| -------- | --------- | ----------------------------------- | ------------------------------------------------------------------------------------------------------------- | ------------- |
+| 1 Signal | SIGNAL    | "The partner went quiet"            | NPS 71 -> 42, falling sparkline; support "day-to-day contact - last 90 days"                                  | orange        |
+| 2 Read   | THE READ  | "Cordova Health is about to walk"   | "$1.2M at risk" (count-up), "61% renewal confidence" (progress bar); account line "Renewals - Cordova Health" | blue          |
+| 3 Move   | NEXT MOVE | "Re-engage the day-to-day team now" | "58 days to renewal"; "Take action" CTA to BOOK_PATH                                                          | green -> blue |
 
 Beat 2 is the largest card and sits on the faint radar rings + breathing glow retained
 from the old hub, so the texture the user liked survives as the engine of the story.

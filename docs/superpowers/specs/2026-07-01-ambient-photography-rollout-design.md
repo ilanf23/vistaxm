@@ -26,19 +26,19 @@ customers, and never showing readable screens or logos.
 
 ## Per-page placement
 
-| Page | Placement | Location | Photo subject |
-|------|-----------|----------|---------------|
-| `index` | AmbientBand | between "Our advantage" and PartnerShadow | colleagues reviewing a dashboard on a laptop |
-| `book-a-call` | side image (left) | "Reach us directly" section | person mid-call at a clean desk |
-| `the-model` | AmbientBand | between "How it works" and "From signal to decision" | small team at a whiteboard mapping accounts |
-| `how-to-start` | side image (right) | convert "Why managed" to 2-col | over-the-shoulder operator with charts |
-| `crn` | AmbientBand | between "5 things" and "How it works" | calm modern ops floor, muted dashboards |
-| `for-oems` | side image (right) | convert "Why a neutral third party" to 2-col | two partners in candid conversation |
-| `insights` | AmbientBand | between Articles and Resources | reading a report/charts on a laptop |
-| `proof` | AmbientBand | between "Real results" and Testimonial | distant, generic team reviewing printed charts |
-| `solutions/brokerpulse` | AmbientBand | between "What it informs" and "In action" | broker reviewing an account portfolio |
-| `solutions/industrialpulse` | AmbientBand | above the "Early pilot" band | distribution warehouse / OEM floor |
-| `solutions/partnerpulse` | AmbientBand | between "Two tracks" and "What it informs" | vendor + reseller teams collaborating |
+| Page                        | Placement          | Location                                             | Photo subject                                  |
+| --------------------------- | ------------------ | ---------------------------------------------------- | ---------------------------------------------- |
+| `index`                     | AmbientBand        | between "Our advantage" and PartnerShadow            | colleagues reviewing a dashboard on a laptop   |
+| `book-a-call`               | side image (left)  | "Reach us directly" section                          | person mid-call at a clean desk                |
+| `the-model`                 | AmbientBand        | between "How it works" and "From signal to decision" | small team at a whiteboard mapping accounts    |
+| `how-to-start`              | side image (right) | convert "Why managed" to 2-col                       | over-the-shoulder operator with charts         |
+| `crn`                       | AmbientBand        | between "5 things" and "How it works"                | calm modern ops floor, muted dashboards        |
+| `for-oems`                  | side image (right) | convert "Why a neutral third party" to 2-col         | two partners in candid conversation            |
+| `insights`                  | AmbientBand        | between Articles and Resources                       | reading a report/charts on a laptop            |
+| `proof`                     | AmbientBand        | between "Real results" and Testimonial               | distant, generic team reviewing printed charts |
+| `solutions/brokerpulse`     | AmbientBand        | between "What it informs" and "In action"            | broker reviewing an account portfolio          |
+| `solutions/industrialpulse` | AmbientBand        | above the "Early pilot" band                         | distribution warehouse / OEM floor             |
+| `solutions/partnerpulse`    | AmbientBand        | between "Two tracks" and "What it informs"           | vendor + reseller teams collaborating          |
 
 ## Guardrails
 

@@ -702,12 +702,20 @@ function ShieldCheckIcon({ className }: { className?: string }) {
 
 const NET_W = 600;
 const NET_H = 660;
-// Three story beats on a forward diagonal through the 600x660 canvas:
-// Signal (top-left) -> Read (center, the engine) -> Move (bottom-right).
-// The eye reads top-left to bottom-right, which is the chronology.
-const BEAT_A = { x: 168, y: 132 }; // signal
-const BEAT_B = { x: 328, y: 336 }; // read (the engine, on the radar rings)
-const BEAT_C = { x: 452, y: 548 }; // move
+const HUB = { x: 300, y: 300 };
+// Symmetric 2-column x 3-row layout: left/right columns equidistant from the
+// hub, three evenly-spaced rows. Keeps the network balanced rather than fanned.
+const COL_L = 108;
+const COL_R = NET_W - COL_L; // 492
+// Middle row sits wider than top/bottom so the two side cards pull away from
+// the hub (a gentle outward bulge at the widest point of the network).
+const COL_MID_L = 63;
+const COL_MID_R = NET_W - COL_MID_L; // 537
+const ROW_TOP = 170;
+const ROW_MID = HUB.y; // 300: middle cards align with the hub
+const ROW_BOT = HUB.y + (HUB.y - ROW_TOP); // 430
+// The problem statement sits at the top and feeds the decision hub.
+const PROBLEM = { x: HUB.x, y: 60 };
 
 type Accent = "orange" | "blue" | "green";
 type ChartKind = "spark-down" | "line-up" | "bars" | "progress";
@@ -739,26 +747,105 @@ const ACCENTS: Record<
   },
 };
 
-type IconKind = "alert" | "arrow-up" | "people" | "shield" | "gauge" | "graph";
+type NetCard = {
+  x: number;
+  y: number;
+  accent: Accent;
+  icon: "alert" | "arrow-up" | "people" | "shield" | "gauge" | "graph";
+  title: string;
+  metric: string;
+  support: string;
+  chart: ChartKind;
+};
+
+const NET_CARDS: NetCard[] = [
+  {
+    x: COL_L,
+    y: ROW_TOP,
+    accent: "orange",
+    icon: "alert",
+    title: "Revenue at risk",
+    metric: "$1.2M",
+    support: "revenue at risk",
+    chart: "spark-down",
+  },
+  {
+    x: COL_R,
+    y: ROW_TOP,
+    accent: "blue",
+    icon: "arrow-up",
+    title: "Expansion opportunity",
+    metric: "$480K",
+    support: "expansion potential",
+    chart: "line-up",
+  },
+  {
+    x: COL_MID_L,
+    y: ROW_MID,
+    accent: "blue",
+    icon: "people",
+    title: "Partner-sourced growth",
+    metric: "+18%",
+    support: "vs last 90 days",
+    chart: "bars",
+  },
+  {
+    x: COL_MID_R,
+    y: ROW_MID,
+    accent: "green",
+    icon: "shield",
+    title: "Renewal confidence",
+    metric: "61%",
+    support: "confidence score",
+    chart: "progress",
+  },
+  {
+    x: COL_L,
+    y: ROW_BOT,
+    accent: "orange",
+    icon: "gauge",
+    title: "Margin pressure",
+    metric: "-3.2 pts",
+    support: "gross margin impact",
+    chart: "spark-down",
+  },
+  {
+    x: COL_R,
+    y: ROW_BOT,
+    accent: "blue",
+    icon: "graph",
+    title: "Pipeline shift",
+    metric: "$2.7M",
+    support: "at risk next quarter",
+    chart: "bars",
+  },
+];
+
+const ACTION = { x: HUB.x, y: 566 };
 
 /* ---- Orchestrated entrance timeline (seconds) ----
-   Chronological, one-time reveal: the Signal beat appears, a pulse travels the
-   spine to the Read beat (which pops as the pulse arrives), then a second pulse
-   travels to the Move beat, revealed last. After ENTRANCE_MS the ambient loop
-   takes over and pulses keep threading the spine. */
-const POP = 0.5; // beat entrance duration
-const A_REVEAL = 0.2; // the signal beat is first
-const SEG = 0.5; // pulse travel time along one spine segment
-const SEG1_START = A_REVEAL + 0.5; // pulse launches from signal toward read
-const B_REVEAL = SEG1_START + SEG; // read beat pops as the pulse arrives (~1.2s)
-const SEG2_START = B_REVEAL + 0.35; // pulse launches from read toward move
-const C_REVEAL = SEG2_START + SEG; // move beat is the finale (~2.05s)
-const ENTRANCE_MS = 4200; // when the ambient loops take over
+   One-time, chronological reveal: the problem box appears, a dot flies down
+   into the hub, then the hub radiates a signal out to each box in turn and the
+   box only pops when its signal arrives. The action card is strictly last. */
+const POP = 0.45; // box / hub entrance duration
+const P2H_START = 0.35; // problem -> hub dot launch
+const P2H_TRAVEL = 0.45; // problem -> hub dot travel
+const HUB_REVEAL = P2H_START + P2H_TRAVEL; // hub pops when the dot arrives (~0.8s)
+const LINE = 0.35; // hub -> box connector draw + dot travel
+const STAGGER = 0.45; // gap between consecutive spokes
+const CARD_BASE = 1.25; // first spoke's line/dot launch
+const ACTION_BEAT = 0.15; // extra pause before the finale
+const ENTRANCE_MS = 5000; // when the ambient loops take over
+
+// Spoke i in 0..6 (6 == ACTION). When its connector/dot launches from the hub.
+const spokeStart = (i: number) => CARD_BASE + i * STAGGER + (i === 6 ? ACTION_BEAT : 0);
+// When the box pops: the moment its signal arrives.
+const cardReveal = (i: number) => spokeStart(i) + LINE;
 
 // design unit -> scaled length (640 design units == container inline width)
 const u = (n: number) => `calc(${n} * var(--net-u))`;
 
-function NetIcon({ kind, color }: { kind: IconKind; color: string }) {
+function NetIcon({ kind, color }: { kind: NetCard["icon"]; color: string }) {
   const common = {
     viewBox: "0 0 24 24",
     fill: "none",
@@ -893,38 +980,19 @@ function MiniChart({ kind, accent }: { kind: ChartKind; accent: Accent }) {
   );
 }
 
-/* Shared chrome for a story beat: positions the card on its anchor, applies the
-   glass card styling with the accent glow, runs the one-time entrance pop, and
-   carries a gentle idle float on the inner element (so the float transform does
-   not clobber the centering transform on the outer element). */
-function BeatShell({
-  x,
-  y,
-  width,
-  accent,
-  delay,
-  shown,
-  floatDur,
-  children,
-}: {
-  x: number;
-  y: number;
-  width: number;
-  accent: Accent;
-  delay: number;
-  shown: boolean;
-  floatDur: number;
-  children: ReactNode;
-}) {
-  const c = ACCENTS[accent];
+function NetMetricCard({ card, delay, shown }: { card: NetCard; delay: number; shown: boolean }) {
+  const c = ACCENTS[card.accent];
   return (
     <div
       className="absolute"
       style={{
-        left: u(x),
-        top: u(y),
-        width: u(width),
+        left: u(card.x),
+        top: u(card.y),
+        width: u(150),
+        // Center on the anchor point. The float animation lives on the inner
+        // element so its transform does not clobber this centering.
         transform: "translate(-50%, -50%)",
+        // Entrance: stay hidden until the hub's signal reaches this box.
         opacity: shown ? undefined : 0,
         animation: shown ? `net-pop ${POP}s ${delay}s both` : undefined,
       }}
@@ -932,212 +1000,113 @@ function BeatShell({
       <div
         className="relative overflow-hidden"
         style={{
-          borderRadius: u(16),
-          padding: `${u(14)} ${u(15)}`,
-          background: "linear-gradient(165deg, rgba(10,42,80,0.92), rgba(5,28,58,0.95))",
+          borderRadius: u(15),
+          padding: `${u(13)} ${u(14)}`,
+          background: "linear-gradient(165deg, rgba(10,42,80,0.92), rgba(5,28,58,0.94))",
           border: `1px solid ${c.border}`,
-          boxShadow: `0 ${u(20)} ${u(44)} rgba(2,16,40,0.55), 0 0 ${u(28)} ${c.glow}, inset 0 1px 0 rgba(255,255,255,0.06)`,
+          boxShadow: `0 ${u(18)} ${u(40)} rgba(2,16,40,0.55), 0 0 ${u(26)} ${c.glow}, inset 0 1px 0 rgba(255,255,255,0.06)`,
           backdropFilter: "blur(8px)",
-          animation: `float-y-sm ${floatDur}s ease-in-out ${delay}s infinite`,
+          animation: `float-y-sm ${6 + (delay % 3)}s ease-in-out ${delay}s infinite`,
         }}
       >
-        {children}
-      </div>
-    </div>
-  );
-}
-
-/* A beat's labelled header: an accent icon chip plus an uppercase eyebrow. */
-function BeatEyebrow({ icon, label, accent }: { icon: IconKind; label: string; accent: Accent }) {
-  const c = ACCENTS[accent];
-  return (
-    <div className="flex items-center" style={{ gap: u(8) }}>
-      <span
-        className="flex flex-none items-center justify-center"
-        style={{
-          width: u(26),
-          height: u(26),
-          borderRadius: u(8),
-          background: c.ring,
-          border: `1px solid ${c.border}`,
-          padding: u(5),
-        }}
-      >
-        <NetIcon kind={icon} color={c.icon} />
-      </span>
-      <span
-        className="font-semibold uppercase"
-        style={{ fontSize: u(10.5), letterSpacing: "0.14em", color: c.stroke }}
-      >
-        {label}
-      </span>
-    </div>
-  );
-}
-
-/* Beat 1 (Signal): the soft signal a score would miss. The team that uses the
-   product daily has gone quiet and NPS is sliding, well before renewal. */
-function SignalBeat({ shown }: { shown: boolean }) {
-  return (
-    <BeatShell
-      x={BEAT_A.x}
-      y={BEAT_A.y}
-      width={238}
-      accent="orange"
-      delay={A_REVEAL}
-      shown={shown}
-      floatDur={7}
-    >
-      <BeatEyebrow icon="people" label="Signal" accent="orange" />
-      <div
-        className="font-bold leading-snug text-white"
-        style={{ fontFamily: "var(--font-display)", fontSize: u(16.5), marginTop: u(10) }}
-      >
-        The partner went quiet
-      </div>
-      <div className="flex items-end justify-between" style={{ marginTop: u(11), gap: u(10) }}>
-        <div>
-          <div
-            className="font-bold leading-none text-white"
-            style={{ fontFamily: "var(--font-display)", fontSize: u(21) }}
+        <div className="flex items-center" style={{ gap: u(8) }}>
+          <span
+            className="flex flex-none items-center justify-center"
+            style={{
+              width: u(26),
+              height: u(26),
+              borderRadius: u(8),
+              background: c.ring,
+              border: `1px solid ${c.border}`,
+              padding: u(5),
+            }}
           >
-            NPS 71 <span style={{ color: ACCENTS.orange.stroke }}>&rarr; 42</span>
-          </div>
-          <div
-            className="text-white/55"
-            style={{ fontSize: u(9.8), marginTop: u(6), letterSpacing: "0.01em" }}
-          >
-            day-to-day contact &middot; last 90 days
-          </div>
-        </div>
-        <span className="flex-none" style={{ width: u(56), height: u(18) }}>
-          <MiniChart kind="spark-down" accent="orange" />
-        </span>
-      </div>
-    </BeatShell>
-  );
-}
-
-/* Beat 2 (Read): the account-level read. This is the engine of the story: it
-   sits on the radar rings and turns the signal into a revenue call, a number
-   and a deadline. Count-ups animate the metric and the confidence bar. */
-function ReadBeat({ shown }: { shown: boolean }) {
-  const risk = useCountUp(1.2, 1400, shown);
-  const conf = useCountUp(61, 1400, shown);
-  return (
-    <BeatShell
-      x={BEAT_B.x}
-      y={BEAT_B.y}
-      width={282}
-      accent="blue"
-      delay={B_REVEAL}
-      shown={shown}
-      floatDur={8}
-    >
-      <div className="flex items-center justify-between" style={{ gap: u(8) }}>
-        <BeatEyebrow icon="graph" label="The read" accent="blue" />
-        <span className="text-white/45" style={{ fontSize: u(9.5), letterSpacing: "0.02em" }}>
-          Renewals &middot; Cordova Health
-        </span>
-      </div>
-      <div
-        className="font-bold leading-snug text-white"
-        style={{ fontFamily: "var(--font-display)", fontSize: u(18.5), marginTop: u(10) }}
-      >
-        Cordova Health is about to walk
-      </div>
-      <div
-        className="font-bold leading-none text-white"
-        style={{ fontFamily: "var(--font-display)", fontSize: u(26), marginTop: u(12) }}
-      >
-        ${risk.toFixed(1)}M
-        <span className="text-white/55" style={{ fontSize: u(11), fontWeight: 500 }}>
-          {" "}
-          revenue at risk
-        </span>
-      </div>
-      <div style={{ marginTop: u(12) }}>
-        <div className="flex items-center justify-between" style={{ marginBottom: u(5) }}>
-          <span className="text-white/55" style={{ fontSize: u(9.8) }}>
-            renewal confidence
+            <NetIcon kind={card.icon} color={c.icon} />
           </span>
-          <span className="font-semibold" style={{ fontSize: u(10.5), color: ACCENTS.blue.stroke }}>
-            {Math.round(conf)}%
+          <span
+            className="font-semibold leading-tight text-white/85"
+            style={{ fontSize: u(11.5), letterSpacing: "-0.01em" }}
+          >
+            {card.title}
           </span>
         </div>
         <div
-          style={{
-            height: u(5),
-            borderRadius: u(3),
-            background: "rgba(255,255,255,0.1)",
-            overflow: "hidden",
-          }}
+          className="font-bold leading-none text-white"
+          style={{ fontFamily: "var(--font-display)", fontSize: u(25), marginTop: u(11) }}
         >
-          <div
-            style={{
-              height: "100%",
-              width: `${conf}%`,
-              borderRadius: u(3),
-              background: `linear-gradient(90deg, ${ACCENTS.blue.icon}, ${ACCENTS.green.icon})`,
-            }}
-          />
+          {card.metric}
+        </div>
+        <div className="flex items-center justify-between" style={{ marginTop: u(8), gap: u(8) }}>
+          <span className="text-white/55" style={{ fontSize: u(9.8), letterSpacing: "0.01em" }}>
+            {card.support}
+          </span>
+          <span className="flex-none" style={{ width: u(46), height: u(15) }}>
+            <MiniChart kind={card.chart} accent={card.accent} />
+          </span>
         </div>
       </div>
-    </BeatShell>
+    </div>
   );
 }
 
-/* Beat 3 (Move): the next move. Specific, owned, time-boxed. The finale. */
-function MoveBeat({ shown }: { shown: boolean }) {
+/* The problem statement at the top of the network: an orange-accented "issue"
+   box that feeds the decision hub below it. Outer div centers on the anchor;
+   inner div carries the float so its transform does not clobber centering. */
+function ProblemBox({ shown, delay }: { shown: boolean; delay: number }) {
   return (
-    <BeatShell
-      x={BEAT_C.x}
-      y={BEAT_C.y}
-      width={248}
-      accent="green"
-      delay={C_REVEAL}
-      shown={shown}
-      floatDur={7.5}
+    <div
+      className="absolute"
+      style={{
+        left: u(PROBLEM.x),
+        top: u(PROBLEM.y),
+        width: u(258),
+        transform: "translate(-50%, -50%)",
+        // Entrance: the problem is the first thing to appear.
+        opacity: shown ? undefined : 0,
+        animation: shown ? `net-pop ${POP}s ${delay}s both` : undefined,
+      }}
     >
-      <div className="flex items-center" style={{ gap: u(8) }}>
-        <NextMoveArrow />
-        <span
-          className="font-semibold uppercase"
-          style={{ fontSize: u(10.5), letterSpacing: "0.14em", color: ACCENTS.green.stroke }}
-        >
-          Next move
-        </span>
-      </div>
       <div
-        className="font-bold leading-snug text-white"
-        style={{ fontFamily: "var(--font-display)", fontSize: u(17.5), marginTop: u(10) }}
-      >
-        Re-engage the day-to-day team now
-      </div>
-      <div className="flex items-center" style={{ gap: u(6), marginTop: u(9) }}>
-        <span className="flex-none" style={{ width: u(13), height: u(13) }}>
-          <ClockIcon className="h-full w-full text-[#9fc0e8]" />
-        </span>
-        <span className="text-white/60" style={{ fontSize: u(10.5) }}>
-          58 days to renewal
-        </span>
-      </div>
-      <a
-        href={BOOK_PATH}
-        className="flex items-center justify-center font-semibold text-white transition-[transform,box-shadow] hover:brightness-110 active:scale-[0.98]"
+        className="relative overflow-hidden"
         style={{
-          marginTop: u(13),
-          width: "100%",
-          borderRadius: u(9),
-          padding: `${u(9)} ${u(12)}`,
-          fontSize: u(11.5),
-          background: "var(--blue-cta)",
-          boxShadow: `0 ${u(8)} ${u(18)} rgba(49,133,252,0.45)`,
+          borderRadius: u(15),
+          padding: `${u(13)} ${u(16)}`,
+          background: "linear-gradient(165deg, rgba(58,33,18,0.62), rgba(7,28,58,0.93))",
+          border: "1px solid rgba(246,130,65,0.42)",
+          boxShadow: `0 ${u(20)} ${u(44)} rgba(2,16,40,0.55), 0 0 ${u(30)} rgba(246,130,65,0.2), inset 0 1px 0 rgba(255,255,255,0.07)`,
+          backdropFilter: "blur(8px)",
+          animation: "float-y-sm 7s ease-in-out 0.15s infinite",
         }}
       >
-        Take action
-      </a>
-    </BeatShell>
+        <div className="flex items-center" style={{ gap: u(8) }}>
+          <span
+            className="flex flex-none items-center justify-center"
+            style={{
+              width: u(26),
+              height: u(26),
+              borderRadius: u(8),
+              background: "rgba(246,130,65,0.16)",
+              border: "1px solid rgba(246,130,65,0.4)",
+              padding: u(5),
+            }}
+          >
+            <NetIcon kind="alert" color="#f68241" />
+          </span>
+          <span
+            className="font-semibold uppercase"
+            style={{ fontSize: u(10.5), letterSpacing: "0.14em", color: "#f9a26a" }}
+          >
+            The problem
+          </span>
+        </div>
+        <div
+          className="font-bold leading-snug text-white"
+          style={{ fontFamily: "var(--font-display)", fontSize: u(15.5), marginTop: u(9) }}
+        >
+          A score won&apos;t tell you which account is about to walk.
+        </div>
+      </div>
+    </div>
   );
 }
 
@@ -1184,8 +1153,78 @@ function NextMoveArrow() {
   );
 }
 
+function NetActionCard({ shown, delay }: { shown: boolean; delay: number }) {
+  return (
+    <div
+      className="absolute"
+      style={{
+        left: u(ACTION.x),
+        top: u(ACTION.y),
+        width: u(200),
+        transform: "translate(-50%, -50%)",
+        // Entrance: the "next best move" is the finale, revealed last.
+        opacity: shown ? undefined : 0,
+        animation: shown ? `net-pop ${POP}s ${delay}s both` : undefined,
+      }}
+    >
+      <div
+        className="relative overflow-hidden"
+        style={{
+          borderRadius: u(16),
+          padding: `${u(15)} ${u(16)}`,
+          background: "linear-gradient(165deg, rgba(11,46,92,0.96), rgba(5,28,58,0.97))",
+          border: "1px solid rgba(49,133,252,0.42)",
+          boxShadow: `0 ${u(24)} ${u(50)} rgba(2,16,40,0.6), 0 0 ${u(34)} rgba(49,133,252,0.28), inset 0 1px 0 rgba(255,255,255,0.07)`,
+          backdropFilter: "blur(8px)",
+          animation: "float-y-sm 7.5s ease-in-out 0.4s infinite",
+        }}
+      >
+        <div className="flex items-center" style={{ gap: u(7) }}>
+          <NextMoveArrow />
+          <span
+            className="font-semibold uppercase text-[color:var(--blue-light)]"
+            style={{ fontSize: u(10), letterSpacing: "0.12em" }}
+          >
+            Next best move
+          </span>
+        </div>
+        <div
+          className="font-bold leading-snug text-white"
+          style={{ fontFamily: "var(--font-display)", fontSize: u(17.5), marginTop: u(10) }}
+        >
+          Re-engage the day-to-day team now
+        </div>
+        <div className="flex items-center" style={{ gap: u(6), marginTop: u(9) }}>
+          <span className="flex-none" style={{ width: u(13), height: u(13) }}>
+            <ClockIcon className="h-full w-full text-[#9fc0e8]" />
+          </span>
+          <span className="text-white/60" style={{ fontSize: u(10.5) }}>
+            58 days to renewal
+          </span>
+        </div>
+        <a
+          href={BOOK_PATH}
+          className="flex items-center justify-center font-semibold text-white transition-[transform,box-shadow] hover:brightness-110 active:scale-[0.98]"
+          style={{
+            marginTop: u(13),
+            width: "100%",
+            borderRadius: u(9),
+            padding: `${u(9)} ${u(12)}`,
+            fontSize: u(11.5),
+            background: "var(--blue-cta)",
+            boxShadow: `0 ${u(8)} ${u(18)} rgba(49,133,252,0.45)`,
+          }}
+        >
+          Take action
+        </a>
+      </div>
+    </div>
+  );
+}
+
 export function RevenueDecisionNetwork() {
   const { ref, shown } = useReveal(0.1);
+  const targets = [...NET_CARDS.map((c) => ({ x: c.x, y: c.y })), ACTION];
 
   // Once the entrance has played, hand off to the ambient (looping) signals.
   const [entered, setEntered] = useState(false);
@@ -1201,10 +1240,6 @@ export function RevenueDecisionNetwork() {
     const t = setTimeout(() => setEntered(true), ENTRANCE_MS);
     return () => clearTimeout(t);
   }, [shown]);
-
-  // Two spine segments carry the story forward: signal -> read -> move.
-  const seg1 = { dx: BEAT_B.x - BEAT_A.x, dy: BEAT_B.y - BEAT_A.y };
-  const seg2 = { dx: BEAT_C.x - BEAT_B.x, dy: BEAT_C.y - BEAT_B.y };
 
   return (
     <div
@@ -1222,7 +1257,7 @@ export function RevenueDecisionNetwork() {
           "opacity 0.8s cubic-bezier(0.22,1,0.36,1), transform 0.8s cubic-bezier(0.22,1,0.36,1)",
       }}
     >
-      {/* Spine, radar rings and glow (under the cards) */}
+      {/* Connectors, radar rings and anchor dots (under the cards) */}
       <svg
         viewBox={`0 0 ${NET_W} ${NET_H}`}
         className="absolute inset-0 h-full w-full"
@@ -1231,203 +1266,314 @@ export function RevenueDecisionNetwork() {
       >
         <defs>
           <radialGradient id="net-ring" cx="50%" cy="50%" r="50%">
-            <stop offset="55%" stopColor="rgba(103,166,255,0)" />
-            <stop offset="100%" stopColor="rgba(103,166,255,0.14)" />
+            <stop offset="60%" stopColor="rgba(103,166,255,0)" />
+            <stop offset="100%" stopColor="rgba(103,166,255,0.12)" />
           </radialGradient>
-          {/* Segment 1: orange (the problem) fading to blue (clarity). */}
+          {/* One gradient per connector in user space so it paints at any angle
+              (an objectBoundingBox gradient does not render on a perfectly
+              horizontal/vertical line, which would drop the middle connectors). */}
+          {targets.map((t, i) => (
+            <linearGradient
+              key={`cg${i}`}
+              id={`conn-${i}`}
+              gradientUnits="userSpaceOnUse"
+              x1={HUB.x}
+              y1={HUB.y}
+              x2={t.x}
+              y2={t.y}
+            >
+              <stop offset="0%" stopColor="rgba(103,166,255,0.6)" />
+              <stop offset="100%" stopColor="rgba(103,166,255,0.1)" />
+            </linearGradient>
+          ))}
+          {/* Problem -> hub: orange at the problem fading to blue at the engine. */}
           <linearGradient
-            id="spine-1"
+            id="conn-problem"
             gradientUnits="userSpaceOnUse"
-            x1={BEAT_A.x}
-            y1={BEAT_A.y}
-            x2={BEAT_B.x}
-            y2={BEAT_B.y}
+            x1={PROBLEM.x}
+            y1={PROBLEM.y}
+            x2={HUB.x}
+            y2={HUB.y}
           >
-            <stop offset="0%" stopColor="rgba(246,130,65,0.65)" />
-            <stop offset="100%" stopColor="rgba(103,166,255,0.55)" />
-          </linearGradient>
-          {/* Segment 2: blue (clarity) resolving to green (the move). */}
-          <linearGradient
-            id="spine-2"
-            gradientUnits="userSpaceOnUse"
-            x1={BEAT_B.x}
-            y1={BEAT_B.y}
-            x2={BEAT_C.x}
-            y2={BEAT_C.y}
-          >
-            <stop offset="0%" stopColor="rgba(103,166,255,0.55)" />
-            <stop offset="100%" stopColor="rgba(94,224,176,0.6)" />
+            <stop offset="0%" stopColor="rgba(246,130,65,0.6)" />
+            <stop offset="100%" stopColor="rgba(103,166,255,0.12)" />
           </linearGradient>
         </defs>
 
-        {/* Faint radar rings behind the read beat (the engine of the story) */}
-        {[150, 112, 78].map((r) => (
+        {/* Faint radar rings behind the hub */}
+        {[150, 116, 84].map((r) => (
           <circle
             key={r}
-            cx={BEAT_B.x}
-            cy={BEAT_B.y}
+            cx={HUB.x}
+            cy={HUB.y}
             r={r}
             fill="none"
-            stroke="rgba(120,170,255,0.13)"
+            stroke="rgba(120,170,255,0.14)"
             strokeWidth="1"
           />
         ))}
-        <circle cx={BEAT_B.x} cy={BEAT_B.y} r="180" fill="url(#net-ring)" />
+        <circle cx={HUB.x} cy={HUB.y} r="190" fill="url(#net-ring)" />
+        {/* faint outer radar arc */}
+        <path
+          d={`M ${HUB.x - 220} ${HUB.y} A 220 220 0 0 1 ${HUB.x + 220} ${HUB.y}`}
+          fill="none"
+          stroke="rgba(120,170,255,0.1)"
+          strokeWidth="1"
+          strokeDasharray="2 7"
+        />
 
-        {/* Spine segment 1: signal -> read. Draws outward as the pulse travels. */}
+        {/* Connector lines from hub to each card. Each draws outward from the
+            hub so the line reaches the box exactly as the box pops in. */}
+        {targets.map((t, i) => (
+          <line
+            key={i}
+            x1={HUB.x}
+            y1={HUB.y}
+            x2={t.x}
+            y2={t.y}
+            stroke={`url(#conn-${i})`}
+            strokeWidth="1.4"
+            pathLength={100}
+            style={{
+              strokeDasharray: 100,
+              strokeDashoffset: 100,
+              animation: shown
+                ? `draw-line ${LINE}s ${spokeStart(i)}s ease-out forwards`
+                : undefined,
+            }}
+          />
+        ))}
+
+        {/* Problem -> hub connector (feeds the engine from the top) */}
         <line
-          x1={BEAT_A.x}
-          y1={BEAT_A.y}
-          x2={BEAT_B.x}
-          y2={BEAT_B.y}
-          stroke="url(#spine-1)"
+          x1={PROBLEM.x}
+          y1={PROBLEM.y}
+          x2={HUB.x}
+          y2={HUB.y}
+          stroke="url(#conn-problem)"
           strokeWidth="1.6"
           pathLength={100}
           style={{
             strokeDasharray: 100,
             strokeDashoffset: 100,
-            animation: shown ? `draw-line ${SEG}s ${SEG1_START}s ease-out forwards` : undefined,
+            animation: shown
+              ? `draw-line ${P2H_TRAVEL}s ${P2H_START}s ease-out forwards`
+              : undefined,
           }}
         />
-        {/* Spine segment 2: read -> move. */}
-        <line
-          x1={BEAT_B.x}
-          y1={BEAT_B.y}
-          x2={BEAT_C.x}
-          y2={BEAT_C.y}
-          stroke="url(#spine-2)"
-          strokeWidth="1.6"
-          pathLength={100}
+
+        {/* Anchor dots on the hub ring at each connector angle.
+            Round trig output so SSR (Node) and client (browser) match. */}
+        {targets.map((t, i) => {
+          const ang = Math.atan2(t.y - HUB.y, t.x - HUB.x);
+          const rr = 76;
+          return (
+            <circle
+              key={`a${i}`}
+              cx={Math.round((HUB.x + Math.cos(ang) * rr) * 100) / 100}
+              cy={Math.round((HUB.y + Math.sin(ang) * rr) * 100) / 100}
+              r="3"
+              fill="#9cc4ff"
+              style={{
+                filter: "drop-shadow(0 0 4px rgba(103,166,255,0.9))",
+                opacity: shown ? undefined : 0,
+                animation: shown ? `net-fade 0.3s ${spokeStart(i)}s both` : undefined,
+              }}
+            />
+          );
+        })}
+        {/* Anchor dot where the problem connector meets the top of the hub ring */}
+        <circle
+          cx={HUB.x}
+          cy={HUB.y - 76}
+          r="3"
+          fill="#f9a26a"
           style={{
-            strokeDasharray: 100,
-            strokeDashoffset: 100,
-            animation: shown ? `draw-line ${SEG}s ${SEG2_START}s ease-out forwards` : undefined,
+            filter: "drop-shadow(0 0 4px rgba(246,130,65,0.9))",
+            opacity: shown ? undefined : 0,
+            animation: shown ? `net-fade 0.3s ${HUB_REVEAL}s both` : undefined,
           }}
         />
       </svg>
 
-      {/* Breathing glow + expanding radar rings behind the read beat. Gated so
-          they only emit once the read beat has been reached. */}
-      <div
-        className="absolute"
-        aria-hidden
-        style={{
-          left: u(BEAT_B.x),
-          top: u(BEAT_B.y),
-          width: u(150),
-          height: u(150),
-          transform: "translate(-50%, -50%)",
-          pointerEvents: "none",
-          opacity: shown ? undefined : 0,
-          animation: shown ? `net-fade 0.5s ${B_REVEAL}s both` : undefined,
-        }}
-      >
-        <span
-          className="absolute rounded-full"
-          style={{
-            inset: u(-16),
-            background: "radial-gradient(circle, rgba(49,133,252,0.34), transparent 68%)",
-            animation: "hub-breath 5s ease-in-out infinite",
-          }}
-        />
-        {[0, 1.6].map((d) => (
-          <span
-            key={d}
-            className="absolute inset-0 rounded-full"
-            style={{
-              border: "1px solid rgba(103,166,255,0.4)",
-              animation: `radar-emit 4s ${d}s ease-out infinite`,
-            }}
-          />
-        ))}
-      </div>
-
-      {/* Signal pulses travelling the spine: a one-shot during the entrance, then
-          a looping ambient version. Rendered before the cards so the cards paint
-          over the pulse ends (each pulse emerges in the gap between beats). */}
+      {/* Entrance (one-shot): a dot flies from the problem down into the hub,
+          then the hub fires a dot out to each box, landing as the box pops. */}
       {!entered && (
         <>
           <span
             className="absolute rounded-full"
             aria-hidden
             style={{
-              left: u(BEAT_A.x),
-              top: u(BEAT_A.y),
-              width: u(7),
-              height: u(7),
-              marginLeft: u(-3.5),
-              marginTop: u(-3.5),
+              left: u(PROBLEM.x),
+              top: u(PROBLEM.y),
+              width: u(6),
+              height: u(6),
+              marginLeft: u(-3),
+              marginTop: u(-3),
               background: "#ffd2b5",
-              boxShadow: "0 0 9px 2px rgba(246,130,65,0.8)",
+              boxShadow: "0 0 8px 2px rgba(246,130,65,0.8)",
               opacity: 0,
-              ["--dx" as string]: u(seg1.dx),
-              ["--dy" as string]: u(seg1.dy),
-              animation: shown ? `signal-travel ${SEG}s ${SEG1_START}s ease-out 1 both` : undefined,
+              ["--dx" as string]: u(0),
+              ["--dy" as string]: u(HUB.y - PROBLEM.y),
+              animation: shown
+                ? `signal-travel ${P2H_TRAVEL}s ${P2H_START}s ease-out 1 both`
+                : undefined,
             }}
           />
-          <span
-            className="absolute rounded-full"
-            aria-hidden
-            style={{
-              left: u(BEAT_B.x),
-              top: u(BEAT_B.y),
-              width: u(7),
-              height: u(7),
-              marginLeft: u(-3.5),
-              marginTop: u(-3.5),
-              background: "#bff0d8",
-              boxShadow: "0 0 9px 2px rgba(94,224,176,0.8)",
-              opacity: 0,
-              ["--dx" as string]: u(seg2.dx),
-              ["--dy" as string]: u(seg2.dy),
-              animation: shown ? `signal-travel ${SEG}s ${SEG2_START}s ease-out 1 both` : undefined,
-            }}
-          />
+          {targets.map((t, i) => (
+            <span
+              key={`ed${i}`}
+              className="absolute rounded-full"
+              aria-hidden
+              style={{
+                left: u(HUB.x),
+                top: u(HUB.y),
+                width: u(6),
+                height: u(6),
+                marginLeft: u(-3),
+                marginTop: u(-3),
+                background: "#bcdcff",
+                boxShadow: "0 0 8px 2px rgba(120,170,255,0.8)",
+                opacity: 0,
+                ["--dx" as string]: u(t.x - HUB.x),
+                ["--dy" as string]: u(t.y - HUB.y),
+                animation: shown
+                  ? `signal-travel ${LINE}s ${spokeStart(i)}s ease-out 1 both`
+                  : undefined,
+              }}
+            />
+          ))}
         </>
       )}
+
+      {/* Ambient (looping) signal pulses, once the entrance has finished. */}
       {entered && (
         <>
+          {targets.map((t, i) => (
+            <span
+              key={`p${i}`}
+              className="absolute rounded-full"
+              aria-hidden
+              style={{
+                left: u(HUB.x),
+                top: u(HUB.y),
+                width: u(6),
+                height: u(6),
+                marginLeft: u(-3),
+                marginTop: u(-3),
+                background: "#bcdcff",
+                boxShadow: "0 0 8px 2px rgba(120,170,255,0.8)",
+                ["--dx" as string]: u(t.x - HUB.x),
+                ["--dy" as string]: u(t.y - HUB.y),
+                animation: `signal-travel ${3.4 + (i % 3) * 0.5}s ${i * 0.55}s ease-in-out infinite`,
+              }}
+            />
+          ))}
           <span
             className="absolute rounded-full"
             aria-hidden
             style={{
-              left: u(BEAT_A.x),
-              top: u(BEAT_A.y),
-              width: u(7),
-              height: u(7),
-              marginLeft: u(-3.5),
-              marginTop: u(-3.5),
+              left: u(PROBLEM.x),
+              top: u(PROBLEM.y),
+              width: u(6),
+              height: u(6),
+              marginLeft: u(-3),
+              marginTop: u(-3),
               background: "#ffd2b5",
-              boxShadow: "0 0 9px 2px rgba(246,130,65,0.8)",
-              ["--dx" as string]: u(seg1.dx),
-              ["--dy" as string]: u(seg1.dy),
-              animation: "signal-travel 3.6s 0s ease-in-out infinite",
-            }}
-          />
-          <span
-            className="absolute rounded-full"
-            aria-hidden
-            style={{
-              left: u(BEAT_B.x),
-              top: u(BEAT_B.y),
-              width: u(7),
-              height: u(7),
-              marginLeft: u(-3.5),
-              marginTop: u(-3.5),
-              background: "#bff0d8",
-              boxShadow: "0 0 9px 2px rgba(94,224,176,0.8)",
-              ["--dx" as string]: u(seg2.dx),
-              ["--dy" as string]: u(seg2.dy),
-              animation: "signal-travel 3.6s 1.8s ease-in-out infinite",
+              boxShadow: "0 0 8px 2px rgba(246,130,65,0.8)",
+              ["--dx" as string]: u(0),
+              ["--dy" as string]: u(HUB.y - PROBLEM.y),
+              animation: "signal-travel 3s 0.3s ease-in-out infinite",
             }}
           />
         </>
       )}
 
-      {/* The three story beats: Signal -> Read -> Move */}
-      <SignalBeat shown={shown} />
-      <ReadBeat shown={shown} />
-      <MoveBeat shown={shown} />
+      {/* Central hub. Gated as one unit so its radar rings and glow (children)
+          do not emit before the problem's dot has reached the hub. */}
+      <div
+        className="absolute"
+        style={{
+          left: u(HUB.x),
+          top: u(HUB.y),
+          width: u(150),
+          height: u(150),
+          transform: "translate(-50%, -50%)",
+          opacity: shown ? undefined : 0,
+          animation: shown ? `net-pop ${POP}s ${HUB_REVEAL}s both` : undefined,
+        }}
+      >
+        {/* expanding signal rings */}
+        {[0, 1.3].map((d) => (
+          <span
+            key={d}
+            className="absolute inset-0 rounded-full"
+            aria-hidden
+            style={{
+              border: "1px solid rgba(103,166,255,0.5)",
+              animation: `radar-emit 3.8s ${d}s ease-out infinite`,
+            }}
+          />
+        ))}
+        {/* glow halo */}
+        <span
+          className="absolute rounded-full"
+          aria-hidden
+          style={{
+            inset: u(-22),
+            background: "radial-gradient(circle, rgba(49,133,252,0.4), transparent 68%)",
+            animation: "hub-breath 5s ease-in-out infinite",
+          }}
+        />
+        {/* hub disc */}
+        <div
+          className="absolute inset-0 flex flex-col items-center justify-center rounded-full text-center"
+          style={{
+            background:
+              "radial-gradient(circle at 50% 36%, rgba(20,58,108,0.96), rgba(4,24,52,0.97))",
+            border: "1px solid rgba(120,170,255,0.45)",
+            boxShadow:
+              "inset 0 1px 0 rgba(255,255,255,0.12), inset 0 0 30px rgba(49,133,252,0.25), 0 20px 50px rgba(2,16,40,0.6)",
+            padding: u(14),
+          }}
+        >
+          <span
+            className="absolute rounded-full"
+            aria-hidden
+            style={{ inset: u(11), border: "1px solid rgba(120,170,255,0.2)" }}
+          />
+          <svg viewBox="0 0 24 24" style={{ width: u(26), height: u(26) }} aria-hidden>
+            <rect x="3" y="13" width="4" height="8" rx="1" fill="#67a6ff" />
+            <rect x="10" y="8" width="4" height="13" rx="1" fill="#9cc4ff" />
+            <rect x="17" y="4" width="4" height="17" rx="1" fill="#3185fc" />
+          </svg>
+          <span
+            className="font-semibold leading-tight text-white"
+            style={{
+              fontFamily: "var(--font-display)",
+              fontSize: u(11.8),
+              marginTop: u(8),
+              maxWidth: u(116),
+              letterSpacing: "-0.012em",
+            }}
+          >
+            Revenue decisions
+            <br />
+            with confidence
+          </span>
+        </div>
+      </div>
+
+      {/* The problem, at the top, feeding the hub (revealed first) */}
+      <ProblemBox shown={shown} delay={0} />
+
+      {/* Metric cards, each popping in as the hub's signal reaches it */}
+      {NET_CARDS.map((card, i) => (
+        <NetMetricCard key={card.title} card={card} delay={cardReveal(i)} shown={shown} />
+      ))}
+
+      {/* Recommended action: the finale, revealed last (spoke index 6) */}
+      <NetActionCard shown={shown} delay={cardReveal(6)} />
 
       {/* Illustrative tag */}
       <div
@@ -1440,6 +1586,7 @@ export function RevenueDecisionNetwork() {
     </div>
   );
 }
+
 /* ---------------- Revenue signal card ----------------
    ILLUSTRATIVE example only. A reusable component with clearly-labeled
    placeholder defaults and a visible "Illustrative" tag. Never present the
@@ -1795,6 +1942,36 @@ export function CTABand() {
         </Reveal>
       </div>
     </section>
+  );
+}
+
+/* ---------------- FAQ (visible, answer-first; pairs with FAQPage JSON-LD) ---------------- */
+
+export function FAQSection({
+  items,
+  title = "Frequently asked questions",
+  intro,
+  tint = true,
+}: {
+  items: { question: string; answer: string }[];
+  title?: string;
+  intro?: ReactNode;
+  tint?: boolean;
+}) {
+  return (
+    <Section tint={tint}>
+      <SectionHead eyebrow="FAQ" title={title} intro={intro} />
+      <div className="mt-12 grid max-w-3xl gap-5">
+        {items.map((f, i) => (
+          <Reveal key={f.question} delay={i * 80}>
+            <div className="rounded-2xl hairline bg-white p-7">
+              <h3 className="text-lg font-semibold text-[color:var(--navy-deep)]">{f.question}</h3>
+              <p className="mt-3 leading-relaxed text-[color:var(--ink-soft)]">{f.answer}</p>
+            </div>
+          </Reveal>
+        ))}
+      </div>
+    </Section>
   );
 }
 

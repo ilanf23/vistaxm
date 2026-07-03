@@ -113,7 +113,7 @@ three symptoms at once: dead space, no real graphics, boring.
   strong, on-brand data visuals. The problem is scarcity, not quality.
 - The navy + orange brand system, `card-lift`, gradient top-borders, and the
   aurora-drift dark sections are cohesive and premium.
-- Copy is sharp and specific. The pages read well; they just don't *show* well.
+- Copy is sharp and specific. The pages read well; they just don't _show_ well.
 
 ## Suggested sequencing
 
