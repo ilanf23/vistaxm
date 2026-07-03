@@ -3,6 +3,7 @@ import { BOOK_PATH } from "@/lib/links";
 import { CTABand, Section, SectionHead, PageHero } from "@/components/site";
 import { FadeIn } from "@/components/motion";
 import {
+  BriefDoc,
   JourneyRail,
   RailNode,
   TierSteps,
@@ -29,25 +30,6 @@ export const Route = createFileRoute("/how-to-start")({
   }),
   component: HowToStart,
 });
-
-/* Local check glyph: internal icons in site.tsx are not exported, so we
-   define one small tick here for the deliverable list below. */
-function Check({ className }: { className?: string }) {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      className={className}
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden
-    >
-      <path d="M5 12.5l4 4 10-10" />
-    </svg>
-  );
-}
 
 const TIERS = [
   {
@@ -165,25 +147,12 @@ function HowToStart() {
               intro="Not a dashboard to interpret. A short, ranked brief you can act on the day it arrives."
             />
 
-            <FadeIn delay={120} className="mt-12">
-              <div className="rounded-2xl hairline bg-white p-7 md:p-10 shadow-[var(--shadow-elevation-2)]">
-                <ul className="grid gap-x-10 gap-y-5 md:grid-cols-2">
-                  {DELIVERABLES.map((item) => (
-                    <li key={item} className="flex items-start gap-3.5">
-                      <span className="mt-0.5 flex h-6 w-6 flex-none items-center justify-center rounded-full bg-[color:var(--blue-tint)] text-[color:var(--blue-cta)]">
-                        <Check className="h-4 w-4" />
-                      </span>
-                      <span className="text-[15px] font-medium leading-relaxed text-[color:var(--navy-deep)]">
-                        {item}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-                <p className="mt-8 border-t border-[color:var(--hairline)] pt-6 text-sm italic text-[color:var(--ink-soft)]">
-                  A sample deliverable, clearly labeled as a sample, is available on request.
-                </p>
-              </div>
-            </FadeIn>
+            <div className="mt-12">
+              <BriefDoc
+                items={DELIVERABLES}
+                footer="A sample deliverable, clearly labeled as a sample, is available on request."
+              />
+            </div>
           </div>
         </Section>
 

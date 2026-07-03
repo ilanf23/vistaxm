@@ -159,6 +159,48 @@ export function TierSteps({
   );
 }
 
+/* The deliverable rendered as the thing itself: a paper brief that settles
+   onto the desk. Ranked rows instead of check bullets. */
+export function BriefDoc({ items, footer }: { items: string[]; footer: ReactNode }) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 28, rotate: -1.2 }}
+      whileInView={{ opacity: 1, y: 0, rotate: 0 }}
+      viewport={VIEWPORT}
+      transition={{ duration: 0.8, ease: EASE }}
+      className="relative mx-auto max-w-3xl rounded-md bg-white p-8 shadow-[var(--shadow-elevation-3)] md:p-12"
+    >
+      <div
+        aria-hidden
+        className="absolute inset-x-0 top-0 h-1 rounded-t-md bg-gradient-to-r from-[color:var(--orange-pop)] to-[color:var(--blue-cta)]"
+      />
+      <div
+        aria-hidden
+        className="flex items-center justify-between border-b border-[color:var(--hairline)] pb-5"
+      >
+        <span className="h-2 w-24 rounded-full bg-[color:var(--blue-tint)]" />
+        <span className="h-2 w-10 rounded-full bg-[color:var(--blue-tint)]" />
+      </div>
+      <ol>
+        {items.map((item, i) => (
+          <li
+            key={item}
+            className="flex items-baseline gap-5 border-b border-[color:var(--hairline)] py-5"
+          >
+            <span className="text-sm font-semibold tabular-nums text-[color:var(--orange-pop)]">
+              {String(i + 1).padStart(2, "0")}
+            </span>
+            <span className="text-[15px] font-medium leading-relaxed text-[color:var(--navy-deep)]">
+              {item}
+            </span>
+          </li>
+        ))}
+      </ol>
+      <p className="pt-5 text-sm italic text-[color:var(--ink-soft)]">{footer}</p>
+    </motion.div>
+  );
+}
+
 /* Section marker that sits on the rail. Place as the first child of a
    section content wrapper that has className="relative xl:pl-14". */
 export function RailNode({ className }: { className?: string }) {
