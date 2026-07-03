@@ -3,6 +3,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { BOOK_PATH } from "@/lib/links";
 import { CTABand, Section, SectionHead, PageHero } from "@/components/site";
 import { FadeIn, Stagger, StaggerItem } from "@/components/motion";
+import { WaveMiniChart } from "@/components/journey";
 
 export const Route = createFileRoute("/how-to-start")({
   head: () => ({
@@ -89,6 +90,7 @@ function HowToStart() {
         title="Start small. Scale when it works."
         subtitle="Two ways in, both fully managed. Prove the signal exists and that it changes a decision, then expand into the ongoing program."
         primary={{ label: "Book a 30-minute call", to: BOOK_PATH }}
+        visual={<WaveMiniChart />}
       />
 
       {/* The two entry paths */}
