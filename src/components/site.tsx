@@ -2191,35 +2191,35 @@ const HEATMAP: {
   cells: [
     // Executive / Economic Buyer
     [
-      { title: "Business-Case Conviction", status: "green" },
-      { title: "Investment Confidence", status: "green" },
-      { title: "Time-to-Value Tracking", status: "yellow" },
-      { title: "Outcome Realization", status: "green" },
-      { title: "Re-Investment Conviction", status: "yellow" },
+      { title: "Business-Case Conviction", status: "green", desc: "Do I believe this vendor's solution meets my business needs?" },
+      { title: "Investment Confidence", status: "green", desc: "Value-to-price conviction." },
+      { title: "Time-to-Value Tracking", status: "yellow", desc: "Is there a clear path to the expected ROI?" },
+      { title: "Outcome Realization", status: "green", desc: "Is the vendor delivering on their promise?" },
+      { title: "Re-Investment Conviction", status: "yellow", desc: "Willingness to renew, advocacy strength, and desire to expand." },
     ],
     // Procurement
     [
-      { title: "Evaluation Rigor", status: "green" },
-      { title: "Terms Friction", status: "yellow" },
-      { title: "Activation Governance", status: "yellow" },
-      { title: "Vendor Accountability", status: "green" },
-      { title: "Renewal Posture", status: "red" },
+      { title: "Evaluation Rigor", status: "green", desc: "Does the vendor have a believable, risk-adjusted value prop?" },
+      { title: "Terms Friction", status: "yellow", desc: "Is the vendor reasonable and fair in their contracting approach?" },
+      { title: "Activation Governance", status: "yellow", desc: "Provisioning accuracy, seat/license fit, and process handoff quality." },
+      { title: "Vendor Accountability", status: "green", desc: "SLA adherence, responsiveness, and relationship-management quality." },
+      { title: "Renewal Posture", status: "red", desc: "Renegotiation risk and likelihood of competitive re-evaluation." },
     ],
     // Technical
     [
-      { title: "Solution-Fit Confidence", status: "green" },
-      { title: "Diligence Gates", status: "green" },
-      { title: "Implementation Health", status: "yellow" },
-      { title: "Resolution Effectiveness", status: "yellow" },
-      { title: "Stickiness vs. Fragility", status: "red" },
+      { title: "Solution-Fit Confidence", status: "green", desc: "Architecture validated and confidently confirmed." },
+      { title: "Diligence Gates", status: "green", desc: "Security and integration requirements met versus flagged." },
+      { title: "Implementation Health", status: "yellow", desc: "Integration success, configuration friction, and deployment confidence." },
+      { title: "Resolution Effectiveness", status: "yellow", desc: "Have the technical teams earned my trust and confidence?" },
+      { title: "Stickiness vs. Fragility", status: "red", desc: "Is the value provided worth more than the risk of change?" },
     ],
     // Day-to-Day User
     [
-      { title: "Adoption Foresight", status: "yellow" },
-      { title: "Voice-of-User Gap", status: "red" },
-      { title: "First-Use Experience", status: "green" },
-      { title: "Daily Friction Signal", status: "red" },
-      { title: "Loyalty & Adoption Depth", status: "yellow" },
+      { title: "Adoption Foresight", status: "yellow", desc: "Do end-users understand what the solution brings to the table?" },
+      { title: "Voice-of-User Gap", status: "red", desc: "Have real end-user needs been considered in the buying decision?" },
+      { title: "First-Use Experience", status: "green", desc: "Ramp friction, training adequacy, and early adoption momentum." },
+      { title: "Daily Friction Signal", status: "red", desc: "Is the solution easy to use with minimal pain of adoption?" },
+      { title: "Loyalty & Adoption Depth", status: "yellow", desc: "Is the solution being used fully, churn risk minimized?" },
     ],
   ],
 };
