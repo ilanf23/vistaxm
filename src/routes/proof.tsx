@@ -108,12 +108,16 @@ function ResultCard({
   headline,
   metrics,
   icon,
+  quote,
+  attribution,
   delay = 0,
 }: {
   client: string;
   headline: string;
   metrics: { value: string; label: string }[];
   icon: string;
+  quote?: string;
+  attribution?: string;
   delay?: number;
 }) {
   return (
@@ -149,6 +153,21 @@ function ResultCard({
             </div>
           ))}
         </dl>
+        {quote && (
+          <figure className="mt-6 border-t border-[color:var(--hairline)] pt-5">
+            <blockquote className="text-sm italic leading-relaxed text-[color:var(--ink)]">
+              <span aria-hidden className="mr-1 text-[color:var(--orange-pop)]">
+                &ldquo;
+              </span>
+              {quote}
+            </blockquote>
+            {attribution && (
+              <figcaption className="mt-2 text-xs font-semibold uppercase tracking-wide text-[color:var(--blue-link)]">
+                {attribution}
+              </figcaption>
+            )}
+          </figure>
+        )}
       </div>
     </Reveal>
   );
