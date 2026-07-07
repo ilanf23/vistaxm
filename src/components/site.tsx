@@ -1600,6 +1600,9 @@ export function RevenueSignalCard({
   daysToRenewal = 58,
   index = 1,
   total = 3,
+  headline,
+  contextLabel,
+  metaLabel,
 }: {
   account?: string;
   amountLabel?: string;
@@ -1608,7 +1611,11 @@ export function RevenueSignalCard({
   daysToRenewal?: number;
   index?: number;
   total?: number;
+  headline?: string;
+  contextLabel?: string;
+  metaLabel?: string;
 }) {
+
   const { ref, shown } = useReveal(0.2);
   return (
     <div
