@@ -2715,7 +2715,7 @@ const FLOW_OUTPUTS = [
   },
   {
     title: "Executive Reporting",
-    desc: "See what is actually driving performance.",
+    desc: "See what is really driving performance.",
     icon: "pie",
     danger: false,
   },
