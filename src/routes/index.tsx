@@ -47,7 +47,7 @@ function Home() {
       <Hero
         eyebrow="Revenue Channel Intelligence"
         title="Know which accounts are about to grow or walk, while you can still do something about it."
-        subtitle="VistaXM turns customer and partner experience into the revenue moves IT solution providers and MSPs make every week. Not another score. The next decision."
+        subtitle="VistaXM turns customer and partner experience into the revenue moves leading firms make every day. Not another score. The next decision."
         primary={{ label: "Book a 30-minute call", to: BOOK_PATH }}
         secondary={{ label: "See how it works", to: "#model" }}
       />
@@ -72,7 +72,7 @@ function Home() {
         <SectionHead
           eyebrow="The model"
           title="Journey × Persona. Every intersection is a revenue signal."
-          intro="Five journey stages across four personas. Where they cross is where retention, expansion, and churn risk actually live."
+          intro="Five journey stages across four personas. Where they cross is where retention, expansion, and churn risk really live."
         />
         <div className="mt-14">
           <JourneyMatrix />
@@ -86,7 +86,7 @@ function Home() {
             dark
             eyebrow="The signature insight"
             title="The Decision Maker → Influencer gap."
-            intro="The executive is satisfied. The day-to-day influencers who actually shape the renewal are not. That gap is the most reliable early warning of churn, and it is invisible to an account-level score."
+            intro="The executive is satisfied. The day-to-day influencers who shape the renewal are not. That gap is the most reliable early warning of churn, and it is invisible to an account-level score."
           />
           <Reveal delay={120}>
             <InfluencerGapCard />
@@ -100,7 +100,7 @@ function Home() {
           <SectionHead
             eyebrow="Promoter · Passive · Detractor"
             title="Sentiment is a spend pattern."
-            intro="When you stack actual revenue against cohort, the chart stops being satisfaction research and starts being a portfolio map."
+            intro="When you stack revenue against cohort, the chart stops being satisfaction research and starts being a portfolio map. Promoters spend 3 to 4X more on average than passives, who spend 2X more than detractors on average."
           />
           <Reveal delay={120}>
             <SpendByCohort />
@@ -111,7 +111,7 @@ function Home() {
       {/* Our advantage */}
       <Section tint>
         <SectionHead eyebrow="Our advantage" title="Why no one else can produce this." />
-        <div className="mt-14 grid gap-6 md:grid-cols-2">
+        <div className="mt-14 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           <Card title="Structural neutrality" kicker="Advantage 01" delay={0}>
             Our neutrality is a structural advantage. As a neutral third party, customers and
             partners tell us things confidentially that they would never put in a vendor survey.
@@ -120,6 +120,10 @@ function Home() {
             We have a robust set of industry benchmarks built from our experience across the
             channel. We help OEMs and Channel Partners understand where they stand against the
             competition with real customer and partner data.
+          </Card>
+          <Card title="Standardized methodology" kicker="Advantage 03" delay={240}>
+            Our programs run on a standardized, industry-leading, best-practice-based methodology,
+            so every read is consistent, comparable, and defensible, wave after wave.
           </Card>
         </div>
       </Section>
@@ -130,10 +134,10 @@ function Home() {
           <AmbientBand
             image="/images/ambient/analytics-dashboard.jpg"
             alt="Two colleagues reviewing an analytics dashboard on a laptop"
-            eyebrow="Where revenue actually moves"
+            eyebrow="Where revenue moves"
             title="The next decision hides in the day-to-day."
           >
-            Not in the headline score, but in how the people closest to the work actually feel.
+            Not in the headline score, but in how the people closest to the work really feel.
           </AmbientBand>
         </Reveal>
       </Section>

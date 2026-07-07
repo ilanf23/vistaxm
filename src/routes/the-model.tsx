@@ -16,7 +16,7 @@ import {
   SectionHead,
 } from "@/components/site";
 import { AmbientBand } from "@/components/media";
-import { FadeIn } from "@/components/motion";
+
 
 const FAQS: Faq[] = [
   {
@@ -63,8 +63,8 @@ function TheModel() {
     <>
       <PageHero
         eyebrow="The model"
-        title="Revenue Channel Intelligence: turn experience into the next revenue decision."
-        subtitle="Every account is sending signals about where revenue is headed. We make those signals legible, account by account, and tie each one to a decision you can act on."
+        title="Revenue Channel Intelligence: turn customer experience into the next revenue decision."
+        subtitle="Every account is sending signals about where revenue is headed. We make those signals visible, account by account, and tie each one to a decision you can act on."
         primary={{ label: "Book a 30-minute call", to: BOOK_PATH }}
         secondary={{ label: "See the proof", to: "/proof" }}
         visual={
@@ -82,43 +82,12 @@ function TheModel() {
         }
       />
 
-      {/* What it is */}
-      <Section>
-        <div className="grid gap-12 lg:grid-cols-[1.1fr_.9fr] lg:items-center">
-          <SectionHead
-            eyebrow="What it is"
-            title="A new category, built for how the channel actually sells."
-            intro="Traditional revenue intelligence reads only your own pipeline. It cannot see the indirect channel, where a partner or broker sits between you and the end customer. Revenue Channel Intelligence is the neutral way to measure end-customer and partner experience across the channel and tie it to retention, expansion, and churn. Customer experience is the method. Revenue is the point."
-          />
-          <FadeIn delay={120}>
-            <figure className="relative rounded-2xl hairline bg-[color:var(--blue-tint)] p-8 md:p-10">
-              <span
-                aria-hidden
-                className="absolute left-6 top-4 text-6xl leading-none text-[color:var(--orange-pop)]/30"
-                style={{ fontFamily: "var(--font-display)" }}
-              >
-                &ldquo;
-              </span>
-              <blockquote
-                className="relative text-2xl font-semibold leading-snug text-[color:var(--navy-deep)] md:text-[1.75rem]"
-                style={{ fontFamily: "var(--font-display)" }}
-              >
-                A score is not a decision. We provide true intelligence to drive revenue decisions.
-              </blockquote>
-              <figcaption className="mt-5 text-sm font-semibold uppercase tracking-wide text-[color:var(--blue-link)]">
-                Erik Vogel, Founder and CEO
-              </figcaption>
-            </figure>
-          </FadeIn>
-        </div>
-      </Section>
-
       {/* Journey x persona */}
       <Section tint>
         <SectionHead
           eyebrow="Journey x persona"
           title="Five stages. Four people. Every intersection is a revenue signal."
-          intro="We measure experience across five journey stages and the four people who shape the buy. A single number averages them into noise. The grid shows exactly where, and with whom, revenue is won or lost."
+          intro="We measure across the journey phases that matter and the personas that drive results. The grid shows exactly where, and with whom, revenue is won or lost."
         />
         <div className="mt-14">
           <JourneyMatrix />

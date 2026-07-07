@@ -153,15 +153,16 @@ const solutions = [
   },
 ] as const;
 
-// "Industries We Serve" dropdown, rendered to the left of Solutions.
-// Each industry routes to the solution that serves it.
+// "Markets We Serve" dropdown, rendered to the left of Solutions.
+// Each market routes to the solution that serves it. The IT OEMs entry
+// links to the dedicated /for-oems page.
 const industries = [
-  { to: "/solutions/partnerpulse", label: "IT OEM" },
-  { to: "/solutions/partnerpulse", label: "IT Solution Provider" },
-  { to: "/solutions/brokerpulse", label: "Insurance Carrier" },
-  { to: "/solutions/brokerpulse", label: "Insurance Broker" },
-  { to: "/solutions/industrialpulse", label: "Industrial OEM" },
-  { to: "/solutions/industrialpulse", label: "Industrial Distributor" },
+  { to: "/for-oems", label: "IT OEMs" },
+  { to: "/solutions/partnerpulse", label: "IT Solution Providers" },
+  { to: "/solutions/brokerpulse", label: "Insurance Carriers" },
+  { to: "/solutions/brokerpulse", label: "Insurance Brokers" },
+  { to: "/solutions/industrialpulse", label: "Industrial OEMs" },
+  { to: "/solutions/industrialpulse", label: "Industrial Distributors" },
   { to: "/solutions/partnerpulse", label: "Technology Providers" },
 ] as const;
 
@@ -169,7 +170,6 @@ const industries = [
 const navAfterSolutions = [
   { to: "/how-to-start", label: "How to Start" },
   { to: "/proof", label: "Proof" },
-  { to: "/for-oems", label: "For OEMs" },
   { to: "/insights", label: "Insights" },
   { to: "/about", label: "About" },
 ] as const;
@@ -244,7 +244,7 @@ function Header() {
               className={`flex items-center gap-1 ${navLinkClass} group-hover:text-white group-focus-within:text-white`}
               aria-haspopup="true"
             >
-              Industries We Serve
+              Markets We Serve
               <svg
                 width="12"
                 height="12"
@@ -353,7 +353,7 @@ function Header() {
             </Link>
             <div className="py-1">
               <div className="eyebrow !text-[color:var(--blue-light)] !text-[0.7rem] mb-2">
-                Industries We Serve
+                Markets We Serve
               </div>
               <div className="flex flex-col gap-2 pl-3">
                 {industries.map((ind) => (

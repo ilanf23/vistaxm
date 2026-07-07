@@ -108,12 +108,16 @@ function ResultCard({
   headline,
   metrics,
   icon,
+  quote,
+  attribution,
   delay = 0,
 }: {
   client: string;
   headline: string;
   metrics: { value: string; label: string }[];
   icon: string;
+  quote?: string;
+  attribution?: string;
   delay?: number;
 }) {
   return (
@@ -149,6 +153,21 @@ function ResultCard({
             </div>
           ))}
         </dl>
+        {quote && (
+          <figure className="mt-6 border-t border-[color:var(--hairline)] pt-5">
+            <blockquote className="text-sm italic leading-relaxed text-[color:var(--ink)]">
+              <span aria-hidden className="mr-1 text-[color:var(--orange-pop)]">
+                &ldquo;
+              </span>
+              {quote}
+            </blockquote>
+            {attribution && (
+              <figcaption className="mt-2 text-xs font-semibold uppercase tracking-wide text-[color:var(--blue-link)]">
+                {attribution}
+              </figcaption>
+            )}
+          </figure>
+        )}
       </div>
     </Reveal>
   );
@@ -603,7 +622,7 @@ function Proof() {
         <Stagger className="mt-14 grid gap-6 md:grid-cols-2 lg:grid-cols-3" stagger={0.08}>
           <StaggerItem className="h-full">
             <ResultCard
-              client="Softchoice"
+              client="IT Solution Provider"
               headline="Compounding score motion that moved the business, over two years."
               icon="trend"
               metrics={[
@@ -616,19 +635,23 @@ function Proof() {
           </StaggerItem>
           <StaggerItem className="h-full">
             <ResultCard
-              client="Veeam"
-              headline="A step change in sentiment that tracked directly with growth."
+              client="Fintech SaaS Provider"
+              headline="NPS and eNPS tied directly to Net Revenue Retention, and the whole program stood up without a new headcount."
               icon="trend"
               metrics={[
-                { value: "30 → 73", label: "NPS movement" },
-                { value: "27%", label: "Year-over-year growth" },
+                { value: "85% → 95%", label: "Net Revenue Retention (105% target)" },
+                { value: "6×", label: "Survey response rate, first cycle" },
+                { value: "Weeks", label: "Time to value, not quarters" },
+                { value: "0", label: "Internal CX headcount added" },
               ]}
+              quote="The correlation of NPS and eNPS to NRR was the aha moment. It was gold."
+              attribution="Customer Experience Leader, Fintech SaaS Company"
             />
           </StaggerItem>
           <StaggerItem className="h-full">
             <ResultCard
-              client="Industrial supplier"
-              headline="A full-service industrial supplier, anonymized. Hidden risk and upside, surfaced."
+              client="Industrial Distributor"
+              headline="A full-service industrial distributor, anonymized. Hidden risk and upside, surfaced."
               icon="vault"
               metrics={[
                 { value: "$26.8M", label: "Opportunity-and-risk pool surfaced" },

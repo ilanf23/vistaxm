@@ -1731,7 +1731,7 @@ function LeaderCard({
   title: string;
   bio: string;
   quote: string;
-  linkedin: string;
+  linkedin?: string;
   initials: string;
   photo?: string;
   delay?: number;
@@ -1779,17 +1779,19 @@ function LeaderCard({
           {quote}
         </blockquote>
 
-        <div className="mt-auto pt-7">
-          <a
-            href={linkedin}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label={`${name} on LinkedIn`}
-            className="inline-flex text-[color:var(--ink-soft)]/40 transition-colors hover:text-[color:var(--blue-cta)] group-hover:text-[color:var(--blue-cta)]"
-          >
-            <LinkedInIcon className="h-6 w-6" />
-          </a>
-        </div>
+        {linkedin && (
+          <div className="mt-auto pt-7">
+            <a
+              href={linkedin}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`${name} on LinkedIn`}
+              className="inline-flex text-[color:var(--ink-soft)]/40 transition-colors hover:text-[color:var(--blue-cta)] group-hover:text-[color:var(--blue-cta)]"
+            >
+              <LinkedInIcon className="h-6 w-6" />
+            </a>
+          </div>
+        )}
       </div>
     </Reveal>
   );
@@ -1804,7 +1806,7 @@ export function TeamSection() {
         title="The team behind the category."
         intro="Revenue Channel Intelligence was built by people who have run customer experience and the channel at scale."
       />
-      <div className="mx-auto mt-12 grid max-w-5xl gap-6 md:mt-14 md:grid-cols-2 md:gap-8">
+      <div className="mx-auto mt-12 grid max-w-6xl gap-6 md:mt-14 md:grid-cols-2 md:gap-8">
         <LeaderCard
           name="Erik Vogel"
           title="Founder and CEO"
@@ -1823,6 +1825,42 @@ export function TeamSection() {
           linkedin="https://www.linkedin.com/in/brucecoughlin"
           bio="Former CEO of Cloud Technology Partners, which he helped guide to its acquisition by HPE. A relationship-first channel leader who believes the experience you deliver is the only real differentiator left."
           quote="The most progressive partners create differentiation and sustain it with customer experience. That is the fundamental tenet of what is happening in the channel."
+          delay={120}
+        />
+        <LeaderCard
+          name="Paul Barr"
+          title="Chief Revenue Officer"
+          initials="PB"
+          photo="/images/team/paul.avif"
+          bio="Chief Revenue Officer at VistaXM, responsible for customer acquisition and revenue generation. 25+ years of experience across Fortune 50, channel, and start-up organizations, driving go-to-market strategy and growth. Previously led Fungible's worldwide channel organization and held leadership roles at Intel and multiple channel organizations."
+          quote="87% of companies say they provide excellent CX yet only 11% of customers agree. Which side is your company on?"
+          delay={0}
+        />
+        <LeaderCard
+          name="Alexey Gerasimov"
+          title="Chief Operating Officer"
+          initials="AG"
+          photo="/images/team/alexey-gerasimov.avif"
+          bio="Chief Operating Officer at VistaXM, leading Services and Delivery. 30+ years in consulting and professional services, scaling organizations and driving digital transformations for the world's largest brands. Previously led Capgemini's North American Cloud organization; earlier senior roles at HPE, Cloud Technology Partners, and MoFuse."
+          quote="Behind every unforgettable customer experience is flawless execution and a united team."
+          delay={120}
+        />
+        <LeaderCard
+          name="Alan Zall"
+          title="Chief Technology Officer"
+          initials="AZ"
+          photo="/images/team/alan-zall.avif"
+          bio="Chief Technology Officer at VistaXM, overseeing Product and Engineering. 30+ years scaling technology organizations and driving digital innovation. Delivers VistaXM's AI-enabled platform. Previously Global CPTO at CSpace, with senior leadership roles at HPE, Cloud Technology Partners, and Fiserv."
+          quote="We build platforms that empower real connections between brands and people."
+          delay={0}
+        />
+        <LeaderCard
+          name="Candice A. Vogel"
+          title="Chief Legal Officer"
+          initials="CV"
+          photo="/images/team/candice-vogel.webp"
+          bio="Chief Legal Officer at VistaXM, responsible for all legal, administrative, and compliance aspects of the business. A seasoned attorney with deep commercial and employment law experience, advising companies of all sizes on federal and state employment matters."
+          quote="Trust is earned through integrity; every promise and every policy matters to our customers."
           delay={120}
         />
       </div>
@@ -2153,35 +2191,35 @@ const HEATMAP: {
   cells: [
     // Executive / Economic Buyer
     [
-      { title: "Business-Case Conviction", status: "green" },
-      { title: "Investment Confidence", status: "green" },
-      { title: "Time-to-Value Tracking", status: "yellow" },
-      { title: "Outcome Realization", status: "green" },
-      { title: "Re-Investment Conviction", status: "yellow" },
+      { title: "Business-Case Conviction", status: "green", desc: "Do I believe this vendor's solution meets my business needs?" },
+      { title: "Investment Confidence", status: "green", desc: "Value-to-price conviction." },
+      { title: "Time-to-Value Tracking", status: "yellow", desc: "Is there a clear path to the expected ROI?" },
+      { title: "Outcome Realization", status: "green", desc: "Is the vendor delivering on their promise?" },
+      { title: "Re-Investment Conviction", status: "yellow", desc: "Willingness to renew, advocacy strength, and desire to expand." },
     ],
     // Procurement
     [
-      { title: "Evaluation Rigor", status: "green" },
-      { title: "Terms Friction", status: "yellow" },
-      { title: "Activation Governance", status: "yellow" },
-      { title: "Vendor Accountability", status: "green" },
-      { title: "Renewal Posture", status: "red" },
+      { title: "Evaluation Rigor", status: "green", desc: "Does the vendor have a believable, risk-adjusted value prop?" },
+      { title: "Terms Friction", status: "yellow", desc: "Is the vendor reasonable and fair in their contracting approach?" },
+      { title: "Activation Governance", status: "yellow", desc: "Provisioning accuracy, seat/license fit, and process handoff quality." },
+      { title: "Vendor Accountability", status: "green", desc: "SLA adherence, responsiveness, and relationship-management quality." },
+      { title: "Renewal Posture", status: "red", desc: "Renegotiation risk and likelihood of competitive re-evaluation." },
     ],
     // Technical
     [
-      { title: "Solution-Fit Confidence", status: "green" },
-      { title: "Diligence Gates", status: "green" },
-      { title: "Implementation Health", status: "yellow" },
-      { title: "Resolution Effectiveness", status: "yellow" },
-      { title: "Stickiness vs. Fragility", status: "red" },
+      { title: "Solution-Fit Confidence", status: "green", desc: "Architecture validated and confidently confirmed." },
+      { title: "Diligence Gates", status: "green", desc: "Security and integration requirements met versus flagged." },
+      { title: "Implementation Health", status: "yellow", desc: "Integration success, configuration friction, and deployment confidence." },
+      { title: "Resolution Effectiveness", status: "yellow", desc: "Have the technical teams earned my trust and confidence?" },
+      { title: "Stickiness vs. Fragility", status: "red", desc: "Is the value provided worth more than the risk of change?" },
     ],
     // Day-to-Day User
     [
-      { title: "Adoption Foresight", status: "yellow" },
-      { title: "Voice-of-User Gap", status: "red" },
-      { title: "First-Use Experience", status: "green" },
-      { title: "Daily Friction Signal", status: "red" },
-      { title: "Loyalty & Adoption Depth", status: "yellow" },
+      { title: "Adoption Foresight", status: "yellow", desc: "Do end-users understand what the solution brings to the table?" },
+      { title: "Voice-of-User Gap", status: "red", desc: "Have real end-user needs been considered in the buying decision?" },
+      { title: "First-Use Experience", status: "green", desc: "Ramp friction, training adequacy, and early adoption momentum." },
+      { title: "Daily Friction Signal", status: "red", desc: "Is the solution easy to use with minimal pain of adoption?" },
+      { title: "Loyalty & Adoption Depth", status: "yellow", desc: "Is the solution being used fully, churn risk minimized?" },
     ],
   ],
 };
@@ -2428,7 +2466,7 @@ export function SpendByCohort() {
       <div className="flex items-baseline justify-between">
         <div>
           <div className="eyebrow mb-2">Spend follows sentiment</div>
-          <h3 className="!text-2xl">Where the revenue actually sits.</h3>
+          <h3 className="!text-2xl">Where the revenue really sits.</h3>
         </div>
         <div className="text-xs text-[color:var(--ink-soft)]">Share of annualized spend</div>
       </div>
@@ -2677,7 +2715,7 @@ const FLOW_OUTPUTS = [
   },
   {
     title: "Executive Reporting",
-    desc: "See what is actually driving performance.",
+    desc: "See what is really driving performance.",
     icon: "pie",
     danger: false,
   },
