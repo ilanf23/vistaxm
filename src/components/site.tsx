@@ -1806,7 +1806,7 @@ export function TeamSection() {
         title="The team behind the category."
         intro="Revenue Channel Intelligence was built by people who have run customer experience and the channel at scale."
       />
-      <div className="mx-auto mt-12 grid max-w-5xl gap-6 md:mt-14 md:grid-cols-2 md:gap-8">
+      <div className="mx-auto mt-12 grid max-w-6xl gap-6 md:mt-14 md:grid-cols-2 md:gap-8">
         <LeaderCard
           name="Erik Vogel"
           title="Founder and CEO"
@@ -1825,6 +1825,42 @@ export function TeamSection() {
           linkedin="https://www.linkedin.com/in/brucecoughlin"
           bio="Former CEO of Cloud Technology Partners, which he helped guide to its acquisition by HPE. A relationship-first channel leader who believes the experience you deliver is the only real differentiator left."
           quote="The most progressive partners create differentiation and sustain it with customer experience. That is the fundamental tenet of what is happening in the channel."
+          delay={120}
+        />
+        <LeaderCard
+          name="Paul Barr"
+          title="Chief Revenue Officer"
+          initials="PB"
+          photo="/images/team/paul.avif"
+          bio="Chief Revenue Officer at VistaXM, responsible for customer acquisition and revenue generation. 25+ years of experience across Fortune 50, channel, and start-up organizations, driving go-to-market strategy and growth. Previously led Fungible's worldwide channel organization and held leadership roles at Intel and multiple channel organizations."
+          quote="87% of companies say they provide excellent CX yet only 11% of customers agree. Which side is your company on?"
+          delay={0}
+        />
+        <LeaderCard
+          name="Alexey Gerasimov"
+          title="Chief Operating Officer"
+          initials="AG"
+          photo="/images/team/alexey-gerasimov.avif"
+          bio="Chief Operating Officer at VistaXM, leading Services and Delivery. 30+ years in consulting and professional services, scaling organizations and driving digital transformations for the world's largest brands. Previously led Capgemini's North American Cloud organization; earlier senior roles at HPE, Cloud Technology Partners, and MoFuse."
+          quote="Behind every unforgettable customer experience is flawless execution and a united team."
+          delay={120}
+        />
+        <LeaderCard
+          name="Alan Zall"
+          title="Chief Technology Officer"
+          initials="AZ"
+          photo="/images/team/alan-zall.avif"
+          bio="Chief Technology Officer at VistaXM, overseeing Product and Engineering. 30+ years scaling technology organizations and driving digital innovation. Delivers VistaXM's AI-enabled platform. Previously Global CPTO at CSpace, with senior leadership roles at HPE, Cloud Technology Partners, and Fiserv."
+          quote="We build platforms that empower real connections between brands and people."
+          delay={0}
+        />
+        <LeaderCard
+          name="Candice A. Vogel"
+          title="Chief Legal Officer"
+          initials="CV"
+          photo="/images/team/candice-vogel.webp"
+          bio="Chief Legal Officer at VistaXM, responsible for all legal, administrative, and compliance aspects of the business. A seasoned attorney with deep commercial and employment law experience, advising companies of all sizes on federal and state employment matters."
+          quote="Trust is earned through integrity; every promise and every policy matters to our customers."
           delay={120}
         />
       </div>
