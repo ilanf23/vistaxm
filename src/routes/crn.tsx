@@ -531,7 +531,7 @@ function HowItWorks() {
           <SectionHead
             dark
             eyebrow="How it works"
-            title="Five stages. Four people. Every intersection is a revenue signal."
+            title="Five stages. Four personas. Every intersection is a revenue signal."
             intro="We measure experience across the whole journey and every persona, as a neutral third party, then tie each signal to retention, expansion, and churn. Managed end to end, first insight in about 90 days."
           />
           <Reveal delay={140}>
