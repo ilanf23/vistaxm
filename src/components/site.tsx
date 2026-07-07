@@ -1779,17 +1779,19 @@ function LeaderCard({
           {quote}
         </blockquote>
 
-        <div className="mt-auto pt-7">
-          <a
-            href={linkedin}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label={`${name} on LinkedIn`}
-            className="inline-flex text-[color:var(--ink-soft)]/40 transition-colors hover:text-[color:var(--blue-cta)] group-hover:text-[color:var(--blue-cta)]"
-          >
-            <LinkedInIcon className="h-6 w-6" />
-          </a>
-        </div>
+        {linkedin && (
+          <div className="mt-auto pt-7">
+            <a
+              href={linkedin}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`${name} on LinkedIn`}
+              className="inline-flex text-[color:var(--ink-soft)]/40 transition-colors hover:text-[color:var(--blue-cta)] group-hover:text-[color:var(--blue-cta)]"
+            >
+              <LinkedInIcon className="h-6 w-6" />
+            </a>
+          </div>
+        )}
       </div>
     </Reveal>
   );
