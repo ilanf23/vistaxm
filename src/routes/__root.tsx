@@ -244,7 +244,7 @@ function Header() {
               className={`flex items-center gap-1 ${navLinkClass} group-hover:text-white group-focus-within:text-white`}
               aria-haspopup="true"
             >
-              Industries We Serve
+              Markets We Serve
               <svg
                 width="12"
                 height="12"
