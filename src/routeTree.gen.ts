@@ -22,6 +22,7 @@ import { Route as SolutionsPartnerpulseRouteImport } from './routes/solutions/pa
 import { Route as SolutionsIndustrialpulseRouteImport } from './routes/solutions/industrialpulse'
 import { Route as SolutionsBrokerpulseRouteImport } from './routes/solutions/brokerpulse'
 import { Route as IndustriesTechnologyProvidersRouteImport } from './routes/industries/technology-providers'
+import { Route as IndustriesItSolutionProvidersRouteImport } from './routes/industries/it-solution-providers'
 
 const TheModelRoute = TheModelRouteImport.update({
   id: '/the-model',
@@ -90,6 +91,12 @@ const IndustriesTechnologyProvidersRoute =
     path: '/industries/technology-providers',
     getParentRoute: () => rootRouteImport,
   } as any)
+const IndustriesItSolutionProvidersRoute =
+  IndustriesItSolutionProvidersRouteImport.update({
+    id: '/industries/it-solution-providers',
+    path: '/industries/it-solution-providers',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -101,6 +108,7 @@ export interface FileRoutesByFullPath {
   '/insights': typeof InsightsRoute
   '/proof': typeof ProofRoute
   '/the-model': typeof TheModelRoute
+  '/industries/it-solution-providers': typeof IndustriesItSolutionProvidersRoute
   '/industries/technology-providers': typeof IndustriesTechnologyProvidersRoute
   '/solutions/brokerpulse': typeof SolutionsBrokerpulseRoute
   '/solutions/industrialpulse': typeof SolutionsIndustrialpulseRoute
@@ -116,6 +124,7 @@ export interface FileRoutesByTo {
   '/insights': typeof InsightsRoute
   '/proof': typeof ProofRoute
   '/the-model': typeof TheModelRoute
+  '/industries/it-solution-providers': typeof IndustriesItSolutionProvidersRoute
   '/industries/technology-providers': typeof IndustriesTechnologyProvidersRoute
   '/solutions/brokerpulse': typeof SolutionsBrokerpulseRoute
   '/solutions/industrialpulse': typeof SolutionsIndustrialpulseRoute
@@ -132,6 +141,7 @@ export interface FileRoutesById {
   '/insights': typeof InsightsRoute
   '/proof': typeof ProofRoute
   '/the-model': typeof TheModelRoute
+  '/industries/it-solution-providers': typeof IndustriesItSolutionProvidersRoute
   '/industries/technology-providers': typeof IndustriesTechnologyProvidersRoute
   '/solutions/brokerpulse': typeof SolutionsBrokerpulseRoute
   '/solutions/industrialpulse': typeof SolutionsIndustrialpulseRoute
@@ -149,6 +159,7 @@ export interface FileRouteTypes {
     | '/insights'
     | '/proof'
     | '/the-model'
+    | '/industries/it-solution-providers'
     | '/industries/technology-providers'
     | '/solutions/brokerpulse'
     | '/solutions/industrialpulse'
@@ -164,6 +175,7 @@ export interface FileRouteTypes {
     | '/insights'
     | '/proof'
     | '/the-model'
+    | '/industries/it-solution-providers'
     | '/industries/technology-providers'
     | '/solutions/brokerpulse'
     | '/solutions/industrialpulse'
@@ -179,6 +191,7 @@ export interface FileRouteTypes {
     | '/insights'
     | '/proof'
     | '/the-model'
+    | '/industries/it-solution-providers'
     | '/industries/technology-providers'
     | '/solutions/brokerpulse'
     | '/solutions/industrialpulse'
@@ -195,6 +208,7 @@ export interface RootRouteChildren {
   InsightsRoute: typeof InsightsRoute
   ProofRoute: typeof ProofRoute
   TheModelRoute: typeof TheModelRoute
+  IndustriesItSolutionProvidersRoute: typeof IndustriesItSolutionProvidersRoute
   IndustriesTechnologyProvidersRoute: typeof IndustriesTechnologyProvidersRoute
   SolutionsBrokerpulseRoute: typeof SolutionsBrokerpulseRoute
   SolutionsIndustrialpulseRoute: typeof SolutionsIndustrialpulseRoute
@@ -294,6 +308,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndustriesTechnologyProvidersRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/industries/it-solution-providers': {
+      id: '/industries/it-solution-providers'
+      path: '/industries/it-solution-providers'
+      fullPath: '/industries/it-solution-providers'
+      preLoaderRoute: typeof IndustriesItSolutionProvidersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -307,6 +328,7 @@ const rootRouteChildren: RootRouteChildren = {
   InsightsRoute: InsightsRoute,
   ProofRoute: ProofRoute,
   TheModelRoute: TheModelRoute,
+  IndustriesItSolutionProvidersRoute: IndustriesItSolutionProvidersRoute,
   IndustriesTechnologyProvidersRoute: IndustriesTechnologyProvidersRoute,
   SolutionsBrokerpulseRoute: SolutionsBrokerpulseRoute,
   SolutionsIndustrialpulseRoute: SolutionsIndustrialpulseRoute,
