@@ -16,7 +16,7 @@ import {
   SectionHead,
 } from "@/components/site";
 import { AmbientBand } from "@/components/media";
-import { FadeIn } from "@/components/motion";
+
 
 const FAQS: Faq[] = [
   {
