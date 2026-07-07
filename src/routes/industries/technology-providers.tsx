@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { canonicalLink } from "@/lib/seo";
+import { BASE_URL, canonicalLink, canonicalUrl } from "@/lib/seo";
 import {
   Card,
   CTABand,
@@ -11,29 +11,58 @@ import {
 } from "@/components/site";
 import { Stagger, StaggerItem } from "@/components/motion";
 
+const PAGE_PATH = "/industries/technology-providers";
+const PAGE_NAME = "Revenue Intelligence for Technology Providers";
+const PAGE_DESC =
+  "Turn customer experience into Net Revenue Retention, expansion, and churn prevention. A fully managed program for SaaS and technology providers.";
+
 export const Route = createFileRoute("/industries/technology-providers")({
   head: () => ({
     meta: [
-      { title: "Revenue Intelligence for Technology Providers | VistaXM" },
-      {
-        name: "description",
-        content:
-          "Turn customer experience into Net Revenue Retention, expansion, and churn prevention. A fully managed program for SaaS and technology providers.",
-      },
-      {
-        property: "og:title",
-        content: "Revenue Intelligence for Technology Providers | VistaXM",
-      },
+      { title: `${PAGE_NAME} | VistaXM` },
+      { name: "description", content: PAGE_DESC },
+      { property: "og:title", content: `${PAGE_NAME} | VistaXM` },
       {
         property: "og:description",
         content:
           "Turn customer experience into NRR, expansion, and churn prevention, run as a fully managed program.",
       },
     ],
-    links: [canonicalLink("/industries/technology-providers")],
+    links: [canonicalLink(PAGE_PATH)],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          itemListElement: [
+            { "@type": "ListItem", position: 1, name: "Home", item: `${BASE_URL}/` },
+            { "@type": "ListItem", position: 2, name: "Markets We Serve" },
+            { "@type": "ListItem", position: 3, name: PAGE_NAME, item: canonicalUrl(PAGE_PATH) },
+          ],
+        }),
+      },
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "Service",
+          name: PAGE_NAME,
+          description: PAGE_DESC,
+          url: canonicalUrl(PAGE_PATH),
+          provider: { "@type": "Organization", name: "VistaXM", url: BASE_URL },
+          audience: {
+            "@type": "Audience",
+            audienceType: "SaaS and technology providers",
+          },
+          areaServed: "Global",
+        }),
+      },
+    ],
   }),
   component: TechnologyProviders,
 });
+
 
 const PROOF_METRICS: { value: string; label: string }[] = [
   { value: "62", label: "NPS, vs a 30 to 40 B2B SaaS median." },
