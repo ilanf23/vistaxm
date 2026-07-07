@@ -353,7 +353,7 @@ function Header() {
             </Link>
             <div className="py-1">
               <div className="eyebrow !text-[color:var(--blue-light)] !text-[0.7rem] mb-2">
-                Industries We Serve
+                Markets We Serve
               </div>
               <div className="flex flex-col gap-2 pl-3">
                 {industries.map((ind) => (
