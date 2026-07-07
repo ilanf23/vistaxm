@@ -56,26 +56,31 @@ function CheckGlyph({ className }: { className?: string }) {
 
 /* ---------------- Local: "what you see" list (neutral read) ---------------- */
 
-const NEUTRAL_READ: { title: string; note: string }[] = [
+const NEUTRAL_READ: { title: string; note: string; why: string }[] = [
   {
     title: "Partner conviction by organization",
     note: "How strongly each partner believes in you, not just whether they are certified.",
+    why: "Replaces uniform partner management with conviction-weighted investment, so every dollar of enablement, MDF, and field time goes where it produces the highest return.",
   },
   {
     title: "Active recommendation rate",
     note: "How often partners actually put you forward in a competitive moment.",
+    why: "Surfaces the revenue you are losing before it is ever registered as a loss. A partner with strong deal registration but a low recommendation rate is generating visible revenue while causing invisible losses.",
   },
   {
     title: "The conviction gap by partner",
     note: "The distance between what leadership commits to and what the front line recommends.",
+    why: "Directs field investment to the right level of the partner organization. A high-gap partner needs a different intervention than a uniformly low-conviction one.",
   },
   {
     title: "Where alternatives are gaining traction",
     note: "Which competitors are winning ground, and at which stage of the deal.",
+    why: "Turns competitive intelligence from anecdotal to systematic, exactly which competitors are gaining traction, at what stage, and in which product categories.",
   },
   {
     title: "Investment confidence by program dimension",
     note: "Where partners trust your program to keep investing, and where confidence is thinning.",
+    why: "Converts program design from opinion-driven to data-driven. The dimension with the lowest confidence score gets attention first, with evidence from the full partner base, not the loudest advisory-council voice.",
   },
 ];
 
@@ -85,19 +90,45 @@ function NeutralReadList() {
       <Stagger className="grid gap-4 md:grid-cols-2" stagger={0.08}>
         {NEUTRAL_READ.map((item) => (
           <StaggerItem key={item.title}>
-            <div className="group flex h-full items-start gap-4 rounded-2xl hairline bg-white p-6 card-lift">
+            <Link
+              to="/solutions/partnerpulse"
+              className="group flex h-full items-start gap-4 rounded-2xl hairline bg-white p-6 card-lift transition-colors hover:border-[color:var(--blue-cta)]"
+            >
               <span className="mt-0.5 flex h-9 w-9 flex-none items-center justify-center rounded-xl bg-[color:var(--blue-tint)] text-[color:var(--blue-link)]">
                 <CheckGlyph className="h-5 w-5" />
               </span>
               <div>
-                <div className="text-base font-semibold text-[color:var(--navy-deep)]">
+                <div className="text-base font-semibold text-[color:var(--navy-deep)] group-hover:text-[color:var(--blue-link)]">
                   {item.title}
                 </div>
                 <p className="mt-1.5 text-sm leading-relaxed text-[color:var(--ink-soft)]">
                   {item.note}
                 </p>
+                <div className="mt-3 border-t border-[color:var(--hairline)] pt-3">
+                  <div className="text-[0.68rem] font-bold uppercase tracking-[0.12em] text-[color:var(--blue-link)]">
+                    Why it matters
+                  </div>
+                  <p className="mt-1.5 text-sm leading-relaxed text-[color:var(--ink)]">
+                    {item.why}
+                  </p>
+                </div>
+                <span className="mt-3 inline-flex items-center gap-1.5 text-[0.78rem] font-semibold text-[color:var(--blue-link)]">
+                  See PartnerPulse
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2.4"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    aria-hidden
+                    className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5"
+                  >
+                    <path d="M5 12h14M13 6l6 6-6 6" />
+                  </svg>
+                </span>
               </div>
-            </div>
+            </Link>
           </StaggerItem>
         ))}
       </Stagger>
@@ -113,6 +144,108 @@ function NeutralReadList() {
           </p>
         </div>
       </Reveal>
+    </div>
+  );
+}
+
+/* ---------------- Local: partner conviction sample readout ---------------- */
+
+function ConvictionReadout() {
+  return (
+    <div className="mx-auto max-w-md rounded-2xl hairline bg-[color:var(--blue-tint)] p-5 md:p-[22px]">
+      {/* Header */}
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-2">
+          <span className="flex h-6 w-6 items-center justify-center rounded-[7px] hairline bg-white text-[color:var(--blue-link)]">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-[13px] w-[13px]" aria-hidden>
+              <path d="M4 5h16v14H4z" />
+              <path d="M4 9h16" />
+            </svg>
+          </span>
+          <span className="text-[0.65rem] font-bold uppercase tracking-[0.1em] text-[color:var(--ink-soft)] opacity-70">
+            Partner conviction readout
+          </span>
+        </div>
+        <span className="inline-flex items-center gap-1.5 rounded-full bg-[rgba(246,130,65,0.16)] px-2 py-0.5 text-[0.6rem] font-bold uppercase tracking-[0.12em] text-[#b64a13]">
+          <span className="h-1 w-1 rounded-full bg-[color:var(--orange-pop)]" aria-hidden />
+          Sample, not a real client
+        </span>
+      </div>
+
+      {/* Partner name */}
+      <div className="mt-4 text-[17px] font-bold leading-snug text-[color:var(--navy-deep)]">
+        Northgate Integration
+      </div>
+      <div className="text-[12.5px] text-[color:var(--ink-soft)]">
+        Tier 1 partner, North America
+      </div>
+
+      {/* Three metrics */}
+      <div className="mt-5 grid grid-cols-3 gap-3">
+        {[
+          { value: "58", label: "Conviction score", sig: "var(--orange-pop)" },
+          { value: "41%", label: "Active recommendation", sig: "var(--navy-deep)" },
+          { value: "22 pts", label: "Conviction gap", sig: "var(--orange-pop)" },
+        ].map((m) => (
+          <div key={m.label} className="rounded-xl bg-white p-3 hairline">
+            <div
+              className="text-[1.5rem] font-bold leading-none tracking-tight tabular-nums"
+              style={{ fontFamily: "var(--font-display)", color: m.sig }}
+            >
+              {m.value}
+            </div>
+            <div className="mt-1.5 text-[10.5px] leading-tight text-[color:var(--ink-soft)]">
+              {m.label}
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Conviction bar */}
+      <div className="mt-5 flex flex-col gap-2">
+        <div className="flex items-baseline justify-between">
+          <span className="text-[12.5px] text-[color:var(--ink-soft)]">Conviction vs. benchmark</span>
+          <span className="text-[12.5px] font-bold tabular-nums text-[color:var(--navy-deep)]">
+            58 / 74 avg
+          </span>
+        </div>
+        <div className="h-[5px] overflow-hidden rounded-full bg-[rgba(2,37,80,0.08)]">
+          <span
+            className="block h-full rounded-full"
+            style={{ width: "58%", background: "var(--orange-pop)" }}
+          />
+        </div>
+      </div>
+
+      {/* Recommended move */}
+      <div className="mt-5 flex flex-col gap-1.5">
+        <span className="text-[10px] font-bold uppercase tracking-[0.13em] text-[color:var(--ink-soft)] opacity-60">
+          Recommended move
+        </span>
+        <div className="flex items-center gap-2.5">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth={2.4}
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="h-[17px] w-[17px] shrink-0 text-[color:var(--orange-pop)]"
+            aria-hidden
+          >
+            <path d="M5 12h14M13 6l6 6-6 6" />
+          </svg>
+          <span className="text-[15px] font-bold text-[color:var(--navy-deep)]">
+            Deploy SA-level enablement at the selling floor.
+          </span>
+        </div>
+      </div>
+
+      {/* Footer tag */}
+      <div className="mt-5 flex items-center gap-1.5 border-t border-[color:var(--gray-line)] pt-3.5 text-[10px] font-bold uppercase tracking-[0.12em] text-[color:var(--ink-soft)] opacity-55">
+        <span className="h-1 w-1 rounded-full bg-current" aria-hidden />
+        Sample, not a real client
+      </div>
     </div>
   );
 }
