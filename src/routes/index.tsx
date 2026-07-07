@@ -72,7 +72,7 @@ function Home() {
         <SectionHead
           eyebrow="The model"
           title="Journey × Persona. Every intersection is a revenue signal."
-          intro="Five journey stages across four personas. Where they cross is where retention, expansion, and churn risk actually live."
+          intro="Five journey stages across four personas. Where they cross is where retention, expansion, and churn risk really live."
         />
         <div className="mt-14">
           <JourneyMatrix />
