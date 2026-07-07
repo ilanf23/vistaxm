@@ -63,8 +63,8 @@ function TheModel() {
     <>
       <PageHero
         eyebrow="The model"
-        title="Revenue Channel Intelligence: turn experience into the next revenue decision."
-        subtitle="Every account is sending signals about where revenue is headed. We make those signals legible, account by account, and tie each one to a decision you can act on."
+        title="Revenue Channel Intelligence: turn customer experience into the next revenue decision."
+        subtitle="Every account is sending signals about where revenue is headed. We make those signals visible, account by account, and tie each one to a decision you can act on."
         primary={{ label: "Book a 30-minute call", to: BOOK_PATH }}
         secondary={{ label: "See the proof", to: "/proof" }}
         visual={
