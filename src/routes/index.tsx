@@ -86,7 +86,7 @@ function Home() {
             dark
             eyebrow="The signature insight"
             title="The Decision Maker → Influencer gap."
-            intro="The executive is satisfied. The day-to-day influencers who actually shape the renewal are not. That gap is the most reliable early warning of churn, and it is invisible to an account-level score."
+            intro="The executive is satisfied. The day-to-day influencers who shape the renewal are not. That gap is the most reliable early warning of churn, and it is invisible to an account-level score."
           />
           <Reveal delay={120}>
             <InfluencerGapCard />
