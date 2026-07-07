@@ -461,6 +461,21 @@ function ForOems() {
         <NeutralReadList />
       </Section>
 
+      {/* 4b. See a sample deliverable */}
+      <Section>
+        <div className="grid items-center gap-12 lg:grid-cols-[1fr_1fr] lg:gap-16">
+          <SectionHead
+            eyebrow="See a sample deliverable"
+            title="A partner conviction readout, at a glance."
+            intro="This is the format you receive: a named partner, the conviction and recommendation scores that matter, the gap that predicts the next move, and the intervention that closes it. Illustrative only, not a real client."
+          />
+          <Reveal delay={120}>
+            <ConvictionReadout />
+          </Reveal>
+        </div>
+      </Section>
+
+
       {/* 5. Why a neutral third party */}
       <Section tint>
         <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
