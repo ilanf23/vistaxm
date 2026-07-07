@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { canonicalLink } from "@/lib/seo";
+import { BASE_URL, canonicalLink, canonicalUrl } from "@/lib/seo";
 import {
   Card,
   CTABand,
@@ -11,29 +11,58 @@ import {
 } from "@/components/site";
 import { Stagger, StaggerItem } from "@/components/motion";
 
+const PAGE_PATH = "/industries/it-solution-providers";
+const PAGE_NAME = "Revenue Intelligence for IT Solution Providers and MSPs";
+const PAGE_DESC =
+  "Know which accounts will grow, which will renew, and which are quietly at risk, before the renewal conversation. A managed program for IT solution providers and MSPs.";
+
 export const Route = createFileRoute("/industries/it-solution-providers")({
   head: () => ({
     meta: [
-      { title: "Revenue Intelligence for IT Solution Providers and MSPs | VistaXM" },
-      {
-        name: "description",
-        content:
-          "Know which accounts will grow, which will renew, and which are quietly at risk, before the renewal conversation. A managed program for IT solution providers and MSPs.",
-      },
-      {
-        property: "og:title",
-        content: "Revenue Intelligence for IT Solution Providers and MSPs | VistaXM",
-      },
+      { title: `${PAGE_NAME} | VistaXM` },
+      { name: "description", content: PAGE_DESC },
+      { property: "og:title", content: `${PAGE_NAME} | VistaXM` },
       {
         property: "og:description",
         content:
           "Named accounts, ranked by revenue gap. The Decision Maker to Influencer gap. Certified NPS you can put in proposals.",
       },
     ],
-    links: [canonicalLink("/industries/it-solution-providers")],
+    links: [canonicalLink(PAGE_PATH)],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          itemListElement: [
+            { "@type": "ListItem", position: 1, name: "Home", item: `${BASE_URL}/` },
+            { "@type": "ListItem", position: 2, name: "Markets We Serve" },
+            { "@type": "ListItem", position: 3, name: PAGE_NAME, item: canonicalUrl(PAGE_PATH) },
+          ],
+        }),
+      },
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "Service",
+          name: PAGE_NAME,
+          description: PAGE_DESC,
+          url: canonicalUrl(PAGE_PATH),
+          provider: { "@type": "Organization", name: "VistaXM", url: BASE_URL },
+          audience: {
+            "@type": "Audience",
+            audienceType: "IT solution providers and MSPs",
+          },
+          areaServed: "Global",
+        }),
+      },
+    ],
   }),
   component: ITSolutionProviders,
 });
+
 
 const WHAT_IT_TELLS: { title: string; desc: string }[] = [
   {
