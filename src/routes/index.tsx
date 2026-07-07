@@ -111,7 +111,7 @@ function Home() {
       {/* Our advantage */}
       <Section tint>
         <SectionHead eyebrow="Our advantage" title="Why no one else can produce this." />
-        <div className="mt-14 grid gap-6 md:grid-cols-2">
+        <div className="mt-14 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           <Card title="Structural neutrality" kicker="Advantage 01" delay={0}>
             Our neutrality is a structural advantage. As a neutral third party, customers and
             partners tell us things confidentially that they would never put in a vendor survey.
@@ -120,6 +120,10 @@ function Home() {
             We have a robust set of industry benchmarks built from our experience across the
             channel. We help OEMs and Channel Partners understand where they stand against the
             competition with real customer and partner data.
+          </Card>
+          <Card title="Standardized methodology" kicker="Advantage 03" delay={240}>
+            Our programs run on a standardized, industry-leading, best-practice-based methodology,
+            so every read is consistent, comparable, and defensible, wave after wave.
           </Card>
         </div>
       </Section>
@@ -130,10 +134,10 @@ function Home() {
           <AmbientBand
             image="/images/ambient/analytics-dashboard.jpg"
             alt="Two colleagues reviewing an analytics dashboard on a laptop"
-            eyebrow="Where revenue actually moves"
+            eyebrow="Where revenue moves"
             title="The next decision hides in the day-to-day."
           >
-            Not in the headline score, but in how the people closest to the work actually feel.
+            Not in the headline score, but in how the people closest to the work really feel.
           </AmbientBand>
         </Reveal>
       </Section>
