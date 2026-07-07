@@ -47,7 +47,7 @@ function Home() {
       <Hero
         eyebrow="Revenue Channel Intelligence"
         title="Know which accounts are about to grow or walk, while you can still do something about it."
-        subtitle="VistaXM turns customer and partner experience into the revenue moves IT solution providers and MSPs make every week. Not another score. The next decision."
+        subtitle="VistaXM turns customer and partner experience into the revenue moves leading firms make every day. Not another score. The next decision."
         primary={{ label: "Book a 30-minute call", to: BOOK_PATH }}
         secondary={{ label: "See how it works", to: "#model" }}
       />
