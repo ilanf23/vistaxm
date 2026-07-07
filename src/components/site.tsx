@@ -1731,7 +1731,7 @@ function LeaderCard({
   title: string;
   bio: string;
   quote: string;
-  linkedin: string;
+  linkedin?: string;
   initials: string;
   photo?: string;
   delay?: number;
