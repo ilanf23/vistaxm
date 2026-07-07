@@ -5,10 +5,12 @@ import {
   CTABand,
   PageHero,
   Reveal,
+  RevenueSignalCard,
   Section,
   SectionHead,
   Stat,
 } from "@/components/site";
+
 import { Stagger, StaggerItem } from "@/components/motion";
 
 const PAGE_PATH = "/industries/it-solution-providers";
@@ -101,7 +103,20 @@ function ITSolutionProviders() {
         eyebrow="For IT solution providers and MSPs"
         title="Revenue Intelligence for IT solution providers and MSPs."
         subtitle="Know which accounts will grow, which will renew, and which are quietly at risk, before the renewal conversation."
+        visual={
+          <RevenueSignalCard
+            account="Illustrative account"
+            contextLabel="Accounts, illustrative"
+            headline="An account is quietly at risk."
+            reason="The executive is satisfied; the day-to-day influencers are not, and the gap is widening."
+            action="Get in front of the influencers this quarter"
+            metaLabel="3 accounts flagged"
+            index={1}
+            total={3}
+          />
+        }
       />
+
 
       <Section>
         <SectionHead

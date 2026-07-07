@@ -5,10 +5,12 @@ import {
   CTABand,
   PageHero,
   Reveal,
+  RevenueSignalCard,
   Section,
   SectionHead,
   Stat,
 } from "@/components/site";
+
 import { Stagger, StaggerItem } from "@/components/motion";
 
 const PAGE_PATH = "/industries/technology-providers";
@@ -112,7 +114,21 @@ function TechnologyProviders() {
         eyebrow="For technology providers"
         title="Revenue Intelligence for technology providers."
         subtitle="Turn customer experience into Net Revenue Retention, expansion, and churn prevention, run as a fully managed program."
+        visual={
+          <RevenueSignalCard
+            account="Illustrative account"
+            amountLabel="$2.4M"
+            contextLabel="Renewals, illustrative account"
+            headline="A $2.4M renewal is about to slip."
+            reason="The champion has gone quiet and the NPS still looks fine. That is the signal."
+            action="Re-engage the champion before the next QBR"
+            daysToRenewal={58}
+            index={1}
+            total={3}
+          />
+        }
       />
+
 
       <Section>
         <SectionHead

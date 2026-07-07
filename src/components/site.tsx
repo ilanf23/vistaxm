@@ -1600,6 +1600,9 @@ export function RevenueSignalCard({
   daysToRenewal = 58,
   index = 1,
   total = 3,
+  headline,
+  contextLabel,
+  metaLabel,
 }: {
   account?: string;
   amountLabel?: string;
@@ -1608,7 +1611,11 @@ export function RevenueSignalCard({
   daysToRenewal?: number;
   index?: number;
   total?: number;
+  headline?: string;
+  contextLabel?: string;
+  metaLabel?: string;
 }) {
+
   const { ref, shown } = useReveal(0.2);
   return (
     <div
@@ -1648,13 +1655,13 @@ export function RevenueSignalCard({
         <div className="px-4 py-4">
           <div className="flex items-center gap-1.5 text-[0.72rem] text-[#7fa3cf]">
             <FolderIcon className="h-3.5 w-3.5" />
-            Renewals · {account}
+            {contextLabel ?? `Renewals · ${account}`}
           </div>
           <div
             className="mt-2.5 text-[17px] font-bold leading-snug text-white"
             style={{ fontFamily: "var(--font-display)" }}
           >
-            A {amountLabel} renewal is about to walk.
+            {headline ?? `A ${amountLabel} renewal is about to walk.`}
           </div>
           <p className="mt-2 text-[12.5px] leading-relaxed text-[#cfe0f7]">{reason}</p>
 
@@ -1664,8 +1671,9 @@ export function RevenueSignalCard({
           </div>
           <div className="mt-2.5 flex items-center gap-1.5 text-[0.72rem] text-[#9fc0e8]">
             <ClockIcon className="h-3.5 w-3.5" />
-            {daysToRenewal} days to renewal
+            {metaLabel ?? `${daysToRenewal} days to renewal`}
           </div>
+
         </div>
 
         {/* Footer */}
