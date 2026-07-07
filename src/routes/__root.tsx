@@ -158,12 +158,12 @@ const solutions = [
 // links to the dedicated /for-oems page.
 const industries = [
   { to: "/for-oems", label: "IT OEMs" },
-  { to: "/solutions/partnerpulse", label: "IT Solution Providers" },
-  { to: "/solutions/brokerpulse", label: "Insurance Carriers" },
+  { to: "/industries/it-solution-providers", label: "IT Solution Providers" },
+  { to: "/industries/technology-providers", label: "Technology Providers" },
+  { to: "/for-oems", label: "Insurance Carriers" },
   { to: "/solutions/brokerpulse", label: "Insurance Brokers" },
-  { to: "/solutions/industrialpulse", label: "Industrial OEMs" },
-  { to: "/solutions/industrialpulse", label: "Industrial Distributors" },
-  { to: "/solutions/partnerpulse", label: "Technology Providers" },
+  { to: "/for-oems", label: "Industrial OEMs" },
+  { to: "/industries/it-solution-providers", label: "Industrial Distributors" },
 ] as const;
 
 // Rendered after "The Model" and the Solutions dropdown.
