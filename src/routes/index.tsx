@@ -100,7 +100,7 @@ function Home() {
           <SectionHead
             eyebrow="Promoter · Passive · Detractor"
             title="Sentiment is a spend pattern."
-            intro="When you stack actual revenue against cohort, the chart stops being satisfaction research and starts being a portfolio map."
+            intro="When you stack revenue against cohort, the chart stops being satisfaction research and starts being a portfolio map. Promoters spend 3 to 4X more on average than passives, who spend 2X more than detractors on average."
           />
           <Reveal delay={120}>
             <SpendByCohort />
