@@ -470,7 +470,7 @@ function Footer() {
             </li>
             <li>
               <Link to="/for-oems" className={footerLinkClass}>
-                For IT OEMs
+                For OEMs
               </Link>
             </li>
             <li>
