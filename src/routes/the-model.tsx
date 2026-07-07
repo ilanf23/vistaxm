@@ -86,7 +86,7 @@ function TheModel() {
       <Section tint>
         <SectionHead
           eyebrow="Journey x persona"
-          title="Five stages. Four people. Every intersection is a revenue signal."
+          title="Five stages. Four personas. Every intersection is a revenue signal."
           intro="We measure across the journey phases that matter and the personas that drive results. The grid shows exactly where, and with whom, revenue is won or lost."
         />
         <div className="mt-14">
