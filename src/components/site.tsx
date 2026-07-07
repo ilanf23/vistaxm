@@ -2466,7 +2466,7 @@ export function SpendByCohort() {
       <div className="flex items-baseline justify-between">
         <div>
           <div className="eyebrow mb-2">Spend follows sentiment</div>
-          <h3 className="!text-2xl">Where the revenue actually sits.</h3>
+          <h3 className="!text-2xl">Where the revenue really sits.</h3>
         </div>
         <div className="text-xs text-[color:var(--ink-soft)]">Share of annualized spend</div>
       </div>
