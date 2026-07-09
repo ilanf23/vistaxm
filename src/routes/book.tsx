@@ -228,24 +228,26 @@ function ContactRow({
   href?: string;
 }) {
   return (
-    <div className="flex items-start gap-4 py-5">
+    <div className="flex items-start gap-5">
       <span
-        className="flex h-10 w-10 flex-none items-center justify-center rounded-full bg-[color:var(--blue-tint)] text-[color:var(--blue-link)]"
+        className="flex h-12 w-12 flex-none items-center justify-center rounded-2xl bg-[color:var(--blue-tint)] text-[color:var(--blue-link)]"
         aria-hidden="true"
       >
         {icon}
       </span>
-      <div className="min-w-0">
-        <div className="eyebrow mb-1">{label}</div>
+      <div className="min-w-0 flex flex-col">
+        <span className="mb-1.5 text-[10px] font-bold uppercase tracking-[0.15em] text-[color:var(--ink-soft)]/70">
+          {label}
+        </span>
         {href ? (
           <a
             href={href}
-            className="text-lg font-semibold text-[color:var(--navy-deep)] transition-colors hover:text-[color:var(--blue-link)]"
+            className="text-xl font-bold text-[color:var(--navy-deep)] transition-colors hover:text-[color:var(--blue-link)]"
           >
             {value}
           </a>
         ) : (
-          <span className="text-lg font-semibold text-[color:var(--navy-deep)]">{value}</span>
+          <span className="text-xl font-bold text-[color:var(--navy-deep)]">{value}</span>
         )}
       </div>
     </div>
@@ -370,15 +372,15 @@ function BookACall() {
 
       {/* Contact band */}
       <Section tint>
-        <div className="grid gap-12 lg:grid-cols-[.8fr_1.2fr] lg:items-center">
-          <div>
+        <div className="grid gap-12 lg:grid-cols-2 lg:gap-20 lg:items-center">
+          <div className="space-y-8">
             <SectionHead
               eyebrow="Reach us directly"
               title="Prefer to start a conversation another way?"
               intro="Email or call. A real person on our team will pick it up."
             />
             <Reveal delay={80}>
-              <div className="img-editorial-soft img-frame mt-8 aspect-[4/3] w-full">
+              <div className="img-editorial-soft img-frame aspect-[4/3] w-full max-w-md">
                 <img
                   src="/images/ambient/on-a-call.jpg"
                   alt="A member of the team taking a call at their desk"
@@ -390,8 +392,8 @@ function BookACall() {
           </div>
 
           <Reveal delay={120}>
-            <div className="rounded-2xl hairline bg-white p-7 shadow-[var(--shadow-elevation-2)] md:p-9">
-              <div className="divide-y divide-[color:var(--hairline)]">
+            <div className="flex flex-col gap-10 rounded-[2rem] hairline bg-white p-8 shadow-[var(--shadow-elevation-2)] md:p-12">
+              <div className="space-y-8">
                 <ContactRow
                   icon={<EmailGlyph className="h-5 w-5" />}
                   label="Email"
@@ -411,8 +413,10 @@ function BookACall() {
                 />
               </div>
 
-              <div className="mt-6 flex items-center gap-2.5 rounded-xl bg-[color:var(--blue-tint)] px-4 py-3 text-sm font-medium text-[color:var(--navy-deep)]">
-                <CheckGlyph className="h-4 w-4 flex-none text-[color:var(--blue-cta)]" />
+              <div className="mt-auto flex items-center gap-3 rounded-2xl bg-[color:var(--blue-tint)] hairline px-5 py-4 text-sm font-semibold text-[color:var(--navy-deep)]">
+                <span className="flex h-6 w-6 flex-none items-center justify-center rounded-full bg-white hairline text-[color:var(--blue-cta)]">
+                  <CheckGlyph className="h-3.5 w-3.5" />
+                </span>
                 One business day response. No marketing list.
               </div>
             </div>
