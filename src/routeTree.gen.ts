@@ -104,12 +104,6 @@ const CaseStudiesJfPetroleumRoute = CaseStudiesJfPetroleumRouteImport.update({
   getParentRoute: () => rootRouteImport,
 } as any)
 
-const CaseStudiesJfPetroleumRoute = CaseStudiesJfPetroleumRouteImport.update({
-  id: '/case-studies/jf-petroleum',
-  path: '/case-studies/jf-petroleum',
-  getParentRoute: () => rootRouteImport,
-} as any)
-
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
