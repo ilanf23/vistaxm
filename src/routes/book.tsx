@@ -228,24 +228,26 @@ function ContactRow({
   href?: string;
 }) {
   return (
-    <div className="flex items-start gap-4 py-5">
+    <div className="flex items-start gap-5">
       <span
-        className="flex h-10 w-10 flex-none items-center justify-center rounded-full bg-[color:var(--blue-tint)] text-[color:var(--blue-link)]"
+        className="flex h-12 w-12 flex-none items-center justify-center rounded-2xl bg-[color:var(--blue-tint)] text-[color:var(--blue-link)]"
         aria-hidden="true"
       >
         {icon}
       </span>
-      <div className="min-w-0">
-        <div className="eyebrow mb-1">{label}</div>
+      <div className="min-w-0 flex flex-col">
+        <span className="mb-1.5 text-[10px] font-bold uppercase tracking-[0.15em] text-[color:var(--ink-soft)]/70">
+          {label}
+        </span>
         {href ? (
           <a
             href={href}
-            className="text-lg font-semibold text-[color:var(--navy-deep)] transition-colors hover:text-[color:var(--blue-link)]"
+            className="text-xl font-bold text-[color:var(--navy-deep)] transition-colors hover:text-[color:var(--blue-link)]"
           >
             {value}
           </a>
         ) : (
-          <span className="text-lg font-semibold text-[color:var(--navy-deep)]">{value}</span>
+          <span className="text-xl font-bold text-[color:var(--navy-deep)]">{value}</span>
         )}
       </div>
     </div>
