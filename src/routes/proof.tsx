@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { BOOK_PATH } from "@/lib/links";
 import { canonicalLink, faqJsonLd, type Faq } from "@/lib/seo";
 import {
