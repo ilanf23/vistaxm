@@ -23,6 +23,7 @@ import { Route as SolutionsIndustrialpulseRouteImport } from './routes/solutions
 import { Route as SolutionsBrokerpulseRouteImport } from './routes/solutions/brokerpulse'
 import { Route as IndustriesTechnologyProvidersRouteImport } from './routes/industries/technology-providers'
 import { Route as IndustriesItSolutionProvidersRouteImport } from './routes/industries/it-solution-providers'
+import { Route as CaseStudiesJfPetroleumRouteImport } from './routes/case-studies/jf-petroleum'
 
 const TheModelRoute = TheModelRouteImport.update({
   id: '/the-model',
@@ -97,6 +98,11 @@ const IndustriesItSolutionProvidersRoute =
     path: '/industries/it-solution-providers',
     getParentRoute: () => rootRouteImport,
   } as any)
+const CaseStudiesJfPetroleumRoute = CaseStudiesJfPetroleumRouteImport.update({
+  id: '/case-studies/jf-petroleum',
+  path: '/case-studies/jf-petroleum',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -108,6 +114,7 @@ export interface FileRoutesByFullPath {
   '/insights': typeof InsightsRoute
   '/proof': typeof ProofRoute
   '/the-model': typeof TheModelRoute
+  '/case-studies/jf-petroleum': typeof CaseStudiesJfPetroleumRoute
   '/industries/it-solution-providers': typeof IndustriesItSolutionProvidersRoute
   '/industries/technology-providers': typeof IndustriesTechnologyProvidersRoute
   '/solutions/brokerpulse': typeof SolutionsBrokerpulseRoute
@@ -124,6 +131,7 @@ export interface FileRoutesByTo {
   '/insights': typeof InsightsRoute
   '/proof': typeof ProofRoute
   '/the-model': typeof TheModelRoute
+  '/case-studies/jf-petroleum': typeof CaseStudiesJfPetroleumRoute
   '/industries/it-solution-providers': typeof IndustriesItSolutionProvidersRoute
   '/industries/technology-providers': typeof IndustriesTechnologyProvidersRoute
   '/solutions/brokerpulse': typeof SolutionsBrokerpulseRoute
@@ -141,6 +149,7 @@ export interface FileRoutesById {
   '/insights': typeof InsightsRoute
   '/proof': typeof ProofRoute
   '/the-model': typeof TheModelRoute
+  '/case-studies/jf-petroleum': typeof CaseStudiesJfPetroleumRoute
   '/industries/it-solution-providers': typeof IndustriesItSolutionProvidersRoute
   '/industries/technology-providers': typeof IndustriesTechnologyProvidersRoute
   '/solutions/brokerpulse': typeof SolutionsBrokerpulseRoute
@@ -159,6 +168,7 @@ export interface FileRouteTypes {
     | '/insights'
     | '/proof'
     | '/the-model'
+    | '/case-studies/jf-petroleum'
     | '/industries/it-solution-providers'
     | '/industries/technology-providers'
     | '/solutions/brokerpulse'
@@ -175,6 +185,7 @@ export interface FileRouteTypes {
     | '/insights'
     | '/proof'
     | '/the-model'
+    | '/case-studies/jf-petroleum'
     | '/industries/it-solution-providers'
     | '/industries/technology-providers'
     | '/solutions/brokerpulse'
@@ -191,6 +202,7 @@ export interface FileRouteTypes {
     | '/insights'
     | '/proof'
     | '/the-model'
+    | '/case-studies/jf-petroleum'
     | '/industries/it-solution-providers'
     | '/industries/technology-providers'
     | '/solutions/brokerpulse'
@@ -208,6 +220,7 @@ export interface RootRouteChildren {
   InsightsRoute: typeof InsightsRoute
   ProofRoute: typeof ProofRoute
   TheModelRoute: typeof TheModelRoute
+  CaseStudiesJfPetroleumRoute: typeof CaseStudiesJfPetroleumRoute
   IndustriesItSolutionProvidersRoute: typeof IndustriesItSolutionProvidersRoute
   IndustriesTechnologyProvidersRoute: typeof IndustriesTechnologyProvidersRoute
   SolutionsBrokerpulseRoute: typeof SolutionsBrokerpulseRoute
@@ -315,6 +328,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndustriesItSolutionProvidersRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/case-studies/jf-petroleum': {
+      id: '/case-studies/jf-petroleum'
+      path: '/case-studies/jf-petroleum'
+      fullPath: '/case-studies/jf-petroleum'
+      preLoaderRoute: typeof CaseStudiesJfPetroleumRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -328,6 +348,7 @@ const rootRouteChildren: RootRouteChildren = {
   InsightsRoute: InsightsRoute,
   ProofRoute: ProofRoute,
   TheModelRoute: TheModelRoute,
+  CaseStudiesJfPetroleumRoute: CaseStudiesJfPetroleumRoute,
   IndustriesItSolutionProvidersRoute: IndustriesItSolutionProvidersRoute,
   IndustriesTechnologyProvidersRoute: IndustriesTechnologyProvidersRoute,
   SolutionsBrokerpulseRoute: SolutionsBrokerpulseRoute,

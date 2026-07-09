@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { BOOK_PATH, BRIEFS } from "@/lib/links";
 import { canonicalLink } from "@/lib/seo";
 import { type ReactNode } from "react";
@@ -9,6 +9,7 @@ import {
   RevenueSignalCard,
   Section,
   SectionHead,
+  Stat,
 } from "@/components/site";
 import { ChannelSignalMap } from "@/components/solutions-viz";
 import { AmbientBand } from "@/components/media";
@@ -162,6 +163,42 @@ function IndustrialPulse() {
         <div className="mx-auto mt-12 max-w-4xl">
           <ChannelSignalMap />
         </div>
+      </Section>
+
+      {/* Proven with JF Petroleum (named, approved case study) */}
+      <Section>
+        <SectionHead
+          eyebrow="Proven with JF Petroleum"
+          title="A named program with real numbers, not a sample."
+          intro="JF Petroleum, one of the largest service-centric industrial distributors, unified operations, assets, and experience with PTC ServiceMax and VistaXM. The result: a measurable shift from volume to value."
+        />
+        <div className="mt-12 grid gap-5 sm:grid-cols-3">
+          <Stat value="+30" label="Technician eNPS within a year, at 55% engagement." delay={0} />
+          <Stat value="+53%" label="Transactional NPS improvement." delay={120} />
+          <Stat value="Volume → Value" label="A measurable shift, in the words of leadership." delay={240} />
+        </div>
+        <FadeIn delay={200}>
+          <div className="mt-8">
+            <Link
+              to="/case-studies/jf-petroleum"
+              className="inline-flex items-center gap-2 text-sm font-semibold text-[color:var(--blue-link)] hover:text-[color:var(--navy-deep)]"
+            >
+              Read the JF Petroleum case study
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth={2.2}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="h-4 w-4"
+                aria-hidden
+              >
+                <path d="M5 12h14M13 6l6 6-6 6" />
+              </svg>
+            </Link>
+          </div>
+        </FadeIn>
       </Section>
 
       {/* Ambient divider: built for the industrial channel */}

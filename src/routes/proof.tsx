@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { BOOK_PATH } from "@/lib/links";
 import { canonicalLink, faqJsonLd, type Faq } from "@/lib/seo";
 import {
@@ -110,6 +110,8 @@ function ResultCard({
   icon,
   quote,
   attribution,
+  ctaLabel,
+  ctaTo,
   delay = 0,
 }: {
   client: string;
@@ -118,6 +120,8 @@ function ResultCard({
   icon: string;
   quote?: string;
   attribution?: string;
+  ctaLabel?: string;
+  ctaTo?: "/case-studies/jf-petroleum";
   delay?: number;
 }) {
   return (
@@ -170,6 +174,28 @@ function ResultCard({
               </figcaption>
             )}
           </figure>
+        )}
+        {ctaTo && ctaLabel && (
+          <div className="mt-auto pt-6">
+            <Link
+              to={ctaTo}
+              className="inline-flex items-center gap-1.5 text-sm font-semibold text-[color:var(--blue-link)] hover:text-[color:var(--navy-deep)]"
+            >
+              {ctaLabel}
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth={2.2}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="h-4 w-4"
+                aria-hidden
+              >
+                <path d="M5 12h14M13 6l6 6-6 6" />
+              </svg>
+            </Link>
+          </div>
         )}
       </div>
     </Reveal>
@@ -660,6 +686,21 @@ function Proof() {
                 { value: "$26.8M", label: "Opportunity-and-risk pool surfaced" },
                 { value: "$11M+", label: "Revenue protected" },
               ]}
+            />
+          </StaggerItem>
+          <StaggerItem className="h-full">
+            <ResultCard
+              client="JF Petroleum"
+              headline="From volume to value: unified operations, assets, and experience with PTC ServiceMax and VistaXM."
+              icon="trend"
+              metrics={[
+                { value: "+30", label: "Technician eNPS, at 55% engagement" },
+                { value: "+53%", label: "Transactional NPS improvement" },
+                { value: "15%", label: "Improvement in ease of communication" },
+                { value: "2×", label: "Detractors more likely to leave" },
+              ]}
+              ctaLabel="Read the case study"
+              ctaTo="/case-studies/jf-petroleum"
             />
           </StaggerItem>
         </Stagger>
