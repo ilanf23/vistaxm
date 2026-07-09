@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { BOOK_PATH, BRIEFS } from "@/lib/links";
 import { canonicalLink } from "@/lib/seo";
 import { type ReactNode } from "react";
@@ -9,6 +9,7 @@ import {
   RevenueSignalCard,
   Section,
   SectionHead,
+  Stat,
 } from "@/components/site";
 import { ChannelSignalMap } from "@/components/solutions-viz";
 import { AmbientBand } from "@/components/media";
