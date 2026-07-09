@@ -324,69 +324,33 @@ function Header() {
             The Model
           </Link>
 
-          {/* Industries We Serve dropdown (left of Solutions; CSS hover + focus-within) */}
-          <div className="group relative">
-            <button
-              type="button"
-              className={`flex items-center gap-1 ${navLinkClass} group-hover:text-white group-focus-within:text-white`}
-              aria-haspopup="true"
-            >
-              Markets We Serve
-              <svg
-                width="12"
-                height="12"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2.5"
-                aria-hidden
-                className="mt-px transition-transform duration-200 group-hover:rotate-180 group-focus-within:rotate-180"
-              >
-                <path d="M6 9l6 6 6-6" />
-              </svg>
-            </button>
-            <div className="invisible absolute left-1/2 top-full z-50 w-64 -translate-x-1/2 pt-3 opacity-0 transition-all duration-200 group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100">
-              <div className="overflow-hidden rounded-2xl border border-white/10 bg-[color:var(--navy-deep)] p-2 shadow-[var(--shadow-elevation-3)]">
+          {/* Markets We Serve dropdown */}
+          <NavDropdown label="Markets We Serve" panelWidthClass="w-64">
+            {(close) => (
+              <>
                 {industries.map((ind) => (
                   <Link
                     key={ind.label}
                     to={ind.to}
+                    onClick={close}
                     className="block rounded-xl px-3.5 py-2.5 text-sm font-medium text-white/85 transition-colors hover:bg-white/[0.06] hover:text-white"
                   >
                     {ind.label}
                   </Link>
                 ))}
-              </div>
-            </div>
-          </div>
+              </>
+            )}
+          </NavDropdown>
 
-          {/* Solutions dropdown (CSS hover + focus-within, SSR-safe) */}
-          <div className="group relative">
-            <button
-              type="button"
-              className={`flex items-center gap-1 ${navLinkClass} group-hover:text-white group-focus-within:text-white`}
-              aria-haspopup="true"
-            >
-              Solutions
-              <svg
-                width="12"
-                height="12"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2.5"
-                aria-hidden
-                className="mt-px transition-transform duration-200 group-hover:rotate-180 group-focus-within:rotate-180"
-              >
-                <path d="M6 9l6 6 6-6" />
-              </svg>
-            </button>
-            <div className="invisible absolute left-1/2 top-full z-50 w-72 -translate-x-1/2 pt-3 opacity-0 transition-all duration-200 group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100">
-              <div className="overflow-hidden rounded-2xl border border-white/10 bg-[color:var(--navy-deep)] p-2 shadow-[var(--shadow-elevation-3)]">
+          {/* Solutions dropdown */}
+          <NavDropdown label="Solutions" panelWidthClass="w-72">
+            {(close) => (
+              <>
                 {solutions.map((s) => (
                   <Link
                     key={s.to}
                     to={s.to}
+                    onClick={close}
                     className="block rounded-xl px-3.5 py-3 transition-colors hover:bg-white/[0.06]"
                     activeProps={{ className: "block rounded-xl px-3.5 py-3 bg-white/[0.06]" }}
                   >
@@ -394,9 +358,10 @@ function Header() {
                     <span className="mt-0.5 block text-xs text-white/55">{s.desc}</span>
                   </Link>
                 ))}
-              </div>
-            </div>
-          </div>
+              </>
+            )}
+          </NavDropdown>
+
 
           {navAfterSolutions.map((n) => (
             <Link
