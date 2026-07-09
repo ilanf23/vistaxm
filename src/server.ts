@@ -37,18 +37,35 @@ async function normalizeCatastrophicSsrResponse(response: Response): Promise<Res
   });
 }
 
+const SECURITY_HEADERS: Record<string, string> = {
+  "X-Frame-Options": "DENY",
+  "Permissions-Policy": "camera=(), microphone=(), geolocation=(), browsing-topics=()",
+  "Cross-Origin-Opener-Policy": "same-origin",
+  "Content-Security-Policy-Report-Only":
+    "default-src 'self'; frame-ancestors 'none'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; connect-src 'self' https:; font-src 'self' data: https:; base-uri 'self'; object-src 'none'",
+};
+
+function withSecurityHeaders(response: Response): Response {
+  for (const [name, value] of Object.entries(SECURITY_HEADERS)) {
+    if (!response.headers.has(name)) response.headers.set(name, value);
+  }
+  return response;
+}
+
 export default {
   async fetch(request: Request, env: unknown, ctx: unknown) {
     try {
       const handler = await getServerEntry();
       const response = await handler.fetch(request, env, ctx);
-      return await normalizeCatastrophicSsrResponse(response);
+      return withSecurityHeaders(await normalizeCatastrophicSsrResponse(response));
     } catch (error) {
       console.error(error);
-      return new Response(renderErrorPage(), {
-        status: 500,
-        headers: { "content-type": "text/html; charset=utf-8" },
-      });
+      return withSecurityHeaders(
+        new Response(renderErrorPage(), {
+          status: 500,
+          headers: { "content-type": "text/html; charset=utf-8" },
+        }),
+      );
     }
   },
 };
