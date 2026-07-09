@@ -421,7 +421,7 @@ function Footer() {
         <div className="md:col-span-5">
           <Logo className="h-7" />
           <p className="mt-5 max-w-md text-sm leading-relaxed text-white/65">
-            Revenue Channel Intelligence. We turn partner and broker experience into the
+            Revenue Channel Intelligence. We turn customer, partner and broker experience into the
             account-level signal of where revenue is about to grow or walk.
           </p>
           <Link to="/book" className="btn-primary mt-7 text-sm">
