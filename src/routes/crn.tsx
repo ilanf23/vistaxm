@@ -605,19 +605,19 @@ function Proof() {
       <SectionHead eyebrow="Proof" title="Real programs. Real numbers." />
       <div className="mt-12 grid gap-6 md:mt-14 md:grid-cols-3">
         <ResultCard
-          brand="Softchoice"
+          brand="IT Solution Provider"
           metric="+8 NPS"
           detail="$8.4M impact · 4% lower churn · 10% higher win rates"
           delay={0}
         />
         <ResultCard
-          brand="Veeam"
-          metric="30 → 73"
-          detail="NPS movement alongside 27% year-over-year growth"
+          brand="Fintech SaaS Provider"
+          metric="85% → 95%"
+          detail="Net Revenue Retention · 6× survey response · weeks to value · zero internal CX headcount"
           delay={120}
         />
         <ResultCard
-          brand="Industrial supplier"
+          brand="Industrial Distributor"
           metric="$11M+"
           detail="revenue protected from a $26.8M risk-and-opportunity pool"
           delay={240}
