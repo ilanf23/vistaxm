@@ -205,6 +205,93 @@ function Logo({ className = "h-7" }: { className?: string }) {
   );
 }
 
+function NavDropdown({
+  label,
+  panelWidthClass,
+  children,
+}: {
+  label: string;
+  panelWidthClass: string;
+  children: (close: () => void) => ReactNode;
+}) {
+  const [open, setOpen] = useState(false);
+  const rootRef = useRef<HTMLDivElement>(null);
+  const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const close = () => setOpen(false);
+  const clearClose = () => {
+    if (closeTimer.current) {
+      clearTimeout(closeTimer.current);
+      closeTimer.current = null;
+    }
+  };
+  const scheduleClose = () => {
+    clearClose();
+    closeTimer.current = setTimeout(() => setOpen(false), 120);
+  };
+
+  useEffect(() => {
+    if (!open) return;
+    const onDocClick = (e: MouseEvent) => {
+      if (!rootRef.current?.contains(e.target as Node)) setOpen(false);
+    };
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(false);
+    };
+    document.addEventListener("mousedown", onDocClick);
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.removeEventListener("mousedown", onDocClick);
+      document.removeEventListener("keydown", onKey);
+    };
+  }, [open]);
+
+  useEffect(() => () => clearClose(), []);
+
+  return (
+    <div
+      ref={rootRef}
+      className="relative"
+      onMouseEnter={() => {
+        clearClose();
+        setOpen(true);
+      }}
+      onMouseLeave={scheduleClose}
+    >
+      <button
+        type="button"
+        className={`flex items-center gap-1 ${navLinkClass} ${open ? "text-white" : ""}`}
+        aria-haspopup="true"
+        aria-expanded={open}
+        onClick={() => setOpen((v) => !v)}
+      >
+        {label}
+        <svg
+          width="12"
+          height="12"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2.5"
+          aria-hidden
+          className={`mt-px transition-transform duration-200 ${open ? "rotate-180" : ""}`}
+        >
+          <path d="M6 9l6 6 6-6" />
+        </svg>
+      </button>
+      <div
+        className={`absolute left-1/2 top-full z-50 ${panelWidthClass} -translate-x-1/2 pt-3 transition-all duration-200 ${
+          open ? "visible opacity-100" : "invisible opacity-0"
+        }`}
+      >
+        <div className="overflow-hidden rounded-2xl border border-white/10 bg-[color:var(--navy-deep)] p-2 shadow-[var(--shadow-elevation-3)]">
+          {children(close)}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function Header() {
   const [open, setOpen] = useState(false);
   const [condensed, setCondensed] = useState(false);
