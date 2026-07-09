@@ -528,19 +528,12 @@ function ForOems() {
       <Section dark>
         <FadeIn>
           <figure className="mx-auto max-w-4xl text-center">
-            <span
-              aria-hidden
-              className="block text-7xl leading-none text-[color:var(--orange-pop)]/40"
-              style={{ fontFamily: "var(--font-display)" }}
-            >
-              &ldquo;
-            </span>
             <blockquote
-              className="-mt-4 text-2xl font-semibold leading-snug !text-white md:text-[2rem] md:leading-[1.25]"
+              className="text-2xl font-semibold leading-snug !text-white md:text-[2rem] md:leading-[1.25]"
               style={{ fontFamily: "var(--font-display)" }}
             >
-              They bring an agnostic viewpoint into the data, and having that unbiased filter is
-              critical to our mission.
+              &ldquo;They bring an agnostic viewpoint into the data, and having that unbiased filter
+              is critical to our mission.&rdquo;
             </blockquote>
             <figcaption className="mt-7 text-sm font-semibold uppercase tracking-[0.12em] text-[color:var(--blue-light)]">
               Deanna Davenport, VP of Customer Experience, ePlus
