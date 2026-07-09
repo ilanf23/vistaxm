@@ -700,12 +700,12 @@ function Proof() {
           <SectionHead
             eyebrow="Sample deliverables"
             title="See a readout before you commit."
-            intro="Sample deliverables, clearly labeled as samples and not real client data, are available on request. They show the exact format you receive: a named account, the dollars in play, and the move that changes the outcome."
+            intro="A sample deliverable is available upon request. It shows the exact format you receive: a named account, the dollars in play, and the move that changes the outcome."
           />
           <FadeIn delay={140}>
             <div className="grid gap-4 sm:grid-cols-2">
               <SampleDeliverable
-                account="Zynaptic"
+                account="Sample Client"
                 signal="risk"
                 title="A renewal is drifting toward risk."
                 hero={{ value: "$1.4M", label: "revenue at risk" }}
@@ -713,7 +713,7 @@ function Proof() {
                 move="Re-engage users"
               />
               <SampleDeliverable
-                account="Meridian"
+                account="Sample Client"
                 signal="upside"
                 title="Expansion is sitting unused."
                 hero={{ value: "$2.1M", label: "latent expansion" }}
