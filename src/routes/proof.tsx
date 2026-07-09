@@ -110,6 +110,8 @@ function ResultCard({
   icon,
   quote,
   attribution,
+  ctaLabel,
+  ctaTo,
   delay = 0,
 }: {
   client: string;
@@ -118,6 +120,8 @@ function ResultCard({
   icon: string;
   quote?: string;
   attribution?: string;
+  ctaLabel?: string;
+  ctaTo?: "/case-studies/jf-petroleum";
   delay?: number;
 }) {
   return (
