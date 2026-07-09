@@ -33,7 +33,7 @@ export const Route = createFileRoute("/")({
       {
         property: "og:description",
         content:
-          "Turn partner and broker experience into the account-level signal of where revenue is about to grow or walk.",
+          "Turn customer, partner and broker experience into the account-level signal of where revenue is about to grow or walk.",
       },
     ],
     links: [canonicalLink("/")],

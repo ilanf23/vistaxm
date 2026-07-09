@@ -470,13 +470,6 @@ function About() {
           <SectionHead eyebrow="The story" title="From the inside of the companies you know." />
           <FadeIn delay={120}>
             <div className="relative rounded-2xl hairline bg-[color:var(--blue-tint)] p-8 md:p-10">
-              <span
-                aria-hidden
-                className="absolute left-6 top-3 text-6xl leading-none text-[color:var(--orange-pop)]/30"
-                style={{ fontFamily: "var(--font-display)" }}
-              >
-                &ldquo;
-              </span>
               <p className="relative text-lg leading-relaxed text-[color:var(--ink-soft)]">
                 Erik built the customer experience program for HPE GreenLake as it shifted to cloud
                 services, then led high-tech and telecom at a leading experience-management

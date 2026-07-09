@@ -67,7 +67,7 @@ export const Route = createFileRoute("/industries/technology-providers")({
 
 
 const PROOF_METRICS: { value: string; label: string }[] = [
-  { value: "62", label: "NPS, vs a 30 to 40 B2B SaaS median." },
+  { value: "62", label: "NPS vs a 30 to 40 B2B SaaS median." },
   {
     value: "20 pts",
     label: "Champion gap: Decision Maker 76 vs Champion 56.",

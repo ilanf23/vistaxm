@@ -7,7 +7,7 @@ import {
   HeadContent,
   Scripts,
 } from "@tanstack/react-router";
-import { useEffect, useState, type ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import { MotionConfig } from "motion/react";
 
 import appCss from "../styles.css?url";
@@ -205,6 +205,93 @@ function Logo({ className = "h-7" }: { className?: string }) {
   );
 }
 
+function NavDropdown({
+  label,
+  panelWidthClass,
+  children,
+}: {
+  label: string;
+  panelWidthClass: string;
+  children: (close: () => void) => ReactNode;
+}) {
+  const [open, setOpen] = useState(false);
+  const rootRef = useRef<HTMLDivElement>(null);
+  const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const close = () => setOpen(false);
+  const clearClose = () => {
+    if (closeTimer.current) {
+      clearTimeout(closeTimer.current);
+      closeTimer.current = null;
+    }
+  };
+  const scheduleClose = () => {
+    clearClose();
+    closeTimer.current = setTimeout(() => setOpen(false), 120);
+  };
+
+  useEffect(() => {
+    if (!open) return;
+    const onDocClick = (e: MouseEvent) => {
+      if (!rootRef.current?.contains(e.target as Node)) setOpen(false);
+    };
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(false);
+    };
+    document.addEventListener("mousedown", onDocClick);
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.removeEventListener("mousedown", onDocClick);
+      document.removeEventListener("keydown", onKey);
+    };
+  }, [open]);
+
+  useEffect(() => () => clearClose(), []);
+
+  return (
+    <div
+      ref={rootRef}
+      className="relative"
+      onMouseEnter={() => {
+        clearClose();
+        setOpen(true);
+      }}
+      onMouseLeave={scheduleClose}
+    >
+      <button
+        type="button"
+        className={`flex items-center gap-1 ${navLinkClass} ${open ? "text-white" : ""}`}
+        aria-haspopup="true"
+        aria-expanded={open}
+        onClick={() => setOpen((v) => !v)}
+      >
+        {label}
+        <svg
+          width="12"
+          height="12"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2.5"
+          aria-hidden
+          className={`mt-px transition-transform duration-200 ${open ? "rotate-180" : ""}`}
+        >
+          <path d="M6 9l6 6 6-6" />
+        </svg>
+      </button>
+      <div
+        className={`absolute left-1/2 top-full z-50 ${panelWidthClass} -translate-x-1/2 pt-3 transition-all duration-200 ${
+          open ? "visible opacity-100" : "invisible opacity-0"
+        }`}
+      >
+        <div className="overflow-hidden rounded-2xl border border-white/10 bg-[color:var(--navy-deep)] p-2 shadow-[var(--shadow-elevation-3)]">
+          {children(close)}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function Header() {
   const [open, setOpen] = useState(false);
   const [condensed, setCondensed] = useState(false);
@@ -237,69 +324,33 @@ function Header() {
             The Model
           </Link>
 
-          {/* Industries We Serve dropdown (left of Solutions; CSS hover + focus-within) */}
-          <div className="group relative">
-            <button
-              type="button"
-              className={`flex items-center gap-1 ${navLinkClass} group-hover:text-white group-focus-within:text-white`}
-              aria-haspopup="true"
-            >
-              Markets We Serve
-              <svg
-                width="12"
-                height="12"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2.5"
-                aria-hidden
-                className="mt-px transition-transform duration-200 group-hover:rotate-180 group-focus-within:rotate-180"
-              >
-                <path d="M6 9l6 6 6-6" />
-              </svg>
-            </button>
-            <div className="invisible absolute left-1/2 top-full z-50 w-64 -translate-x-1/2 pt-3 opacity-0 transition-all duration-200 group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100">
-              <div className="overflow-hidden rounded-2xl border border-white/10 bg-[color:var(--navy-deep)] p-2 shadow-[var(--shadow-elevation-3)]">
+          {/* Markets We Serve dropdown */}
+          <NavDropdown label="Markets We Serve" panelWidthClass="w-64">
+            {(close) => (
+              <>
                 {industries.map((ind) => (
                   <Link
                     key={ind.label}
                     to={ind.to}
+                    onClick={close}
                     className="block rounded-xl px-3.5 py-2.5 text-sm font-medium text-white/85 transition-colors hover:bg-white/[0.06] hover:text-white"
                   >
                     {ind.label}
                   </Link>
                 ))}
-              </div>
-            </div>
-          </div>
+              </>
+            )}
+          </NavDropdown>
 
-          {/* Solutions dropdown (CSS hover + focus-within, SSR-safe) */}
-          <div className="group relative">
-            <button
-              type="button"
-              className={`flex items-center gap-1 ${navLinkClass} group-hover:text-white group-focus-within:text-white`}
-              aria-haspopup="true"
-            >
-              Solutions
-              <svg
-                width="12"
-                height="12"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2.5"
-                aria-hidden
-                className="mt-px transition-transform duration-200 group-hover:rotate-180 group-focus-within:rotate-180"
-              >
-                <path d="M6 9l6 6 6-6" />
-              </svg>
-            </button>
-            <div className="invisible absolute left-1/2 top-full z-50 w-72 -translate-x-1/2 pt-3 opacity-0 transition-all duration-200 group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100">
-              <div className="overflow-hidden rounded-2xl border border-white/10 bg-[color:var(--navy-deep)] p-2 shadow-[var(--shadow-elevation-3)]">
+          {/* Solutions dropdown */}
+          <NavDropdown label="Solutions" panelWidthClass="w-72">
+            {(close) => (
+              <>
                 {solutions.map((s) => (
                   <Link
                     key={s.to}
                     to={s.to}
+                    onClick={close}
                     className="block rounded-xl px-3.5 py-3 transition-colors hover:bg-white/[0.06]"
                     activeProps={{ className: "block rounded-xl px-3.5 py-3 bg-white/[0.06]" }}
                   >
@@ -307,9 +358,10 @@ function Header() {
                     <span className="mt-0.5 block text-xs text-white/55">{s.desc}</span>
                   </Link>
                 ))}
-              </div>
-            </div>
-          </div>
+              </>
+            )}
+          </NavDropdown>
+
 
           {navAfterSolutions.map((n) => (
             <Link
@@ -421,7 +473,7 @@ function Footer() {
         <div className="md:col-span-5">
           <Logo className="h-7" />
           <p className="mt-5 max-w-md text-sm leading-relaxed text-white/65">
-            Revenue Channel Intelligence. We turn partner and broker experience into the
+            Revenue Channel Intelligence. We turn customer, partner and broker experience into the
             account-level signal of where revenue is about to grow or walk.
           </p>
           <Link to="/book" className="btn-primary mt-7 text-sm">

@@ -232,18 +232,12 @@ function PartnerPulse() {
           />
           <FadeIn delay={120}>
             <figure className="relative rounded-2xl hairline bg-[color:var(--blue-tint)] p-8 md:p-10">
-              <span
-                aria-hidden
-                className="absolute left-6 top-4 text-6xl leading-none text-[color:var(--orange-pop)]/30"
-                style={{ fontFamily: "var(--font-display)" }}
-              >
-                &ldquo;
-              </span>
               <blockquote
                 className="relative text-2xl font-semibold leading-snug text-[color:var(--navy-deep)] md:text-[1.75rem]"
                 style={{ fontFamily: "var(--font-display)" }}
               >
-                A score is not a decision. We provide true intelligence to drive revenue decisions.
+                &ldquo;A score is not a decision. We provide true intelligence to drive revenue
+                decisions.&rdquo;
               </blockquote>
               <figcaption className="mt-5 text-sm font-semibold uppercase tracking-wide text-[color:var(--blue-link)]">
                 Erik Vogel, Founder and CEO
