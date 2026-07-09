@@ -156,10 +156,13 @@ function ResultCard({
         {quote && (
           <figure className="mt-6 border-t border-[color:var(--hairline)] pt-5">
             <blockquote className="text-sm italic leading-relaxed text-[color:var(--ink)]">
-              <span aria-hidden className="mr-1 text-[color:var(--orange-pop)]">
+              <span aria-hidden className="mr-1 text-[color:var(--navy-deep)]">
                 &ldquo;
               </span>
               {quote}
+              <span aria-hidden className="ml-0.5 text-[color:var(--navy-deep)]">
+                &rdquo;
+              </span>
             </blockquote>
             {attribution && (
               <figcaption className="mt-2 text-xs font-semibold uppercase tracking-wide text-[color:var(--blue-link)]">
