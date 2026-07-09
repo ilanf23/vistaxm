@@ -24,7 +24,6 @@ import { Route as SolutionsBrokerpulseRouteImport } from './routes/solutions/bro
 import { Route as IndustriesTechnologyProvidersRouteImport } from './routes/industries/technology-providers'
 import { Route as IndustriesItSolutionProvidersRouteImport } from './routes/industries/it-solution-providers'
 import { Route as CaseStudiesJfPetroleumRouteImport } from './routes/case-studies/jf-petroleum'
-import { Route as CaseStudiesJfPetroleumRouteImport } from './routes/case-studies/jf-petroleum'
 
 const TheModelRoute = TheModelRouteImport.update({
   id: '/the-model',
@@ -99,6 +98,12 @@ const IndustriesItSolutionProvidersRoute =
     path: '/industries/it-solution-providers',
     getParentRoute: () => rootRouteImport,
   } as any)
+const CaseStudiesJfPetroleumRoute = CaseStudiesJfPetroleumRouteImport.update({
+  id: '/case-studies/jf-petroleum',
+  path: '/case-studies/jf-petroleum',
+  getParentRoute: () => rootRouteImport,
+} as any)
+
 const CaseStudiesJfPetroleumRoute = CaseStudiesJfPetroleumRouteImport.update({
   id: '/case-studies/jf-petroleum',
   path: '/case-studies/jf-petroleum',
