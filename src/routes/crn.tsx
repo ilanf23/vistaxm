@@ -642,7 +642,7 @@ function Proof() {
             style={{ fontFamily: "var(--font-display)" }}
           >
             They bring an agnostic viewpoint into the data... having that unbiased filter, with the
-            readout coming from the VistaXM team, is critical to our mission.
+            readout coming from the VistaXM team, is critical to our mission.&rdquo;
           </blockquote>
           <figcaption className="relative mt-5 pl-4 text-sm text-[color:var(--ink-soft)]">
             <span className="font-semibold text-[color:var(--navy-deep)]">Deanna Davenport</span>,
