@@ -688,6 +688,21 @@ function Proof() {
               ]}
             />
           </StaggerItem>
+          <StaggerItem className="h-full">
+            <ResultCard
+              client="JF Petroleum"
+              headline="From volume to value: unified operations, assets, and experience with PTC ServiceMax and VistaXM."
+              icon="trend"
+              metrics={[
+                { value: "+30", label: "Technician eNPS, at 55% engagement" },
+                { value: "+53%", label: "Transactional NPS improvement" },
+                { value: "15%", label: "Improvement in ease of communication" },
+                { value: "2×", label: "Detractors more likely to leave" },
+              ]}
+              ctaLabel="Read the case study"
+              ctaTo="/case-studies/jf-petroleum"
+            />
+          </StaggerItem>
         </Stagger>
 
         <FadeIn delay={120} className="mt-6">
