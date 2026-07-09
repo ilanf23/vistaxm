@@ -372,15 +372,15 @@ function BookACall() {
 
       {/* Contact band */}
       <Section tint>
-        <div className="grid gap-12 lg:grid-cols-[.8fr_1.2fr] lg:items-center">
-          <div>
+        <div className="grid gap-12 lg:grid-cols-2 lg:gap-20 lg:items-center">
+          <div className="space-y-8">
             <SectionHead
               eyebrow="Reach us directly"
               title="Prefer to start a conversation another way?"
               intro="Email or call. A real person on our team will pick it up."
             />
             <Reveal delay={80}>
-              <div className="img-editorial-soft img-frame mt-8 aspect-[4/3] w-full">
+              <div className="img-editorial-soft img-frame aspect-[4/3] w-full max-w-md">
                 <img
                   src="/images/ambient/on-a-call.jpg"
                   alt="A member of the team taking a call at their desk"
@@ -392,8 +392,8 @@ function BookACall() {
           </div>
 
           <Reveal delay={120}>
-            <div className="rounded-2xl hairline bg-white p-7 shadow-[var(--shadow-elevation-2)] md:p-9">
-              <div className="divide-y divide-[color:var(--hairline)]">
+            <div className="flex flex-col gap-10 rounded-[2rem] hairline bg-white p-8 shadow-[var(--shadow-elevation-2)] md:p-12">
+              <div className="space-y-8">
                 <ContactRow
                   icon={<EmailGlyph className="h-5 w-5" />}
                   label="Email"
@@ -413,8 +413,10 @@ function BookACall() {
                 />
               </div>
 
-              <div className="mt-6 flex items-center gap-2.5 rounded-xl bg-[color:var(--blue-tint)] px-4 py-3 text-sm font-medium text-[color:var(--navy-deep)]">
-                <CheckGlyph className="h-4 w-4 flex-none text-[color:var(--blue-cta)]" />
+              <div className="mt-auto flex items-center gap-3 rounded-2xl bg-[color:var(--blue-tint)] hairline px-5 py-4 text-sm font-semibold text-[color:var(--navy-deep)]">
+                <span className="flex h-6 w-6 flex-none items-center justify-center rounded-full bg-white hairline text-[color:var(--blue-cta)]">
+                  <CheckGlyph className="h-3.5 w-3.5" />
+                </span>
                 One business day response. No marketing list.
               </div>
             </div>
