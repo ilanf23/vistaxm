@@ -234,7 +234,7 @@ function HowToStart() {
               />
               <BriefDoc
                 items={DELIVERABLE_ROWS}
-                footer="A sample deliverable, clearly labeled as a sample, is available on request."
+                footer="A sample deliverable is available upon request."
               />
             </div>
           </div>
