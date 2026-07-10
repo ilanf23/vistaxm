@@ -42,7 +42,7 @@ const SECURITY_HEADERS: Record<string, string> = {
   "Permissions-Policy": "camera=(), microphone=(), geolocation=(), browsing-topics=()",
   "Cross-Origin-Opener-Policy": "same-origin",
   "Content-Security-Policy-Report-Only":
-    "default-src 'self'; frame-ancestors 'none'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; connect-src 'self' https:; font-src 'self' data: https:; base-uri 'self'; object-src 'none'",
+    "default-src 'self'; frame-ancestors 'none'; img-src 'self' data: https: https://www.googletagmanager.com https://*.googletagmanager.com https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com https://px.ads.linkedin.com; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://*.googletagmanager.com https://www.google-analytics.com https://*.google-analytics.com https://snap.licdn.com https://*.posthog.com https://*.zoominfo.com; connect-src 'self' https: https://www.googletagmanager.com https://*.googletagmanager.com https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com https://px.ads.linkedin.com https://*.posthog.com https://*.zoominfo.com; font-src 'self' data: https:; base-uri 'self'; object-src 'none'",
 };
 
 function withSecurityHeaders(response: Response): Response {
