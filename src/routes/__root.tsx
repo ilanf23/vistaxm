@@ -140,12 +140,11 @@ function isProductionHost(host: string | undefined): boolean {
 
 function getSsrHost(): string | undefined {
   try {
-    // Server-only import; will throw on client, caught below.
-    // eslint-disable-next-line @typescript-eslint/no-require-imports
-    const mod = require("@tanstack/react-start/server") as {
-      getRequestHost?: () => string;
+    // RootShell only renders on the server (shellComponent).
+    const { getRequestHost } = require("@tanstack/react-start/server") as {
+      getRequestHost: () => string;
     };
-    return mod.getRequestHost?.();
+    return getRequestHost();
   } catch {
     return undefined;
   }
