@@ -141,10 +141,6 @@ function isProductionHost(host: string | undefined): boolean {
 
 function getSsrHost(): string | undefined {
   try {
-    // RootShell only renders on the server (shellComponent).
-    const { getRequestHost } = require("@tanstack/react-start/server") as {
-      getRequestHost: () => string;
-    };
     return getRequestHost();
   } catch {
     return undefined;
