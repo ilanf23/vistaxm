@@ -14,6 +14,7 @@ import appCss from "../styles.css?url";
 import logoAsset from "../assets/vistaxm-logo.svg.asset.json";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { ORGANIZATION_JSONLD, WEBSITE_JSONLD } from "../lib/seo";
+import { getRequestHost } from "@tanstack/react-start/server";
 
 function NotFoundComponent() {
   return (
