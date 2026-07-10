@@ -132,27 +132,50 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
   errorComponent: ErrorComponent,
 });
 
+function isProductionHost(host: string | undefined): boolean {
+  if (!host) return false;
+  const h = host.split(":")[0].toLowerCase();
+  return h === "vistaxm.com" || h === "www.vistaxm.com";
+}
+
+function getSsrHost(): string | undefined {
+  try {
+    // Server-only import; will throw on client, caught below.
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    const mod = require("@tanstack/react-start/server") as {
+      getRequestHost?: () => string;
+    };
+    return mod.getRequestHost?.();
+  } catch {
+    return undefined;
+  }
+}
+
 function RootShell({ children }: { children: ReactNode }) {
+  const gtmEnabled = isProductionHost(getSsrHost());
   return (
     <html lang="en">
       <head>
         <HeadContent />
       </head>
       <body>
-        <noscript>
-          <iframe
-            src="https://www.googletagmanager.com/ns.html?id=GTM-NX6L38LZ"
-            height={0}
-            width={0}
-            style={{ display: "none", visibility: "hidden" }}
-          />
-        </noscript>
+        {gtmEnabled && (
+          <noscript>
+            <iframe
+              src="https://www.googletagmanager.com/ns.html?id=GTM-NX6L38LZ"
+              height={0}
+              width={0}
+              style={{ display: "none", visibility: "hidden" }}
+            />
+          </noscript>
+        )}
         {children}
         <Scripts />
       </body>
     </html>
   );
 }
+
 
 const solutions = [
   {
