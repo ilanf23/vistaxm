@@ -14,6 +14,7 @@ import appCss from "../styles.css?url";
 import logoAsset from "../assets/vistaxm-logo.svg.asset.json";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { ORGANIZATION_JSONLD, WEBSITE_JSONLD } from "../lib/seo";
+import { getRequestHost } from "@tanstack/react-start/server";
 
 function NotFoundComponent() {
   return (
@@ -120,7 +121,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     scripts: [
       {
         children:
-          "(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-NX6L38LZ');",
+          "(function(){try{var h=location.hostname;if(h!=='vistaxm.com'&&h!=='www.vistaxm.com')return;}catch(e){return;}(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-NX6L38LZ');})();",
       },
       ORGANIZATION_JSONLD,
       WEBSITE_JSONLD,
@@ -132,27 +133,45 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
   errorComponent: ErrorComponent,
 });
 
+function isProductionHost(host: string | undefined): boolean {
+  if (!host) return false;
+  const h = host.split(":")[0].toLowerCase();
+  return h === "vistaxm.com" || h === "www.vistaxm.com";
+}
+
+function getSsrHost(): string | undefined {
+  try {
+    return getRequestHost();
+  } catch {
+    return undefined;
+  }
+}
+
 function RootShell({ children }: { children: ReactNode }) {
+  const gtmEnabled = isProductionHost(getSsrHost());
   return (
     <html lang="en">
       <head>
         <HeadContent />
       </head>
       <body>
-        <noscript>
-          <iframe
-            src="https://www.googletagmanager.com/ns.html?id=GTM-NX6L38LZ"
-            height={0}
-            width={0}
-            style={{ display: "none", visibility: "hidden" }}
-          />
-        </noscript>
+        {gtmEnabled && (
+          <noscript>
+            <iframe
+              src="https://www.googletagmanager.com/ns.html?id=GTM-NX6L38LZ"
+              height={0}
+              width={0}
+              style={{ display: "none", visibility: "hidden" }}
+            />
+          </noscript>
+        )}
         {children}
         <Scripts />
       </body>
     </html>
   );
 }
+
 
 const solutions = [
   {
