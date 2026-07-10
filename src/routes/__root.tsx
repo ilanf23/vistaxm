@@ -576,8 +576,19 @@ function Footer() {
         </div>
       </div>
       <div className="border-t border-white/10">
-        <div className="container-x py-6 text-xs text-white/55 flex flex-wrap justify-between gap-3">
+        <div className="container-x py-6 text-xs text-white/55 flex flex-wrap items-center justify-between gap-3">
           <span>© {new Date().getFullYear()} VistaXM. All rights reserved.</span>
+          <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
+            <Link to="/legal/privacy-policy" className={footerLinkClass}>
+              Privacy Policy
+            </Link>
+            <Link to="/legal/terms-of-service" className={footerLinkClass}>
+              Terms of Service
+            </Link>
+            <Link to="/legal/cookie-policy" className={footerLinkClass}>
+              Cookie Policy
+            </Link>
+          </div>
           <span>PartnerPulse and BrokerPulse are products of VistaXM.</span>
         </div>
       </div>

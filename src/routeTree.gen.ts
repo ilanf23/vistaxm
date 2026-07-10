@@ -21,6 +21,9 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as SolutionsPartnerpulseRouteImport } from './routes/solutions/partnerpulse'
 import { Route as SolutionsIndustrialpulseRouteImport } from './routes/solutions/industrialpulse'
 import { Route as SolutionsBrokerpulseRouteImport } from './routes/solutions/brokerpulse'
+import { Route as LegalTermsOfServiceRouteImport } from './routes/legal/terms-of-service'
+import { Route as LegalPrivacyPolicyRouteImport } from './routes/legal/privacy-policy'
+import { Route as LegalCookiePolicyRouteImport } from './routes/legal/cookie-policy'
 import { Route as IndustriesTechnologyProvidersRouteImport } from './routes/industries/technology-providers'
 import { Route as IndustriesItSolutionProvidersRouteImport } from './routes/industries/it-solution-providers'
 import { Route as CaseStudiesJfPetroleumRouteImport } from './routes/case-studies/jf-petroleum'
@@ -86,6 +89,21 @@ const SolutionsBrokerpulseRoute = SolutionsBrokerpulseRouteImport.update({
   path: '/solutions/brokerpulse',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LegalTermsOfServiceRoute = LegalTermsOfServiceRouteImport.update({
+  id: '/legal/terms-of-service',
+  path: '/legal/terms-of-service',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LegalPrivacyPolicyRoute = LegalPrivacyPolicyRouteImport.update({
+  id: '/legal/privacy-policy',
+  path: '/legal/privacy-policy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LegalCookiePolicyRoute = LegalCookiePolicyRouteImport.update({
+  id: '/legal/cookie-policy',
+  path: '/legal/cookie-policy',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndustriesTechnologyProvidersRoute =
   IndustriesTechnologyProvidersRouteImport.update({
     id: '/industries/technology-providers',
@@ -117,6 +135,9 @@ export interface FileRoutesByFullPath {
   '/case-studies/jf-petroleum': typeof CaseStudiesJfPetroleumRoute
   '/industries/it-solution-providers': typeof IndustriesItSolutionProvidersRoute
   '/industries/technology-providers': typeof IndustriesTechnologyProvidersRoute
+  '/legal/cookie-policy': typeof LegalCookiePolicyRoute
+  '/legal/privacy-policy': typeof LegalPrivacyPolicyRoute
+  '/legal/terms-of-service': typeof LegalTermsOfServiceRoute
   '/solutions/brokerpulse': typeof SolutionsBrokerpulseRoute
   '/solutions/industrialpulse': typeof SolutionsIndustrialpulseRoute
   '/solutions/partnerpulse': typeof SolutionsPartnerpulseRoute
@@ -134,6 +155,9 @@ export interface FileRoutesByTo {
   '/case-studies/jf-petroleum': typeof CaseStudiesJfPetroleumRoute
   '/industries/it-solution-providers': typeof IndustriesItSolutionProvidersRoute
   '/industries/technology-providers': typeof IndustriesTechnologyProvidersRoute
+  '/legal/cookie-policy': typeof LegalCookiePolicyRoute
+  '/legal/privacy-policy': typeof LegalPrivacyPolicyRoute
+  '/legal/terms-of-service': typeof LegalTermsOfServiceRoute
   '/solutions/brokerpulse': typeof SolutionsBrokerpulseRoute
   '/solutions/industrialpulse': typeof SolutionsIndustrialpulseRoute
   '/solutions/partnerpulse': typeof SolutionsPartnerpulseRoute
@@ -152,6 +176,9 @@ export interface FileRoutesById {
   '/case-studies/jf-petroleum': typeof CaseStudiesJfPetroleumRoute
   '/industries/it-solution-providers': typeof IndustriesItSolutionProvidersRoute
   '/industries/technology-providers': typeof IndustriesTechnologyProvidersRoute
+  '/legal/cookie-policy': typeof LegalCookiePolicyRoute
+  '/legal/privacy-policy': typeof LegalPrivacyPolicyRoute
+  '/legal/terms-of-service': typeof LegalTermsOfServiceRoute
   '/solutions/brokerpulse': typeof SolutionsBrokerpulseRoute
   '/solutions/industrialpulse': typeof SolutionsIndustrialpulseRoute
   '/solutions/partnerpulse': typeof SolutionsPartnerpulseRoute
@@ -171,6 +198,9 @@ export interface FileRouteTypes {
     | '/case-studies/jf-petroleum'
     | '/industries/it-solution-providers'
     | '/industries/technology-providers'
+    | '/legal/cookie-policy'
+    | '/legal/privacy-policy'
+    | '/legal/terms-of-service'
     | '/solutions/brokerpulse'
     | '/solutions/industrialpulse'
     | '/solutions/partnerpulse'
@@ -188,6 +218,9 @@ export interface FileRouteTypes {
     | '/case-studies/jf-petroleum'
     | '/industries/it-solution-providers'
     | '/industries/technology-providers'
+    | '/legal/cookie-policy'
+    | '/legal/privacy-policy'
+    | '/legal/terms-of-service'
     | '/solutions/brokerpulse'
     | '/solutions/industrialpulse'
     | '/solutions/partnerpulse'
@@ -205,6 +238,9 @@ export interface FileRouteTypes {
     | '/case-studies/jf-petroleum'
     | '/industries/it-solution-providers'
     | '/industries/technology-providers'
+    | '/legal/cookie-policy'
+    | '/legal/privacy-policy'
+    | '/legal/terms-of-service'
     | '/solutions/brokerpulse'
     | '/solutions/industrialpulse'
     | '/solutions/partnerpulse'
@@ -223,6 +259,9 @@ export interface RootRouteChildren {
   CaseStudiesJfPetroleumRoute: typeof CaseStudiesJfPetroleumRoute
   IndustriesItSolutionProvidersRoute: typeof IndustriesItSolutionProvidersRoute
   IndustriesTechnologyProvidersRoute: typeof IndustriesTechnologyProvidersRoute
+  LegalCookiePolicyRoute: typeof LegalCookiePolicyRoute
+  LegalPrivacyPolicyRoute: typeof LegalPrivacyPolicyRoute
+  LegalTermsOfServiceRoute: typeof LegalTermsOfServiceRoute
   SolutionsBrokerpulseRoute: typeof SolutionsBrokerpulseRoute
   SolutionsIndustrialpulseRoute: typeof SolutionsIndustrialpulseRoute
   SolutionsPartnerpulseRoute: typeof SolutionsPartnerpulseRoute
@@ -314,6 +353,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SolutionsBrokerpulseRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/legal/terms-of-service': {
+      id: '/legal/terms-of-service'
+      path: '/legal/terms-of-service'
+      fullPath: '/legal/terms-of-service'
+      preLoaderRoute: typeof LegalTermsOfServiceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/legal/privacy-policy': {
+      id: '/legal/privacy-policy'
+      path: '/legal/privacy-policy'
+      fullPath: '/legal/privacy-policy'
+      preLoaderRoute: typeof LegalPrivacyPolicyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/legal/cookie-policy': {
+      id: '/legal/cookie-policy'
+      path: '/legal/cookie-policy'
+      fullPath: '/legal/cookie-policy'
+      preLoaderRoute: typeof LegalCookiePolicyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/industries/technology-providers': {
       id: '/industries/technology-providers'
       path: '/industries/technology-providers'
@@ -351,6 +411,9 @@ const rootRouteChildren: RootRouteChildren = {
   CaseStudiesJfPetroleumRoute: CaseStudiesJfPetroleumRoute,
   IndustriesItSolutionProvidersRoute: IndustriesItSolutionProvidersRoute,
   IndustriesTechnologyProvidersRoute: IndustriesTechnologyProvidersRoute,
+  LegalCookiePolicyRoute: LegalCookiePolicyRoute,
+  LegalPrivacyPolicyRoute: LegalPrivacyPolicyRoute,
+  LegalTermsOfServiceRoute: LegalTermsOfServiceRoute,
   SolutionsBrokerpulseRoute: SolutionsBrokerpulseRoute,
   SolutionsIndustrialpulseRoute: SolutionsIndustrialpulseRoute,
   SolutionsPartnerpulseRoute: SolutionsPartnerpulseRoute,
