@@ -117,14 +117,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         href: "https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap",
       },
     ],
-    scripts: [
-      {
-        children:
-          "(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-NX6L38LZ');",
-      },
-      ORGANIZATION_JSONLD,
-      WEBSITE_JSONLD,
-    ],
+    scripts: [ORGANIZATION_JSONLD, WEBSITE_JSONLD],
   }),
   shellComponent: RootShell,
   component: RootComponent,
@@ -139,14 +132,6 @@ function RootShell({ children }: { children: ReactNode }) {
         <HeadContent />
       </head>
       <body>
-        <noscript>
-          <iframe
-            src="https://www.googletagmanager.com/ns.html?id=GTM-NX6L38LZ"
-            height={0}
-            width={0}
-            style={{ display: "none", visibility: "hidden" }}
-          />
-        </noscript>
         {children}
         <Scripts />
       </body>
@@ -576,19 +561,8 @@ function Footer() {
         </div>
       </div>
       <div className="border-t border-white/10">
-        <div className="container-x py-6 text-xs text-white/55 flex flex-wrap items-center justify-between gap-3">
+        <div className="container-x py-6 text-xs text-white/55 flex flex-wrap justify-between gap-3">
           <span>© {new Date().getFullYear()} VistaXM. All rights reserved.</span>
-          <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
-            <Link to="/legal/privacy-policy" className={footerLinkClass}>
-              Privacy Policy
-            </Link>
-            <Link to="/legal/terms-of-service" className={footerLinkClass}>
-              Terms of Service
-            </Link>
-            <Link to="/legal/cookie-policy" className={footerLinkClass}>
-              Cookie Policy
-            </Link>
-          </div>
           <span>PartnerPulse and BrokerPulse are products of VistaXM.</span>
         </div>
       </div>
