@@ -430,14 +430,8 @@ export function PartnerShadow() {
                 down.
               </p>
               <div className="relative mt-auto pt-7">
-                <div className="relative h-44 overflow-hidden rounded-2xl border border-white/10">
-                  <img
-                    src="/images/partner-shadow/partner-broker.jpg"
-                    alt="Partner responsible for the customer relationship"
-                    className="h-full w-full object-cover"
-                    loading="lazy"
-                  />
-                  <div className="absolute inset-0 bg-[color:var(--navy-deep)]/25" />
+                <div className="relative h-44 overflow-hidden rounded-2xl border border-white/10 bg-[color:var(--navy-deep)]">
+                  <SignalFilterGraphic className="h-full w-full" />
                   <div className="absolute inset-x-0 bottom-0 border-t border-white/10 bg-[rgba(2,37,80,.78)] px-4 py-3 backdrop-blur-md">
                     <div className="flex items-center justify-between text-xs">
                       <span className="text-white/55">Signal transmitted</span>
