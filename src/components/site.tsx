@@ -1710,6 +1710,7 @@ function LeaderCard({
   bio,
   quote,
   linkedin,
+  showLinkedIn = true,
   initials,
   photo,
   delay = 0,
@@ -1719,11 +1720,14 @@ function LeaderCard({
   bio: string;
   quote: string;
   linkedin?: string;
+  /** When false, the LinkedIn icon is not rendered at all (e.g. no public profile). */
+  showLinkedIn?: boolean;
   initials: string;
   photo?: string;
   delay?: number;
 }) {
   const { ref, shown } = useReveal<HTMLDivElement>();
+  const linkedinHref = linkedin ?? "#";
   return (
     <Reveal delay={delay} className="h-full">
       <div
@@ -1766,12 +1770,12 @@ function LeaderCard({
           {quote}
         </blockquote>
 
-        {linkedin && (
+        {showLinkedIn && (
           <div className="mt-auto pt-7">
             <a
-              href={linkedin}
-              target="_blank"
-              rel="noopener noreferrer"
+              href={linkedinHref}
+              target={linkedin ? "_blank" : undefined}
+              rel={linkedin ? "noopener noreferrer" : undefined}
               aria-label={`${name} on LinkedIn`}
               className="inline-flex text-[color:var(--ink-soft)]/40 transition-colors hover:text-[color:var(--blue-cta)] group-hover:text-[color:var(--blue-cta)]"
             >
