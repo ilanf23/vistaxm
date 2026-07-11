@@ -1985,19 +1985,28 @@ export function FAQSection({
   title = "Frequently asked questions",
   intro,
   tint = true,
+  grid = false,
 }: {
   items: { question: string; answer: string }[];
   title?: string;
   intro?: ReactNode;
   tint?: boolean;
+  /** When true, lay the questions out in a two-column grid instead of a single stack. */
+  grid?: boolean;
 }) {
   return (
     <Section tint={tint}>
       <SectionHead eyebrow="FAQ" title={title} intro={intro} />
-      <div className="mt-12 grid max-w-3xl gap-5">
+      <div
+        className={
+          grid
+            ? "mt-12 grid gap-5 md:grid-cols-2 md:gap-6"
+            : "mt-12 grid max-w-3xl gap-5"
+        }
+      >
         {items.map((f, i) => (
           <Reveal key={f.question} delay={i * 80}>
-            <div className="rounded-2xl hairline bg-white p-7">
+            <div className="rounded-2xl hairline bg-white p-7 h-full">
               <h3 className="text-lg font-semibold text-[color:var(--navy-deep)]">{f.question}</h3>
               <p className="mt-3 leading-relaxed text-[color:var(--ink-soft)]">{f.answer}</p>
             </div>
