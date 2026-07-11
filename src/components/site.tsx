@@ -401,12 +401,7 @@ export function PartnerShadow() {
                 </p>
               </div>
               <div className="relative mt-7 h-44 overflow-hidden rounded-2xl">
-                <img
-                  src="/images/partner-shadow/vendor.jpg"
-                  alt="Vendor team reviewing channel performance"
-                  className="h-full w-full object-cover"
-                  loading="lazy"
-                />
+                <CROForecastGraphic className="h-full w-full" />
                 <div className="absolute inset-0 bg-gradient-to-t from-[rgba(2,37,80,.82)] via-transparent to-transparent" />
                 <div className="absolute inset-x-4 bottom-4 flex items-center justify-between text-xs font-semibold text-white">
                   <span>Partner forecast</span>
