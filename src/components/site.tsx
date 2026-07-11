@@ -427,7 +427,7 @@ export function PartnerShadow() {
               has instrumented.
             </p>
             <span className="inline-flex w-fit items-center gap-2 rounded-full border border-[color:var(--blue-pale)] bg-white px-3 py-1.5 text-xs font-semibold text-[color:var(--blue-link)]">
-              VistaXM makes the invisible measurable <span aria-hidden>→</span>
+              VistaXM makes the invisible measurable
             </span>
           </div>
         </div>
@@ -1676,29 +1676,8 @@ export function RevenueSignalCard({
 
         </div>
 
-        {/* Footer */}
-        <div
-          className="flex items-center gap-2 px-4 py-3"
-          style={{ background: "#08305c", borderTop: "1px solid rgba(255,255,255,.08)" }}
-        >
-          <button
-            type="button"
-            className="rounded-lg bg-white px-3.5 py-2 text-[0.8rem] font-semibold text-[#022550] transition-[transform,background-color] duration-200 hover:bg-[#eaf2ff] active:scale-[0.98]"
-          >
-            Start the play
-          </button>
-          <button
-            type="button"
-            aria-label="Assign"
-            className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#0a3a6b] text-[#cfe3ff] transition-[transform,filter] duration-200 hover:brightness-125 active:scale-[0.98]"
-          >
-            <UserPlusIcon className="h-4 w-4" />
-          </button>
-          <span className="ml-auto text-[0.72rem] text-[#7fa3cf]">
-            {index} of {total}
-          </span>
-        </div>
       </div>
+
 
       {/* Illustrative tag */}
       <div className="mt-2.5 flex items-center gap-1.5 text-[0.68rem] font-semibold uppercase tracking-[0.12em] text-[#7fa3cf]">
@@ -2077,16 +2056,15 @@ function CountStat({
   );
 }
 
-/* Lead proof chip: the named, independently validated ePlus NPS. Links to /proof. */
+/* Lead proof chip: the independently validated NPS badge. Links to /proof. */
 function EPlusNPSStat() {
   const { ref, shown } = useReveal<HTMLAnchorElement>(0.4);
-  const v = useCountUp(74, 1600, shown);
   return (
     <a
       href="/proof"
       ref={ref}
       className="group relative block pt-6"
-      aria-label="NPS 74, independently validated for ePlus. See the proof."
+      aria-label="Independently validated NPS. See the proof."
       style={{
         opacity: shown ? 1 : 0,
         transform: shown ? "translateY(0)" : "translateY(16px)",
@@ -2098,17 +2076,8 @@ function EPlusNPSStat() {
         aria-hidden
         className="absolute left-0 top-0 h-[2px] w-10 bg-gradient-to-r from-[color:var(--orange-pop)] to-[color:var(--blue-cta)] transition-all duration-500 group-hover:w-16"
       />
-      <div
-        className="text-5xl md:text-6xl font-semibold text-[color:var(--navy-deep)] tracking-tight tabular-nums"
-        style={{ fontFamily: "var(--font-display)" }}
-      >
-        {Math.round(v)}
-      </div>
       <div className="mt-3 text-sm text-[color:var(--ink-soft)] leading-relaxed max-w-[22ch]">
-        NPS, independently validated
-        <span className="mt-1.5 flex items-center gap-1 text-xs font-semibold uppercase tracking-[0.12em] text-[color:var(--blue-link)]">
-          ePlus
-        </span>
+        Independently Validated NPS
       </div>
     </a>
   );
@@ -2513,8 +2482,8 @@ export function SpendByCohort() {
 
       <div className="mt-6 pt-5 border-t border-[color:var(--hairline)] text-sm text-[color:var(--ink-soft)]">
         Promoter accounts carry{" "}
-        <span className="font-semibold text-[color:var(--navy-deep)]">5.2×</span> the lifetime value
-        of detractors. A single point of score motion is a portfolio move.
+        <span className="font-semibold text-[color:var(--navy-deep)] tabular-nums">5.2<span className="align-baseline">×</span></span> the lifetime value
+        of detractors. Small improvements drive large revenue gains.
       </div>
     </div>
   );
@@ -2739,7 +2708,7 @@ const FLOW_STEPS = [
   {
     n: "01",
     title: "Unify the customer story",
-    desc: "Bring fragmented channel signal into one account-level view.",
+    desc: "Bring fragmented channel signals into one account-level view.",
   },
   {
     n: "02",
