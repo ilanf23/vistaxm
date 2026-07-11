@@ -1873,7 +1873,7 @@ export function TeamSection() {
       <div className="mx-auto mt-12 grid max-w-6xl gap-6 md:mt-14 md:grid-cols-3 md:gap-8">
         <LeaderCard
           name="Erik Vogel"
-          title="Chief Executive Officer"
+          title="CEO"
           initials="EV"
           photo="/images/team/erik-vogel.avif"
           linkedin="https://www.linkedin.com/in/erikvogel2020/"
@@ -1907,7 +1907,7 @@ export function TeamSection() {
           initials="BC"
           photo="/images/team/bruce-coughlin.jpg"
           linkedin="https://www.linkedin.com/in/brucecoughlin"
-          bio="Former CEO of Cloud Technology Partners, which he helped guide to its acquisition by HPE. A relationship-first channel leader who believes the experience you deliver is the only real differentiator left."
+          bio="Former CEO of Cloud Technology Partners, which he helped guide to its acquisition by HPE. A relationship-first channel leader who believes the experience you deliver is the only real differentiation left."
           quote="The most progressive partners create differentiation and sustain it with customer experience. That is the fundamental tenet of what is happening in the channel."
           delay={0}
         />
