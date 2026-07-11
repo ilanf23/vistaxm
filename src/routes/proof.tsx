@@ -785,7 +785,7 @@ function Proof() {
         </div>
       </Section>
 
-      <FAQSection items={FAQS} />
+      <FAQSection items={FAQS} grid />
 
       <CTABand />
     </>
