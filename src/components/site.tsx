@@ -501,7 +501,7 @@ export function Hero({
   secondary,
   trust,
 }: {
-  eyebrow?: string;
+  eyebrow?: string | string[];
   title: ReactNode;
   subtitle?: ReactNode;
   primary?: { label: string; to: string };
@@ -516,6 +516,8 @@ export function Hero({
       "opacity 0.7s cubic-bezier(0.22,1,0.36,1), transform 0.7s cubic-bezier(0.22,1,0.36,1)",
     transitionDelay: `${delay}ms`,
   });
+
+  const eyebrowItems = eyebrow ? (Array.isArray(eyebrow) ? eyebrow : [eyebrow]) : [];
 
   return (
     <section className="hero-rci relative overflow-hidden bg-[#022550] text-white">
@@ -551,13 +553,17 @@ export function Hero({
         <div className="grid items-center gap-12 lg:grid-cols-[minmax(0,0.86fr)_minmax(0,1.14fr)] lg:gap-12">
           {/* Left column: the message */}
           <div className="max-w-[580px]">
-            {eyebrow && (
-              <div
-                className="inline-flex items-center gap-2 rounded-full border border-[rgba(103,166,255,0.32)] bg-[rgba(13,78,216,0.18)] px-3.5 py-1.5 text-[0.78rem] font-semibold text-[#9cc4ff] backdrop-blur-sm"
-                style={reveal(0)}
-              >
-                <span className="h-1.5 w-1.5 rounded-full bg-[#67a6ff] shadow-[0_0_8px_2px_rgba(103,166,255,0.7)]" />
-                {eyebrow}
+            {eyebrowItems.length > 0 && (
+              <div className="flex flex-wrap gap-2" style={reveal(0)}>
+                {eyebrowItems.map((item) => (
+                  <span
+                    key={item}
+                    className="inline-flex items-center gap-2 rounded-full border border-[rgba(103,166,255,0.32)] bg-[rgba(13,78,216,0.18)] px-3.5 py-1.5 text-[0.78rem] font-semibold text-[#9cc4ff] backdrop-blur-sm"
+                  >
+                    <span className="h-1.5 w-1.5 rounded-full bg-[#67a6ff] shadow-[0_0_8px_2px_rgba(103,166,255,0.7)]" />
+                    {item}
+                  </span>
+                ))}
               </div>
             )}
             <h1
