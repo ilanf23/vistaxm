@@ -45,7 +45,7 @@ function Home() {
   return (
     <>
       <Hero
-        eyebrow="Revenue Channel Intelligence"
+        eyebrow={["Revenue Channel Intelligence", "Revenue Intelligence"]}
         title={
           <>
             Know which accounts are about to grow or walk,{" "}
