@@ -530,9 +530,7 @@ function EPlusBenchmarkCard() {
 
         {/* Verified-for lockup, replacing the logo placeholder */}
         <div className="mt-auto flex items-center gap-3 border-t border-[color:var(--gray-line)] pt-6">
-          <span className="flex h-9 w-9 flex-none items-center justify-center rounded-[10px] bg-[color:var(--navy-deep)] text-white">
-            <ProofIcon name="shield" className="h-5 w-5" />
-          </span>
+          <CertifiedScoreSeal className="h-16 w-16 flex-none" />
           <span>
             <span className="block text-sm font-bold text-[color:var(--navy-deep)]">
               Verified for ePlus
