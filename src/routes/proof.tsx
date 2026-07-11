@@ -756,11 +756,22 @@ function Proof() {
       {/* Sample deliverables */}
       <Section>
         <div className="grid items-center gap-12 lg:grid-cols-[1fr_1fr] lg:gap-16">
-          <SectionHead
-            eyebrow="Sample deliverables"
-            title="See a readout before you commit."
-            intro="A sample deliverable is available upon request. It shows the exact format you receive: a named account, the dollars in play, and the move that changes the outcome."
-          />
+          <div>
+            <SectionHead
+              eyebrow="Sample deliverables"
+              title="See a readout before you commit."
+              intro="A sample deliverable is available upon request. It shows the exact format you receive: a named account, the dollars in play, and the move that changes the outcome."
+            />
+            <div className="mt-8">
+              <a
+                href="mailto:contactus@vistaxm.com?subject=Sample%20deliverable%20request&body=Hi%20VistaXM%20team%2C%20please%20send%20me%20the%20sample%20deliverable."
+                className="btn-primary"
+              >
+                Request the sample deliverable
+              </a>
+              <p className="mt-3 text-xs text-[color:var(--ink-soft)]">Sent to you on request.</p>
+            </div>
+          </div>
           <FadeIn delay={140}>
             <div className="grid gap-4 sm:grid-cols-2">
               <SampleDeliverable
