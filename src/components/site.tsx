@@ -264,6 +264,84 @@ function ShadowIcon({ type }: { type: "vendor" | "partner" | "customer" | "hidde
   );
 }
 
+export function CertifiedScoreSeal({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 200 200" fill="none" role="img" aria-label="VistaXM Certified Score, independently verified" className={className}>
+      <defs>
+        <path id="cs-top" d="M 20 100 A 80 80 0 0 1 180 100" />
+        <path id="cs-bottom" d="M 180 100 A 80 80 0 0 1 20 100" />
+      </defs>
+      <circle cx="100" cy="100" r="97" stroke="#022550" strokeWidth="3" />
+      <circle cx="100" cy="100" r="90" stroke="#022550" strokeWidth="1.25" />
+      <circle cx="100" cy="100" r="72" stroke="#3185fc" strokeWidth="2" strokeDasharray="1.5 5.5" opacity="0.55" />
+      <circle cx="100" cy="100" r="63" fill="#3185fc" fillOpacity="0.06" stroke="#022550" strokeWidth="1.25" />
+      <text fill="#022550" fontSize="15.5" fontWeight="700" letterSpacing="3" fontFamily="var(--font-display), Georgia, serif">
+        <textPath href="#cs-top" startOffset="50%" textAnchor="middle">CERTIFIED SCORE</textPath>
+      </text>
+      <text fill="#022550" fontSize="10.5" fontWeight="700" letterSpacing="3.4" fontFamily="system-ui, Helvetica, Arial, sans-serif">
+        <textPath href="#cs-bottom" startOffset="50%" textAnchor="middle">INDEPENDENTLY VERIFIED</textPath>
+      </text>
+      <path d="M18 100 l3.5 -3.5 3.5 3.5 -3.5 3.5 z" fill="#f68241" />
+      <path d="M175 100 l3.5 -3.5 3.5 3.5 -3.5 3.5 z" fill="#f68241" />
+      <path d="M76 80 L76 120 L98 100 Z" fill="#022550" />
+      <path d="M124 80 L124 120 L102 100 Z" fill="#3185fc" />
+      <text x="100" y="142" textAnchor="middle" fontSize="12.5" fontWeight="800" letterSpacing="1.5" fontFamily="var(--font-display), Georgia, serif">
+        <tspan fill="#022550">VISTA</tspan><tspan fill="#3185fc">XM</tspan>
+      </text>
+      <text x="150" y="64" fontSize="11" fontWeight="700" fill="#022550" fontFamily="system-ui, Helvetica, Arial, sans-serif">{"\u2122"}</text>
+    </svg>
+  );
+}
+
+function CROForecastGraphic({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 320 176" fill="none" role="img" aria-label="A CRO viewing a healthy revenue forecast" className={className}>
+      <rect width="320" height="176" rx="16" fill="#3185fc" fillOpacity="0.05" />
+      <circle cx="66" cy="70" r="34" fill="#ffffff" stroke="#022550" strokeWidth="1.5" />
+      <circle cx="66" cy="60" r="12" fill="#022550" />
+      <path d="M44 92 a22 20 0 0 1 44 0" fill="#022550" />
+      <rect x="34" y="118" width="64" height="16" rx="8" fill="#022550" />
+      <text x="66" y="130" textAnchor="middle" fontSize="9" fontWeight="700" letterSpacing="1" fill="#ffffff" fontFamily="system-ui, Helvetica, Arial, sans-serif">CRO</text>
+      <rect x="132" y="30" width="158" height="104" rx="12" fill="#ffffff" stroke="#022550" strokeWidth="1.5" />
+      <text x="146" y="50" fontSize="9" fontWeight="700" letterSpacing="1.5" fill="#3185fc" fontFamily="system-ui, Helvetica, Arial, sans-serif">FORECAST</text>
+      <polyline points="146,112 172,100 196,104 222,86 250,72 276,54" stroke="#3185fc" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M146 118 L146 60" stroke="#022550" strokeOpacity="0.2" strokeWidth="1" />
+      <path d="M146 118 L280 118" stroke="#022550" strokeOpacity="0.2" strokeWidth="1" />
+      <circle cx="276" cy="54" r="4" fill="#f68241" />
+      <path d="M262 44 l14 -10 4 16" fill="none" stroke="#f68241" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
+function SignalFilterGraphic({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 320 176" fill="none" role="img" aria-label="Many customer signals filtered down to a selective few" className={className}>
+      <circle cx="60" cy="26" r="5" fill="#67a6ff" />
+      <circle cx="96" cy="20" r="5" fill="#f68241" />
+      <circle cx="132" cy="28" r="5" fill="#67a6ff" />
+      <circle cx="168" cy="20" r="5" fill="#67a6ff" />
+      <circle cx="204" cy="28" r="5" fill="#f68241" />
+      <circle cx="240" cy="22" r="5" fill="#67a6ff" />
+      <g stroke="#67a6ff" strokeWidth="1.6" strokeOpacity="0.55" fill="none">
+        <path d="M60 32 C 90 60, 120 60, 150 74" />
+        <path d="M96 26 C 120 56, 140 60, 152 74" />
+        <path d="M132 34 L 156 74" />
+        <path d="M168 26 L 164 74" />
+        <path d="M204 34 C 190 56, 175 62, 168 74" />
+        <path d="M240 28 C 210 58, 185 62, 170 74" />
+      </g>
+      <path d="M104 78 L216 78 L176 108 L144 108 Z" fill="#022550" stroke="#67a6ff" strokeWidth="2" />
+      <line x1="120" y1="86" x2="200" y2="86" stroke="#67a6ff" strokeWidth="2" strokeOpacity="0.7" />
+      <line x1="130" y1="94" x2="190" y2="94" stroke="#67a6ff" strokeWidth="2" strokeOpacity="0.7" />
+      <line x1="140" y1="102" x2="180" y2="102" stroke="#67a6ff" strokeWidth="2" strokeOpacity="0.7" />
+      <text x="160" y="70" textAnchor="middle" fontSize="8.5" fontWeight="700" letterSpacing="2" fill="#67a6ff" fontFamily="system-ui, Helvetica, Arial, sans-serif">FILTER</text>
+      <path d="M160 108 L160 138" stroke="#f68241" strokeWidth="2.4" strokeLinecap="round" />
+      <circle cx="160" cy="146" r="5" fill="#f68241" />
+      <path d="M150 132 l10 12 10 -12" fill="none" stroke="#f68241" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
 export function PartnerShadow() {
   const signals = ["Onboarding friction", "Support fatigue", "Operational risk"];
 
@@ -323,12 +401,7 @@ export function PartnerShadow() {
                 </p>
               </div>
               <div className="relative mt-7 h-44 overflow-hidden rounded-2xl">
-                <img
-                  src="/images/partner-shadow/vendor.jpg"
-                  alt="Vendor team reviewing channel performance"
-                  className="h-full w-full object-cover"
-                  loading="lazy"
-                />
+                <CROForecastGraphic className="h-full w-full" />
                 <div className="absolute inset-0 bg-gradient-to-t from-[rgba(2,37,80,.82)] via-transparent to-transparent" />
                 <div className="absolute inset-x-4 bottom-4 flex items-center justify-between text-xs font-semibold text-white">
                   <span>Partner forecast</span>
@@ -357,14 +430,8 @@ export function PartnerShadow() {
                 down.
               </p>
               <div className="relative mt-auto pt-7">
-                <div className="relative h-44 overflow-hidden rounded-2xl border border-white/10">
-                  <img
-                    src="/images/partner-shadow/partner-broker.jpg"
-                    alt="Partner responsible for the customer relationship"
-                    className="h-full w-full object-cover"
-                    loading="lazy"
-                  />
-                  <div className="absolute inset-0 bg-[color:var(--navy-deep)]/25" />
+                <div className="relative h-44 overflow-hidden rounded-2xl border border-white/10 bg-[color:var(--navy-deep)]">
+                  <SignalFilterGraphic className="h-full w-full" />
                   <div className="absolute inset-x-0 bottom-0 border-t border-white/10 bg-[rgba(2,37,80,.78)] px-4 py-3 backdrop-blur-md">
                     <div className="flex items-center justify-between text-xs">
                       <span className="text-white/55">Signal transmitted</span>

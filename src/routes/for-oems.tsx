@@ -464,11 +464,22 @@ function ForOems() {
       {/* 4b. See a sample deliverable */}
       <Section>
         <div className="grid items-center gap-12 lg:grid-cols-[1fr_1fr] lg:gap-16">
-          <SectionHead
-            eyebrow="See a sample deliverable"
-            title="A partner conviction readout, at a glance."
-            intro="This is the format you receive: a named partner, the conviction and recommendation scores that matter, the gap that predicts the next move, and the intervention that closes it. Illustrative only, not a real client."
-          />
+          <div>
+            <SectionHead
+              eyebrow="See a sample deliverable"
+              title="A partner conviction readout, at a glance."
+              intro="This is the format you receive: a named partner, the conviction and recommendation scores that matter, the gap that predicts the next move, and the intervention that closes it. Illustrative only, not a real client."
+            />
+            <div className="mt-8">
+              <a
+                href="mailto:contactus@vistaxm.com?subject=Sample%20deliverable%20request&body=Hi%20VistaXM%20team%2C%20please%20send%20me%20the%20sample%20deliverable."
+                className="btn-primary"
+              >
+                Request the sample deliverable
+              </a>
+              <p className="mt-3 text-xs text-[color:var(--ink-soft)]">Sent to you on request.</p>
+            </div>
+          </div>
           <Reveal delay={120}>
             <ConvictionReadout />
           </Reveal>

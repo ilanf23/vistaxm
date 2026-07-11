@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { BOOK_PATH } from "@/lib/links";
 import { canonicalLink, faqJsonLd, type Faq } from "@/lib/seo";
 import {
+  CertifiedScoreSeal,
   CTABand,
   FAQSection,
   NPSGauge,
@@ -16,9 +17,24 @@ import { useCountUp, useReveal } from "@/hooks/use-reveal";
 
 const FAQS: Faq[] = [
   {
-    question: "Is VistaXM's NPS independent and certified?",
+    question: "Can we put the certified NPS in proposals and RFPs?",
     answer:
-      "Yes. VistaXM runs surveys as a neutral third party and produces an independent, certified NPS standard for the channel. ePlus, a NASDAQ-listed solutions provider, publicly reported an NPS of 74 from an independent survey conducted by VistaXM across more than 1,400 customers, well above the 40 to 55 technology industry average.",
+      "Yes. It is third-party verified, so you can cite it in proposals, RFPs, investor communications, and marketing, the same way ePlus published theirs. A self-reported number does not carry the same weight, because the party being rated cannot certify itself.",
+  },
+  {
+    question: "What does the score get benchmarked against?",
+    answer:
+      "Your certified NPS is placed against the channel and the broader technology industry, where the average runs about 40 to 55. You see where you land relative to peers, not just an absolute number floating on its own.",
+  },
+  {
+    question: "How is this different from running our own NPS survey?",
+    answer:
+      "Neutrality. Customers and partners tell an independent third party things they will never put in a vendor's own survey, and you cannot certify a score you produced yourself. That independence is exactly what makes the result usable as external proof.",
+  },
+  {
+    question: "How large a sample do you need for a credible result?",
+    answer:
+      "Enough responses to be representative of your customer base, designed up front with you. The ePlus certification drew on more than 1,400 customers. Credibility comes from sound methodology and response quality, not volume alone.",
   },
 ];
 
@@ -382,7 +398,7 @@ function CertifiedSeal() {
       {/* Seal header */}
       <div className="flex items-start justify-between gap-4">
         <div className="flex items-center gap-3">
-          <SealMark className="h-11 w-11 flex-none" />
+          <CertifiedScoreSeal className="h-12 w-12 flex-none" />
           <div>
             <div className="text-[0.72rem] font-semibold uppercase tracking-[0.16em] text-[#67a6ff]">
               Certified NPS
@@ -514,9 +530,7 @@ function EPlusBenchmarkCard() {
 
         {/* Verified-for lockup, replacing the logo placeholder */}
         <div className="mt-auto flex items-center gap-3 border-t border-[color:var(--gray-line)] pt-6">
-          <span className="flex h-9 w-9 flex-none items-center justify-center rounded-[10px] bg-[color:var(--navy-deep)] text-white">
-            <ProofIcon name="shield" className="h-5 w-5" />
-          </span>
+          <CertifiedScoreSeal className="h-16 w-16 flex-none" />
           <span>
             <span className="block text-sm font-bold text-[color:var(--navy-deep)]">
               Verified for ePlus
@@ -742,11 +756,22 @@ function Proof() {
       {/* Sample deliverables */}
       <Section>
         <div className="grid items-center gap-12 lg:grid-cols-[1fr_1fr] lg:gap-16">
-          <SectionHead
-            eyebrow="Sample deliverables"
-            title="See a readout before you commit."
-            intro="A sample deliverable is available upon request. It shows the exact format you receive: a named account, the dollars in play, and the move that changes the outcome."
-          />
+          <div>
+            <SectionHead
+              eyebrow="Sample deliverables"
+              title="See a readout before you commit."
+              intro="A sample deliverable is available upon request. It shows the exact format you receive: a named account, the dollars in play, and the move that changes the outcome."
+            />
+            <div className="mt-8">
+              <a
+                href="mailto:contactus@vistaxm.com?subject=Sample%20deliverable%20request&body=Hi%20VistaXM%20team%2C%20please%20send%20me%20the%20sample%20deliverable."
+                className="btn-primary"
+              >
+                Request the sample deliverable
+              </a>
+              <p className="mt-3 text-xs text-[color:var(--ink-soft)]">Sent to you on request.</p>
+            </div>
+          </div>
           <FadeIn delay={140}>
             <div className="grid gap-4 sm:grid-cols-2">
               <SampleDeliverable
@@ -770,7 +795,7 @@ function Proof() {
         </div>
       </Section>
 
-      <FAQSection items={FAQS} />
+      <FAQSection items={FAQS} grid />
 
       <CTABand />
     </>
