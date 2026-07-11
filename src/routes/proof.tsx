@@ -446,7 +446,7 @@ function EPlusBenchmarkCard() {
         {/* Attribution + certified chip */}
         <div className="flex items-center justify-between gap-4">
           <span className="text-sm font-semibold uppercase tracking-[0.12em] text-[color:var(--blue-link)]">
-            ePlus
+            <span className="normal-case">ePlus</span>
           </span>
           <span className="inline-flex items-center gap-1.5 rounded-full border border-[color:var(--blue-pale)] bg-white px-2.5 py-1 text-[0.625rem] font-bold uppercase tracking-[0.1em] text-[color:var(--navy-mid)]">
             <ProofIcon name="shield" className="h-3 w-3 text-[color:var(--blue-cta)]" />

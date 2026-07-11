@@ -536,7 +536,8 @@ function ForOems() {
               is critical to our mission.&rdquo;
             </blockquote>
             <figcaption className="mt-7 text-sm font-semibold uppercase tracking-[0.12em] text-[color:var(--blue-light)]">
-              Deanna Davenport, VP of Customer Experience, ePlus
+              Deanna Davenport, VP of Customer Experience,{" "}
+              <span className="normal-case">ePlus</span>
               <span className="ml-2 font-normal normal-case tracking-normal text-white/55">
                 (CRN, April 2026)
               </span>
