@@ -1813,7 +1813,7 @@ export function TeamSection() {
           title="Chief Revenue Officer"
           initials="PB"
           photo="/images/team/paul.avif"
-          // TODO: replace "#" with Paul Barr's LinkedIn URL when supplied.
+          linkedin="https://www.linkedin.com/in/pbarr97"
           bio="Chief Revenue Officer at VistaXM, responsible for customer acquisition and revenue generation. 25+ years of experience across Fortune 50, channel, and start-up organizations, driving go-to-market strategy and growth. Previously led Fungible's worldwide channel organization and held leadership roles at Intel and multiple channel organizations."
           quote="87% of companies say they provide excellent CX yet only 11% of customers agree. Which side is your company on?"
           delay={80}
@@ -1823,7 +1823,7 @@ export function TeamSection() {
           title="Chief Operating Officer"
           initials="AG"
           photo="/images/team/alexey-gerasimov.avif"
-          // TODO: replace "#" with Alexey Gerasimov's LinkedIn URL when supplied.
+          linkedin="https://www.linkedin.com/in/alexey"
           bio="Chief Operating Officer at VistaXM, leading Services and Delivery. 30+ years in consulting and professional services, scaling organizations and driving digital transformations for the world's largest brands. Previously led Capgemini's North American Cloud organization; earlier senior roles at HPE, Cloud Technology Partners, and MoFuse."
           quote="Behind every unforgettable customer experience is flawless execution and a united team."
           delay={160}
@@ -1843,7 +1843,7 @@ export function TeamSection() {
           title="Chief Technology Officer"
           initials="AZ"
           photo="/images/team/alan-zall.avif"
-          // TODO: replace "#" with Alan Zall's LinkedIn URL when supplied.
+          linkedin="https://www.linkedin.com/in/alanzall"
           bio="Chief Technology Officer at VistaXM, overseeing Product and Engineering. 30+ years scaling technology organizations and driving digital innovation. Delivers VistaXM's AI-enabled platform. Previously Global CPTO at CSpace, with senior leadership roles at HPE, Cloud Technology Partners, and Fiserv."
           quote="We build platforms that empower real connections between brands and people."
           delay={80}
