@@ -422,7 +422,7 @@ function ForOems() {
         eyebrow="For OEMs and distributors"
         title={
           <>
-            You can see how your partners sell.
+            You can see how your <span className="whitespace-nowrap">partners sell.</span>
             <br className="hidden md:block" /> You cannot see how they serve.
           </>
         }
@@ -431,12 +431,7 @@ function ForOems() {
         visual={<SellServeCard />}
       />
 
-      {/* 2. The partner shadow */}
-      <Section tint className="overflow-hidden">
-        <PartnerShadow />
-      </Section>
-
-      {/* 3. The conviction gap */}
+      {/* 2. The conviction gap (moved above the partner shadow) */}
       <Section dark>
         <div className="grid items-center gap-14 lg:grid-cols-[1fr_1.15fr]">
           <SectionHead
@@ -451,12 +446,17 @@ function ForOems() {
         </div>
       </Section>
 
+      {/* 3. The partner shadow */}
+      <Section tint className="overflow-hidden">
+        <PartnerShadow />
+      </Section>
+
       {/* 4. A neutral read on your whole channel */}
       <Section>
         <SectionHead
           eyebrow="What you finally see"
           title="A neutral read on your whole channel."
-          intro="One benchmarked view of how the channel really feels about selling you, drawn from the partners who decide whether you make the shortlist."
+          intro="One benchmarked view of how the channel really feels about selling your solutions, drawn from the partners who decide whether you make the shortlist."
         />
         <NeutralReadList />
       </Section>
@@ -482,7 +482,7 @@ function ForOems() {
           <SectionHead
             eyebrow="Why a neutral third party"
             title="Why your partners will tell us what they will not tell you."
-            intro="Partners hear your surveys as performance reviews. They tell a confidential neutral third party what they will never put in writing to you. Independence is structural, and it is not something the program being evaluated can replicate."
+            intro="Partners see your surveys as performance reviews. They tell a confidential neutral third party what they will never put in writing to you. Independence is structural, and it is not something the program being evaluated can replicate."
           />
           <Reveal delay={120}>
             <div className="img-editorial-soft img-frame aspect-[4/3] w-full">

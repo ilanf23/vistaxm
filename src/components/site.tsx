@@ -427,7 +427,7 @@ export function PartnerShadow() {
               has instrumented.
             </p>
             <span className="inline-flex w-fit items-center gap-2 rounded-full border border-[color:var(--blue-pale)] bg-white px-3 py-1.5 text-xs font-semibold text-[color:var(--blue-link)]">
-              VistaXM makes the invisible measurable <span aria-hidden>→</span>
+              VistaXM makes the invisible measurable
             </span>
           </div>
         </div>
@@ -1676,29 +1676,8 @@ export function RevenueSignalCard({
 
         </div>
 
-        {/* Footer */}
-        <div
-          className="flex items-center gap-2 px-4 py-3"
-          style={{ background: "#08305c", borderTop: "1px solid rgba(255,255,255,.08)" }}
-        >
-          <button
-            type="button"
-            className="rounded-lg bg-white px-3.5 py-2 text-[0.8rem] font-semibold text-[#022550] transition-[transform,background-color] duration-200 hover:bg-[#eaf2ff] active:scale-[0.98]"
-          >
-            Start the play
-          </button>
-          <button
-            type="button"
-            aria-label="Assign"
-            className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#0a3a6b] text-[#cfe3ff] transition-[transform,filter] duration-200 hover:brightness-125 active:scale-[0.98]"
-          >
-            <UserPlusIcon className="h-4 w-4" />
-          </button>
-          <span className="ml-auto text-[0.72rem] text-[#7fa3cf]">
-            {index} of {total}
-          </span>
-        </div>
       </div>
+
 
       {/* Illustrative tag */}
       <div className="mt-2.5 flex items-center gap-1.5 text-[0.68rem] font-semibold uppercase tracking-[0.12em] text-[#7fa3cf]">
@@ -1731,6 +1710,7 @@ function LeaderCard({
   bio,
   quote,
   linkedin,
+  showLinkedIn = true,
   initials,
   photo,
   delay = 0,
@@ -1740,11 +1720,14 @@ function LeaderCard({
   bio: string;
   quote: string;
   linkedin?: string;
+  /** When false, the LinkedIn icon is not rendered at all (e.g. no public profile). */
+  showLinkedIn?: boolean;
   initials: string;
   photo?: string;
   delay?: number;
 }) {
   const { ref, shown } = useReveal<HTMLDivElement>();
+  const linkedinHref = linkedin ?? "#";
   return (
     <Reveal delay={delay} className="h-full">
       <div
@@ -1787,12 +1770,12 @@ function LeaderCard({
           {quote}
         </blockquote>
 
-        {linkedin && (
+        {showLinkedIn && (
           <div className="mt-auto pt-7">
             <a
-              href={linkedin}
-              target="_blank"
-              rel="noopener noreferrer"
+              href={linkedinHref}
+              target={linkedin ? "_blank" : undefined}
+              rel={linkedin ? "noopener noreferrer" : undefined}
               aria-label={`${name} on LinkedIn`}
               className="inline-flex text-[color:var(--ink-soft)]/40 transition-colors hover:text-[color:var(--blue-cta)] group-hover:text-[color:var(--blue-cta)]"
             >
@@ -1814,16 +1797,36 @@ export function TeamSection() {
         title="The team behind the category."
         intro="Revenue Channel Intelligence was built by people who have run customer experience and the channel at scale."
       />
-      <div className="mx-auto mt-12 grid max-w-6xl gap-6 md:mt-14 md:grid-cols-2 md:gap-8">
+      <div className="mx-auto mt-12 grid max-w-6xl gap-6 md:mt-14 md:grid-cols-3 md:gap-8">
         <LeaderCard
           name="Erik Vogel"
-          title="Founder and CEO"
+          title="Chief Executive Officer"
           initials="EV"
           photo="/images/team/erik-vogel.avif"
           linkedin="https://www.linkedin.com/in/erikvogel2020/"
           bio="Twenty-six years in IT services. Built the customer experience program for HPE GreenLake, then led the high-tech and telecom practice at a leading experience-management platform, advising the world's top technology brands. He founded VistaXM to bring that rigor to the channel."
           quote="Companies don't spend NPS points. They spend dollars."
           delay={0}
+        />
+        <LeaderCard
+          name="Paul Barr"
+          title="Chief Revenue Officer"
+          initials="PB"
+          photo="/images/team/paul.avif"
+          // TODO: replace "#" with Paul Barr's LinkedIn URL when supplied.
+          bio="Chief Revenue Officer at VistaXM, responsible for customer acquisition and revenue generation. 25+ years of experience across Fortune 50, channel, and start-up organizations, driving go-to-market strategy and growth. Previously led Fungible's worldwide channel organization and held leadership roles at Intel and multiple channel organizations."
+          quote="87% of companies say they provide excellent CX yet only 11% of customers agree. Which side is your company on?"
+          delay={80}
+        />
+        <LeaderCard
+          name="Alexey Gerasimov"
+          title="Chief Operating Officer"
+          initials="AG"
+          photo="/images/team/alexey-gerasimov.avif"
+          // TODO: replace "#" with Alexey Gerasimov's LinkedIn URL when supplied.
+          bio="Chief Operating Officer at VistaXM, leading Services and Delivery. 30+ years in consulting and professional services, scaling organizations and driving digital transformations for the world's largest brands. Previously led Capgemini's North American Cloud organization; earlier senior roles at HPE, Cloud Technology Partners, and MoFuse."
+          quote="Behind every unforgettable customer experience is flawless execution and a united team."
+          delay={160}
         />
         <LeaderCard
           name="Bruce Coughlin"
@@ -1833,43 +1836,27 @@ export function TeamSection() {
           linkedin="https://www.linkedin.com/in/brucecoughlin"
           bio="Former CEO of Cloud Technology Partners, which he helped guide to its acquisition by HPE. A relationship-first channel leader who believes the experience you deliver is the only real differentiator left."
           quote="The most progressive partners create differentiation and sustain it with customer experience. That is the fundamental tenet of what is happening in the channel."
-          delay={120}
-        />
-        <LeaderCard
-          name="Paul Barr"
-          title="Chief Revenue Officer"
-          initials="PB"
-          photo="/images/team/paul.avif"
-          bio="Chief Revenue Officer at VistaXM, responsible for customer acquisition and revenue generation. 25+ years of experience across Fortune 50, channel, and start-up organizations, driving go-to-market strategy and growth. Previously led Fungible's worldwide channel organization and held leadership roles at Intel and multiple channel organizations."
-          quote="87% of companies say they provide excellent CX yet only 11% of customers agree. Which side is your company on?"
           delay={0}
-        />
-        <LeaderCard
-          name="Alexey Gerasimov"
-          title="Chief Operating Officer"
-          initials="AG"
-          photo="/images/team/alexey-gerasimov.avif"
-          bio="Chief Operating Officer at VistaXM, leading Services and Delivery. 30+ years in consulting and professional services, scaling organizations and driving digital transformations for the world's largest brands. Previously led Capgemini's North American Cloud organization; earlier senior roles at HPE, Cloud Technology Partners, and MoFuse."
-          quote="Behind every unforgettable customer experience is flawless execution and a united team."
-          delay={120}
         />
         <LeaderCard
           name="Alan Zall"
           title="Chief Technology Officer"
           initials="AZ"
           photo="/images/team/alan-zall.avif"
+          // TODO: replace "#" with Alan Zall's LinkedIn URL when supplied.
           bio="Chief Technology Officer at VistaXM, overseeing Product and Engineering. 30+ years scaling technology organizations and driving digital innovation. Delivers VistaXM's AI-enabled platform. Previously Global CPTO at CSpace, with senior leadership roles at HPE, Cloud Technology Partners, and Fiserv."
           quote="We build platforms that empower real connections between brands and people."
-          delay={0}
+          delay={80}
         />
         <LeaderCard
           name="Candice A. Vogel"
           title="Chief Legal Officer"
           initials="CV"
           photo="/images/team/candice-vogel.webp"
+          showLinkedIn={false}
           bio="Chief Legal Officer at VistaXM, responsible for all legal, administrative, and compliance aspects of the business. A seasoned attorney with deep commercial and employment law experience, advising companies of all sizes on federal and state employment matters."
           quote="Trust is earned through integrity; every promise and every policy matters to our customers."
-          delay={120}
+          delay={160}
         />
       </div>
     </Section>
@@ -1998,19 +1985,28 @@ export function FAQSection({
   title = "Frequently asked questions",
   intro,
   tint = true,
+  grid = false,
 }: {
   items: { question: string; answer: string }[];
   title?: string;
   intro?: ReactNode;
   tint?: boolean;
+  /** When true, lay the questions out in a two-column grid instead of a single stack. */
+  grid?: boolean;
 }) {
   return (
     <Section tint={tint}>
       <SectionHead eyebrow="FAQ" title={title} intro={intro} />
-      <div className="mt-12 grid max-w-3xl gap-5">
+      <div
+        className={
+          grid
+            ? "mt-12 grid gap-5 md:grid-cols-2 md:gap-6"
+            : "mt-12 grid max-w-3xl gap-5"
+        }
+      >
         {items.map((f, i) => (
           <Reveal key={f.question} delay={i * 80}>
-            <div className="rounded-2xl hairline bg-white p-7">
+            <div className="rounded-2xl hairline bg-white p-7 h-full">
               <h3 className="text-lg font-semibold text-[color:var(--navy-deep)]">{f.question}</h3>
               <p className="mt-3 leading-relaxed text-[color:var(--ink-soft)]">{f.answer}</p>
             </div>
@@ -2077,16 +2073,15 @@ function CountStat({
   );
 }
 
-/* Lead proof chip: the named, independently validated ePlus NPS. Links to /proof. */
+/* Lead proof chip: the independently validated NPS badge. Links to /proof. */
 function EPlusNPSStat() {
   const { ref, shown } = useReveal<HTMLAnchorElement>(0.4);
-  const v = useCountUp(74, 1600, shown);
   return (
     <a
       href="/proof"
       ref={ref}
       className="group relative block pt-6"
-      aria-label="NPS 74, independently validated for ePlus. See the proof."
+      aria-label="Independently validated NPS. See the proof."
       style={{
         opacity: shown ? 1 : 0,
         transform: shown ? "translateY(0)" : "translateY(16px)",
@@ -2098,17 +2093,8 @@ function EPlusNPSStat() {
         aria-hidden
         className="absolute left-0 top-0 h-[2px] w-10 bg-gradient-to-r from-[color:var(--orange-pop)] to-[color:var(--blue-cta)] transition-all duration-500 group-hover:w-16"
       />
-      <div
-        className="text-5xl md:text-6xl font-semibold text-[color:var(--navy-deep)] tracking-tight tabular-nums"
-        style={{ fontFamily: "var(--font-display)" }}
-      >
-        {Math.round(v)}
-      </div>
       <div className="mt-3 text-sm text-[color:var(--ink-soft)] leading-relaxed max-w-[22ch]">
-        NPS, independently validated
-        <span className="mt-1.5 flex items-center gap-1 text-xs font-semibold uppercase tracking-[0.12em] text-[color:var(--blue-link)]">
-          ePlus
-        </span>
+        Independently Validated NPS
       </div>
     </a>
   );
@@ -2513,8 +2499,8 @@ export function SpendByCohort() {
 
       <div className="mt-6 pt-5 border-t border-[color:var(--hairline)] text-sm text-[color:var(--ink-soft)]">
         Promoter accounts carry{" "}
-        <span className="font-semibold text-[color:var(--navy-deep)]">5.2×</span> the lifetime value
-        of detractors. A single point of score motion is a portfolio move.
+        <span className="font-semibold text-[color:var(--navy-deep)] tabular-nums">5.2<span className="align-baseline">×</span></span> the lifetime value
+        of detractors. Small improvements drive large revenue gains.
       </div>
     </div>
   );
@@ -2739,7 +2725,7 @@ const FLOW_STEPS = [
   {
     n: "01",
     title: "Unify the customer story",
-    desc: "Bring fragmented channel signal into one account-level view.",
+    desc: "Bring fragmented channel signals into one account-level view.",
   },
   {
     n: "02",

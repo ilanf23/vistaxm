@@ -46,8 +46,15 @@ function Home() {
     <>
       <Hero
         eyebrow="Revenue Channel Intelligence"
-        title="Know which accounts are about to grow or walk, while you can still do something about it."
-        subtitle="VistaXM turns customer and partner experience into the revenue moves leading firms make every day. Not another score. The next decision."
+        title={
+          <>
+            Know which accounts are about to grow or walk,{" "}
+            <span className="text-[color:var(--blue-light)]">
+              while you can still do something about it.
+            </span>
+          </>
+        }
+        subtitle="VistaXM turns customer and partner experience into the revenue moves that leading firms make every day. Not another score. The next decision."
         primary={{ label: "Book a 30-minute call", to: BOOK_PATH }}
         secondary={{ label: "See how it works", to: "#model" }}
       />
@@ -60,7 +67,7 @@ function Home() {
         <SectionHead
           eyebrow="Why a single score fails"
           title="A score can't tell you which account, which stage, or which person."
-          intro="In the channel it can't even tell you whose problem it is to fix. The score is a vanity metric. The decision is a revenue act."
+          intro="A score can't tell you whose problem it is to fix; it's a vanity metric. The decision is a revenue act."
         />
         <div className="mt-14">
           <RevenueIntelligenceFlow />
@@ -100,7 +107,7 @@ function Home() {
           <SectionHead
             eyebrow="Promoter · Passive · Detractor"
             title="Sentiment is a spend pattern."
-            intro="When you stack revenue against cohort, the chart stops being satisfaction research and starts being a portfolio map. Promoters spend 3 to 4X more on average than passives, who spend 2X more than detractors on average."
+            intro="When you stack revenue against cohort, the chart stops being satisfaction research and starts being a portfolio map. Promoters spend 3 to 4× more on average than passives, who spend 2× more than detractors on average."
           />
           <Reveal delay={120}>
             <SpendByCohort />
@@ -137,7 +144,7 @@ function Home() {
             eyebrow="Where revenue moves"
             title="The next decision hides in the day-to-day."
           >
-            Not in the headline score, but in how the people closest to the work really feel.
+            Not in the headline score, but in how revenue intelligence gets used to make daily decisions.
           </AmbientBand>
         </Reveal>
       </Section>
@@ -182,7 +189,7 @@ function Home() {
       <Section tint>
         <SectionHead
           eyebrow="How to start"
-          title="Start small. Scale when it works."
+          title="Start small. Scale when ready."
           intro="Two ways in, both fully managed. Prove the signal exists, then expand into the ongoing program."
         />
         <div className="mt-14 grid gap-6 md:grid-cols-2">

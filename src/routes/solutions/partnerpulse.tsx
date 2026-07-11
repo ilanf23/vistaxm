@@ -240,7 +240,7 @@ function PartnerPulse() {
                 decisions.&rdquo;
               </blockquote>
               <figcaption className="mt-5 text-sm font-semibold uppercase tracking-wide text-[color:var(--blue-link)]">
-                Erik Vogel, Founder and CEO
+                Erik Vogel, Chief Executive Officer
               </figcaption>
             </figure>
           </FadeIn>

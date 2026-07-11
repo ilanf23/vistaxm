@@ -1,4 +1,4 @@
-import { type ReactNode } from "react";
+import { type ReactNode, useEffect } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { BOOK_A_CALL_URL } from "@/lib/links";
 import { canonicalLink } from "@/lib/seo";
@@ -342,6 +342,21 @@ function AgendaCard() {
 }
 
 function BookACall() {
+  // Visitors arriving on /book have already indicated intent to book (they
+  // clicked a "Book a call" CTA). Auto-scroll to the scheduling form after
+  // mount so they land on the calendar, not the marketing hero. Uses smooth
+  // scroll and respects prefers-reduced-motion for accessibility.
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const el = document.getElementById("booking");
+    if (!el) return;
+    // Small delay to let the hero render and layout settle before scrolling.
+    const t = window.setTimeout(() => {
+      el.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
+    }, 120);
+    return () => window.clearTimeout(t);
+  }, []);
   return (
     <>
       <PageHero
@@ -353,7 +368,7 @@ function BookACall() {
       />
 
       {/* What to expect + scheduling */}
-      <Section>
+      <Section id="booking">
         <div className="grid gap-12 lg:grid-cols-[.85fr_1.15fr] lg:gap-16">
           <div>
             <SectionHead

@@ -473,8 +473,8 @@ function EPlusBenchmarkCard() {
         {/* Benchmark scale: 40–55 industry band vs the 74 marker */}
         <div className="mt-8">
           <div className="flex items-baseline justify-between text-[0.6875rem] font-semibold uppercase tracking-[0.06em] text-[color:var(--ink-soft)]">
-            <span>vs. technology industry</span>
-            <span className="text-[color:var(--orange-pop)]">+19 above the industry ceiling</span>
+            <span>vs. industry average</span>
+            <span className="text-[color:var(--orange-pop)]">+19 above the industry average</span>
           </div>
           <div className="relative mt-9 h-3 rounded-full bg-[rgba(2,37,80,0.07)]">
             {/* Industry average band (40 to 55 on a 0 to 100 scale) */}
@@ -522,7 +522,7 @@ function EPlusBenchmarkCard() {
               Verified for ePlus
             </span>
             <span className="block text-xs text-[color:var(--ink-soft)]">
-              1,400+ customers surveyed &middot; published on NASDAQ
+              1,400+ customers surveyed
             </span>
           </span>
         </div>
@@ -555,7 +555,7 @@ function Proof() {
                 a neutral third party, ePlus scored a Net Promoter Score of 74. ePlus, a
                 NASDAQ-listed solutions provider, published the result in its own investor
                 communications. This is what the independent, certified NPS standard for the channel
-                looks like: confirmed in public, by the customer, not by us.
+                looks like: confirmed by us, an independent, unbiased third party.
               </p>
             </FadeIn>
 
@@ -617,7 +617,7 @@ function Proof() {
             dark
             eyebrow="The certified NPS"
             title="The independent, certified NPS standard for the channel."
-            intro="A third-party certified NPS you can use in proposals, RFPs, and marketing. Verifiable evidence, where a self-reported number is not. One competitive win attributable to the credential pays for the program many times over."
+            intro="A third-party certified NPS you can use in proposals, RFPs, and marketing. Verifiable evidence, where a self-reported number is not. Prospects trust independent ratings much more than self-proclaimed greatness."
           />
           <Reveal delay={140}>
             <div className="relative rounded-2xl glass p-8 md:p-10">
@@ -646,22 +646,25 @@ function Proof() {
         <SectionHead
           eyebrow="Real results"
           title="Outcomes, not vanity metrics."
-          intro="Real programs, real numbers. Retention held, expansion found, and revenue protected before a renewal was ever at risk."
         />
-        <Stagger className="mt-14 grid gap-6 md:grid-cols-2 lg:grid-cols-3" stagger={0.08}>
-          <StaggerItem className="h-full">
-            <ResultCard
-              client="IT Solution Provider"
-              headline="Compounding score motion that moved the business, over two years."
-              icon="trend"
-              metrics={[
-                { value: "+8", label: "NPS over two years" },
-                { value: "$8.4M", label: "Business impact" },
-                { value: "4%", label: "Lower churn" },
-                { value: "10%", label: "Higher win rates" },
-              ]}
-            />
-          </StaggerItem>
+
+        {/* Market-reality lead-in: connects the header to the results below. */}
+        <FadeIn delay={80} className="mt-8">
+          <div className="flex flex-col gap-5 rounded-2xl hairline bg-[color:var(--blue-tint)] p-7 md:flex-row md:items-center md:gap-8 md:p-9">
+            <div
+              className="text-5xl font-semibold tabular-nums tracking-tight text-[color:var(--navy-deep)] md:text-6xl"
+              style={{ fontFamily: "var(--font-display)" }}
+            >
+              33%
+            </div>
+            <p className="text-base leading-relaxed text-[color:var(--ink-soft)] md:max-w-[62ch]">
+              33% of companies never link NPS to revenue. We are different, we give you the
+              insights to take action. Real programs, real numbers.
+            </p>
+          </div>
+        </FadeIn>
+
+        <Stagger className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3" stagger={0.08}>
           <StaggerItem className="h-full">
             <ResultCard
               client="Fintech SaaS Provider"
@@ -673,8 +676,6 @@ function Proof() {
                 { value: "Weeks", label: "Time to value, not quarters" },
                 { value: "0", label: "Internal CX headcount added" },
               ]}
-              quote="The correlation of NPS and eNPS to NRR was the aha moment. It was gold."
-              attribution="Customer Experience Leader, Fintech SaaS Company"
             />
           </StaggerItem>
           <StaggerItem className="h-full">
@@ -705,21 +706,24 @@ function Proof() {
           </StaggerItem>
         </Stagger>
 
-        <FadeIn delay={120} className="mt-6">
-          <div className="flex flex-col gap-5 rounded-2xl hairline bg-[color:var(--blue-tint)] p-7 md:flex-row md:items-center md:gap-8 md:p-9">
-            <div
-              className="text-5xl font-semibold tabular-nums tracking-tight text-[color:var(--navy-deep)] md:text-6xl"
+        {/* Fintech SaaS pull-quote, extracted to full-width, styled like the OEM
+            page's Deanna Davenport quote. */}
+        <FadeIn delay={140} className="mt-14">
+          <figure className="mx-auto max-w-4xl text-center">
+            <blockquote
+              className="text-2xl font-semibold leading-snug text-[color:var(--navy-deep)] md:text-[2rem] md:leading-[1.25]"
               style={{ fontFamily: "var(--font-display)" }}
             >
-              33%
-            </div>
-            <p className="text-base leading-relaxed text-[color:var(--ink-soft)] md:max-w-[60ch]">
-              Market reality: only 33% of companies that measure NPS ever link it to revenue. A
-              number that is never tied to a dollar is a number that never changes a decision.
-            </p>
-          </div>
+              &ldquo;The correlation of NPS and eNPS to NRR was the aha moment. It was
+              gold.&rdquo;
+            </blockquote>
+            <figcaption className="mt-7 text-sm font-semibold uppercase tracking-[0.12em] text-[color:var(--blue-link)]">
+              Customer Experience Leader, Fintech SaaS Company
+            </figcaption>
+          </figure>
         </FadeIn>
       </Section>
+
 
       {/* Ambient divider: behind the numbers */}
       <Section>
