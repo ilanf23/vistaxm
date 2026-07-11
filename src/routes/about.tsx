@@ -156,19 +156,6 @@ const LEADERS: {
     ],
   },
   {
-    name: "Bruce Coughlin",
-    title: "Chief Growth Officer",
-    tagline: "The differentiator isn't the technology; it's the team you build around it.",
-    initials: "BC",
-    photo: "/images/team/bruce-coughlin.jpg",
-    bio: [
-      "Bruce has proven to be an expert leader and team builder with deep expertise in growing and scaling businesses in key technology sectors. He provides a strong balance of skills with strategic foresight combined with the ability to build out teams for scale. He brings practical entrepreneurial experience that has resulted in building great leaders, teams and companies.",
-      "As a hands-on leader throughout his career, he has experience in both public and private companies, such as Siemens and Cloud Technology Partners (CTP). He has worked in driving innovation to take advantage of some of the major technology trends including IT Outsourcing, Cloud Computing, Cybersecurity and, now, AI. Bruce has been responsible for all aspects of building and managing companies including Sales/GTM/Marketing, Service Delivery, IP Development, Operations, Corporate Functions and Fundraising/Investor Relationships.",
-      "At CTP, Bruce built the premier cloud services organizations in the US, leading to a successful exit with Hewlett-Packard Enterprise. He has built and deployed leading-edge portfolio capabilities across an array of services companies on a global basis.",
-      "Bruce graduated from Bucknell University and currently advises several leading technology and services companies.",
-    ],
-  },
-  {
     name: "Paul Barr",
     title: "Chief Revenue Officer",
     tagline:
@@ -193,6 +180,19 @@ const LEADERS: {
       "Alexey has a distinguished career scaling and operating successful organizations and driving digital transformations for some of the world's biggest brands and enterprises. He is both a seasoned entrepreneur and an experienced senior leader in Fortune 500 companies. Alexey uses his deep knowledge and passion for technology to help organizations pragmatically drive digital transformation initiatives that produce a strong and lasting impact on their business.",
       "Prior to joining VistaXM, Alexey led North American Cloud organization for Capgemini's CIS Global Business Line. Before Capgemini, Alexey held senior leadership roles at HPE, Cloud Technology Partners, and MoFuse.",
       "Alexey graduated with a Bachelor of Science in Computer Science from Hartwick College.",
+    ],
+  },
+  {
+    name: "Bruce Coughlin",
+    title: "Chief Growth Officer",
+    tagline: "The differentiator isn't the technology; it's the team you build around it.",
+    initials: "BC",
+    photo: "/images/team/bruce-coughlin.jpg",
+    bio: [
+      "Bruce has proven to be an expert leader and team builder with deep expertise in growing and scaling businesses in key technology sectors. He provides a strong balance of skills with strategic foresight combined with the ability to build out teams for scale. He brings practical entrepreneurial experience that has resulted in building great leaders, teams and companies.",
+      "As a hands-on leader throughout his career, he has experience in both public and private companies, such as Siemens and Cloud Technology Partners (CTP). He has worked in driving innovation to take advantage of some of the major technology trends including IT Outsourcing, Cloud Computing, Cybersecurity and, now, AI. Bruce has been responsible for all aspects of building and managing companies including Sales/GTM/Marketing, Service Delivery, IP Development, Operations, Corporate Functions and Fundraising/Investor Relationships.",
+      "At CTP, Bruce built the premier cloud services organizations in the US, leading to a successful exit with Hewlett-Packard Enterprise. He has built and deployed leading-edge portfolio capabilities across an array of services companies on a global basis.",
+      "Bruce graduated from Bucknell University and currently advises several leading technology and services companies.",
     ],
   },
   {
