@@ -34,6 +34,11 @@ const FAQS: Faq[] = [
     answer:
       "The Decision-Maker to Influencer gap is the difference between how executives and how day-to-day contacts rate the same relationship. It is the most reliable leading indicator of renewal risk, and it is invisible to a single account-level score.",
   },
+  {
+    question: "How fast do we see results?",
+    answer:
+      "Essentials delivers your first certified NPS and initial account-level signals in about ninety days, with prioritized moves you can act on immediately. The ongoing program then compounds each wave, turning single signals into a running read on where revenue is about to grow or walk.",
+  },
 ];
 
 export const Route = createFileRoute("/the-model")({
@@ -75,8 +80,6 @@ function TheModel() {
               reason="The survey score looks fine, but the people who influence the renewal have stopped engaging. That is the signal."
               action="Get in front of the influencers this quarter"
               daysToRenewal={112}
-              index={2}
-              total={5}
             />
           </div>
         }
@@ -121,14 +124,14 @@ function TheModel() {
         </div>
       </Section>
 
-      {/* Ambient divider: from reading to deciding */}
+      {/* Ambient divider: from inaction to decision */}
       <Section>
         <Reveal>
           <AmbientBand
             image="/images/ambient/whiteboard-mapping.jpg"
             alt="A small team mapping accounts together at a whiteboard"
-            eyebrow="From reading to deciding"
-            title="A read is only useful when it changes a decision."
+            eyebrow="From inaction to decision"
+            title="Signal is only useful when it drives a decision."
           >
             We do the listening and the analysis. What reaches you is the move worth making.
           </AmbientBand>
@@ -149,8 +152,8 @@ function TheModel() {
 
       {/* Our advantage */}
       <Section>
-        <SectionHead eyebrow="Our advantage" title="Two things no one else can give you." />
-        <div className="mt-14 grid gap-6 md:grid-cols-2">
+        <SectionHead eyebrow="Our advantage" title="Three things no one else can give you." />
+        <div className="mt-14 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           <Card title="Neutrality is structural" kicker="Advantage 01" delay={0}>
             As a confidential third party, customers and partners tell us what they will never tell
             you directly. Independence is built into the model, not bolted on.
@@ -159,10 +162,15 @@ function TheModel() {
             See exactly where you stand against your market, with real customer and partner data,
             not a guess. The benchmark compounds with every wave.
           </Card>
+          <Card title="Standardized methodology" kicker="Advantage 03" delay={240}>
+            Our programs run on a standardized, industry-leading, best-practice-based methodology,
+            so every read is consistent, comparable, and defensible, wave after wave.
+          </Card>
         </div>
       </Section>
 
-      <FAQSection items={FAQS} />
+      <FAQSection items={FAQS} grid />
+
 
       <CTABand />
     </>
