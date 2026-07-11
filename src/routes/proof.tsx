@@ -16,9 +16,24 @@ import { useCountUp, useReveal } from "@/hooks/use-reveal";
 
 const FAQS: Faq[] = [
   {
-    question: "Is VistaXM's NPS independent and certified?",
+    question: "Can we put the certified NPS in proposals and RFPs?",
     answer:
-      "Yes. VistaXM runs surveys as a neutral third party and produces an independent, certified NPS standard for the channel. ePlus, a NASDAQ-listed solutions provider, publicly reported an NPS of 74 from an independent survey conducted by VistaXM across more than 1,400 customers, well above the 40 to 55 technology industry average.",
+      "Yes. It is third-party verified, so you can cite it in proposals, RFPs, investor communications, and marketing, the same way ePlus published theirs. A self-reported number does not carry the same weight, because the party being rated cannot certify itself.",
+  },
+  {
+    question: "What does the score get benchmarked against?",
+    answer:
+      "Your certified NPS is placed against the channel and the broader technology industry, where the average runs about 40 to 55. You see where you land relative to peers, not just an absolute number floating on its own.",
+  },
+  {
+    question: "How is this different from running our own NPS survey?",
+    answer:
+      "Neutrality. Customers and partners tell an independent third party things they will never put in a vendor's own survey, and you cannot certify a score you produced yourself. That independence is exactly what makes the result usable as external proof.",
+  },
+  {
+    question: "How large a sample do you need for a credible result?",
+    answer:
+      "Enough responses to be representative of your customer base, designed up front with you. The ePlus certification drew on more than 1,400 customers. Credibility comes from sound methodology and response quality, not volume alone.",
   },
 ];
 
