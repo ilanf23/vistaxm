@@ -1907,7 +1907,7 @@ export function TeamSection() {
           initials="BC"
           photo="/images/team/bruce-coughlin.jpg"
           linkedin="https://www.linkedin.com/in/brucecoughlin"
-          bio="Former CEO of Cloud Technology Partners, which he helped guide to its acquisition by HPE. A relationship-first channel leader who believes the experience you deliver is the only real differentiation left."
+          bio="Former CEO of Cloud Technology Partners, which he helped guide to its acquisition by HPE. A relationship-first channel leader who believes the experience you deliver is the only real differentiator left."
           quote="The most progressive partners create differentiation and sustain it with customer experience. That is the fundamental tenet of what is happening in the channel."
           delay={0}
         />
