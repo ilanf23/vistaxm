@@ -1873,7 +1873,7 @@ export function TeamSection() {
       <div className="mx-auto mt-12 grid max-w-6xl gap-6 md:mt-14 md:grid-cols-3 md:gap-8">
         <LeaderCard
           name="Erik Vogel"
-          title="Chief Executive Officer"
+          title="CEO"
           initials="EV"
           photo="/images/team/erik-vogel.avif"
           linkedin="https://www.linkedin.com/in/erikvogel2020/"
