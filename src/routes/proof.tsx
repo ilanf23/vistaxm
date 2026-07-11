@@ -473,8 +473,8 @@ function EPlusBenchmarkCard() {
         {/* Benchmark scale: 40–55 industry band vs the 74 marker */}
         <div className="mt-8">
           <div className="flex items-baseline justify-between text-[0.6875rem] font-semibold uppercase tracking-[0.06em] text-[color:var(--ink-soft)]">
-            <span>vs. technology industry</span>
-            <span className="text-[color:var(--orange-pop)]">+19 above the industry ceiling</span>
+            <span>vs. industry average</span>
+            <span className="text-[color:var(--orange-pop)]">+19 above the industry average</span>
           </div>
           <div className="relative mt-9 h-3 rounded-full bg-[rgba(2,37,80,0.07)]">
             {/* Industry average band (40 to 55 on a 0 to 100 scale) */}
@@ -522,7 +522,7 @@ function EPlusBenchmarkCard() {
               Verified for ePlus
             </span>
             <span className="block text-xs text-[color:var(--ink-soft)]">
-              1,400+ customers surveyed &middot; published on NASDAQ
+              1,400+ customers surveyed
             </span>
           </span>
         </div>
@@ -555,7 +555,7 @@ function Proof() {
                 a neutral third party, ePlus scored a Net Promoter Score of 74. ePlus, a
                 NASDAQ-listed solutions provider, published the result in its own investor
                 communications. This is what the independent, certified NPS standard for the channel
-                looks like: confirmed in public, by the customer, not by us.
+                looks like: confirmed by us, an independent, unbiased third party.
               </p>
             </FadeIn>
 
@@ -617,7 +617,7 @@ function Proof() {
             dark
             eyebrow="The certified NPS"
             title="The independent, certified NPS standard for the channel."
-            intro="A third-party certified NPS you can use in proposals, RFPs, and marketing. Verifiable evidence, where a self-reported number is not. One competitive win attributable to the credential pays for the program many times over."
+            intro="A third-party certified NPS you can use in proposals, RFPs, and marketing. Verifiable evidence, where a self-reported number is not. Prospects trust independent ratings much more than self-proclaimed greatness."
           />
           <Reveal delay={140}>
             <div className="relative rounded-2xl glass p-8 md:p-10">
