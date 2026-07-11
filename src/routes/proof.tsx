@@ -398,7 +398,7 @@ function CertifiedSeal() {
       {/* Seal header */}
       <div className="flex items-start justify-between gap-4">
         <div className="flex items-center gap-3">
-          <SealMark className="h-11 w-11 flex-none" />
+          <CertifiedScoreSeal className="h-12 w-12 flex-none" />
           <div>
             <div className="text-[0.72rem] font-semibold uppercase tracking-[0.16em] text-[#67a6ff]">
               Certified NPS
