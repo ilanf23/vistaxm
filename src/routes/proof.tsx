@@ -12,7 +12,7 @@ import {
   SectionHead,
 } from "@/components/site";
 import { AmbientBand } from "@/components/media";
-import { FadeIn, Stagger, StaggerItem } from "@/components/motion";
+import { FadeIn, Floaty, Stagger, StaggerItem } from "@/components/motion";
 import { useCountUp, useReveal } from "@/hooks/use-reveal";
 
 const FAQS: Faq[] = [
@@ -453,7 +453,9 @@ function CertifiedSeal() {
       {/* Seal header */}
       <div className="flex items-start justify-between gap-4">
         <div className="flex items-center gap-3">
-          <SealMark className="h-16 w-16 flex-none" />
+          <Floaty className="flex-none" amplitude={6} duration={5}>
+            <SealMark className="h-16 w-16" />
+          </Floaty>
           <div>
             <div className="text-[0.72rem] font-semibold uppercase tracking-[0.16em] text-[#67a6ff]">
               Certified NPS
