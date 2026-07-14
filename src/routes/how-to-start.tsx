@@ -36,7 +36,7 @@ export const Route = createFileRoute("/how-to-start")({
       {
         property: "og:description",
         content:
-          "Start small. Scale when it works. Prove the signal exists and that it changes a decision, then expand into the ongoing program.",
+          "Start small. Scale when ready. Prove the signal exists and that it changes a decision, then expand into the ongoing program.",
       },
     ],
     links: [canonicalLink("/how-to-start")],
