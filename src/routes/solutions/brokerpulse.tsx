@@ -33,7 +33,6 @@ export const Route = createFileRoute("/solutions/brokerpulse")({
       },
     ],
     links: [canonicalLink("/solutions/brokerpulse")],
-    scripts: [faqJsonLd(FAQS)],
   }),
   component: BrokerPulse,
 });
@@ -218,8 +217,6 @@ function BrokerPulse() {
       <Section tint>
         <GetTheBrief brief={BRIEFS.brokerpulse} />
       </Section>
-
-      <FAQSection items={FAQS} tint={false} />
 
       <CTABand />
     </>
