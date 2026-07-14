@@ -85,7 +85,7 @@ const WHAT_IT_TELLS: { title: string; desc: string }[] = [
   },
   {
     title: "Expansion-readiness ranking",
-    desc: "So expansion effort goes where it is most likely to land, not where it is easiest to ask.",
+    desc: "Expansion effort goes where it is most likely to land, not where it is easiest to ask.",
   },
 ];
 
