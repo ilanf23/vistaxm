@@ -206,6 +206,7 @@ const LEADERS: {
     tagline: "We build platforms that empower real connections between brands and people.",
     initials: "AZ",
     photo: "/images/team/alan-zall.avif",
+    linkedin: "https://www.linkedin.com/in/alanzall",
     bio: [
       "Alan Zall is the Chief Technology Officer at VistaXM, Inc., overseeing the Product and Engineering organization. With over 30 years of experience in Product and Professional Services across various industries, he leads the delivery of VistaXM's AI-enabled platform and supporting technologies that enhance collaboration and insight analysis.",
       "Throughout his career, Alan has successfully scaled and operated technology organizations, driving digital innovation for brands and enterprises. He combines deep technical expertise with strong business acumen to deliver products that exceed expectations.",
