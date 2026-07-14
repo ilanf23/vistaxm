@@ -328,7 +328,7 @@ function PartnerPulse() {
         <GetTheBrief brief={BRIEFS.partnerpulse} />
       </Section>
 
-      <FAQSection items={FAQS} />
+
 
       <CTABand />
     </>
