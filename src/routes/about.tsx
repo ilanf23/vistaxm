@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { canonicalLink } from "@/lib/seo";
-import { CTABand, PageHero, Section, SectionHead } from "@/components/site";
+import { CTABand, LinkedInIcon, PageHero, Section, SectionHead } from "@/components/site";
 import { FadeIn } from "@/components/motion";
 import {
   Dialog,
