@@ -35,7 +35,6 @@ export const Route = createFileRoute("/solutions/partnerpulse")({
       },
     ],
     links: [canonicalLink("/solutions/partnerpulse")],
-    scripts: [faqJsonLd(FAQS)],
   }),
   component: PartnerPulse,
 });
