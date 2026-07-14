@@ -178,6 +178,7 @@ const LEADERS: {
       "Behind every unforgettable customer experience is flawless execution and a united team.",
     initials: "AG",
     photo: "/images/team/alexey-gerasimov.avif",
+    linkedin: "https://www.linkedin.com/in/alexey",
     bio: [
       "Alexey Gerasimov is the Chief Operating Officer of VistaXM, Inc and is responsible for the Services and Delivery organization. With 30+ years of Consulting and Professional Services experience across various industries, Alexey is the key driver behind VistaXM's ability to deliver impactful outcomes to our clients.",
       "Alexey has a distinguished career scaling and operating successful organizations and driving digital transformations for some of the world's biggest brands and enterprises. He is both a seasoned entrepreneur and an experienced senior leader in Fortune 500 companies. Alexey uses his deep knowledge and passion for technology to help organizations pragmatically drive digital transformation initiatives that produce a strong and lasting impact on their business.",
