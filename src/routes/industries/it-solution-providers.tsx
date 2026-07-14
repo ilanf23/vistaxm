@@ -89,12 +89,6 @@ const WHAT_IT_TELLS: { title: string; desc: string }[] = [
   },
 ];
 
-const PROOF_METRICS: { value: string; label: string }[] = [
-  { value: "62", label: "NPS vs a 40 to 55 industry average." },
-  { value: "20 pts", label: "Decision Maker to Influencer gap surfaced." },
-  { value: "$54M+", label: "Year 1 business value on a single program investment." },
-  { value: "Named", label: "Passive accounts, ranked by revenue gap." },
-];
 
 function ITSolutionProviders() {
   return (
