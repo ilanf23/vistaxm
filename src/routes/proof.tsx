@@ -162,7 +162,7 @@ function ResultCard({
           {metrics.map((m) => (
             <div key={m.label}>
               <dt
-                className="text-3xl font-semibold tabular-nums tracking-tight text-[color:var(--navy-deep)]"
+                className="whitespace-nowrap text-3xl font-semibold tabular-nums tracking-tight text-[color:var(--navy-deep)]"
                 style={{ fontFamily: "var(--font-display)" }}
               >
                 {m.value}

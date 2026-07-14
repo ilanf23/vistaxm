@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { canonicalLink } from "@/lib/seo";
-import { CTABand, PageHero, Section, SectionHead } from "@/components/site";
+import { CTABand, LinkedInIcon, PageHero, Section, SectionHead } from "@/components/site";
 import { FadeIn } from "@/components/motion";
 import {
   Dialog,
@@ -140,6 +140,7 @@ const LEADERS: {
   initials: string;
   photo?: string;
   bio: string[];
+  linkedin?: string;
 }[] = [
   {
     name: "Erik Vogel",
@@ -148,6 +149,7 @@ const LEADERS: {
       "We listen relentlessly, innovate boldly, and shape experiences that customers remember.",
     initials: "EV",
     photo: "/images/team/erik-vogel.avif",
+    linkedin: "https://www.linkedin.com/in/erikvogel2020/",
     bio: [
       "Erik Vogel is the Chief Executive Officer of VistaXM, Inc. He spearheads the company's global go-to-market strategy and revenue growth, with VistaXM's sales, operations, and product management functions reporting directly to him.",
       "Erik is a seasoned global executive with more than 30 years' experience across the technology and services industries. He has a proven track record of success and a relentless drive for innovation, customer satisfaction, and continuous improvement. Erik previously served as Senior Vice President & Global Head of High-Tech, Telco, and Media at a leading experience-management software company.",
@@ -162,6 +164,7 @@ const LEADERS: {
       "87% of companies say they provide excellent CX yet only 11% of customers agree. Which side is your company on?",
     initials: "PB",
     photo: "/images/team/paul.avif",
+    linkedin: "https://www.linkedin.com/in/pbarr97",
     bio: [
       "Paul Barr is the Chief Revenue Officer of VistaXM, Inc and is responsible for customer acquisition and revenue generation. With 25+ years of experience in operations, business development and sales across Fortune 50, channel and start-up organizations, Paul is driving the go-to-market strategy and enabling VistaXM's growth.",
       "Paul is a builder at heart. From his personal hobbies to his professional life, he has been instrumental in developing many early stage companies and helping them get to the next level. Paul embraces disruptive technology and challenging the status quo. As a result, he has helped numerous organizations transform their operations and become a trusted advisor. His teams operate with integrity, passion and focus on doing the right thing for the customer.",
@@ -175,6 +178,7 @@ const LEADERS: {
       "Behind every unforgettable customer experience is flawless execution and a united team.",
     initials: "AG",
     photo: "/images/team/alexey-gerasimov.avif",
+    linkedin: "https://www.linkedin.com/in/alexey",
     bio: [
       "Alexey Gerasimov is the Chief Operating Officer of VistaXM, Inc and is responsible for the Services and Delivery organization. With 30+ years of Consulting and Professional Services experience across various industries, Alexey is the key driver behind VistaXM's ability to deliver impactful outcomes to our clients.",
       "Alexey has a distinguished career scaling and operating successful organizations and driving digital transformations for some of the world's biggest brands and enterprises. He is both a seasoned entrepreneur and an experienced senior leader in Fortune 500 companies. Alexey uses his deep knowledge and passion for technology to help organizations pragmatically drive digital transformation initiatives that produce a strong and lasting impact on their business.",
@@ -188,6 +192,7 @@ const LEADERS: {
     tagline: "The differentiator isn't the technology; it's the team you build around it.",
     initials: "BC",
     photo: "/images/team/bruce-coughlin.jpg",
+    linkedin: "https://www.linkedin.com/in/brucecoughlin",
     bio: [
       "Bruce has proven to be an expert leader and team builder with deep expertise in growing and scaling businesses in key technology sectors. He provides a strong balance of skills with strategic foresight combined with the ability to build out teams for scale. He brings practical entrepreneurial experience that has resulted in building great leaders, teams and companies.",
       "As a hands-on leader throughout his career, he has experience in both public and private companies, such as Siemens and Cloud Technology Partners (CTP). He has worked in driving innovation to take advantage of some of the major technology trends including IT Outsourcing, Cloud Computing, Cybersecurity and, now, AI. Bruce has been responsible for all aspects of building and managing companies including Sales/GTM/Marketing, Service Delivery, IP Development, Operations, Corporate Functions and Fundraising/Investor Relationships.",
@@ -201,6 +206,7 @@ const LEADERS: {
     tagline: "We build platforms that empower real connections between brands and people.",
     initials: "AZ",
     photo: "/images/team/alan-zall.avif",
+    linkedin: "https://www.linkedin.com/in/alanzall",
     bio: [
       "Alan Zall is the Chief Technology Officer at VistaXM, Inc., overseeing the Product and Engineering organization. With over 30 years of experience in Product and Professional Services across various industries, he leads the delivery of VistaXM's AI-enabled platform and supporting technologies that enhance collaboration and insight analysis.",
       "Throughout his career, Alan has successfully scaled and operated technology organizations, driving digital innovation for brands and enterprises. He combines deep technical expertise with strong business acumen to deliver products that exceed expectations.",
@@ -230,6 +236,7 @@ function LeaderProfileCard({
   initials,
   photo,
   bio,
+  linkedin,
   delay = 0,
 }: {
   name: string;
@@ -238,6 +245,7 @@ function LeaderProfileCard({
   initials: string;
   photo?: string;
   bio: string[];
+  linkedin?: string;
   delay?: number;
 }) {
   return (
@@ -263,8 +271,19 @@ function LeaderProfileCard({
           </span>
         </blockquote>
 
-        <div className="mt-auto pt-7">
+        <div className="mt-auto flex items-center justify-between gap-4 pt-7">
           <BioModal name={name} title={title} initials={initials} photo={photo} bio={bio} />
+          {linkedin && (
+            <a
+              href={linkedin}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`${name} on LinkedIn`}
+              className="inline-flex text-[color:var(--ink-soft)]/40 transition-colors hover:text-[color:var(--blue-cta)] group-hover:text-[color:var(--blue-cta)]"
+            >
+              <LinkedInIcon className="h-6 w-6" />
+            </a>
+          )}
         </div>
       </div>
     </FadeIn>
@@ -503,7 +522,7 @@ function About() {
         <SectionHead
           center
           eyebrow="Advisors"
-          title="Guided by people who ran the channel."
+          title="Guided by people who are passionate about the channel and revenue intelligence."
           intro="Backed by industry leaders in technology, strategy, and customer success."
         />
         <div className="mx-auto mt-12 grid max-w-6xl gap-6 md:mt-14 md:grid-cols-2 md:gap-8 lg:grid-cols-3">

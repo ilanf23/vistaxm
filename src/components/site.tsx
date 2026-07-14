@@ -1763,7 +1763,7 @@ export function RevenueSignalCard({
 
 /* ---------------- Leadership ---------------- */
 
-function LinkedInIcon({ className }: { className?: string }) {
+export function LinkedInIcon({ className }: { className?: string }) {
   return (
     <svg
       viewBox="0 0 24 24"
@@ -2166,8 +2166,9 @@ function EPlusNPSStat() {
         aria-hidden
         className="absolute left-0 top-0 h-[2px] w-10 bg-gradient-to-r from-[color:var(--orange-pop)] to-[color:var(--blue-cta)] transition-all duration-500 group-hover:w-16"
       />
-      <div className="mt-3 text-sm text-[color:var(--ink-soft)] leading-relaxed max-w-[22ch]">
-        Independently Validated NPS
+      <div className="mt-3 flex items-center gap-2.5 text-sm text-[color:var(--ink-soft)] leading-relaxed max-w-[22ch]">
+        <CertifiedScoreSeal className="h-10 w-10 flex-none" />
+        <span>Independently Validated NPS</span>
       </div>
     </a>
   );
@@ -3345,9 +3346,21 @@ function GapRow({
   );
 }
 
-export function InfluencerGapCard() {
+export function InfluencerGapCard({
+  accountName = "Acme Logistics",
+  rows: rowsProp,
+}: {
+  accountName?: string;
+  rows?: {
+    label: string;
+    value: number;
+    fill: string;
+    glow: string;
+    danger?: boolean;
+  }[];
+} = {}) {
   const { ref, shown } = useReveal(0.3);
-  const rows = [
+  const rows = rowsProp ?? [
     {
       label: "Executive / Decision Maker",
       value: 72,
@@ -3394,7 +3407,7 @@ export function InfluencerGapCard() {
             className="h-2 w-2 rounded-full bg-[color:var(--orange-pop)]"
             style={{ animation: "cell-pulse 2s ease-out infinite" }}
           />
-          <span className="text-sm font-semibold text-white">Acme Logistics</span>
+          <span className="text-sm font-semibold text-white">{accountName}</span>
         </div>
         <span className="pill">7-month read</span>
       </div>

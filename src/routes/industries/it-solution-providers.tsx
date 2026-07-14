@@ -85,7 +85,7 @@ const WHAT_IT_TELLS: { title: string; desc: string }[] = [
   },
   {
     title: "Expansion-readiness ranking",
-    desc: "So expansion effort goes where it is most likely to land, not where it is easiest to ask.",
+    desc: "Expansion effort goes where it is most likely to land, not where it is easiest to ask.",
   },
 ];
 
@@ -121,7 +121,7 @@ function ITSolutionProviders() {
       <Section>
         <SectionHead
           eyebrow="What it tells you"
-          title="Five reads that change the next decision."
+          title="Five insights that shape your next decision."
           intro="Not a satisfaction study. A managed program that hands the account team the names, the gaps, and the moves."
         />
         <Stagger className="mt-12 grid gap-5 md:grid-cols-2" stagger={0.08}>

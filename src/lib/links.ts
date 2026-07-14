@@ -40,7 +40,7 @@ export const BRIEFS: Record<"partnerpulse" | "brokerpulse" | "industrialpulse", 
     pdfHref: "/assets/briefs/partnerpulse.pdf",
     learnMore: {
       label: "Read the PartnerPulse whitepaper",
-      href: "https://www.vistaxm.com/white-paper/partnerpulse-the-future-of-partner-experience/",
+      href: "/assets/briefs/partnerpulse.pdf",
     },
   },
   brokerpulse: {
@@ -49,7 +49,7 @@ export const BRIEFS: Record<"partnerpulse" | "brokerpulse" | "industrialpulse", 
     pdfHref: "/assets/briefs/brokerpulse.pdf",
     learnMore: {
       label: "Read the State of Broker Experience 2025",
-      href: "https://www.vistaxm.com/white-paper/the-state-of-broker-experience-2025/",
+      href: "/assets/briefs/brokerpulse.pdf",
     },
   },
   industrialpulse: {

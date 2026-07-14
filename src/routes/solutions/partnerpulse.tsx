@@ -1,10 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { BOOK_PATH, BRIEFS } from "@/lib/links";
-import { canonicalLink, faqJsonLd, type Faq } from "@/lib/seo";
+import { canonicalLink } from "@/lib/seo";
 import {
   CTABand,
   Card,
-  FAQSection,
   GetTheBrief,
   NPSGauge,
   PageHero,
@@ -18,13 +17,6 @@ import { ConvictionMap } from "@/components/solutions-viz";
 import { AmbientBand } from "@/components/media";
 import { FadeIn, Stagger, StaggerItem } from "@/components/motion";
 
-const FAQS: Faq[] = [
-  {
-    question: "What is PartnerPulse?",
-    answer:
-      "PartnerPulse is VistaXM's program for OEMs and distributors. It gives them a neutral, benchmarked view of how their partners deliver customer experience across the journey, so they can see where revenue is at risk before it shows up in the numbers.",
-  },
-];
 
 export const Route = createFileRoute("/solutions/partnerpulse")({
   head: () => ({
@@ -43,7 +35,6 @@ export const Route = createFileRoute("/solutions/partnerpulse")({
       },
     ],
     links: [canonicalLink("/solutions/partnerpulse")],
-    scripts: [faqJsonLd(FAQS)],
   }),
   component: PartnerPulse,
 });
@@ -337,7 +328,7 @@ function PartnerPulse() {
         <GetTheBrief brief={BRIEFS.partnerpulse} />
       </Section>
 
-      <FAQSection items={FAQS} />
+
 
       <CTABand />
     </>

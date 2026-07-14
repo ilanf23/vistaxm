@@ -145,7 +145,36 @@ function BrokerPulse() {
             intro="We measure the experience across your broker and agency network, flag which relationships are at risk and which are ready to grow, and tie each signal to premium retention and expansion. The agencies quietly turning passive show up here long before production declines."
           />
           <Reveal delay={120}>
-            <InfluencerGapCard />
+            <InfluencerGapCard
+              accountName="Northwind Mutual Insurance"
+              rows={[
+                {
+                  label: "Executive / Decision Maker",
+                  value: 72,
+                  fill: "linear-gradient(90deg, var(--blue-cta), var(--blue-light))",
+                  glow: "0 0 16px rgba(49,133,252,0.45)",
+                },
+                {
+                  label: "Commercial",
+                  value: 58,
+                  fill: "linear-gradient(90deg, rgba(49,133,252,0.7), var(--blue-light))",
+                  glow: "0 0 12px rgba(103,166,255,0.35)",
+                },
+                {
+                  label: "Procurement",
+                  value: 49,
+                  fill: "linear-gradient(90deg, rgba(103,166,255,0.6), var(--blue-light))",
+                  glow: "0 0 12px rgba(103,166,255,0.3)",
+                },
+                {
+                  label: "Operations / Day-to-Day",
+                  value: 21,
+                  fill: "linear-gradient(90deg, #c95a26, var(--orange-pop))",
+                  glow: "0 0 20px rgba(246,130,65,0.6)",
+                  danger: true,
+                },
+              ]}
+            />
             <div className="mt-3 flex items-center gap-1.5 text-[0.68rem] font-semibold uppercase tracking-[0.12em] text-white/55">
               <span aria-hidden className="h-1 w-1 rounded-full bg-white/55" />
               Illustrative example

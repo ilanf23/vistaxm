@@ -36,7 +36,7 @@ export const Route = createFileRoute("/how-to-start")({
       {
         property: "og:description",
         content:
-          "Start small. Scale when it works. Prove the signal exists and that it changes a decision, then expand into the ongoing program.",
+          "Start small. Scale when ready. Prove the signal exists and that it changes a decision, then expand into the ongoing program.",
       },
     ],
     links: [canonicalLink("/how-to-start")],
@@ -119,7 +119,7 @@ function HowToStart() {
     <>
       <PageHero
         eyebrow="How to start"
-        title="Start small. Scale when it works."
+        title="Start small. Scale when ready."
         subtitle="Two ways in, both fully managed. Prove the signal exists and that it changes a decision, then expand into the ongoing program."
         primary={{ label: "Book a 30-minute call", to: BOOK_PATH }}
         visual={<ProgramArcChart />}
