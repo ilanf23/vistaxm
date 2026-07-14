@@ -1,9 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { BOOK_PATH, BRIEFS } from "@/lib/links";
-import { canonicalLink, faqJsonLd, type Faq } from "@/lib/seo";
+import { canonicalLink } from "@/lib/seo";
 import {
   CTABand,
-  FAQSection,
   GetTheBrief,
   InfluencerGapCard,
   PageHero,
@@ -16,14 +15,6 @@ import {
 import { BrokerBookMap } from "@/components/solutions-viz";
 import { AmbientBand } from "@/components/media";
 import { Stagger, StaggerItem } from "@/components/motion";
-
-const FAQS: Faq[] = [
-  {
-    question: "What is BrokerPulse?",
-    answer:
-      "BrokerPulse is VistaXM's program for insurance carriers. It measures broker experience, quantifies the premium at risk, and produces a Broker Advocacy Index, so carriers can see why some brokers sell more, stay longer, and advocate.",
-  },
-];
 
 export const Route = createFileRoute("/solutions/brokerpulse")({
   head: () => ({
