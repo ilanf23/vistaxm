@@ -140,6 +140,7 @@ const LEADERS: {
   initials: string;
   photo?: string;
   bio: string[];
+  linkedin?: string;
 }[] = [
   {
     name: "Erik Vogel",
