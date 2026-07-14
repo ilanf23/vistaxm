@@ -26,7 +26,7 @@ export const Route = createFileRoute("/for-oems")({
       {
         property: "og:description",
         content:
-          "You can see how your partners sell. You cannot see how they serve. VistaXM gives OEMs and distributors a neutral read on the whole channel.",
+          "You can see what your partners sell. You cannot see how they serve. VistaXM gives OEMs and distributors a neutral read on the whole channel.",
       },
     ],
     links: [canonicalLink("/for-oems")],
