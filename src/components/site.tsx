@@ -2166,8 +2166,9 @@ function EPlusNPSStat() {
         aria-hidden
         className="absolute left-0 top-0 h-[2px] w-10 bg-gradient-to-r from-[color:var(--orange-pop)] to-[color:var(--blue-cta)] transition-all duration-500 group-hover:w-16"
       />
-      <div className="mt-3 text-sm text-[color:var(--ink-soft)] leading-relaxed max-w-[22ch]">
-        Independently Validated NPS
+      <div className="mt-3 flex items-center gap-2.5 text-sm text-[color:var(--ink-soft)] leading-relaxed max-w-[22ch]">
+        <CertifiedScoreSeal className="h-10 w-10 flex-none" />
+        <span>Independently Validated NPS</span>
       </div>
     </a>
   );
