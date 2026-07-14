@@ -503,7 +503,7 @@ function About() {
         <SectionHead
           center
           eyebrow="Advisors"
-          title="Guided by people who ran the channel."
+          title="Guided by people who are passionate about the channel and revenue intelligence."
           intro="Backed by industry leaders in technology, strategy, and customer success."
         />
         <div className="mx-auto mt-12 grid max-w-6xl gap-6 md:mt-14 md:grid-cols-2 md:gap-8 lg:grid-cols-3">
