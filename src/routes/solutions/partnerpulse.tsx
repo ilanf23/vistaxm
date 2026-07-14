@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { BOOK_PATH, BRIEFS } from "@/lib/links";
-import { canonicalLink, faqJsonLd, type Faq } from "@/lib/seo";
+import { canonicalLink } from "@/lib/seo";
 import {
   CTABand,
   Card,
