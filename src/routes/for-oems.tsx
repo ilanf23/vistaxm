@@ -422,7 +422,7 @@ function ForOems() {
         eyebrow="For OEMs and distributors"
         title={
           <>
-            You can see how your <span className="whitespace-nowrap">partners sell.</span>
+            You can see what your <span className="whitespace-nowrap">partners sell.</span>
             <br className="hidden md:block" /> You cannot see how they serve.
           </>
         }
