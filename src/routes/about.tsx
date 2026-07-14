@@ -149,7 +149,7 @@ const LEADERS: {
       "We listen relentlessly, innovate boldly, and shape experiences that customers remember.",
     initials: "EV",
     photo: "/images/team/erik-vogel.avif",
-    bio: [
+    linkedin: "https://www.linkedin.com/in/erikvogel2020/",
       "Erik Vogel is the Chief Executive Officer of VistaXM, Inc. He spearheads the company's global go-to-market strategy and revenue growth, with VistaXM's sales, operations, and product management functions reporting directly to him.",
       "Erik is a seasoned global executive with more than 30 years' experience across the technology and services industries. He has a proven track record of success and a relentless drive for innovation, customer satisfaction, and continuous improvement. Erik previously served as Senior Vice President & Global Head of High-Tech, Telco, and Media at a leading experience-management software company.",
       "Prior to that, Erik held multiple senior leadership positions at HPE, Inc, a multinational information technology leader, including Global Vice President of Customer Experience and Global Vice President of Software Defined and Cloud Center of Excellence. Earlier in his career Erik held leadership roles with Cisco.",
