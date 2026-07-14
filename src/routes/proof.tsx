@@ -12,7 +12,7 @@ import {
   SectionHead,
 } from "@/components/site";
 import { AmbientBand } from "@/components/media";
-import { FadeIn, Floaty, Stagger, StaggerItem } from "@/components/motion";
+import { FadeIn, Stagger, StaggerItem } from "@/components/motion";
 import { useCountUp, useReveal } from "@/hooks/use-reveal";
 
 const FAQS: Faq[] = [
@@ -321,78 +321,23 @@ function SampleDeliverable({
 /* ---------------- Local: certified-NPS credential seal (hero visual) ---------------- */
 
 function SealMark({ className }: { className?: string }) {
-  // Official circular rosette seal for the dark hero. Built to read like a
-  // third-party certification badge: scalloped border, circular text, star
-  // accents, and the VistaXM mark at the center.
-  const c = 80;
-  const r = 62;
-  const points = 18;
-  const outer = 72;
-  const inner = 66;
-  let d = "";
-  for (let i = 0; i <= points * 2; i++) {
-    const angle = (Math.PI * 2 * i) / (points * 2) - Math.PI / 2;
-    const radius = i % 2 === 0 ? outer : inner;
-    const x = c + Math.cos(angle) * radius;
-    const y = c + Math.sin(angle) * radius;
-    d += (i === 0 ? "M" : "L") + ` ${x.toFixed(2)} ${y.toFixed(2)}`;
-  }
-  d += "Z";
-
+  // A rosette / verified badge: notched outer ring with an inner check.
   return (
-    <svg viewBox="0 0 160 160" fill="none" aria-hidden className={className}>
-      <defs>
-        <path id="seal-top" d={`M 28 80 A 52 52 0 0 1 132 80`} />
-        <path id="seal-bottom" d={`M 132 80 A 52 52 0 0 1 28 80`} />
-        <linearGradient id="seal-glow" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stopColor="rgba(103,166,255,0.35)" />
-          <stop offset="100%" stopColor="rgba(49,133,252,0.08)" />
-        </linearGradient>
-      </defs>
-
-      {/* Soft glow behind the seal */}
-      <circle cx={c} cy={c} r="78" fill="url(#seal-glow)" opacity="0.6" />
-
-      {/* Scalloped rosette border */}
+    <svg viewBox="0 0 48 48" fill="none" aria-hidden className={className}>
       <path
-        d={d}
-        fill="rgba(103,166,255,0.10)"
+        d="M24 3.5l4.6 2.9 5.4-.7 2.2 5 4.6 3-1.4 5.3 1.4 5.3-4.6 3-2.2 5-5.4-.7L24 44.5l-4.6-2.9-5.4.7-2.2-5-4.6-3 1.4-5.3L7.2 18l4.6-3 2.2-5 5.4.7L24 3.5z"
+        fill="rgba(103,166,255,0.14)"
         stroke="#67a6ff"
         strokeWidth="1.4"
         strokeLinejoin="round"
       />
-
-      {/* Inner rings */}
-      <circle cx={c} cy={c} r="58" stroke="#67a6ff" strokeWidth="1" opacity="0.35" />
-      <circle cx={c} cy={c} r="50" fill="rgba(103,166,255,0.06)" stroke="#67a6ff" strokeWidth="1.2" />
-
-      {/* Circular text */}
-      <text fill="#67a6ff" fontSize="12" fontWeight="700" letterSpacing="2.8" fontFamily="var(--font-display), ui-sans-serif, system-ui">
-        <textPath href="#seal-top" startOffset="50%" textAnchor="middle">
-          CERTIFIED NPS
-        </textPath>
-      </text>
-      <text fill="#9fc0e8" fontSize="8" fontWeight="700" letterSpacing="2.2" fontFamily="system-ui, Helvetica, Arial, sans-serif">
-        <textPath href="#seal-bottom" startOffset="50%" textAnchor="middle">
-          INDEPENDENTLY VERIFIED
-        </textPath>
-      </text>
-
-      {/* Star/diamond accents at 9 and 3 o'clock */}
-      <path d="M12 80l4-4 4 4-4 4z" fill="#f68241" />
-      <path d="M140 80l4-4 4 4-4 4z" fill="#f68241" />
-
-      {/* Center VistaXM play mark */}
-      <g transform={`translate(${c}, ${c})`}>
-        <path d="M-22 -16 L-22 16 L-2 0 Z" fill="#ffffff" />
-        <path d="M2 -16 L2 16 L22 0 Z" fill="#67a6ff" />
-      </g>
-
-      {/* Center wordmark */}
-      <text x={c} y="122" textAnchor="middle" fontSize="13" fontWeight="800" letterSpacing="1.2" fontFamily="var(--font-display), ui-sans-serif, system-ui">
-        <tspan fill="#ffffff">VISTA</tspan>
-        <tspan fill="#67a6ff">XM</tspan>
-      </text>
+      <path
+        d="M17.5 24.2l4.4 4.3 8.6-9"
+        stroke="#67a6ff"
+        strokeWidth="2.2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
     </svg>
   );
 }
@@ -453,9 +398,7 @@ function CertifiedSeal() {
       {/* Seal header */}
       <div className="flex items-start justify-between gap-4">
         <div className="flex items-center gap-3">
-          <Floaty className="flex-none" amplitude={6} duration={5}>
-            <SealMark className="h-16 w-16" />
-          </Floaty>
+          <CertifiedScoreSeal className="h-12 w-12 flex-none" />
           <div>
             <div className="text-[0.72rem] font-semibold uppercase tracking-[0.16em] text-[#67a6ff]">
               Certified NPS
