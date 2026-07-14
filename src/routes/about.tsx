@@ -164,6 +164,7 @@ const LEADERS: {
       "87% of companies say they provide excellent CX yet only 11% of customers agree. Which side is your company on?",
     initials: "PB",
     photo: "/images/team/paul.avif",
+    linkedin: "https://www.linkedin.com/in/pbarr97",
     bio: [
       "Paul Barr is the Chief Revenue Officer of VistaXM, Inc and is responsible for customer acquisition and revenue generation. With 25+ years of experience in operations, business development and sales across Fortune 50, channel and start-up organizations, Paul is driving the go-to-market strategy and enabling VistaXM's growth.",
       "Paul is a builder at heart. From his personal hobbies to his professional life, he has been instrumental in developing many early stage companies and helping them get to the next level. Paul embraces disruptive technology and challenging the status quo. As a result, he has helped numerous organizations transform their operations and become a trusted advisor. His teams operate with integrity, passion and focus on doing the right thing for the customer.",
