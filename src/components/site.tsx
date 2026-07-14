@@ -1763,7 +1763,7 @@ export function RevenueSignalCard({
 
 /* ---------------- Leadership ---------------- */
 
-function LinkedInIcon({ className }: { className?: string }) {
+export function LinkedInIcon({ className }: { className?: string }) {
   return (
     <svg
       viewBox="0 0 24 24"
