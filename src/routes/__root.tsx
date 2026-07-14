@@ -158,7 +158,7 @@ const solutions = [
 // links to the dedicated /for-oems page.
 const industries = [
   { to: "/for-oems", label: "IT OEMs" },
-  { to: "/industries/it-solution-providers", label: "IT Solution Providers" },
+  { to: "/industries/it-solution-providers", label: "IT Solution Providers/MSPs" },
   { to: "/industries/technology-providers", label: "Technology Providers" },
   { to: "/solutions/brokerpulse", label: "Insurance Carriers" },
   { to: "/solutions/brokerpulse", label: "Insurance Brokers" },
