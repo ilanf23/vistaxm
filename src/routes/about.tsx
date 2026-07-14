@@ -236,6 +236,7 @@ function LeaderProfileCard({
   initials,
   photo,
   bio,
+  linkedin,
   delay = 0,
 }: {
   name: string;
@@ -244,6 +245,7 @@ function LeaderProfileCard({
   initials: string;
   photo?: string;
   bio: string[];
+  linkedin?: string;
   delay?: number;
 }) {
   return (
@@ -269,8 +271,19 @@ function LeaderProfileCard({
           </span>
         </blockquote>
 
-        <div className="mt-auto pt-7">
+        <div className="mt-auto flex items-center justify-between gap-4 pt-7">
           <BioModal name={name} title={title} initials={initials} photo={photo} bio={bio} />
+          {linkedin && (
+            <a
+              href={linkedin}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`${name} on LinkedIn`}
+              className="inline-flex text-[color:var(--ink-soft)]/40 transition-colors hover:text-[color:var(--blue-cta)] group-hover:text-[color:var(--blue-cta)]"
+            >
+              <LinkedInIcon className="h-6 w-6" />
+            </a>
+          )}
         </div>
       </div>
     </FadeIn>
