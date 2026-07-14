@@ -89,12 +89,6 @@ const WHAT_IT_TELLS: { title: string; desc: string }[] = [
   },
 ];
 
-const PROOF_METRICS: { value: string; label: string }[] = [
-  { value: "62", label: "NPS vs a 40 to 55 industry average." },
-  { value: "20 pts", label: "Decision Maker to Influencer gap surfaced." },
-  { value: "$54M+", label: "Year 1 business value on a single program investment." },
-  { value: "Named", label: "Passive accounts, ranked by revenue gap." },
-];
 
 function ITSolutionProviders() {
   return (
@@ -162,41 +156,79 @@ function ITSolutionProviders() {
         <SectionHead
           eyebrow="Illustrative results"
           title="What a fully managed program can produce."
-          intro="Anonymized numbers from a real IT solution provider engagement. Not a real named client. Shown to make the shape of the outcome concrete."
+          intro="A look at the shape of a VistaXM executive readout, drawn from an illustrative IT solution provider engagement. Fictional client, illustrative figures, shown to make the outcome concrete."
         />
-        <div className="mt-12">
-          <Reveal>
-            <div className="relative overflow-hidden rounded-2xl hairline bg-white p-7 md:p-9">
-              <span
-                aria-hidden
-                className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-[color:var(--blue-cta)] to-[color:var(--blue-light)]"
-              />
-              <div className="flex items-center justify-between">
-                <span className="text-sm font-semibold uppercase tracking-[0.12em] text-[color:var(--blue-link)]">
-                  IT solution provider
-                </span>
-                <span className="flex items-center gap-1.5 whitespace-nowrap text-[0.68rem] font-semibold uppercase tracking-[0.12em] text-[color:var(--ink-soft)]">
-                  <span className="h-1.5 w-1.5 rounded-full bg-[color:var(--orange-pop)]" aria-hidden />
-                  Illustrative, not a real named client
-                </span>
-              </div>
-              <dl className="mt-8 grid gap-x-6 gap-y-8 sm:grid-cols-2 lg:grid-cols-4">
-                {PROOF_METRICS.map((m) => (
-                  <div key={m.label}>
-                    <dt
-                      className="text-4xl font-semibold tabular-nums tracking-tight text-[color:var(--navy-deep)]"
-                      style={{ fontFamily: "var(--font-display)" }}
-                    >
-                      {m.value}
-                    </dt>
-                    <dd className="mt-2 text-sm leading-relaxed text-[color:var(--ink-soft)]">
-                      {m.label}
-                    </dd>
+
+        <div className="mt-12 space-y-6">
+          <div className="grid gap-6 lg:grid-cols-[1.3fr_1fr]">
+            <Reveal>
+              <div className="relative h-full overflow-hidden rounded-2xl hairline bg-white p-7 md:p-9">
+                <span aria-hidden className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-[color:var(--blue-cta)] to-[color:var(--orange-pop)]" />
+                <span className="text-sm font-semibold uppercase tracking-[0.12em] text-[color:var(--blue-link)]">The headline</span>
+                <div className="mt-5 flex items-end gap-4">
+                  <span className="text-[5rem] font-semibold leading-[0.85] tracking-tight tabular-nums text-[color:var(--navy-deep)]" style={{ fontFamily: "var(--font-display)" }}>62</span>
+                  <span className="mb-2 text-sm font-medium leading-snug text-[color:var(--ink-soft)]">Certified NPS<br />Industry average 40 to 55</span>
+                </div>
+                <div className="mt-8">
+                  <div className="flex h-3 w-full overflow-hidden rounded-full">
+                    <span className="h-full" style={{ width: "74%", background: "linear-gradient(90deg, var(--blue-cta), var(--blue-light))" }} />
+                    <span className="h-full" style={{ width: "14%", background: "var(--blue-pale)" }} />
+                    <span className="h-full" style={{ width: "12%", background: "var(--orange-pop)" }} />
                   </div>
-                ))}
-              </dl>
+                  <div className="mt-4 grid grid-cols-3 gap-3 text-center">
+                    <div><div className="text-lg font-semibold tabular-nums text-[color:var(--navy-deep)]">74%</div><div className="text-xs text-[color:var(--ink-soft)]">Promoters</div></div>
+                    <div><div className="text-lg font-semibold tabular-nums text-[color:var(--navy-deep)]">14%</div><div className="text-xs text-[color:var(--ink-soft)]">Passives</div></div>
+                    <div><div className="text-lg font-semibold tabular-nums text-[color:var(--navy-deep)]">12%</div><div className="text-xs text-[color:var(--ink-soft)]">Detractors</div></div>
+                  </div>
+                  <p className="mt-5 text-sm leading-relaxed text-[color:var(--ink-soft)]">Promoters spend 6.8x more than passives on average. The gap between the two is the primary growth lever in the data.</p>
+                </div>
+              </div>
+            </Reveal>
+
+            <Reveal delay={100}>
+              <div className="relative flex h-full flex-col overflow-hidden rounded-2xl bg-[color:var(--navy-deep)] p-7 text-white md:p-9">
+                <span className="text-sm font-semibold uppercase tracking-[0.12em] text-[color:var(--blue-light)]">The Influencer gap</span>
+                <div className="mt-6 flex items-center justify-between">
+                  <div><div className="text-4xl font-semibold tabular-nums" style={{ fontFamily: "var(--font-display)" }}>76</div><div className="mt-1 text-xs text-white/60">Decision Makers</div></div>
+                  <div className="text-2xl text-white/40">&rarr;</div>
+                  <div><div className="text-4xl font-semibold tabular-nums" style={{ fontFamily: "var(--font-display)" }}>56</div><div className="mt-1 text-xs text-white/60">Influencers</div></div>
+                </div>
+                <div className="mt-auto rounded-xl bg-white/[0.06] p-4 text-center">
+                  <div className="text-3xl font-semibold tabular-nums text-[color:var(--orange-pop)]" style={{ fontFamily: "var(--font-display)" }}>20 pts</div>
+                  <div className="mt-1 text-xs leading-relaxed text-white/70">The gap that predicts renewal risk, invisible to an account-level score.</div>
+                </div>
+              </div>
+            </Reveal>
+          </div>
+
+          <Reveal>
+            <div className="relative overflow-hidden rounded-2xl hairline bg-[color:var(--blue-tint)] p-7 md:p-9">
+              <span className="text-sm font-semibold uppercase tracking-[0.12em] text-[color:var(--blue-link)]">The revenue story</span>
+              <p className="mt-2 text-sm text-[color:var(--ink-soft)]">Average annual spend by NPS tier. The tiers map directly to revenue.</p>
+              <div className="mt-6 grid gap-5 sm:grid-cols-3">
+                <div className="rounded-xl hairline bg-white p-5"><div className="text-3xl font-semibold tabular-nums text-[color:var(--navy-deep)]" style={{ fontFamily: "var(--font-display)" }}>$4.1M</div><div className="mt-1.5 text-sm font-semibold text-[color:var(--navy-deep)]">Promoters</div><div className="text-xs text-[color:var(--ink-soft)]">6.8x passives</div></div>
+                <div className="rounded-xl hairline bg-white p-5"><div className="text-3xl font-semibold tabular-nums text-[color:var(--navy-deep)]" style={{ fontFamily: "var(--font-display)" }}>$600K</div><div className="mt-1.5 text-sm font-semibold text-[color:var(--navy-deep)]">Passives</div><div className="text-xs text-[color:var(--ink-soft)]">2.7x detractors</div></div>
+                <div className="rounded-xl hairline bg-white p-5"><div className="text-3xl font-semibold tabular-nums text-[color:var(--navy-deep)]" style={{ fontFamily: "var(--font-display)" }}>$225K</div><div className="mt-1.5 text-sm font-semibold text-[color:var(--navy-deep)]">Detractors</div><div className="text-xs text-[color:var(--ink-soft)]">baseline</div></div>
+              </div>
+              <div className="mt-5 flex items-center gap-3 rounded-xl bg-[color:var(--navy-deep)] px-5 py-4 text-white">
+                <span className="flex-none text-2xl font-semibold tabular-nums text-[color:var(--orange-pop)]" style={{ fontFamily: "var(--font-display)" }}>$3.5M</span>
+                <span className="text-sm leading-snug">Additional average annual spend from converting one passive account to a promoter.</span>
+              </div>
             </div>
           </Reveal>
+
+          <Reveal>
+            <div className="grid gap-5 sm:grid-cols-3">
+              <div className="rounded-2xl hairline bg-white p-6"><div className="text-xs font-bold uppercase tracking-[0.12em] text-[color:var(--blue-link)]">Growth opportunity</div><div className="mt-3 text-4xl font-semibold tabular-nums text-[color:var(--navy-deep)]" style={{ fontFamily: "var(--font-display)" }}>$54.2M</div><div className="mt-1.5 text-sm leading-relaxed text-[color:var(--ink-soft)]">Top 10 passive accounts, annual revenue.</div></div>
+              <div className="rounded-2xl hairline bg-white p-6"><div className="text-xs font-bold uppercase tracking-[0.12em] text-[color:var(--orange-pop)]">Revenue protection</div><div className="mt-3 text-4xl font-semibold tabular-nums text-[color:var(--navy-deep)]" style={{ fontFamily: "var(--font-display)" }}>$10.0M</div><div className="mt-1.5 text-sm leading-relaxed text-[color:var(--ink-soft)]">Top 10 detractor accounts, renewal risk.</div></div>
+              <div className="rounded-2xl hairline bg-white p-6"><div className="text-xs font-bold uppercase tracking-[0.12em] text-[color:var(--ink-soft)]">Intelligence gap</div><div className="mt-3 text-4xl font-semibold tabular-nums text-[color:var(--navy-deep)]" style={{ fontFamily: "var(--font-display)" }}>$551M</div><div className="mt-1.5 text-sm leading-relaxed text-[color:var(--ink-soft)]">Uncharacterized base, next-cycle priority.</div></div>
+            </div>
+          </Reveal>
+
+          <div className="flex items-center gap-1.5 text-[0.68rem] font-semibold uppercase tracking-[0.12em] text-[color:var(--ink-soft)]">
+            <span className="h-1.5 w-1.5 rounded-full bg-[color:var(--orange-pop)]" aria-hidden />
+            Illustrative sample, based on a VistaXM executive readout. Fictional client, illustrative figures.
+          </div>
         </div>
       </Section>
 
