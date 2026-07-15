@@ -9,25 +9,57 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as WhitePapersRouteImport } from './routes/white-papers'
+import { Route as VideosRouteImport } from './routes/videos'
 import { Route as TheModelRouteImport } from './routes/the-model'
 import { Route as ProofRouteImport } from './routes/proof'
+import { Route as NewsRouteImport } from './routes/news'
 import { Route as InsightsRouteImport } from './routes/insights'
+import { Route as InsightHubRouteImport } from './routes/insight-hub'
 import { Route as HowToStartRouteImport } from './routes/how-to-start'
 import { Route as ForOemsRouteImport } from './routes/for-oems'
 import { Route as CrnRouteImport } from './routes/crn'
+import { Route as CompanyRouteImport } from './routes/company'
+import { Route as BrochuresRouteImport } from './routes/brochures'
 import { Route as BookRouteImport } from './routes/book'
+import { Route as ArticlesRouteImport } from './routes/articles'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as SolutionsIndexRouteImport } from './routes/solutions/index'
+import { Route as InsightHubIndexRouteImport } from './routes/insight-hub.index'
+import { Route as CompanyIndexRouteImport } from './routes/company.index'
+import { Route as WhitePapersSplatRouteImport } from './routes/white-papers.$'
+import { Route as VideosSplatRouteImport } from './routes/videos.$'
+import { Route as SolutionsUseCasesRouteImport } from './routes/solutions/use-cases'
+import { Route as SolutionsResultsWeDeliverRouteImport } from './routes/solutions/results-we-deliver'
 import { Route as SolutionsPartnerpulseRouteImport } from './routes/solutions/partnerpulse'
+import { Route as SolutionsMethodologyRouteImport } from './routes/solutions/methodology'
 import { Route as SolutionsIndustrialpulseRouteImport } from './routes/solutions/industrialpulse'
 import { Route as SolutionsBrokerpulseRouteImport } from './routes/solutions/brokerpulse'
+import { Route as NewsSplatRouteImport } from './routes/news.$'
 import { Route as LegalTermsOfServiceRouteImport } from './routes/legal/terms-of-service'
 import { Route as LegalPrivacyPolicyRouteImport } from './routes/legal/privacy-policy'
 import { Route as LegalCookiePolicyRouteImport } from './routes/legal/cookie-policy'
+import { Route as InsightHubRoiCalculatorRouteImport } from './routes/insight-hub.roi-calculator'
+import { Route as InsightHubCxMaturityAssessmentRouteImport } from './routes/insight-hub.cx-maturity-assessment'
+import { Route as InsightHubSplatRouteImport } from './routes/insight-hub.$'
 import { Route as IndustriesTechnologyProvidersRouteImport } from './routes/industries/technology-providers'
 import { Route as IndustriesItSolutionProvidersRouteImport } from './routes/industries/it-solution-providers'
+import { Route as CompanyLeadershipRouteImport } from './routes/company.leadership'
 import { Route as CaseStudiesJfPetroleumRouteImport } from './routes/case-studies/jf-petroleum'
+import { Route as BrochuresSplatRouteImport } from './routes/brochures.$'
+import { Route as ArticlesSplatRouteImport } from './routes/articles.$'
 
+const WhitePapersRoute = WhitePapersRouteImport.update({
+  id: '/white-papers',
+  path: '/white-papers',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const VideosRoute = VideosRouteImport.update({
+  id: '/videos',
+  path: '/videos',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const TheModelRoute = TheModelRouteImport.update({
   id: '/the-model',
   path: '/the-model',
@@ -38,9 +70,19 @@ const ProofRoute = ProofRouteImport.update({
   path: '/proof',
   getParentRoute: () => rootRouteImport,
 } as any)
+const NewsRoute = NewsRouteImport.update({
+  id: '/news',
+  path: '/news',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const InsightsRoute = InsightsRouteImport.update({
   id: '/insights',
   path: '/insights',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const InsightHubRoute = InsightHubRouteImport.update({
+  id: '/insight-hub',
+  path: '/insight-hub',
   getParentRoute: () => rootRouteImport,
 } as any)
 const HowToStartRoute = HowToStartRouteImport.update({
@@ -58,9 +100,24 @@ const CrnRoute = CrnRouteImport.update({
   path: '/crn',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CompanyRoute = CompanyRouteImport.update({
+  id: '/company',
+  path: '/company',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BrochuresRoute = BrochuresRouteImport.update({
+  id: '/brochures',
+  path: '/brochures',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const BookRoute = BookRouteImport.update({
   id: '/book',
   path: '/book',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ArticlesRoute = ArticlesRouteImport.update({
+  id: '/articles',
+  path: '/articles',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AboutRoute = AboutRouteImport.update({
@@ -73,9 +130,50 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SolutionsIndexRoute = SolutionsIndexRouteImport.update({
+  id: '/solutions/',
+  path: '/solutions/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const InsightHubIndexRoute = InsightHubIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => InsightHubRoute,
+} as any)
+const CompanyIndexRoute = CompanyIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => CompanyRoute,
+} as any)
+const WhitePapersSplatRoute = WhitePapersSplatRouteImport.update({
+  id: '/$',
+  path: '/$',
+  getParentRoute: () => WhitePapersRoute,
+} as any)
+const VideosSplatRoute = VideosSplatRouteImport.update({
+  id: '/$',
+  path: '/$',
+  getParentRoute: () => VideosRoute,
+} as any)
+const SolutionsUseCasesRoute = SolutionsUseCasesRouteImport.update({
+  id: '/solutions/use-cases',
+  path: '/solutions/use-cases',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SolutionsResultsWeDeliverRoute =
+  SolutionsResultsWeDeliverRouteImport.update({
+    id: '/solutions/results-we-deliver',
+    path: '/solutions/results-we-deliver',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const SolutionsPartnerpulseRoute = SolutionsPartnerpulseRouteImport.update({
   id: '/solutions/partnerpulse',
   path: '/solutions/partnerpulse',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SolutionsMethodologyRoute = SolutionsMethodologyRouteImport.update({
+  id: '/solutions/methodology',
+  path: '/solutions/methodology',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SolutionsIndustrialpulseRoute =
@@ -88,6 +186,11 @@ const SolutionsBrokerpulseRoute = SolutionsBrokerpulseRouteImport.update({
   id: '/solutions/brokerpulse',
   path: '/solutions/brokerpulse',
   getParentRoute: () => rootRouteImport,
+} as any)
+const NewsSplatRoute = NewsSplatRouteImport.update({
+  id: '/$',
+  path: '/$',
+  getParentRoute: () => NewsRoute,
 } as any)
 const LegalTermsOfServiceRoute = LegalTermsOfServiceRouteImport.update({
   id: '/legal/terms-of-service',
@@ -104,6 +207,22 @@ const LegalCookiePolicyRoute = LegalCookiePolicyRouteImport.update({
   path: '/legal/cookie-policy',
   getParentRoute: () => rootRouteImport,
 } as any)
+const InsightHubRoiCalculatorRoute = InsightHubRoiCalculatorRouteImport.update({
+  id: '/roi-calculator',
+  path: '/roi-calculator',
+  getParentRoute: () => InsightHubRoute,
+} as any)
+const InsightHubCxMaturityAssessmentRoute =
+  InsightHubCxMaturityAssessmentRouteImport.update({
+    id: '/cx-maturity-assessment',
+    path: '/cx-maturity-assessment',
+    getParentRoute: () => InsightHubRoute,
+  } as any)
+const InsightHubSplatRoute = InsightHubSplatRouteImport.update({
+  id: '/$',
+  path: '/$',
+  getParentRoute: () => InsightHubRoute,
+} as any)
 const IndustriesTechnologyProvidersRoute =
   IndustriesTechnologyProvidersRouteImport.update({
     id: '/industries/technology-providers',
@@ -116,146 +235,296 @@ const IndustriesItSolutionProvidersRoute =
     path: '/industries/it-solution-providers',
     getParentRoute: () => rootRouteImport,
   } as any)
+const CompanyLeadershipRoute = CompanyLeadershipRouteImport.update({
+  id: '/leadership',
+  path: '/leadership',
+  getParentRoute: () => CompanyRoute,
+} as any)
 const CaseStudiesJfPetroleumRoute = CaseStudiesJfPetroleumRouteImport.update({
   id: '/case-studies/jf-petroleum',
   path: '/case-studies/jf-petroleum',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BrochuresSplatRoute = BrochuresSplatRouteImport.update({
+  id: '/$',
+  path: '/$',
+  getParentRoute: () => BrochuresRoute,
+} as any)
+const ArticlesSplatRoute = ArticlesSplatRouteImport.update({
+  id: '/$',
+  path: '/$',
+  getParentRoute: () => ArticlesRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/articles': typeof ArticlesRouteWithChildren
   '/book': typeof BookRoute
+  '/brochures': typeof BrochuresRouteWithChildren
+  '/company': typeof CompanyRouteWithChildren
   '/crn': typeof CrnRoute
   '/for-oems': typeof ForOemsRoute
   '/how-to-start': typeof HowToStartRoute
+  '/insight-hub': typeof InsightHubRouteWithChildren
   '/insights': typeof InsightsRoute
+  '/news': typeof NewsRouteWithChildren
   '/proof': typeof ProofRoute
   '/the-model': typeof TheModelRoute
+  '/videos': typeof VideosRouteWithChildren
+  '/white-papers': typeof WhitePapersRouteWithChildren
+  '/articles/$': typeof ArticlesSplatRoute
+  '/brochures/$': typeof BrochuresSplatRoute
   '/case-studies/jf-petroleum': typeof CaseStudiesJfPetroleumRoute
+  '/company/leadership': typeof CompanyLeadershipRoute
   '/industries/it-solution-providers': typeof IndustriesItSolutionProvidersRoute
   '/industries/technology-providers': typeof IndustriesTechnologyProvidersRoute
+  '/insight-hub/$': typeof InsightHubSplatRoute
+  '/insight-hub/cx-maturity-assessment': typeof InsightHubCxMaturityAssessmentRoute
+  '/insight-hub/roi-calculator': typeof InsightHubRoiCalculatorRoute
   '/legal/cookie-policy': typeof LegalCookiePolicyRoute
   '/legal/privacy-policy': typeof LegalPrivacyPolicyRoute
   '/legal/terms-of-service': typeof LegalTermsOfServiceRoute
+  '/news/$': typeof NewsSplatRoute
   '/solutions/brokerpulse': typeof SolutionsBrokerpulseRoute
   '/solutions/industrialpulse': typeof SolutionsIndustrialpulseRoute
+  '/solutions/methodology': typeof SolutionsMethodologyRoute
   '/solutions/partnerpulse': typeof SolutionsPartnerpulseRoute
+  '/solutions/results-we-deliver': typeof SolutionsResultsWeDeliverRoute
+  '/solutions/use-cases': typeof SolutionsUseCasesRoute
+  '/videos/$': typeof VideosSplatRoute
+  '/white-papers/$': typeof WhitePapersSplatRoute
+  '/company/': typeof CompanyIndexRoute
+  '/insight-hub/': typeof InsightHubIndexRoute
+  '/solutions/': typeof SolutionsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/articles': typeof ArticlesRouteWithChildren
   '/book': typeof BookRoute
+  '/brochures': typeof BrochuresRouteWithChildren
   '/crn': typeof CrnRoute
   '/for-oems': typeof ForOemsRoute
   '/how-to-start': typeof HowToStartRoute
   '/insights': typeof InsightsRoute
+  '/news': typeof NewsRouteWithChildren
   '/proof': typeof ProofRoute
   '/the-model': typeof TheModelRoute
+  '/videos': typeof VideosRouteWithChildren
+  '/white-papers': typeof WhitePapersRouteWithChildren
+  '/articles/$': typeof ArticlesSplatRoute
+  '/brochures/$': typeof BrochuresSplatRoute
   '/case-studies/jf-petroleum': typeof CaseStudiesJfPetroleumRoute
+  '/company/leadership': typeof CompanyLeadershipRoute
   '/industries/it-solution-providers': typeof IndustriesItSolutionProvidersRoute
   '/industries/technology-providers': typeof IndustriesTechnologyProvidersRoute
+  '/insight-hub/$': typeof InsightHubSplatRoute
+  '/insight-hub/cx-maturity-assessment': typeof InsightHubCxMaturityAssessmentRoute
+  '/insight-hub/roi-calculator': typeof InsightHubRoiCalculatorRoute
   '/legal/cookie-policy': typeof LegalCookiePolicyRoute
   '/legal/privacy-policy': typeof LegalPrivacyPolicyRoute
   '/legal/terms-of-service': typeof LegalTermsOfServiceRoute
+  '/news/$': typeof NewsSplatRoute
   '/solutions/brokerpulse': typeof SolutionsBrokerpulseRoute
   '/solutions/industrialpulse': typeof SolutionsIndustrialpulseRoute
+  '/solutions/methodology': typeof SolutionsMethodologyRoute
   '/solutions/partnerpulse': typeof SolutionsPartnerpulseRoute
+  '/solutions/results-we-deliver': typeof SolutionsResultsWeDeliverRoute
+  '/solutions/use-cases': typeof SolutionsUseCasesRoute
+  '/videos/$': typeof VideosSplatRoute
+  '/white-papers/$': typeof WhitePapersSplatRoute
+  '/company': typeof CompanyIndexRoute
+  '/insight-hub': typeof InsightHubIndexRoute
+  '/solutions': typeof SolutionsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/articles': typeof ArticlesRouteWithChildren
   '/book': typeof BookRoute
+  '/brochures': typeof BrochuresRouteWithChildren
+  '/company': typeof CompanyRouteWithChildren
   '/crn': typeof CrnRoute
   '/for-oems': typeof ForOemsRoute
   '/how-to-start': typeof HowToStartRoute
+  '/insight-hub': typeof InsightHubRouteWithChildren
   '/insights': typeof InsightsRoute
+  '/news': typeof NewsRouteWithChildren
   '/proof': typeof ProofRoute
   '/the-model': typeof TheModelRoute
+  '/videos': typeof VideosRouteWithChildren
+  '/white-papers': typeof WhitePapersRouteWithChildren
+  '/articles/$': typeof ArticlesSplatRoute
+  '/brochures/$': typeof BrochuresSplatRoute
   '/case-studies/jf-petroleum': typeof CaseStudiesJfPetroleumRoute
+  '/company/leadership': typeof CompanyLeadershipRoute
   '/industries/it-solution-providers': typeof IndustriesItSolutionProvidersRoute
   '/industries/technology-providers': typeof IndustriesTechnologyProvidersRoute
+  '/insight-hub/$': typeof InsightHubSplatRoute
+  '/insight-hub/cx-maturity-assessment': typeof InsightHubCxMaturityAssessmentRoute
+  '/insight-hub/roi-calculator': typeof InsightHubRoiCalculatorRoute
   '/legal/cookie-policy': typeof LegalCookiePolicyRoute
   '/legal/privacy-policy': typeof LegalPrivacyPolicyRoute
   '/legal/terms-of-service': typeof LegalTermsOfServiceRoute
+  '/news/$': typeof NewsSplatRoute
   '/solutions/brokerpulse': typeof SolutionsBrokerpulseRoute
   '/solutions/industrialpulse': typeof SolutionsIndustrialpulseRoute
+  '/solutions/methodology': typeof SolutionsMethodologyRoute
   '/solutions/partnerpulse': typeof SolutionsPartnerpulseRoute
+  '/solutions/results-we-deliver': typeof SolutionsResultsWeDeliverRoute
+  '/solutions/use-cases': typeof SolutionsUseCasesRoute
+  '/videos/$': typeof VideosSplatRoute
+  '/white-papers/$': typeof WhitePapersSplatRoute
+  '/company/': typeof CompanyIndexRoute
+  '/insight-hub/': typeof InsightHubIndexRoute
+  '/solutions/': typeof SolutionsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
     | '/about'
+    | '/articles'
     | '/book'
+    | '/brochures'
+    | '/company'
     | '/crn'
     | '/for-oems'
     | '/how-to-start'
+    | '/insight-hub'
     | '/insights'
+    | '/news'
     | '/proof'
     | '/the-model'
+    | '/videos'
+    | '/white-papers'
+    | '/articles/$'
+    | '/brochures/$'
     | '/case-studies/jf-petroleum'
+    | '/company/leadership'
     | '/industries/it-solution-providers'
     | '/industries/technology-providers'
+    | '/insight-hub/$'
+    | '/insight-hub/cx-maturity-assessment'
+    | '/insight-hub/roi-calculator'
     | '/legal/cookie-policy'
     | '/legal/privacy-policy'
     | '/legal/terms-of-service'
+    | '/news/$'
     | '/solutions/brokerpulse'
     | '/solutions/industrialpulse'
+    | '/solutions/methodology'
     | '/solutions/partnerpulse'
+    | '/solutions/results-we-deliver'
+    | '/solutions/use-cases'
+    | '/videos/$'
+    | '/white-papers/$'
+    | '/company/'
+    | '/insight-hub/'
+    | '/solutions/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/about'
+    | '/articles'
     | '/book'
+    | '/brochures'
     | '/crn'
     | '/for-oems'
     | '/how-to-start'
     | '/insights'
+    | '/news'
     | '/proof'
     | '/the-model'
+    | '/videos'
+    | '/white-papers'
+    | '/articles/$'
+    | '/brochures/$'
     | '/case-studies/jf-petroleum'
+    | '/company/leadership'
     | '/industries/it-solution-providers'
     | '/industries/technology-providers'
+    | '/insight-hub/$'
+    | '/insight-hub/cx-maturity-assessment'
+    | '/insight-hub/roi-calculator'
     | '/legal/cookie-policy'
     | '/legal/privacy-policy'
     | '/legal/terms-of-service'
+    | '/news/$'
     | '/solutions/brokerpulse'
     | '/solutions/industrialpulse'
+    | '/solutions/methodology'
     | '/solutions/partnerpulse'
+    | '/solutions/results-we-deliver'
+    | '/solutions/use-cases'
+    | '/videos/$'
+    | '/white-papers/$'
+    | '/company'
+    | '/insight-hub'
+    | '/solutions'
   id:
     | '__root__'
     | '/'
     | '/about'
+    | '/articles'
     | '/book'
+    | '/brochures'
+    | '/company'
     | '/crn'
     | '/for-oems'
     | '/how-to-start'
+    | '/insight-hub'
     | '/insights'
+    | '/news'
     | '/proof'
     | '/the-model'
+    | '/videos'
+    | '/white-papers'
+    | '/articles/$'
+    | '/brochures/$'
     | '/case-studies/jf-petroleum'
+    | '/company/leadership'
     | '/industries/it-solution-providers'
     | '/industries/technology-providers'
+    | '/insight-hub/$'
+    | '/insight-hub/cx-maturity-assessment'
+    | '/insight-hub/roi-calculator'
     | '/legal/cookie-policy'
     | '/legal/privacy-policy'
     | '/legal/terms-of-service'
+    | '/news/$'
     | '/solutions/brokerpulse'
     | '/solutions/industrialpulse'
+    | '/solutions/methodology'
     | '/solutions/partnerpulse'
+    | '/solutions/results-we-deliver'
+    | '/solutions/use-cases'
+    | '/videos/$'
+    | '/white-papers/$'
+    | '/company/'
+    | '/insight-hub/'
+    | '/solutions/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
+  ArticlesRoute: typeof ArticlesRouteWithChildren
   BookRoute: typeof BookRoute
+  BrochuresRoute: typeof BrochuresRouteWithChildren
+  CompanyRoute: typeof CompanyRouteWithChildren
   CrnRoute: typeof CrnRoute
   ForOemsRoute: typeof ForOemsRoute
   HowToStartRoute: typeof HowToStartRoute
+  InsightHubRoute: typeof InsightHubRouteWithChildren
   InsightsRoute: typeof InsightsRoute
+  NewsRoute: typeof NewsRouteWithChildren
   ProofRoute: typeof ProofRoute
   TheModelRoute: typeof TheModelRoute
+  VideosRoute: typeof VideosRouteWithChildren
+  WhitePapersRoute: typeof WhitePapersRouteWithChildren
   CaseStudiesJfPetroleumRoute: typeof CaseStudiesJfPetroleumRoute
   IndustriesItSolutionProvidersRoute: typeof IndustriesItSolutionProvidersRoute
   IndustriesTechnologyProvidersRoute: typeof IndustriesTechnologyProvidersRoute
@@ -264,11 +533,29 @@ export interface RootRouteChildren {
   LegalTermsOfServiceRoute: typeof LegalTermsOfServiceRoute
   SolutionsBrokerpulseRoute: typeof SolutionsBrokerpulseRoute
   SolutionsIndustrialpulseRoute: typeof SolutionsIndustrialpulseRoute
+  SolutionsMethodologyRoute: typeof SolutionsMethodologyRoute
   SolutionsPartnerpulseRoute: typeof SolutionsPartnerpulseRoute
+  SolutionsResultsWeDeliverRoute: typeof SolutionsResultsWeDeliverRoute
+  SolutionsUseCasesRoute: typeof SolutionsUseCasesRoute
+  SolutionsIndexRoute: typeof SolutionsIndexRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/white-papers': {
+      id: '/white-papers'
+      path: '/white-papers'
+      fullPath: '/white-papers'
+      preLoaderRoute: typeof WhitePapersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/videos': {
+      id: '/videos'
+      path: '/videos'
+      fullPath: '/videos'
+      preLoaderRoute: typeof VideosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/the-model': {
       id: '/the-model'
       path: '/the-model'
@@ -283,11 +570,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProofRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/news': {
+      id: '/news'
+      path: '/news'
+      fullPath: '/news'
+      preLoaderRoute: typeof NewsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/insights': {
       id: '/insights'
       path: '/insights'
       fullPath: '/insights'
       preLoaderRoute: typeof InsightsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/insight-hub': {
+      id: '/insight-hub'
+      path: '/insight-hub'
+      fullPath: '/insight-hub'
+      preLoaderRoute: typeof InsightHubRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/how-to-start': {
@@ -311,11 +612,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CrnRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/company': {
+      id: '/company'
+      path: '/company'
+      fullPath: '/company'
+      preLoaderRoute: typeof CompanyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/brochures': {
+      id: '/brochures'
+      path: '/brochures'
+      fullPath: '/brochures'
+      preLoaderRoute: typeof BrochuresRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/book': {
       id: '/book'
       path: '/book'
       fullPath: '/book'
       preLoaderRoute: typeof BookRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/articles': {
+      id: '/articles'
+      path: '/articles'
+      fullPath: '/articles'
+      preLoaderRoute: typeof ArticlesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/about': {
@@ -332,11 +654,67 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/solutions/': {
+      id: '/solutions/'
+      path: '/solutions'
+      fullPath: '/solutions/'
+      preLoaderRoute: typeof SolutionsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/insight-hub/': {
+      id: '/insight-hub/'
+      path: '/'
+      fullPath: '/insight-hub/'
+      preLoaderRoute: typeof InsightHubIndexRouteImport
+      parentRoute: typeof InsightHubRoute
+    }
+    '/company/': {
+      id: '/company/'
+      path: '/'
+      fullPath: '/company/'
+      preLoaderRoute: typeof CompanyIndexRouteImport
+      parentRoute: typeof CompanyRoute
+    }
+    '/white-papers/$': {
+      id: '/white-papers/$'
+      path: '/$'
+      fullPath: '/white-papers/$'
+      preLoaderRoute: typeof WhitePapersSplatRouteImport
+      parentRoute: typeof WhitePapersRoute
+    }
+    '/videos/$': {
+      id: '/videos/$'
+      path: '/$'
+      fullPath: '/videos/$'
+      preLoaderRoute: typeof VideosSplatRouteImport
+      parentRoute: typeof VideosRoute
+    }
+    '/solutions/use-cases': {
+      id: '/solutions/use-cases'
+      path: '/solutions/use-cases'
+      fullPath: '/solutions/use-cases'
+      preLoaderRoute: typeof SolutionsUseCasesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/solutions/results-we-deliver': {
+      id: '/solutions/results-we-deliver'
+      path: '/solutions/results-we-deliver'
+      fullPath: '/solutions/results-we-deliver'
+      preLoaderRoute: typeof SolutionsResultsWeDeliverRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/solutions/partnerpulse': {
       id: '/solutions/partnerpulse'
       path: '/solutions/partnerpulse'
       fullPath: '/solutions/partnerpulse'
       preLoaderRoute: typeof SolutionsPartnerpulseRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/solutions/methodology': {
+      id: '/solutions/methodology'
+      path: '/solutions/methodology'
+      fullPath: '/solutions/methodology'
+      preLoaderRoute: typeof SolutionsMethodologyRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/solutions/industrialpulse': {
@@ -352,6 +730,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/solutions/brokerpulse'
       preLoaderRoute: typeof SolutionsBrokerpulseRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/news/$': {
+      id: '/news/$'
+      path: '/$'
+      fullPath: '/news/$'
+      preLoaderRoute: typeof NewsSplatRouteImport
+      parentRoute: typeof NewsRoute
     }
     '/legal/terms-of-service': {
       id: '/legal/terms-of-service'
@@ -374,6 +759,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LegalCookiePolicyRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/insight-hub/roi-calculator': {
+      id: '/insight-hub/roi-calculator'
+      path: '/roi-calculator'
+      fullPath: '/insight-hub/roi-calculator'
+      preLoaderRoute: typeof InsightHubRoiCalculatorRouteImport
+      parentRoute: typeof InsightHubRoute
+    }
+    '/insight-hub/cx-maturity-assessment': {
+      id: '/insight-hub/cx-maturity-assessment'
+      path: '/cx-maturity-assessment'
+      fullPath: '/insight-hub/cx-maturity-assessment'
+      preLoaderRoute: typeof InsightHubCxMaturityAssessmentRouteImport
+      parentRoute: typeof InsightHubRoute
+    }
+    '/insight-hub/$': {
+      id: '/insight-hub/$'
+      path: '/$'
+      fullPath: '/insight-hub/$'
+      preLoaderRoute: typeof InsightHubSplatRouteImport
+      parentRoute: typeof InsightHubRoute
+    }
     '/industries/technology-providers': {
       id: '/industries/technology-providers'
       path: '/industries/technology-providers'
@@ -388,6 +794,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndustriesItSolutionProvidersRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/company/leadership': {
+      id: '/company/leadership'
+      path: '/leadership'
+      fullPath: '/company/leadership'
+      preLoaderRoute: typeof CompanyLeadershipRouteImport
+      parentRoute: typeof CompanyRoute
+    }
     '/case-studies/jf-petroleum': {
       id: '/case-studies/jf-petroleum'
       path: '/case-studies/jf-petroleum'
@@ -395,19 +808,128 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CaseStudiesJfPetroleumRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/brochures/$': {
+      id: '/brochures/$'
+      path: '/$'
+      fullPath: '/brochures/$'
+      preLoaderRoute: typeof BrochuresSplatRouteImport
+      parentRoute: typeof BrochuresRoute
+    }
+    '/articles/$': {
+      id: '/articles/$'
+      path: '/$'
+      fullPath: '/articles/$'
+      preLoaderRoute: typeof ArticlesSplatRouteImport
+      parentRoute: typeof ArticlesRoute
+    }
   }
 }
+
+interface ArticlesRouteChildren {
+  ArticlesSplatRoute: typeof ArticlesSplatRoute
+}
+
+const ArticlesRouteChildren: ArticlesRouteChildren = {
+  ArticlesSplatRoute: ArticlesSplatRoute,
+}
+
+const ArticlesRouteWithChildren = ArticlesRoute._addFileChildren(
+  ArticlesRouteChildren,
+)
+
+interface BrochuresRouteChildren {
+  BrochuresSplatRoute: typeof BrochuresSplatRoute
+}
+
+const BrochuresRouteChildren: BrochuresRouteChildren = {
+  BrochuresSplatRoute: BrochuresSplatRoute,
+}
+
+const BrochuresRouteWithChildren = BrochuresRoute._addFileChildren(
+  BrochuresRouteChildren,
+)
+
+interface CompanyRouteChildren {
+  CompanyLeadershipRoute: typeof CompanyLeadershipRoute
+  CompanyIndexRoute: typeof CompanyIndexRoute
+}
+
+const CompanyRouteChildren: CompanyRouteChildren = {
+  CompanyLeadershipRoute: CompanyLeadershipRoute,
+  CompanyIndexRoute: CompanyIndexRoute,
+}
+
+const CompanyRouteWithChildren =
+  CompanyRoute._addFileChildren(CompanyRouteChildren)
+
+interface InsightHubRouteChildren {
+  InsightHubSplatRoute: typeof InsightHubSplatRoute
+  InsightHubCxMaturityAssessmentRoute: typeof InsightHubCxMaturityAssessmentRoute
+  InsightHubRoiCalculatorRoute: typeof InsightHubRoiCalculatorRoute
+  InsightHubIndexRoute: typeof InsightHubIndexRoute
+}
+
+const InsightHubRouteChildren: InsightHubRouteChildren = {
+  InsightHubSplatRoute: InsightHubSplatRoute,
+  InsightHubCxMaturityAssessmentRoute: InsightHubCxMaturityAssessmentRoute,
+  InsightHubRoiCalculatorRoute: InsightHubRoiCalculatorRoute,
+  InsightHubIndexRoute: InsightHubIndexRoute,
+}
+
+const InsightHubRouteWithChildren = InsightHubRoute._addFileChildren(
+  InsightHubRouteChildren,
+)
+
+interface NewsRouteChildren {
+  NewsSplatRoute: typeof NewsSplatRoute
+}
+
+const NewsRouteChildren: NewsRouteChildren = {
+  NewsSplatRoute: NewsSplatRoute,
+}
+
+const NewsRouteWithChildren = NewsRoute._addFileChildren(NewsRouteChildren)
+
+interface VideosRouteChildren {
+  VideosSplatRoute: typeof VideosSplatRoute
+}
+
+const VideosRouteChildren: VideosRouteChildren = {
+  VideosSplatRoute: VideosSplatRoute,
+}
+
+const VideosRouteWithChildren =
+  VideosRoute._addFileChildren(VideosRouteChildren)
+
+interface WhitePapersRouteChildren {
+  WhitePapersSplatRoute: typeof WhitePapersSplatRoute
+}
+
+const WhitePapersRouteChildren: WhitePapersRouteChildren = {
+  WhitePapersSplatRoute: WhitePapersSplatRoute,
+}
+
+const WhitePapersRouteWithChildren = WhitePapersRoute._addFileChildren(
+  WhitePapersRouteChildren,
+)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
+  ArticlesRoute: ArticlesRouteWithChildren,
   BookRoute: BookRoute,
+  BrochuresRoute: BrochuresRouteWithChildren,
+  CompanyRoute: CompanyRouteWithChildren,
   CrnRoute: CrnRoute,
   ForOemsRoute: ForOemsRoute,
   HowToStartRoute: HowToStartRoute,
+  InsightHubRoute: InsightHubRouteWithChildren,
   InsightsRoute: InsightsRoute,
+  NewsRoute: NewsRouteWithChildren,
   ProofRoute: ProofRoute,
   TheModelRoute: TheModelRoute,
+  VideosRoute: VideosRouteWithChildren,
+  WhitePapersRoute: WhitePapersRouteWithChildren,
   CaseStudiesJfPetroleumRoute: CaseStudiesJfPetroleumRoute,
   IndustriesItSolutionProvidersRoute: IndustriesItSolutionProvidersRoute,
   IndustriesTechnologyProvidersRoute: IndustriesTechnologyProvidersRoute,
@@ -416,7 +938,11 @@ const rootRouteChildren: RootRouteChildren = {
   LegalTermsOfServiceRoute: LegalTermsOfServiceRoute,
   SolutionsBrokerpulseRoute: SolutionsBrokerpulseRoute,
   SolutionsIndustrialpulseRoute: SolutionsIndustrialpulseRoute,
+  SolutionsMethodologyRoute: SolutionsMethodologyRoute,
   SolutionsPartnerpulseRoute: SolutionsPartnerpulseRoute,
+  SolutionsResultsWeDeliverRoute: SolutionsResultsWeDeliverRoute,
+  SolutionsUseCasesRoute: SolutionsUseCasesRoute,
+  SolutionsIndexRoute: SolutionsIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
