@@ -32,6 +32,7 @@ import { Route as InsightHubSplatRouteImport } from './routes/insight-hub.$'
 import { Route as IndustriesTechnologyProvidersRouteImport } from './routes/industries/technology-providers'
 import { Route as IndustriesItSolutionProvidersRouteImport } from './routes/industries/it-solution-providers'
 import { Route as CaseStudiesJfPetroleumRouteImport } from './routes/case-studies/jf-petroleum'
+import { Route as ArticlesSplatRouteImport } from './routes/articles.$'
 
 const TheModelRoute = TheModelRouteImport.update({
   id: '/the-model',
@@ -152,11 +153,16 @@ const CaseStudiesJfPetroleumRoute = CaseStudiesJfPetroleumRouteImport.update({
   path: '/case-studies/jf-petroleum',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ArticlesSplatRoute = ArticlesSplatRouteImport.update({
+  id: '/$',
+  path: '/$',
+  getParentRoute: () => ArticlesRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
-  '/articles': typeof ArticlesRoute
+  '/articles': typeof ArticlesRouteWithChildren
   '/book': typeof BookRoute
   '/crn': typeof CrnRoute
   '/for-oems': typeof ForOemsRoute
@@ -165,6 +171,7 @@ export interface FileRoutesByFullPath {
   '/insights': typeof InsightsRoute
   '/proof': typeof ProofRoute
   '/the-model': typeof TheModelRoute
+  '/articles/$': typeof ArticlesSplatRoute
   '/case-studies/jf-petroleum': typeof CaseStudiesJfPetroleumRoute
   '/industries/it-solution-providers': typeof IndustriesItSolutionProvidersRoute
   '/industries/technology-providers': typeof IndustriesTechnologyProvidersRoute
@@ -181,7 +188,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
-  '/articles': typeof ArticlesRoute
+  '/articles': typeof ArticlesRouteWithChildren
   '/book': typeof BookRoute
   '/crn': typeof CrnRoute
   '/for-oems': typeof ForOemsRoute
@@ -190,6 +197,7 @@ export interface FileRoutesByTo {
   '/insights': typeof InsightsRoute
   '/proof': typeof ProofRoute
   '/the-model': typeof TheModelRoute
+  '/articles/$': typeof ArticlesSplatRoute
   '/case-studies/jf-petroleum': typeof CaseStudiesJfPetroleumRoute
   '/industries/it-solution-providers': typeof IndustriesItSolutionProvidersRoute
   '/industries/technology-providers': typeof IndustriesTechnologyProvidersRoute
@@ -207,7 +215,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
-  '/articles': typeof ArticlesRoute
+  '/articles': typeof ArticlesRouteWithChildren
   '/book': typeof BookRoute
   '/crn': typeof CrnRoute
   '/for-oems': typeof ForOemsRoute
@@ -216,6 +224,7 @@ export interface FileRoutesById {
   '/insights': typeof InsightsRoute
   '/proof': typeof ProofRoute
   '/the-model': typeof TheModelRoute
+  '/articles/$': typeof ArticlesSplatRoute
   '/case-studies/jf-petroleum': typeof CaseStudiesJfPetroleumRoute
   '/industries/it-solution-providers': typeof IndustriesItSolutionProvidersRoute
   '/industries/technology-providers': typeof IndustriesTechnologyProvidersRoute
@@ -243,6 +252,7 @@ export interface FileRouteTypes {
     | '/insights'
     | '/proof'
     | '/the-model'
+    | '/articles/$'
     | '/case-studies/jf-petroleum'
     | '/industries/it-solution-providers'
     | '/industries/technology-providers'
@@ -268,6 +278,7 @@ export interface FileRouteTypes {
     | '/insights'
     | '/proof'
     | '/the-model'
+    | '/articles/$'
     | '/case-studies/jf-petroleum'
     | '/industries/it-solution-providers'
     | '/industries/technology-providers'
@@ -293,6 +304,7 @@ export interface FileRouteTypes {
     | '/insights'
     | '/proof'
     | '/the-model'
+    | '/articles/$'
     | '/case-studies/jf-petroleum'
     | '/industries/it-solution-providers'
     | '/industries/technology-providers'
@@ -310,7 +322,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
-  ArticlesRoute: typeof ArticlesRoute
+  ArticlesRoute: typeof ArticlesRouteWithChildren
   BookRoute: typeof BookRoute
   CrnRoute: typeof CrnRoute
   ForOemsRoute: typeof ForOemsRoute
@@ -493,8 +505,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CaseStudiesJfPetroleumRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/articles/$': {
+      id: '/articles/$'
+      path: '/$'
+      fullPath: '/articles/$'
+      preLoaderRoute: typeof ArticlesSplatRouteImport
+      parentRoute: typeof ArticlesRoute
+    }
   }
 }
+
+interface ArticlesRouteChildren {
+  ArticlesSplatRoute: typeof ArticlesSplatRoute
+}
+
+const ArticlesRouteChildren: ArticlesRouteChildren = {
+  ArticlesSplatRoute: ArticlesSplatRoute,
+}
+
+const ArticlesRouteWithChildren = ArticlesRoute._addFileChildren(
+  ArticlesRouteChildren,
+)
 
 interface InsightHubRouteChildren {
   InsightHubSplatRoute: typeof InsightHubSplatRoute
@@ -515,7 +546,7 @@ const InsightHubRouteWithChildren = InsightHubRoute._addFileChildren(
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
-  ArticlesRoute: ArticlesRoute,
+  ArticlesRoute: ArticlesRouteWithChildren,
   BookRoute: BookRoute,
   CrnRoute: CrnRoute,
   ForOemsRoute: ForOemsRoute,
