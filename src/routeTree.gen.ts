@@ -13,6 +13,7 @@ import { Route as WhitePapersRouteImport } from './routes/white-papers'
 import { Route as VideosRouteImport } from './routes/videos'
 import { Route as TheModelRouteImport } from './routes/the-model'
 import { Route as ProofRouteImport } from './routes/proof'
+import { Route as NewsRouteImport } from './routes/news'
 import { Route as InsightsRouteImport } from './routes/insights'
 import { Route as InsightHubRouteImport } from './routes/insight-hub'
 import { Route as HowToStartRouteImport } from './routes/how-to-start'
@@ -58,6 +59,11 @@ const TheModelRoute = TheModelRouteImport.update({
 const ProofRoute = ProofRouteImport.update({
   id: '/proof',
   path: '/proof',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const NewsRoute = NewsRouteImport.update({
+  id: '/news',
+  path: '/news',
   getParentRoute: () => rootRouteImport,
 } as any)
 const InsightsRoute = InsightsRouteImport.update({
@@ -206,6 +212,7 @@ export interface FileRoutesByFullPath {
   '/how-to-start': typeof HowToStartRoute
   '/insight-hub': typeof InsightHubRouteWithChildren
   '/insights': typeof InsightsRoute
+  '/news': typeof NewsRoute
   '/proof': typeof ProofRoute
   '/the-model': typeof TheModelRoute
   '/videos': typeof VideosRouteWithChildren
@@ -238,6 +245,7 @@ export interface FileRoutesByTo {
   '/how-to-start': typeof HowToStartRoute
   '/insight-hub': typeof InsightHubRouteWithChildren
   '/insights': typeof InsightsRoute
+  '/news': typeof NewsRoute
   '/proof': typeof ProofRoute
   '/the-model': typeof TheModelRoute
   '/videos': typeof VideosRouteWithChildren
@@ -271,6 +279,7 @@ export interface FileRoutesById {
   '/how-to-start': typeof HowToStartRoute
   '/insight-hub': typeof InsightHubRouteWithChildren
   '/insights': typeof InsightsRoute
+  '/news': typeof NewsRoute
   '/proof': typeof ProofRoute
   '/the-model': typeof TheModelRoute
   '/videos': typeof VideosRouteWithChildren
@@ -305,6 +314,7 @@ export interface FileRouteTypes {
     | '/how-to-start'
     | '/insight-hub'
     | '/insights'
+    | '/news'
     | '/proof'
     | '/the-model'
     | '/videos'
@@ -337,6 +347,7 @@ export interface FileRouteTypes {
     | '/how-to-start'
     | '/insight-hub'
     | '/insights'
+    | '/news'
     | '/proof'
     | '/the-model'
     | '/videos'
@@ -369,6 +380,7 @@ export interface FileRouteTypes {
     | '/how-to-start'
     | '/insight-hub'
     | '/insights'
+    | '/news'
     | '/proof'
     | '/the-model'
     | '/videos'
@@ -402,6 +414,7 @@ export interface RootRouteChildren {
   HowToStartRoute: typeof HowToStartRoute
   InsightHubRoute: typeof InsightHubRouteWithChildren
   InsightsRoute: typeof InsightsRoute
+  NewsRoute: typeof NewsRoute
   ProofRoute: typeof ProofRoute
   TheModelRoute: typeof TheModelRoute
   VideosRoute: typeof VideosRouteWithChildren
@@ -445,6 +458,13 @@ declare module '@tanstack/react-router' {
       path: '/proof'
       fullPath: '/proof'
       preLoaderRoute: typeof ProofRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/news': {
+      id: '/news'
+      path: '/news'
+      fullPath: '/news'
+      preLoaderRoute: typeof NewsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/insights': {
@@ -706,6 +726,7 @@ const rootRouteChildren: RootRouteChildren = {
   HowToStartRoute: HowToStartRoute,
   InsightHubRoute: InsightHubRouteWithChildren,
   InsightsRoute: InsightsRoute,
+  NewsRoute: NewsRoute,
   ProofRoute: ProofRoute,
   TheModelRoute: TheModelRoute,
   VideosRoute: VideosRouteWithChildren,
