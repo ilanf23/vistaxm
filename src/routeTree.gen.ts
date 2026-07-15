@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as TheModelRouteImport } from './routes/the-model'
 import { Route as ProofRouteImport } from './routes/proof'
 import { Route as InsightsRouteImport } from './routes/insights'
+import { Route as InsightHubRouteImport } from './routes/insight-hub'
 import { Route as HowToStartRouteImport } from './routes/how-to-start'
 import { Route as ForOemsRouteImport } from './routes/for-oems'
 import { Route as CrnRouteImport } from './routes/crn'
@@ -41,6 +42,11 @@ const ProofRoute = ProofRouteImport.update({
 const InsightsRoute = InsightsRouteImport.update({
   id: '/insights',
   path: '/insights',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const InsightHubRoute = InsightHubRouteImport.update({
+  id: '/insight-hub',
+  path: '/insight-hub',
   getParentRoute: () => rootRouteImport,
 } as any)
 const HowToStartRoute = HowToStartRouteImport.update({
@@ -129,6 +135,7 @@ export interface FileRoutesByFullPath {
   '/crn': typeof CrnRoute
   '/for-oems': typeof ForOemsRoute
   '/how-to-start': typeof HowToStartRoute
+  '/insight-hub': typeof InsightHubRoute
   '/insights': typeof InsightsRoute
   '/proof': typeof ProofRoute
   '/the-model': typeof TheModelRoute
@@ -149,6 +156,7 @@ export interface FileRoutesByTo {
   '/crn': typeof CrnRoute
   '/for-oems': typeof ForOemsRoute
   '/how-to-start': typeof HowToStartRoute
+  '/insight-hub': typeof InsightHubRoute
   '/insights': typeof InsightsRoute
   '/proof': typeof ProofRoute
   '/the-model': typeof TheModelRoute
@@ -170,6 +178,7 @@ export interface FileRoutesById {
   '/crn': typeof CrnRoute
   '/for-oems': typeof ForOemsRoute
   '/how-to-start': typeof HowToStartRoute
+  '/insight-hub': typeof InsightHubRoute
   '/insights': typeof InsightsRoute
   '/proof': typeof ProofRoute
   '/the-model': typeof TheModelRoute
@@ -192,6 +201,7 @@ export interface FileRouteTypes {
     | '/crn'
     | '/for-oems'
     | '/how-to-start'
+    | '/insight-hub'
     | '/insights'
     | '/proof'
     | '/the-model'
@@ -212,6 +222,7 @@ export interface FileRouteTypes {
     | '/crn'
     | '/for-oems'
     | '/how-to-start'
+    | '/insight-hub'
     | '/insights'
     | '/proof'
     | '/the-model'
@@ -232,6 +243,7 @@ export interface FileRouteTypes {
     | '/crn'
     | '/for-oems'
     | '/how-to-start'
+    | '/insight-hub'
     | '/insights'
     | '/proof'
     | '/the-model'
@@ -253,6 +265,7 @@ export interface RootRouteChildren {
   CrnRoute: typeof CrnRoute
   ForOemsRoute: typeof ForOemsRoute
   HowToStartRoute: typeof HowToStartRoute
+  InsightHubRoute: typeof InsightHubRoute
   InsightsRoute: typeof InsightsRoute
   ProofRoute: typeof ProofRoute
   TheModelRoute: typeof TheModelRoute
@@ -288,6 +301,13 @@ declare module '@tanstack/react-router' {
       path: '/insights'
       fullPath: '/insights'
       preLoaderRoute: typeof InsightsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/insight-hub': {
+      id: '/insight-hub'
+      path: '/insight-hub'
+      fullPath: '/insight-hub'
+      preLoaderRoute: typeof InsightHubRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/how-to-start': {
@@ -405,6 +425,7 @@ const rootRouteChildren: RootRouteChildren = {
   CrnRoute: CrnRoute,
   ForOemsRoute: ForOemsRoute,
   HowToStartRoute: HowToStartRoute,
+  InsightHubRoute: InsightHubRoute,
   InsightsRoute: InsightsRoute,
   ProofRoute: ProofRoute,
   TheModelRoute: TheModelRoute,
@@ -421,13 +442,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
