@@ -1,10 +1,11 @@
-import { type ReactNode } from "react";
+import { type ReactNode, useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { BOOK_PATH } from "@/lib/links";
 import { canonicalLink } from "@/lib/seo";
 import { CTABand, PageHero, Reveal, Section, SectionHead } from "@/components/site";
 import { AmbientBand } from "@/components/media";
 import { FadeIn, Stagger, StaggerItem } from "@/components/motion";
+import videoThumbnail from "@/assets/EH3hJEnUTuc-HD.jpg.asset.json";
 
 export const Route = createFileRoute("/insights")({
   head: () => ({
