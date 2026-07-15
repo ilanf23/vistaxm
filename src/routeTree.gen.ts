@@ -27,6 +27,7 @@ import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as SolutionsIndexRouteImport } from './routes/solutions/index'
 import { Route as InsightHubIndexRouteImport } from './routes/insight-hub.index'
+import { Route as CompanyIndexRouteImport } from './routes/company.index'
 import { Route as WhitePapersSplatRouteImport } from './routes/white-papers.$'
 import { Route as VideosSplatRouteImport } from './routes/videos.$'
 import { Route as SolutionsUseCasesRouteImport } from './routes/solutions/use-cases'
@@ -138,6 +139,11 @@ const InsightHubIndexRoute = InsightHubIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => InsightHubRoute,
+} as any)
+const CompanyIndexRoute = CompanyIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => CompanyRoute,
 } as any)
 const WhitePapersSplatRoute = WhitePapersSplatRouteImport.update({
   id: '/$',
@@ -288,6 +294,7 @@ export interface FileRoutesByFullPath {
   '/solutions/use-cases': typeof SolutionsUseCasesRoute
   '/videos/$': typeof VideosSplatRoute
   '/white-papers/$': typeof WhitePapersSplatRoute
+  '/company/': typeof CompanyIndexRoute
   '/insight-hub/': typeof InsightHubIndexRoute
   '/solutions/': typeof SolutionsIndexRoute
 }
@@ -297,7 +304,6 @@ export interface FileRoutesByTo {
   '/articles': typeof ArticlesRouteWithChildren
   '/book': typeof BookRoute
   '/brochures': typeof BrochuresRouteWithChildren
-  '/company': typeof CompanyRouteWithChildren
   '/crn': typeof CrnRoute
   '/for-oems': typeof ForOemsRoute
   '/how-to-start': typeof HowToStartRoute
@@ -328,6 +334,7 @@ export interface FileRoutesByTo {
   '/solutions/use-cases': typeof SolutionsUseCasesRoute
   '/videos/$': typeof VideosSplatRoute
   '/white-papers/$': typeof WhitePapersSplatRoute
+  '/company': typeof CompanyIndexRoute
   '/insight-hub': typeof InsightHubIndexRoute
   '/solutions': typeof SolutionsIndexRoute
 }
@@ -370,6 +377,7 @@ export interface FileRoutesById {
   '/solutions/use-cases': typeof SolutionsUseCasesRoute
   '/videos/$': typeof VideosSplatRoute
   '/white-papers/$': typeof WhitePapersSplatRoute
+  '/company/': typeof CompanyIndexRoute
   '/insight-hub/': typeof InsightHubIndexRoute
   '/solutions/': typeof SolutionsIndexRoute
 }
@@ -413,6 +421,7 @@ export interface FileRouteTypes {
     | '/solutions/use-cases'
     | '/videos/$'
     | '/white-papers/$'
+    | '/company/'
     | '/insight-hub/'
     | '/solutions/'
   fileRoutesByTo: FileRoutesByTo
@@ -422,7 +431,6 @@ export interface FileRouteTypes {
     | '/articles'
     | '/book'
     | '/brochures'
-    | '/company'
     | '/crn'
     | '/for-oems'
     | '/how-to-start'
@@ -453,6 +461,7 @@ export interface FileRouteTypes {
     | '/solutions/use-cases'
     | '/videos/$'
     | '/white-papers/$'
+    | '/company'
     | '/insight-hub'
     | '/solutions'
   id:
@@ -494,6 +503,7 @@ export interface FileRouteTypes {
     | '/solutions/use-cases'
     | '/videos/$'
     | '/white-papers/$'
+    | '/company/'
     | '/insight-hub/'
     | '/solutions/'
   fileRoutesById: FileRoutesById
@@ -657,6 +667,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/insight-hub/'
       preLoaderRoute: typeof InsightHubIndexRouteImport
       parentRoute: typeof InsightHubRoute
+    }
+    '/company/': {
+      id: '/company/'
+      path: '/'
+      fullPath: '/company/'
+      preLoaderRoute: typeof CompanyIndexRouteImport
+      parentRoute: typeof CompanyRoute
     }
     '/white-papers/$': {
       id: '/white-papers/$'
@@ -834,10 +851,12 @@ const BrochuresRouteWithChildren = BrochuresRoute._addFileChildren(
 
 interface CompanyRouteChildren {
   CompanyLeadershipRoute: typeof CompanyLeadershipRoute
+  CompanyIndexRoute: typeof CompanyIndexRoute
 }
 
 const CompanyRouteChildren: CompanyRouteChildren = {
   CompanyLeadershipRoute: CompanyLeadershipRoute,
+  CompanyIndexRoute: CompanyIndexRoute,
 }
 
 const CompanyRouteWithChildren =
@@ -928,3 +947,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
