@@ -29,6 +29,7 @@ import { Route as VideosSplatRouteImport } from './routes/videos.$'
 import { Route as SolutionsPartnerpulseRouteImport } from './routes/solutions/partnerpulse'
 import { Route as SolutionsIndustrialpulseRouteImport } from './routes/solutions/industrialpulse'
 import { Route as SolutionsBrokerpulseRouteImport } from './routes/solutions/brokerpulse'
+import { Route as NewsSplatRouteImport } from './routes/news.$'
 import { Route as LegalTermsOfServiceRouteImport } from './routes/legal/terms-of-service'
 import { Route as LegalPrivacyPolicyRouteImport } from './routes/legal/privacy-policy'
 import { Route as LegalCookiePolicyRouteImport } from './routes/legal/cookie-policy'
@@ -142,6 +143,11 @@ const SolutionsBrokerpulseRoute = SolutionsBrokerpulseRouteImport.update({
   path: '/solutions/brokerpulse',
   getParentRoute: () => rootRouteImport,
 } as any)
+const NewsSplatRoute = NewsSplatRouteImport.update({
+  id: '/$',
+  path: '/$',
+  getParentRoute: () => NewsRoute,
+} as any)
 const LegalTermsOfServiceRoute = LegalTermsOfServiceRouteImport.update({
   id: '/legal/terms-of-service',
   path: '/legal/terms-of-service',
@@ -212,7 +218,7 @@ export interface FileRoutesByFullPath {
   '/how-to-start': typeof HowToStartRoute
   '/insight-hub': typeof InsightHubRouteWithChildren
   '/insights': typeof InsightsRoute
-  '/news': typeof NewsRoute
+  '/news': typeof NewsRouteWithChildren
   '/proof': typeof ProofRoute
   '/the-model': typeof TheModelRoute
   '/videos': typeof VideosRouteWithChildren
@@ -228,6 +234,7 @@ export interface FileRoutesByFullPath {
   '/legal/cookie-policy': typeof LegalCookiePolicyRoute
   '/legal/privacy-policy': typeof LegalPrivacyPolicyRoute
   '/legal/terms-of-service': typeof LegalTermsOfServiceRoute
+  '/news/$': typeof NewsSplatRoute
   '/solutions/brokerpulse': typeof SolutionsBrokerpulseRoute
   '/solutions/industrialpulse': typeof SolutionsIndustrialpulseRoute
   '/solutions/partnerpulse': typeof SolutionsPartnerpulseRoute
@@ -245,7 +252,7 @@ export interface FileRoutesByTo {
   '/how-to-start': typeof HowToStartRoute
   '/insight-hub': typeof InsightHubRouteWithChildren
   '/insights': typeof InsightsRoute
-  '/news': typeof NewsRoute
+  '/news': typeof NewsRouteWithChildren
   '/proof': typeof ProofRoute
   '/the-model': typeof TheModelRoute
   '/videos': typeof VideosRouteWithChildren
@@ -261,6 +268,7 @@ export interface FileRoutesByTo {
   '/legal/cookie-policy': typeof LegalCookiePolicyRoute
   '/legal/privacy-policy': typeof LegalPrivacyPolicyRoute
   '/legal/terms-of-service': typeof LegalTermsOfServiceRoute
+  '/news/$': typeof NewsSplatRoute
   '/solutions/brokerpulse': typeof SolutionsBrokerpulseRoute
   '/solutions/industrialpulse': typeof SolutionsIndustrialpulseRoute
   '/solutions/partnerpulse': typeof SolutionsPartnerpulseRoute
@@ -279,7 +287,7 @@ export interface FileRoutesById {
   '/how-to-start': typeof HowToStartRoute
   '/insight-hub': typeof InsightHubRouteWithChildren
   '/insights': typeof InsightsRoute
-  '/news': typeof NewsRoute
+  '/news': typeof NewsRouteWithChildren
   '/proof': typeof ProofRoute
   '/the-model': typeof TheModelRoute
   '/videos': typeof VideosRouteWithChildren
@@ -295,6 +303,7 @@ export interface FileRoutesById {
   '/legal/cookie-policy': typeof LegalCookiePolicyRoute
   '/legal/privacy-policy': typeof LegalPrivacyPolicyRoute
   '/legal/terms-of-service': typeof LegalTermsOfServiceRoute
+  '/news/$': typeof NewsSplatRoute
   '/solutions/brokerpulse': typeof SolutionsBrokerpulseRoute
   '/solutions/industrialpulse': typeof SolutionsIndustrialpulseRoute
   '/solutions/partnerpulse': typeof SolutionsPartnerpulseRoute
@@ -330,6 +339,7 @@ export interface FileRouteTypes {
     | '/legal/cookie-policy'
     | '/legal/privacy-policy'
     | '/legal/terms-of-service'
+    | '/news/$'
     | '/solutions/brokerpulse'
     | '/solutions/industrialpulse'
     | '/solutions/partnerpulse'
@@ -363,6 +373,7 @@ export interface FileRouteTypes {
     | '/legal/cookie-policy'
     | '/legal/privacy-policy'
     | '/legal/terms-of-service'
+    | '/news/$'
     | '/solutions/brokerpulse'
     | '/solutions/industrialpulse'
     | '/solutions/partnerpulse'
@@ -396,6 +407,7 @@ export interface FileRouteTypes {
     | '/legal/cookie-policy'
     | '/legal/privacy-policy'
     | '/legal/terms-of-service'
+    | '/news/$'
     | '/solutions/brokerpulse'
     | '/solutions/industrialpulse'
     | '/solutions/partnerpulse'
@@ -414,7 +426,7 @@ export interface RootRouteChildren {
   HowToStartRoute: typeof HowToStartRoute
   InsightHubRoute: typeof InsightHubRouteWithChildren
   InsightsRoute: typeof InsightsRoute
-  NewsRoute: typeof NewsRoute
+  NewsRoute: typeof NewsRouteWithChildren
   ProofRoute: typeof ProofRoute
   TheModelRoute: typeof TheModelRoute
   VideosRoute: typeof VideosRouteWithChildren
@@ -572,6 +584,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SolutionsBrokerpulseRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/news/$': {
+      id: '/news/$'
+      path: '/$'
+      fullPath: '/news/$'
+      preLoaderRoute: typeof NewsSplatRouteImport
+      parentRoute: typeof NewsRoute
+    }
     '/legal/terms-of-service': {
       id: '/legal/terms-of-service'
       path: '/legal/terms-of-service'
@@ -692,6 +711,16 @@ const InsightHubRouteWithChildren = InsightHubRoute._addFileChildren(
   InsightHubRouteChildren,
 )
 
+interface NewsRouteChildren {
+  NewsSplatRoute: typeof NewsSplatRoute
+}
+
+const NewsRouteChildren: NewsRouteChildren = {
+  NewsSplatRoute: NewsSplatRoute,
+}
+
+const NewsRouteWithChildren = NewsRoute._addFileChildren(NewsRouteChildren)
+
 interface VideosRouteChildren {
   VideosSplatRoute: typeof VideosSplatRoute
 }
@@ -726,7 +755,7 @@ const rootRouteChildren: RootRouteChildren = {
   HowToStartRoute: HowToStartRoute,
   InsightHubRoute: InsightHubRouteWithChildren,
   InsightsRoute: InsightsRoute,
-  NewsRoute: NewsRoute,
+  NewsRoute: NewsRouteWithChildren,
   ProofRoute: ProofRoute,
   TheModelRoute: TheModelRoute,
   VideosRoute: VideosRouteWithChildren,
