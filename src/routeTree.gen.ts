@@ -25,6 +25,7 @@ import { Route as BookRouteImport } from './routes/book'
 import { Route as ArticlesRouteImport } from './routes/articles'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as SolutionsIndexRouteImport } from './routes/solutions/index'
 import { Route as WhitePapersSplatRouteImport } from './routes/white-papers.$'
 import { Route as VideosSplatRouteImport } from './routes/videos.$'
 import { Route as SolutionsPartnerpulseRouteImport } from './routes/solutions/partnerpulse'
@@ -122,6 +123,11 @@ const AboutRoute = AboutRouteImport.update({
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SolutionsIndexRoute = SolutionsIndexRouteImport.update({
+  id: '/solutions/',
+  path: '/solutions/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const WhitePapersSplatRoute = WhitePapersSplatRouteImport.update({
@@ -254,6 +260,7 @@ export interface FileRoutesByFullPath {
   '/solutions/partnerpulse': typeof SolutionsPartnerpulseRoute
   '/videos/$': typeof VideosSplatRoute
   '/white-papers/$': typeof WhitePapersSplatRoute
+  '/solutions/': typeof SolutionsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -290,6 +297,7 @@ export interface FileRoutesByTo {
   '/solutions/partnerpulse': typeof SolutionsPartnerpulseRoute
   '/videos/$': typeof VideosSplatRoute
   '/white-papers/$': typeof WhitePapersSplatRoute
+  '/solutions': typeof SolutionsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -327,6 +335,7 @@ export interface FileRoutesById {
   '/solutions/partnerpulse': typeof SolutionsPartnerpulseRoute
   '/videos/$': typeof VideosSplatRoute
   '/white-papers/$': typeof WhitePapersSplatRoute
+  '/solutions/': typeof SolutionsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -365,6 +374,7 @@ export interface FileRouteTypes {
     | '/solutions/partnerpulse'
     | '/videos/$'
     | '/white-papers/$'
+    | '/solutions/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -401,6 +411,7 @@ export interface FileRouteTypes {
     | '/solutions/partnerpulse'
     | '/videos/$'
     | '/white-papers/$'
+    | '/solutions'
   id:
     | '__root__'
     | '/'
@@ -437,6 +448,7 @@ export interface FileRouteTypes {
     | '/solutions/partnerpulse'
     | '/videos/$'
     | '/white-papers/$'
+    | '/solutions/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -465,6 +477,7 @@ export interface RootRouteChildren {
   SolutionsBrokerpulseRoute: typeof SolutionsBrokerpulseRoute
   SolutionsIndustrialpulseRoute: typeof SolutionsIndustrialpulseRoute
   SolutionsPartnerpulseRoute: typeof SolutionsPartnerpulseRoute
+  SolutionsIndexRoute: typeof SolutionsIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -579,6 +592,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/solutions/': {
+      id: '/solutions/'
+      path: '/solutions'
+      fullPath: '/solutions/'
+      preLoaderRoute: typeof SolutionsIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/white-papers/$': {
@@ -820,6 +840,7 @@ const rootRouteChildren: RootRouteChildren = {
   SolutionsBrokerpulseRoute: SolutionsBrokerpulseRoute,
   SolutionsIndustrialpulseRoute: SolutionsIndustrialpulseRoute,
   SolutionsPartnerpulseRoute: SolutionsPartnerpulseRoute,
+  SolutionsIndexRoute: SolutionsIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
