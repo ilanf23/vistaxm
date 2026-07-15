@@ -28,6 +28,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as SolutionsIndexRouteImport } from './routes/solutions/index'
 import { Route as WhitePapersSplatRouteImport } from './routes/white-papers.$'
 import { Route as VideosSplatRouteImport } from './routes/videos.$'
+import { Route as SolutionsResultsWeDeliverRouteImport } from './routes/solutions/results-we-deliver'
 import { Route as SolutionsPartnerpulseRouteImport } from './routes/solutions/partnerpulse'
 import { Route as SolutionsMethodologyRouteImport } from './routes/solutions/methodology'
 import { Route as SolutionsIndustrialpulseRouteImport } from './routes/solutions/industrialpulse'
@@ -141,6 +142,12 @@ const VideosSplatRoute = VideosSplatRouteImport.update({
   path: '/$',
   getParentRoute: () => VideosRoute,
 } as any)
+const SolutionsResultsWeDeliverRoute =
+  SolutionsResultsWeDeliverRouteImport.update({
+    id: '/solutions/results-we-deliver',
+    path: '/solutions/results-we-deliver',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const SolutionsPartnerpulseRoute = SolutionsPartnerpulseRouteImport.update({
   id: '/solutions/partnerpulse',
   path: '/solutions/partnerpulse',
@@ -265,6 +272,7 @@ export interface FileRoutesByFullPath {
   '/solutions/industrialpulse': typeof SolutionsIndustrialpulseRoute
   '/solutions/methodology': typeof SolutionsMethodologyRoute
   '/solutions/partnerpulse': typeof SolutionsPartnerpulseRoute
+  '/solutions/results-we-deliver': typeof SolutionsResultsWeDeliverRoute
   '/videos/$': typeof VideosSplatRoute
   '/white-papers/$': typeof WhitePapersSplatRoute
   '/solutions/': typeof SolutionsIndexRoute
@@ -303,6 +311,7 @@ export interface FileRoutesByTo {
   '/solutions/industrialpulse': typeof SolutionsIndustrialpulseRoute
   '/solutions/methodology': typeof SolutionsMethodologyRoute
   '/solutions/partnerpulse': typeof SolutionsPartnerpulseRoute
+  '/solutions/results-we-deliver': typeof SolutionsResultsWeDeliverRoute
   '/videos/$': typeof VideosSplatRoute
   '/white-papers/$': typeof WhitePapersSplatRoute
   '/solutions': typeof SolutionsIndexRoute
@@ -342,6 +351,7 @@ export interface FileRoutesById {
   '/solutions/industrialpulse': typeof SolutionsIndustrialpulseRoute
   '/solutions/methodology': typeof SolutionsMethodologyRoute
   '/solutions/partnerpulse': typeof SolutionsPartnerpulseRoute
+  '/solutions/results-we-deliver': typeof SolutionsResultsWeDeliverRoute
   '/videos/$': typeof VideosSplatRoute
   '/white-papers/$': typeof WhitePapersSplatRoute
   '/solutions/': typeof SolutionsIndexRoute
@@ -382,6 +392,7 @@ export interface FileRouteTypes {
     | '/solutions/industrialpulse'
     | '/solutions/methodology'
     | '/solutions/partnerpulse'
+    | '/solutions/results-we-deliver'
     | '/videos/$'
     | '/white-papers/$'
     | '/solutions/'
@@ -420,6 +431,7 @@ export interface FileRouteTypes {
     | '/solutions/industrialpulse'
     | '/solutions/methodology'
     | '/solutions/partnerpulse'
+    | '/solutions/results-we-deliver'
     | '/videos/$'
     | '/white-papers/$'
     | '/solutions'
@@ -458,6 +470,7 @@ export interface FileRouteTypes {
     | '/solutions/industrialpulse'
     | '/solutions/methodology'
     | '/solutions/partnerpulse'
+    | '/solutions/results-we-deliver'
     | '/videos/$'
     | '/white-papers/$'
     | '/solutions/'
@@ -490,6 +503,7 @@ export interface RootRouteChildren {
   SolutionsIndustrialpulseRoute: typeof SolutionsIndustrialpulseRoute
   SolutionsMethodologyRoute: typeof SolutionsMethodologyRoute
   SolutionsPartnerpulseRoute: typeof SolutionsPartnerpulseRoute
+  SolutionsResultsWeDeliverRoute: typeof SolutionsResultsWeDeliverRoute
   SolutionsIndexRoute: typeof SolutionsIndexRoute
 }
 
@@ -627,6 +641,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/videos/$'
       preLoaderRoute: typeof VideosSplatRouteImport
       parentRoute: typeof VideosRoute
+    }
+    '/solutions/results-we-deliver': {
+      id: '/solutions/results-we-deliver'
+      path: '/solutions/results-we-deliver'
+      fullPath: '/solutions/results-we-deliver'
+      preLoaderRoute: typeof SolutionsResultsWeDeliverRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/solutions/partnerpulse': {
       id: '/solutions/partnerpulse'
@@ -861,6 +882,7 @@ const rootRouteChildren: RootRouteChildren = {
   SolutionsIndustrialpulseRoute: SolutionsIndustrialpulseRoute,
   SolutionsMethodologyRoute: SolutionsMethodologyRoute,
   SolutionsPartnerpulseRoute: SolutionsPartnerpulseRoute,
+  SolutionsResultsWeDeliverRoute: SolutionsResultsWeDeliverRoute,
   SolutionsIndexRoute: SolutionsIndexRoute,
 }
 export const routeTree = rootRouteImport
