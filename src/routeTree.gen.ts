@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as VideosRouteImport } from './routes/videos'
 import { Route as TheModelRouteImport } from './routes/the-model'
 import { Route as ProofRouteImport } from './routes/proof'
 import { Route as InsightsRouteImport } from './routes/insights'
@@ -34,6 +35,11 @@ import { Route as IndustriesItSolutionProvidersRouteImport } from './routes/indu
 import { Route as CaseStudiesJfPetroleumRouteImport } from './routes/case-studies/jf-petroleum'
 import { Route as ArticlesSplatRouteImport } from './routes/articles.$'
 
+const VideosRoute = VideosRouteImport.update({
+  id: '/videos',
+  path: '/videos',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const TheModelRoute = TheModelRouteImport.update({
   id: '/the-model',
   path: '/the-model',
@@ -171,6 +177,7 @@ export interface FileRoutesByFullPath {
   '/insights': typeof InsightsRoute
   '/proof': typeof ProofRoute
   '/the-model': typeof TheModelRoute
+  '/videos': typeof VideosRoute
   '/articles/$': typeof ArticlesSplatRoute
   '/case-studies/jf-petroleum': typeof CaseStudiesJfPetroleumRoute
   '/industries/it-solution-providers': typeof IndustriesItSolutionProvidersRoute
@@ -197,6 +204,7 @@ export interface FileRoutesByTo {
   '/insights': typeof InsightsRoute
   '/proof': typeof ProofRoute
   '/the-model': typeof TheModelRoute
+  '/videos': typeof VideosRoute
   '/articles/$': typeof ArticlesSplatRoute
   '/case-studies/jf-petroleum': typeof CaseStudiesJfPetroleumRoute
   '/industries/it-solution-providers': typeof IndustriesItSolutionProvidersRoute
@@ -224,6 +232,7 @@ export interface FileRoutesById {
   '/insights': typeof InsightsRoute
   '/proof': typeof ProofRoute
   '/the-model': typeof TheModelRoute
+  '/videos': typeof VideosRoute
   '/articles/$': typeof ArticlesSplatRoute
   '/case-studies/jf-petroleum': typeof CaseStudiesJfPetroleumRoute
   '/industries/it-solution-providers': typeof IndustriesItSolutionProvidersRoute
@@ -252,6 +261,7 @@ export interface FileRouteTypes {
     | '/insights'
     | '/proof'
     | '/the-model'
+    | '/videos'
     | '/articles/$'
     | '/case-studies/jf-petroleum'
     | '/industries/it-solution-providers'
@@ -278,6 +288,7 @@ export interface FileRouteTypes {
     | '/insights'
     | '/proof'
     | '/the-model'
+    | '/videos'
     | '/articles/$'
     | '/case-studies/jf-petroleum'
     | '/industries/it-solution-providers'
@@ -304,6 +315,7 @@ export interface FileRouteTypes {
     | '/insights'
     | '/proof'
     | '/the-model'
+    | '/videos'
     | '/articles/$'
     | '/case-studies/jf-petroleum'
     | '/industries/it-solution-providers'
@@ -331,6 +343,7 @@ export interface RootRouteChildren {
   InsightsRoute: typeof InsightsRoute
   ProofRoute: typeof ProofRoute
   TheModelRoute: typeof TheModelRoute
+  VideosRoute: typeof VideosRoute
   CaseStudiesJfPetroleumRoute: typeof CaseStudiesJfPetroleumRoute
   IndustriesItSolutionProvidersRoute: typeof IndustriesItSolutionProvidersRoute
   IndustriesTechnologyProvidersRoute: typeof IndustriesTechnologyProvidersRoute
@@ -344,6 +357,13 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/videos': {
+      id: '/videos'
+      path: '/videos'
+      fullPath: '/videos'
+      preLoaderRoute: typeof VideosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/the-model': {
       id: '/the-model'
       path: '/the-model'
@@ -555,6 +575,7 @@ const rootRouteChildren: RootRouteChildren = {
   InsightsRoute: InsightsRoute,
   ProofRoute: ProofRoute,
   TheModelRoute: TheModelRoute,
+  VideosRoute: VideosRoute,
   CaseStudiesJfPetroleumRoute: CaseStudiesJfPetroleumRoute,
   IndustriesItSolutionProvidersRoute: IndustriesItSolutionProvidersRoute,
   IndustriesTechnologyProvidersRoute: IndustriesTechnologyProvidersRoute,
