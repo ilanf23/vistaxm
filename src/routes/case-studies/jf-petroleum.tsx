@@ -128,6 +128,24 @@ function PullQuote({ quote, name, role }: { quote: string; name: string; role: s
   );
 }
 
+/** Small download icon for the case-study PDF link. */
+function DownloadIcon({ className = "h-4 w-4" }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      className={className}
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.9"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden
+    >
+      <path d="M12 3v12m0 0l-4-4m4 4l4-4M5 21h14" />
+    </svg>
+  );
+}
+
 function JFPetroleumCaseStudy() {
   return (
     <>
@@ -155,10 +173,22 @@ function JFPetroleumCaseStudy() {
       {/* The challenge */}
       <Section tint>
         <div className="grid gap-12 lg:grid-cols-[1fr_1fr] lg:gap-16">
-          <SectionHead
-            eyebrow="The challenge"
-            title="Acquisition growth, rising asset complexity, fragmented visibility."
-          />
+          <div>
+            <SectionHead
+              eyebrow="The challenge"
+              title="Acquisition growth, rising asset complexity, fragmented visibility."
+            />
+            <div className="mt-8">
+              <a
+                href="/assets/case-studies/jf-petroleum.pdf"
+                download
+                className="btn-secondary-dark inline-flex items-center gap-2"
+              >
+                <DownloadIcon />
+                Download the full case study (PDF)
+              </a>
+            </div>
+          </div>
           <FadeIn delay={120}>
             <div className="space-y-5 text-base leading-relaxed text-[color:var(--ink-soft)] md:text-lg">
               <p>
