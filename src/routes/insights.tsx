@@ -309,10 +309,14 @@ const CASE_STUDIES: { title: string; note: string }[] = [
 // on-message clips are cut (the Erik Vogel x Terry Richardson webinar can be
 // split into several short placed assets) and add those clips below.
 const VIDEOS: {
-  featured: { title: string; url: string };
-  clips: { title: string; url: string }[];
+  featured: { title: string; url: string; thumbnail: string };
+  clips: { title: string; url: string; thumbnail?: string }[];
 } = {
-  featured: { title: "The Journey from CX to Revenue Intelligence", url: "https://www.youtube.com/embed/EH3hJEnUTuc" },
+  featured: {
+    title: "The Journey from CX to Revenue Intelligence",
+    url: "https://www.youtube.com/embed/EH3hJEnUTuc",
+    thumbnail: videoThumbnail.url,
+  },
   clips: [], // additional placed clips later
 };
 
