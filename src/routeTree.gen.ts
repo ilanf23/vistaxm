@@ -26,6 +26,7 @@ import { Route as ArticlesRouteImport } from './routes/articles'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as SolutionsIndexRouteImport } from './routes/solutions/index'
+import { Route as InsightHubIndexRouteImport } from './routes/insight-hub.index'
 import { Route as WhitePapersSplatRouteImport } from './routes/white-papers.$'
 import { Route as VideosSplatRouteImport } from './routes/videos.$'
 import { Route as SolutionsUseCasesRouteImport } from './routes/solutions/use-cases'
@@ -132,6 +133,11 @@ const SolutionsIndexRoute = SolutionsIndexRouteImport.update({
   id: '/solutions/',
   path: '/solutions/',
   getParentRoute: () => rootRouteImport,
+} as any)
+const InsightHubIndexRoute = InsightHubIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => InsightHubRoute,
 } as any)
 const WhitePapersSplatRoute = WhitePapersSplatRouteImport.update({
   id: '/$',
@@ -282,6 +288,7 @@ export interface FileRoutesByFullPath {
   '/solutions/use-cases': typeof SolutionsUseCasesRoute
   '/videos/$': typeof VideosSplatRoute
   '/white-papers/$': typeof WhitePapersSplatRoute
+  '/insight-hub/': typeof InsightHubIndexRoute
   '/solutions/': typeof SolutionsIndexRoute
 }
 export interface FileRoutesByTo {
@@ -294,7 +301,6 @@ export interface FileRoutesByTo {
   '/crn': typeof CrnRoute
   '/for-oems': typeof ForOemsRoute
   '/how-to-start': typeof HowToStartRoute
-  '/insight-hub': typeof InsightHubRouteWithChildren
   '/insights': typeof InsightsRoute
   '/news': typeof NewsRouteWithChildren
   '/proof': typeof ProofRoute
@@ -322,6 +328,7 @@ export interface FileRoutesByTo {
   '/solutions/use-cases': typeof SolutionsUseCasesRoute
   '/videos/$': typeof VideosSplatRoute
   '/white-papers/$': typeof WhitePapersSplatRoute
+  '/insight-hub': typeof InsightHubIndexRoute
   '/solutions': typeof SolutionsIndexRoute
 }
 export interface FileRoutesById {
@@ -363,6 +370,7 @@ export interface FileRoutesById {
   '/solutions/use-cases': typeof SolutionsUseCasesRoute
   '/videos/$': typeof VideosSplatRoute
   '/white-papers/$': typeof WhitePapersSplatRoute
+  '/insight-hub/': typeof InsightHubIndexRoute
   '/solutions/': typeof SolutionsIndexRoute
 }
 export interface FileRouteTypes {
@@ -405,6 +413,7 @@ export interface FileRouteTypes {
     | '/solutions/use-cases'
     | '/videos/$'
     | '/white-papers/$'
+    | '/insight-hub/'
     | '/solutions/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -417,7 +426,6 @@ export interface FileRouteTypes {
     | '/crn'
     | '/for-oems'
     | '/how-to-start'
-    | '/insight-hub'
     | '/insights'
     | '/news'
     | '/proof'
@@ -445,6 +453,7 @@ export interface FileRouteTypes {
     | '/solutions/use-cases'
     | '/videos/$'
     | '/white-papers/$'
+    | '/insight-hub'
     | '/solutions'
   id:
     | '__root__'
@@ -485,6 +494,7 @@ export interface FileRouteTypes {
     | '/solutions/use-cases'
     | '/videos/$'
     | '/white-papers/$'
+    | '/insight-hub/'
     | '/solutions/'
   fileRoutesById: FileRoutesById
 }
@@ -640,6 +650,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/solutions/'
       preLoaderRoute: typeof SolutionsIndexRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/insight-hub/': {
+      id: '/insight-hub/'
+      path: '/'
+      fullPath: '/insight-hub/'
+      preLoaderRoute: typeof InsightHubIndexRouteImport
+      parentRoute: typeof InsightHubRoute
     }
     '/white-papers/$': {
       id: '/white-papers/$'
@@ -830,12 +847,14 @@ interface InsightHubRouteChildren {
   InsightHubSplatRoute: typeof InsightHubSplatRoute
   InsightHubCxMaturityAssessmentRoute: typeof InsightHubCxMaturityAssessmentRoute
   InsightHubRoiCalculatorRoute: typeof InsightHubRoiCalculatorRoute
+  InsightHubIndexRoute: typeof InsightHubIndexRoute
 }
 
 const InsightHubRouteChildren: InsightHubRouteChildren = {
   InsightHubSplatRoute: InsightHubSplatRoute,
   InsightHubCxMaturityAssessmentRoute: InsightHubCxMaturityAssessmentRoute,
   InsightHubRoiCalculatorRoute: InsightHubRoiCalculatorRoute,
+  InsightHubIndexRoute: InsightHubIndexRoute,
 }
 
 const InsightHubRouteWithChildren = InsightHubRoute._addFileChildren(
