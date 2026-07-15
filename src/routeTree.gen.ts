@@ -12,18 +12,30 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as WhitePapersRouteImport } from './routes/white-papers'
 import { Route as VideosRouteImport } from './routes/videos'
 import { Route as TheModelRouteImport } from './routes/the-model'
+import { Route as ServicesRouteImport } from './routes/services'
 import { Route as ProofRouteImport } from './routes/proof'
+import { Route as PartnerPulseRouteImport } from './routes/partner-pulse'
 import { Route as NewsRouteImport } from './routes/news'
+import { Route as ItHardwareAndServicesRouteImport } from './routes/it-hardware-and-services'
 import { Route as InsightsRouteImport } from './routes/insights'
 import { Route as InsightHubRouteImport } from './routes/insight-hub'
+import { Route as IndustrialProductsAndServicesRouteImport } from './routes/industrial-products-and-services'
 import { Route as HowToStartRouteImport } from './routes/how-to-start'
 import { Route as ForOemsRouteImport } from './routes/for-oems'
+import { Route as FinancialServicesRouteImport } from './routes/financial-services'
+import { Route as CxCostReductionPlaybookRouteImport } from './routes/cx-cost-reduction-playbook'
+import { Route as CustomerExperienceManagementStrategiesForSmallBusinessesRouteImport } from './routes/customer-experience-management-strategies-for-small-businesses'
+import { Route as CustomerExperienceACoreBusinessStrategyButNotTheOnlyPathToSuccessRouteImport } from './routes/customer-experience-a-core-business-strategy-but-not-the-only-path-to-success'
 import { Route as CrnRouteImport } from './routes/crn'
+import { Route as ContactRouteImport } from './routes/contact'
 import { Route as CompanyRouteImport } from './routes/company'
+import { Route as BrokerPulseRouteImport } from './routes/broker-pulse'
 import { Route as BrochuresRouteImport } from './routes/brochures'
 import { Route as BookRouteImport } from './routes/book'
 import { Route as ArticlesRouteImport } from './routes/articles'
+import { Route as AboutUsRouteImport } from './routes/about-us'
 import { Route as AboutRouteImport } from './routes/about'
+import { Route as R10MustHaveToolsForCustomerExperienceManagementRouteImport } from './routes/10-must-have-tools-for-customer-experience-management'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as SolutionsIndexRouteImport } from './routes/solutions/index'
 import { Route as InsightHubIndexRouteImport } from './routes/insight-hub.index'
@@ -65,14 +77,29 @@ const TheModelRoute = TheModelRouteImport.update({
   path: '/the-model',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ServicesRoute = ServicesRouteImport.update({
+  id: '/services',
+  path: '/services',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ProofRoute = ProofRouteImport.update({
   id: '/proof',
   path: '/proof',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PartnerPulseRoute = PartnerPulseRouteImport.update({
+  id: '/partner-pulse',
+  path: '/partner-pulse',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const NewsRoute = NewsRouteImport.update({
   id: '/news',
   path: '/news',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ItHardwareAndServicesRoute = ItHardwareAndServicesRouteImport.update({
+  id: '/it-hardware-and-services',
+  path: '/it-hardware-and-services',
   getParentRoute: () => rootRouteImport,
 } as any)
 const InsightsRoute = InsightsRouteImport.update({
@@ -85,6 +112,12 @@ const InsightHubRoute = InsightHubRouteImport.update({
   path: '/insight-hub',
   getParentRoute: () => rootRouteImport,
 } as any)
+const IndustrialProductsAndServicesRoute =
+  IndustrialProductsAndServicesRouteImport.update({
+    id: '/industrial-products-and-services',
+    path: '/industrial-products-and-services',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const HowToStartRoute = HowToStartRouteImport.update({
   id: '/how-to-start',
   path: '/how-to-start',
@@ -95,14 +128,48 @@ const ForOemsRoute = ForOemsRouteImport.update({
   path: '/for-oems',
   getParentRoute: () => rootRouteImport,
 } as any)
+const FinancialServicesRoute = FinancialServicesRouteImport.update({
+  id: '/financial-services',
+  path: '/financial-services',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CxCostReductionPlaybookRoute = CxCostReductionPlaybookRouteImport.update({
+  id: '/cx-cost-reduction-playbook',
+  path: '/cx-cost-reduction-playbook',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CustomerExperienceManagementStrategiesForSmallBusinessesRoute =
+  CustomerExperienceManagementStrategiesForSmallBusinessesRouteImport.update({
+    id: '/customer-experience-management-strategies-for-small-businesses',
+    path: '/customer-experience-management-strategies-for-small-businesses',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const CustomerExperienceACoreBusinessStrategyButNotTheOnlyPathToSuccessRoute =
+  CustomerExperienceACoreBusinessStrategyButNotTheOnlyPathToSuccessRouteImport.update(
+    {
+      id: '/customer-experience-a-core-business-strategy-but-not-the-only-path-to-success',
+      path: '/customer-experience-a-core-business-strategy-but-not-the-only-path-to-success',
+      getParentRoute: () => rootRouteImport,
+    } as any,
+  )
 const CrnRoute = CrnRouteImport.update({
   id: '/crn',
   path: '/crn',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CompanyRoute = CompanyRouteImport.update({
   id: '/company',
   path: '/company',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BrokerPulseRoute = BrokerPulseRouteImport.update({
+  id: '/broker-pulse',
+  path: '/broker-pulse',
   getParentRoute: () => rootRouteImport,
 } as any)
 const BrochuresRoute = BrochuresRouteImport.update({
@@ -120,11 +187,22 @@ const ArticlesRoute = ArticlesRouteImport.update({
   path: '/articles',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AboutUsRoute = AboutUsRouteImport.update({
+  id: '/about-us',
+  path: '/about-us',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AboutRoute = AboutRouteImport.update({
   id: '/about',
   path: '/about',
   getParentRoute: () => rootRouteImport,
 } as any)
+const R10MustHaveToolsForCustomerExperienceManagementRoute =
+  R10MustHaveToolsForCustomerExperienceManagementRouteImport.update({
+    id: '/10-must-have-tools-for-customer-experience-management',
+    path: '/10-must-have-tools-for-customer-experience-management',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -258,18 +336,30 @@ const ArticlesSplatRoute = ArticlesSplatRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/10-must-have-tools-for-customer-experience-management': typeof R10MustHaveToolsForCustomerExperienceManagementRoute
   '/about': typeof AboutRoute
+  '/about-us': typeof AboutUsRoute
   '/articles': typeof ArticlesRouteWithChildren
   '/book': typeof BookRoute
   '/brochures': typeof BrochuresRouteWithChildren
+  '/broker-pulse': typeof BrokerPulseRoute
   '/company': typeof CompanyRouteWithChildren
+  '/contact': typeof ContactRoute
   '/crn': typeof CrnRoute
+  '/customer-experience-a-core-business-strategy-but-not-the-only-path-to-success': typeof CustomerExperienceACoreBusinessStrategyButNotTheOnlyPathToSuccessRoute
+  '/customer-experience-management-strategies-for-small-businesses': typeof CustomerExperienceManagementStrategiesForSmallBusinessesRoute
+  '/cx-cost-reduction-playbook': typeof CxCostReductionPlaybookRoute
+  '/financial-services': typeof FinancialServicesRoute
   '/for-oems': typeof ForOemsRoute
   '/how-to-start': typeof HowToStartRoute
+  '/industrial-products-and-services': typeof IndustrialProductsAndServicesRoute
   '/insight-hub': typeof InsightHubRouteWithChildren
   '/insights': typeof InsightsRoute
+  '/it-hardware-and-services': typeof ItHardwareAndServicesRoute
   '/news': typeof NewsRouteWithChildren
+  '/partner-pulse': typeof PartnerPulseRoute
   '/proof': typeof ProofRoute
+  '/services': typeof ServicesRoute
   '/the-model': typeof TheModelRoute
   '/videos': typeof VideosRouteWithChildren
   '/white-papers': typeof WhitePapersRouteWithChildren
@@ -300,16 +390,28 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/10-must-have-tools-for-customer-experience-management': typeof R10MustHaveToolsForCustomerExperienceManagementRoute
   '/about': typeof AboutRoute
+  '/about-us': typeof AboutUsRoute
   '/articles': typeof ArticlesRouteWithChildren
   '/book': typeof BookRoute
   '/brochures': typeof BrochuresRouteWithChildren
+  '/broker-pulse': typeof BrokerPulseRoute
+  '/contact': typeof ContactRoute
   '/crn': typeof CrnRoute
+  '/customer-experience-a-core-business-strategy-but-not-the-only-path-to-success': typeof CustomerExperienceACoreBusinessStrategyButNotTheOnlyPathToSuccessRoute
+  '/customer-experience-management-strategies-for-small-businesses': typeof CustomerExperienceManagementStrategiesForSmallBusinessesRoute
+  '/cx-cost-reduction-playbook': typeof CxCostReductionPlaybookRoute
+  '/financial-services': typeof FinancialServicesRoute
   '/for-oems': typeof ForOemsRoute
   '/how-to-start': typeof HowToStartRoute
+  '/industrial-products-and-services': typeof IndustrialProductsAndServicesRoute
   '/insights': typeof InsightsRoute
+  '/it-hardware-and-services': typeof ItHardwareAndServicesRoute
   '/news': typeof NewsRouteWithChildren
+  '/partner-pulse': typeof PartnerPulseRoute
   '/proof': typeof ProofRoute
+  '/services': typeof ServicesRoute
   '/the-model': typeof TheModelRoute
   '/videos': typeof VideosRouteWithChildren
   '/white-papers': typeof WhitePapersRouteWithChildren
@@ -341,18 +443,30 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/10-must-have-tools-for-customer-experience-management': typeof R10MustHaveToolsForCustomerExperienceManagementRoute
   '/about': typeof AboutRoute
+  '/about-us': typeof AboutUsRoute
   '/articles': typeof ArticlesRouteWithChildren
   '/book': typeof BookRoute
   '/brochures': typeof BrochuresRouteWithChildren
+  '/broker-pulse': typeof BrokerPulseRoute
   '/company': typeof CompanyRouteWithChildren
+  '/contact': typeof ContactRoute
   '/crn': typeof CrnRoute
+  '/customer-experience-a-core-business-strategy-but-not-the-only-path-to-success': typeof CustomerExperienceACoreBusinessStrategyButNotTheOnlyPathToSuccessRoute
+  '/customer-experience-management-strategies-for-small-businesses': typeof CustomerExperienceManagementStrategiesForSmallBusinessesRoute
+  '/cx-cost-reduction-playbook': typeof CxCostReductionPlaybookRoute
+  '/financial-services': typeof FinancialServicesRoute
   '/for-oems': typeof ForOemsRoute
   '/how-to-start': typeof HowToStartRoute
+  '/industrial-products-and-services': typeof IndustrialProductsAndServicesRoute
   '/insight-hub': typeof InsightHubRouteWithChildren
   '/insights': typeof InsightsRoute
+  '/it-hardware-and-services': typeof ItHardwareAndServicesRoute
   '/news': typeof NewsRouteWithChildren
+  '/partner-pulse': typeof PartnerPulseRoute
   '/proof': typeof ProofRoute
+  '/services': typeof ServicesRoute
   '/the-model': typeof TheModelRoute
   '/videos': typeof VideosRouteWithChildren
   '/white-papers': typeof WhitePapersRouteWithChildren
@@ -385,18 +499,30 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/10-must-have-tools-for-customer-experience-management'
     | '/about'
+    | '/about-us'
     | '/articles'
     | '/book'
     | '/brochures'
+    | '/broker-pulse'
     | '/company'
+    | '/contact'
     | '/crn'
+    | '/customer-experience-a-core-business-strategy-but-not-the-only-path-to-success'
+    | '/customer-experience-management-strategies-for-small-businesses'
+    | '/cx-cost-reduction-playbook'
+    | '/financial-services'
     | '/for-oems'
     | '/how-to-start'
+    | '/industrial-products-and-services'
     | '/insight-hub'
     | '/insights'
+    | '/it-hardware-and-services'
     | '/news'
+    | '/partner-pulse'
     | '/proof'
+    | '/services'
     | '/the-model'
     | '/videos'
     | '/white-papers'
@@ -427,16 +553,28 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/10-must-have-tools-for-customer-experience-management'
     | '/about'
+    | '/about-us'
     | '/articles'
     | '/book'
     | '/brochures'
+    | '/broker-pulse'
+    | '/contact'
     | '/crn'
+    | '/customer-experience-a-core-business-strategy-but-not-the-only-path-to-success'
+    | '/customer-experience-management-strategies-for-small-businesses'
+    | '/cx-cost-reduction-playbook'
+    | '/financial-services'
     | '/for-oems'
     | '/how-to-start'
+    | '/industrial-products-and-services'
     | '/insights'
+    | '/it-hardware-and-services'
     | '/news'
+    | '/partner-pulse'
     | '/proof'
+    | '/services'
     | '/the-model'
     | '/videos'
     | '/white-papers'
@@ -467,18 +605,30 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/10-must-have-tools-for-customer-experience-management'
     | '/about'
+    | '/about-us'
     | '/articles'
     | '/book'
     | '/brochures'
+    | '/broker-pulse'
     | '/company'
+    | '/contact'
     | '/crn'
+    | '/customer-experience-a-core-business-strategy-but-not-the-only-path-to-success'
+    | '/customer-experience-management-strategies-for-small-businesses'
+    | '/cx-cost-reduction-playbook'
+    | '/financial-services'
     | '/for-oems'
     | '/how-to-start'
+    | '/industrial-products-and-services'
     | '/insight-hub'
     | '/insights'
+    | '/it-hardware-and-services'
     | '/news'
+    | '/partner-pulse'
     | '/proof'
+    | '/services'
     | '/the-model'
     | '/videos'
     | '/white-papers'
@@ -510,18 +660,30 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  R10MustHaveToolsForCustomerExperienceManagementRoute: typeof R10MustHaveToolsForCustomerExperienceManagementRoute
   AboutRoute: typeof AboutRoute
+  AboutUsRoute: typeof AboutUsRoute
   ArticlesRoute: typeof ArticlesRouteWithChildren
   BookRoute: typeof BookRoute
   BrochuresRoute: typeof BrochuresRouteWithChildren
+  BrokerPulseRoute: typeof BrokerPulseRoute
   CompanyRoute: typeof CompanyRouteWithChildren
+  ContactRoute: typeof ContactRoute
   CrnRoute: typeof CrnRoute
+  CustomerExperienceACoreBusinessStrategyButNotTheOnlyPathToSuccessRoute: typeof CustomerExperienceACoreBusinessStrategyButNotTheOnlyPathToSuccessRoute
+  CustomerExperienceManagementStrategiesForSmallBusinessesRoute: typeof CustomerExperienceManagementStrategiesForSmallBusinessesRoute
+  CxCostReductionPlaybookRoute: typeof CxCostReductionPlaybookRoute
+  FinancialServicesRoute: typeof FinancialServicesRoute
   ForOemsRoute: typeof ForOemsRoute
   HowToStartRoute: typeof HowToStartRoute
+  IndustrialProductsAndServicesRoute: typeof IndustrialProductsAndServicesRoute
   InsightHubRoute: typeof InsightHubRouteWithChildren
   InsightsRoute: typeof InsightsRoute
+  ItHardwareAndServicesRoute: typeof ItHardwareAndServicesRoute
   NewsRoute: typeof NewsRouteWithChildren
+  PartnerPulseRoute: typeof PartnerPulseRoute
   ProofRoute: typeof ProofRoute
+  ServicesRoute: typeof ServicesRoute
   TheModelRoute: typeof TheModelRoute
   VideosRoute: typeof VideosRouteWithChildren
   WhitePapersRoute: typeof WhitePapersRouteWithChildren
@@ -563,6 +725,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TheModelRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/services': {
+      id: '/services'
+      path: '/services'
+      fullPath: '/services'
+      preLoaderRoute: typeof ServicesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/proof': {
       id: '/proof'
       path: '/proof'
@@ -570,11 +739,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProofRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/partner-pulse': {
+      id: '/partner-pulse'
+      path: '/partner-pulse'
+      fullPath: '/partner-pulse'
+      preLoaderRoute: typeof PartnerPulseRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/news': {
       id: '/news'
       path: '/news'
       fullPath: '/news'
       preLoaderRoute: typeof NewsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/it-hardware-and-services': {
+      id: '/it-hardware-and-services'
+      path: '/it-hardware-and-services'
+      fullPath: '/it-hardware-and-services'
+      preLoaderRoute: typeof ItHardwareAndServicesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/insights': {
@@ -591,6 +774,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof InsightHubRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/industrial-products-and-services': {
+      id: '/industrial-products-and-services'
+      path: '/industrial-products-and-services'
+      fullPath: '/industrial-products-and-services'
+      preLoaderRoute: typeof IndustrialProductsAndServicesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/how-to-start': {
       id: '/how-to-start'
       path: '/how-to-start'
@@ -605,6 +795,34 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ForOemsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/financial-services': {
+      id: '/financial-services'
+      path: '/financial-services'
+      fullPath: '/financial-services'
+      preLoaderRoute: typeof FinancialServicesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/cx-cost-reduction-playbook': {
+      id: '/cx-cost-reduction-playbook'
+      path: '/cx-cost-reduction-playbook'
+      fullPath: '/cx-cost-reduction-playbook'
+      preLoaderRoute: typeof CxCostReductionPlaybookRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/customer-experience-management-strategies-for-small-businesses': {
+      id: '/customer-experience-management-strategies-for-small-businesses'
+      path: '/customer-experience-management-strategies-for-small-businesses'
+      fullPath: '/customer-experience-management-strategies-for-small-businesses'
+      preLoaderRoute: typeof CustomerExperienceManagementStrategiesForSmallBusinessesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/customer-experience-a-core-business-strategy-but-not-the-only-path-to-success': {
+      id: '/customer-experience-a-core-business-strategy-but-not-the-only-path-to-success'
+      path: '/customer-experience-a-core-business-strategy-but-not-the-only-path-to-success'
+      fullPath: '/customer-experience-a-core-business-strategy-but-not-the-only-path-to-success'
+      preLoaderRoute: typeof CustomerExperienceACoreBusinessStrategyButNotTheOnlyPathToSuccessRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/crn': {
       id: '/crn'
       path: '/crn'
@@ -612,11 +830,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CrnRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/company': {
       id: '/company'
       path: '/company'
       fullPath: '/company'
       preLoaderRoute: typeof CompanyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/broker-pulse': {
+      id: '/broker-pulse'
+      path: '/broker-pulse'
+      fullPath: '/broker-pulse'
+      preLoaderRoute: typeof BrokerPulseRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/brochures': {
@@ -640,11 +872,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ArticlesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/about-us': {
+      id: '/about-us'
+      path: '/about-us'
+      fullPath: '/about-us'
+      preLoaderRoute: typeof AboutUsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/about': {
       id: '/about'
       path: '/about'
       fullPath: '/about'
       preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/10-must-have-tools-for-customer-experience-management': {
+      id: '/10-must-have-tools-for-customer-experience-management'
+      path: '/10-must-have-tools-for-customer-experience-management'
+      fullPath: '/10-must-have-tools-for-customer-experience-management'
+      preLoaderRoute: typeof R10MustHaveToolsForCustomerExperienceManagementRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -915,18 +1161,33 @@ const WhitePapersRouteWithChildren = WhitePapersRoute._addFileChildren(
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  R10MustHaveToolsForCustomerExperienceManagementRoute:
+    R10MustHaveToolsForCustomerExperienceManagementRoute,
   AboutRoute: AboutRoute,
+  AboutUsRoute: AboutUsRoute,
   ArticlesRoute: ArticlesRouteWithChildren,
   BookRoute: BookRoute,
   BrochuresRoute: BrochuresRouteWithChildren,
+  BrokerPulseRoute: BrokerPulseRoute,
   CompanyRoute: CompanyRouteWithChildren,
+  ContactRoute: ContactRoute,
   CrnRoute: CrnRoute,
+  CustomerExperienceACoreBusinessStrategyButNotTheOnlyPathToSuccessRoute:
+    CustomerExperienceACoreBusinessStrategyButNotTheOnlyPathToSuccessRoute,
+  CustomerExperienceManagementStrategiesForSmallBusinessesRoute:
+    CustomerExperienceManagementStrategiesForSmallBusinessesRoute,
+  CxCostReductionPlaybookRoute: CxCostReductionPlaybookRoute,
+  FinancialServicesRoute: FinancialServicesRoute,
   ForOemsRoute: ForOemsRoute,
   HowToStartRoute: HowToStartRoute,
+  IndustrialProductsAndServicesRoute: IndustrialProductsAndServicesRoute,
   InsightHubRoute: InsightHubRouteWithChildren,
   InsightsRoute: InsightsRoute,
+  ItHardwareAndServicesRoute: ItHardwareAndServicesRoute,
   NewsRoute: NewsRouteWithChildren,
+  PartnerPulseRoute: PartnerPulseRoute,
   ProofRoute: ProofRoute,
+  ServicesRoute: ServicesRoute,
   TheModelRoute: TheModelRoute,
   VideosRoute: VideosRouteWithChildren,
   WhitePapersRoute: WhitePapersRouteWithChildren,
