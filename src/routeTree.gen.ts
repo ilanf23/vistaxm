@@ -39,6 +39,7 @@ import { Route as InsightHubCxMaturityAssessmentRouteImport } from './routes/ins
 import { Route as InsightHubSplatRouteImport } from './routes/insight-hub.$'
 import { Route as IndustriesTechnologyProvidersRouteImport } from './routes/industries/technology-providers'
 import { Route as IndustriesItSolutionProvidersRouteImport } from './routes/industries/it-solution-providers'
+import { Route as CompanyLeadershipRouteImport } from './routes/company.leadership'
 import { Route as CaseStudiesJfPetroleumRouteImport } from './routes/case-studies/jf-petroleum'
 import { Route as BrochuresSplatRouteImport } from './routes/brochures.$'
 import { Route as ArticlesSplatRouteImport } from './routes/articles.$'
@@ -197,6 +198,11 @@ const IndustriesItSolutionProvidersRoute =
     path: '/industries/it-solution-providers',
     getParentRoute: () => rootRouteImport,
   } as any)
+const CompanyLeadershipRoute = CompanyLeadershipRouteImport.update({
+  id: '/leadership',
+  path: '/leadership',
+  getParentRoute: () => CompanyRoute,
+} as any)
 const CaseStudiesJfPetroleumRoute = CaseStudiesJfPetroleumRouteImport.update({
   id: '/case-studies/jf-petroleum',
   path: '/case-studies/jf-petroleum',
@@ -219,7 +225,7 @@ export interface FileRoutesByFullPath {
   '/articles': typeof ArticlesRouteWithChildren
   '/book': typeof BookRoute
   '/brochures': typeof BrochuresRouteWithChildren
-  '/company': typeof CompanyRoute
+  '/company': typeof CompanyRouteWithChildren
   '/crn': typeof CrnRoute
   '/for-oems': typeof ForOemsRoute
   '/how-to-start': typeof HowToStartRoute
@@ -233,6 +239,7 @@ export interface FileRoutesByFullPath {
   '/articles/$': typeof ArticlesSplatRoute
   '/brochures/$': typeof BrochuresSplatRoute
   '/case-studies/jf-petroleum': typeof CaseStudiesJfPetroleumRoute
+  '/company/leadership': typeof CompanyLeadershipRoute
   '/industries/it-solution-providers': typeof IndustriesItSolutionProvidersRoute
   '/industries/technology-providers': typeof IndustriesTechnologyProvidersRoute
   '/insight-hub/$': typeof InsightHubSplatRoute
@@ -254,7 +261,7 @@ export interface FileRoutesByTo {
   '/articles': typeof ArticlesRouteWithChildren
   '/book': typeof BookRoute
   '/brochures': typeof BrochuresRouteWithChildren
-  '/company': typeof CompanyRoute
+  '/company': typeof CompanyRouteWithChildren
   '/crn': typeof CrnRoute
   '/for-oems': typeof ForOemsRoute
   '/how-to-start': typeof HowToStartRoute
@@ -268,6 +275,7 @@ export interface FileRoutesByTo {
   '/articles/$': typeof ArticlesSplatRoute
   '/brochures/$': typeof BrochuresSplatRoute
   '/case-studies/jf-petroleum': typeof CaseStudiesJfPetroleumRoute
+  '/company/leadership': typeof CompanyLeadershipRoute
   '/industries/it-solution-providers': typeof IndustriesItSolutionProvidersRoute
   '/industries/technology-providers': typeof IndustriesTechnologyProvidersRoute
   '/insight-hub/$': typeof InsightHubSplatRoute
@@ -290,7 +298,7 @@ export interface FileRoutesById {
   '/articles': typeof ArticlesRouteWithChildren
   '/book': typeof BookRoute
   '/brochures': typeof BrochuresRouteWithChildren
-  '/company': typeof CompanyRoute
+  '/company': typeof CompanyRouteWithChildren
   '/crn': typeof CrnRoute
   '/for-oems': typeof ForOemsRoute
   '/how-to-start': typeof HowToStartRoute
@@ -304,6 +312,7 @@ export interface FileRoutesById {
   '/articles/$': typeof ArticlesSplatRoute
   '/brochures/$': typeof BrochuresSplatRoute
   '/case-studies/jf-petroleum': typeof CaseStudiesJfPetroleumRoute
+  '/company/leadership': typeof CompanyLeadershipRoute
   '/industries/it-solution-providers': typeof IndustriesItSolutionProvidersRoute
   '/industries/technology-providers': typeof IndustriesTechnologyProvidersRoute
   '/insight-hub/$': typeof InsightHubSplatRoute
@@ -341,6 +350,7 @@ export interface FileRouteTypes {
     | '/articles/$'
     | '/brochures/$'
     | '/case-studies/jf-petroleum'
+    | '/company/leadership'
     | '/industries/it-solution-providers'
     | '/industries/technology-providers'
     | '/insight-hub/$'
@@ -376,6 +386,7 @@ export interface FileRouteTypes {
     | '/articles/$'
     | '/brochures/$'
     | '/case-studies/jf-petroleum'
+    | '/company/leadership'
     | '/industries/it-solution-providers'
     | '/industries/technology-providers'
     | '/insight-hub/$'
@@ -411,6 +422,7 @@ export interface FileRouteTypes {
     | '/articles/$'
     | '/brochures/$'
     | '/case-studies/jf-petroleum'
+    | '/company/leadership'
     | '/industries/it-solution-providers'
     | '/industries/technology-providers'
     | '/insight-hub/$'
@@ -433,7 +445,7 @@ export interface RootRouteChildren {
   ArticlesRoute: typeof ArticlesRouteWithChildren
   BookRoute: typeof BookRoute
   BrochuresRoute: typeof BrochuresRouteWithChildren
-  CompanyRoute: typeof CompanyRoute
+  CompanyRoute: typeof CompanyRouteWithChildren
   CrnRoute: typeof CrnRoute
   ForOemsRoute: typeof ForOemsRoute
   HowToStartRoute: typeof HowToStartRoute
@@ -667,6 +679,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndustriesItSolutionProvidersRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/company/leadership': {
+      id: '/company/leadership'
+      path: '/leadership'
+      fullPath: '/company/leadership'
+      preLoaderRoute: typeof CompanyLeadershipRouteImport
+      parentRoute: typeof CompanyRoute
+    }
     '/case-studies/jf-petroleum': {
       id: '/case-studies/jf-petroleum'
       path: '/case-studies/jf-petroleum'
@@ -714,6 +733,17 @@ const BrochuresRouteChildren: BrochuresRouteChildren = {
 const BrochuresRouteWithChildren = BrochuresRoute._addFileChildren(
   BrochuresRouteChildren,
 )
+
+interface CompanyRouteChildren {
+  CompanyLeadershipRoute: typeof CompanyLeadershipRoute
+}
+
+const CompanyRouteChildren: CompanyRouteChildren = {
+  CompanyLeadershipRoute: CompanyLeadershipRoute,
+}
+
+const CompanyRouteWithChildren =
+  CompanyRoute._addFileChildren(CompanyRouteChildren)
 
 interface InsightHubRouteChildren {
   InsightHubSplatRoute: typeof InsightHubSplatRoute
@@ -770,7 +800,7 @@ const rootRouteChildren: RootRouteChildren = {
   ArticlesRoute: ArticlesRouteWithChildren,
   BookRoute: BookRoute,
   BrochuresRoute: BrochuresRouteWithChildren,
-  CompanyRoute: CompanyRoute,
+  CompanyRoute: CompanyRouteWithChildren,
   CrnRoute: CrnRoute,
   ForOemsRoute: ForOemsRoute,
   HowToStartRoute: HowToStartRoute,
