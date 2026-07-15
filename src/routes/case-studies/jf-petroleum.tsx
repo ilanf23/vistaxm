@@ -128,6 +128,24 @@ function PullQuote({ quote, name, role }: { quote: string; name: string; role: s
   );
 }
 
+/** Small download icon for the case-study PDF link. */
+function DownloadIcon({ className = "h-4 w-4" }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      className={className}
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.9"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden
+    >
+      <path d="M12 3v12m0 0l-4-4m4 4l4-4M5 21h14" />
+    </svg>
+  );
+}
+
 function JFPetroleumCaseStudy() {
   return (
     <>
