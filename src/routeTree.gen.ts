@@ -17,6 +17,7 @@ import { Route as HowToStartRouteImport } from './routes/how-to-start'
 import { Route as ForOemsRouteImport } from './routes/for-oems'
 import { Route as CrnRouteImport } from './routes/crn'
 import { Route as BookRouteImport } from './routes/book'
+import { Route as ArticlesRouteImport } from './routes/articles'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as SolutionsPartnerpulseRouteImport } from './routes/solutions/partnerpulse'
@@ -70,6 +71,11 @@ const CrnRoute = CrnRouteImport.update({
 const BookRoute = BookRouteImport.update({
   id: '/book',
   path: '/book',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ArticlesRoute = ArticlesRouteImport.update({
+  id: '/articles',
+  path: '/articles',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AboutRoute = AboutRouteImport.update({
@@ -150,6 +156,7 @@ const CaseStudiesJfPetroleumRoute = CaseStudiesJfPetroleumRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/articles': typeof ArticlesRoute
   '/book': typeof BookRoute
   '/crn': typeof CrnRoute
   '/for-oems': typeof ForOemsRoute
@@ -174,6 +181,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/articles': typeof ArticlesRoute
   '/book': typeof BookRoute
   '/crn': typeof CrnRoute
   '/for-oems': typeof ForOemsRoute
@@ -199,6 +207,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/articles': typeof ArticlesRoute
   '/book': typeof BookRoute
   '/crn': typeof CrnRoute
   '/for-oems': typeof ForOemsRoute
@@ -225,6 +234,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/about'
+    | '/articles'
     | '/book'
     | '/crn'
     | '/for-oems'
@@ -249,6 +259,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/about'
+    | '/articles'
     | '/book'
     | '/crn'
     | '/for-oems'
@@ -273,6 +284,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/about'
+    | '/articles'
     | '/book'
     | '/crn'
     | '/for-oems'
@@ -298,6 +310,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
+  ArticlesRoute: typeof ArticlesRoute
   BookRoute: typeof BookRoute
   CrnRoute: typeof CrnRoute
   ForOemsRoute: typeof ForOemsRoute
@@ -373,6 +386,13 @@ declare module '@tanstack/react-router' {
       path: '/book'
       fullPath: '/book'
       preLoaderRoute: typeof BookRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/articles': {
+      id: '/articles'
+      path: '/articles'
+      fullPath: '/articles'
+      preLoaderRoute: typeof ArticlesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/about': {
@@ -495,6 +515,7 @@ const InsightHubRouteWithChildren = InsightHubRoute._addFileChildren(
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
+  ArticlesRoute: ArticlesRoute,
   BookRoute: BookRoute,
   CrnRoute: CrnRoute,
   ForOemsRoute: ForOemsRoute,
