@@ -19,6 +19,7 @@ import { Route as InsightHubRouteImport } from './routes/insight-hub'
 import { Route as HowToStartRouteImport } from './routes/how-to-start'
 import { Route as ForOemsRouteImport } from './routes/for-oems'
 import { Route as CrnRouteImport } from './routes/crn'
+import { Route as CompanyRouteImport } from './routes/company'
 import { Route as BrochuresRouteImport } from './routes/brochures'
 import { Route as BookRouteImport } from './routes/book'
 import { Route as ArticlesRouteImport } from './routes/articles'
@@ -90,6 +91,11 @@ const ForOemsRoute = ForOemsRouteImport.update({
 const CrnRoute = CrnRouteImport.update({
   id: '/crn',
   path: '/crn',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CompanyRoute = CompanyRouteImport.update({
+  id: '/company',
+  path: '/company',
   getParentRoute: () => rootRouteImport,
 } as any)
 const BrochuresRoute = BrochuresRouteImport.update({
@@ -213,6 +219,7 @@ export interface FileRoutesByFullPath {
   '/articles': typeof ArticlesRouteWithChildren
   '/book': typeof BookRoute
   '/brochures': typeof BrochuresRouteWithChildren
+  '/company': typeof CompanyRoute
   '/crn': typeof CrnRoute
   '/for-oems': typeof ForOemsRoute
   '/how-to-start': typeof HowToStartRoute
@@ -247,6 +254,7 @@ export interface FileRoutesByTo {
   '/articles': typeof ArticlesRouteWithChildren
   '/book': typeof BookRoute
   '/brochures': typeof BrochuresRouteWithChildren
+  '/company': typeof CompanyRoute
   '/crn': typeof CrnRoute
   '/for-oems': typeof ForOemsRoute
   '/how-to-start': typeof HowToStartRoute
@@ -282,6 +290,7 @@ export interface FileRoutesById {
   '/articles': typeof ArticlesRouteWithChildren
   '/book': typeof BookRoute
   '/brochures': typeof BrochuresRouteWithChildren
+  '/company': typeof CompanyRoute
   '/crn': typeof CrnRoute
   '/for-oems': typeof ForOemsRoute
   '/how-to-start': typeof HowToStartRoute
@@ -318,6 +327,7 @@ export interface FileRouteTypes {
     | '/articles'
     | '/book'
     | '/brochures'
+    | '/company'
     | '/crn'
     | '/for-oems'
     | '/how-to-start'
@@ -352,6 +362,7 @@ export interface FileRouteTypes {
     | '/articles'
     | '/book'
     | '/brochures'
+    | '/company'
     | '/crn'
     | '/for-oems'
     | '/how-to-start'
@@ -386,6 +397,7 @@ export interface FileRouteTypes {
     | '/articles'
     | '/book'
     | '/brochures'
+    | '/company'
     | '/crn'
     | '/for-oems'
     | '/how-to-start'
@@ -421,6 +433,7 @@ export interface RootRouteChildren {
   ArticlesRoute: typeof ArticlesRouteWithChildren
   BookRoute: typeof BookRoute
   BrochuresRoute: typeof BrochuresRouteWithChildren
+  CompanyRoute: typeof CompanyRoute
   CrnRoute: typeof CrnRoute
   ForOemsRoute: typeof ForOemsRoute
   HowToStartRoute: typeof HowToStartRoute
@@ -512,6 +525,13 @@ declare module '@tanstack/react-router' {
       path: '/crn'
       fullPath: '/crn'
       preLoaderRoute: typeof CrnRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/company': {
+      id: '/company'
+      path: '/company'
+      fullPath: '/company'
+      preLoaderRoute: typeof CompanyRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/brochures': {
@@ -750,6 +770,7 @@ const rootRouteChildren: RootRouteChildren = {
   ArticlesRoute: ArticlesRouteWithChildren,
   BookRoute: BookRoute,
   BrochuresRoute: BrochuresRouteWithChildren,
+  CompanyRoute: CompanyRoute,
   CrnRoute: CrnRoute,
   ForOemsRoute: ForOemsRoute,
   HowToStartRoute: HowToStartRoute,
