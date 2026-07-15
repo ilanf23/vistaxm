@@ -700,7 +700,12 @@ function Insights() {
       <Section>
         <SectionHead eyebrow="Video and media" title="Watch the thinking, not just read it." />
         <div className="mt-12 md:mt-14">
-          <VideoCard title={VIDEOS.featured.title} url={VIDEOS.featured.url} featured />
+          <VideoCard
+            title={VIDEOS.featured.title}
+            url={VIDEOS.featured.url}
+            thumbnail={VIDEOS.featured.thumbnail}
+            featured
+          />
         </div>
         {VIDEOS.clips.length > 0 && (
           <Stagger className="mt-6 grid gap-6 md:grid-cols-3" stagger={0.08}>
