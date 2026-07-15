@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as WhitePapersRouteImport } from './routes/white-papers'
 import { Route as VideosRouteImport } from './routes/videos'
 import { Route as TheModelRouteImport } from './routes/the-model'
 import { Route as ProofRouteImport } from './routes/proof'
@@ -38,6 +39,11 @@ import { Route as CaseStudiesJfPetroleumRouteImport } from './routes/case-studie
 import { Route as BrochuresSplatRouteImport } from './routes/brochures.$'
 import { Route as ArticlesSplatRouteImport } from './routes/articles.$'
 
+const WhitePapersRoute = WhitePapersRouteImport.update({
+  id: '/white-papers',
+  path: '/white-papers',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const VideosRoute = VideosRouteImport.update({
   id: '/videos',
   path: '/videos',
@@ -197,6 +203,7 @@ export interface FileRoutesByFullPath {
   '/proof': typeof ProofRoute
   '/the-model': typeof TheModelRoute
   '/videos': typeof VideosRouteWithChildren
+  '/white-papers': typeof WhitePapersRoute
   '/articles/$': typeof ArticlesSplatRoute
   '/brochures/$': typeof BrochuresSplatRoute
   '/case-studies/jf-petroleum': typeof CaseStudiesJfPetroleumRoute
@@ -227,6 +234,7 @@ export interface FileRoutesByTo {
   '/proof': typeof ProofRoute
   '/the-model': typeof TheModelRoute
   '/videos': typeof VideosRouteWithChildren
+  '/white-papers': typeof WhitePapersRoute
   '/articles/$': typeof ArticlesSplatRoute
   '/brochures/$': typeof BrochuresSplatRoute
   '/case-studies/jf-petroleum': typeof CaseStudiesJfPetroleumRoute
@@ -258,6 +266,7 @@ export interface FileRoutesById {
   '/proof': typeof ProofRoute
   '/the-model': typeof TheModelRoute
   '/videos': typeof VideosRouteWithChildren
+  '/white-papers': typeof WhitePapersRoute
   '/articles/$': typeof ArticlesSplatRoute
   '/brochures/$': typeof BrochuresSplatRoute
   '/case-studies/jf-petroleum': typeof CaseStudiesJfPetroleumRoute
@@ -290,6 +299,7 @@ export interface FileRouteTypes {
     | '/proof'
     | '/the-model'
     | '/videos'
+    | '/white-papers'
     | '/articles/$'
     | '/brochures/$'
     | '/case-studies/jf-petroleum'
@@ -320,6 +330,7 @@ export interface FileRouteTypes {
     | '/proof'
     | '/the-model'
     | '/videos'
+    | '/white-papers'
     | '/articles/$'
     | '/brochures/$'
     | '/case-studies/jf-petroleum'
@@ -350,6 +361,7 @@ export interface FileRouteTypes {
     | '/proof'
     | '/the-model'
     | '/videos'
+    | '/white-papers'
     | '/articles/$'
     | '/brochures/$'
     | '/case-studies/jf-petroleum'
@@ -381,6 +393,7 @@ export interface RootRouteChildren {
   ProofRoute: typeof ProofRoute
   TheModelRoute: typeof TheModelRoute
   VideosRoute: typeof VideosRouteWithChildren
+  WhitePapersRoute: typeof WhitePapersRoute
   CaseStudiesJfPetroleumRoute: typeof CaseStudiesJfPetroleumRoute
   IndustriesItSolutionProvidersRoute: typeof IndustriesItSolutionProvidersRoute
   IndustriesTechnologyProvidersRoute: typeof IndustriesTechnologyProvidersRoute
@@ -394,6 +407,13 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/white-papers': {
+      id: '/white-papers'
+      path: '/white-papers'
+      fullPath: '/white-papers'
+      preLoaderRoute: typeof WhitePapersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/videos': {
       id: '/videos'
       path: '/videos'
@@ -658,6 +678,7 @@ const rootRouteChildren: RootRouteChildren = {
   ProofRoute: ProofRoute,
   TheModelRoute: TheModelRoute,
   VideosRoute: VideosRouteWithChildren,
+  WhitePapersRoute: WhitePapersRoute,
   CaseStudiesJfPetroleumRoute: CaseStudiesJfPetroleumRoute,
   IndustriesItSolutionProvidersRoute: IndustriesItSolutionProvidersRoute,
   IndustriesTechnologyProvidersRoute: IndustriesTechnologyProvidersRoute,
