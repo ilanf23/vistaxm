@@ -21,6 +21,7 @@ import { Route as BookRouteImport } from './routes/book'
 import { Route as ArticlesRouteImport } from './routes/articles'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as VideosSplatRouteImport } from './routes/videos.$'
 import { Route as SolutionsPartnerpulseRouteImport } from './routes/solutions/partnerpulse'
 import { Route as SolutionsIndustrialpulseRouteImport } from './routes/solutions/industrialpulse'
 import { Route as SolutionsBrokerpulseRouteImport } from './routes/solutions/brokerpulse'
@@ -94,6 +95,11 @@ const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
+} as any)
+const VideosSplatRoute = VideosSplatRouteImport.update({
+  id: '/$',
+  path: '/$',
+  getParentRoute: () => VideosRoute,
 } as any)
 const SolutionsPartnerpulseRoute = SolutionsPartnerpulseRouteImport.update({
   id: '/solutions/partnerpulse',
@@ -177,7 +183,7 @@ export interface FileRoutesByFullPath {
   '/insights': typeof InsightsRoute
   '/proof': typeof ProofRoute
   '/the-model': typeof TheModelRoute
-  '/videos': typeof VideosRoute
+  '/videos': typeof VideosRouteWithChildren
   '/articles/$': typeof ArticlesSplatRoute
   '/case-studies/jf-petroleum': typeof CaseStudiesJfPetroleumRoute
   '/industries/it-solution-providers': typeof IndustriesItSolutionProvidersRoute
@@ -191,6 +197,7 @@ export interface FileRoutesByFullPath {
   '/solutions/brokerpulse': typeof SolutionsBrokerpulseRoute
   '/solutions/industrialpulse': typeof SolutionsIndustrialpulseRoute
   '/solutions/partnerpulse': typeof SolutionsPartnerpulseRoute
+  '/videos/$': typeof VideosSplatRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -204,7 +211,7 @@ export interface FileRoutesByTo {
   '/insights': typeof InsightsRoute
   '/proof': typeof ProofRoute
   '/the-model': typeof TheModelRoute
-  '/videos': typeof VideosRoute
+  '/videos': typeof VideosRouteWithChildren
   '/articles/$': typeof ArticlesSplatRoute
   '/case-studies/jf-petroleum': typeof CaseStudiesJfPetroleumRoute
   '/industries/it-solution-providers': typeof IndustriesItSolutionProvidersRoute
@@ -218,6 +225,7 @@ export interface FileRoutesByTo {
   '/solutions/brokerpulse': typeof SolutionsBrokerpulseRoute
   '/solutions/industrialpulse': typeof SolutionsIndustrialpulseRoute
   '/solutions/partnerpulse': typeof SolutionsPartnerpulseRoute
+  '/videos/$': typeof VideosSplatRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -232,7 +240,7 @@ export interface FileRoutesById {
   '/insights': typeof InsightsRoute
   '/proof': typeof ProofRoute
   '/the-model': typeof TheModelRoute
-  '/videos': typeof VideosRoute
+  '/videos': typeof VideosRouteWithChildren
   '/articles/$': typeof ArticlesSplatRoute
   '/case-studies/jf-petroleum': typeof CaseStudiesJfPetroleumRoute
   '/industries/it-solution-providers': typeof IndustriesItSolutionProvidersRoute
@@ -246,6 +254,7 @@ export interface FileRoutesById {
   '/solutions/brokerpulse': typeof SolutionsBrokerpulseRoute
   '/solutions/industrialpulse': typeof SolutionsIndustrialpulseRoute
   '/solutions/partnerpulse': typeof SolutionsPartnerpulseRoute
+  '/videos/$': typeof VideosSplatRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -275,6 +284,7 @@ export interface FileRouteTypes {
     | '/solutions/brokerpulse'
     | '/solutions/industrialpulse'
     | '/solutions/partnerpulse'
+    | '/videos/$'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -302,6 +312,7 @@ export interface FileRouteTypes {
     | '/solutions/brokerpulse'
     | '/solutions/industrialpulse'
     | '/solutions/partnerpulse'
+    | '/videos/$'
   id:
     | '__root__'
     | '/'
@@ -329,6 +340,7 @@ export interface FileRouteTypes {
     | '/solutions/brokerpulse'
     | '/solutions/industrialpulse'
     | '/solutions/partnerpulse'
+    | '/videos/$'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -343,7 +355,7 @@ export interface RootRouteChildren {
   InsightsRoute: typeof InsightsRoute
   ProofRoute: typeof ProofRoute
   TheModelRoute: typeof TheModelRoute
-  VideosRoute: typeof VideosRoute
+  VideosRoute: typeof VideosRouteWithChildren
   CaseStudiesJfPetroleumRoute: typeof CaseStudiesJfPetroleumRoute
   IndustriesItSolutionProvidersRoute: typeof IndustriesItSolutionProvidersRoute
   IndustriesTechnologyProvidersRoute: typeof IndustriesTechnologyProvidersRoute
@@ -440,6 +452,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/videos/$': {
+      id: '/videos/$'
+      path: '/$'
+      fullPath: '/videos/$'
+      preLoaderRoute: typeof VideosSplatRouteImport
+      parentRoute: typeof VideosRoute
     }
     '/solutions/partnerpulse': {
       id: '/solutions/partnerpulse'
@@ -563,6 +582,17 @@ const InsightHubRouteWithChildren = InsightHubRoute._addFileChildren(
   InsightHubRouteChildren,
 )
 
+interface VideosRouteChildren {
+  VideosSplatRoute: typeof VideosSplatRoute
+}
+
+const VideosRouteChildren: VideosRouteChildren = {
+  VideosSplatRoute: VideosSplatRoute,
+}
+
+const VideosRouteWithChildren =
+  VideosRoute._addFileChildren(VideosRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
@@ -575,7 +605,7 @@ const rootRouteChildren: RootRouteChildren = {
   InsightsRoute: InsightsRoute,
   ProofRoute: ProofRoute,
   TheModelRoute: TheModelRoute,
-  VideosRoute: VideosRoute,
+  VideosRoute: VideosRouteWithChildren,
   CaseStudiesJfPetroleumRoute: CaseStudiesJfPetroleumRoute,
   IndustriesItSolutionProvidersRoute: IndustriesItSolutionProvidersRoute,
   IndustriesTechnologyProvidersRoute: IndustriesTechnologyProvidersRoute,
