@@ -435,19 +435,25 @@ function ComingSoonCard({
 }
 
 /** Video gallery card. Renders a responsive YouTube/Vimeo embed when `url`
- *  resolves, otherwise a labeled "Video coming soon" placeholder. */
+ *  resolves, otherwise a labeled "Video coming soon" placeholder. When a
+ *  `thumbnail` is supplied, it is shown as a poster with a play button until
+ *  the user clicks to load the embed. */
 function VideoCard({
   title,
   url = "",
+  thumbnail = "",
   featured = false,
   delay = 0,
 }: {
   title: string;
   url?: string;
+  thumbnail?: string;
   featured?: boolean;
   delay?: number;
 }) {
   const embed = toEmbedUrl(url);
+  const [playing, setPlaying] = useState(false);
+  const showEmbed = embed && (!thumbnail || playing);
   return (
     <Reveal delay={delay}>
       <div className="group relative h-full overflow-hidden rounded-2xl hairline bg-white card-lift">
@@ -456,7 +462,7 @@ function VideoCard({
             featured ? "aspect-[16/9]" : "aspect-video"
           }`}
         >
-          {embed ? (
+          {showEmbed ? (
             <iframe
               src={embed}
               title={title}
@@ -467,20 +473,40 @@ function VideoCard({
             />
           ) : (
             <div className="absolute inset-0 flex items-center justify-center">
-              <div
-                aria-hidden
-                className="absolute inset-0 opacity-80"
-                style={{
-                  backgroundImage:
-                    "radial-gradient(520px 260px at 80% 10%, rgba(49,133,252,0.28), transparent 66%), radial-gradient(420px 240px at 10% 100%, rgba(0,86,167,0.34), transparent 68%)",
-                }}
-              />
-              <span className="relative flex h-16 w-16 items-center justify-center rounded-full bg-white/15 text-white ring-1 ring-white/25 backdrop-blur transition-transform duration-300 group-hover:scale-105">
-                <PlayIcon className="ml-0.5 h-6 w-6" />
-              </span>
-              <span className="absolute right-3 top-3">
-                <StatusTag>Video coming soon</StatusTag>
-              </span>
+              {thumbnail ? (
+                <>
+                  <img
+                    src={thumbnail}
+                    alt={`Thumbnail for ${title}`}
+                    loading="lazy"
+                    className="absolute inset-0 h-full w-full object-cover"
+                  />
+                  <div aria-hidden className="absolute inset-0 bg-[color:var(--navy-deep)]/30" />
+                </>
+              ) : (
+                <div
+                  aria-hidden
+                  className="absolute inset-0 opacity-80"
+                  style={{
+                    backgroundImage:
+                      "radial-gradient(520px 260px at 80% 10%, rgba(49,133,252,0.28), transparent 66%), radial-gradient(420px 240px at 10% 100%, rgba(0,86,167,0.34), transparent 68%)",
+                  }}
+                />
+              )}
+              {embed ? (
+                <button
+                  type="button"
+                  onClick={() => setPlaying(true)}
+                  className="relative flex h-16 w-16 items-center justify-center rounded-full bg-white/15 text-white ring-1 ring-white/25 backdrop-blur transition-transform duration-300 group-hover:scale-105"
+                  aria-label={`Play ${title}`}
+                >
+                  <PlayIcon className="ml-0.5 h-6 w-6" />
+                </button>
+              ) : (
+                <span className="absolute right-3 top-3">
+                  <StatusTag>Video coming soon</StatusTag>
+                </span>
+              )}
             </div>
           )}
         </div>
