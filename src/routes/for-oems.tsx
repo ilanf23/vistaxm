@@ -472,7 +472,7 @@ function ForOems() {
             />
             <div className="mt-8">
               <a
-                href="mailto:contactus@vistaxm.com?subject=Sample%20deliverable%20request&body=Hi%20VistaXM%20team%2C%20please%20send%20me%20the%20sample%20deliverable."
+                href="mailto:sales@vistaxm.com?subject=Sample%20deliverable%20request&body=Hi%20VistaXM%20team%2C%20please%20send%20me%20the%20sample%20deliverable."
                 className="btn-primary"
               >
                 Request the sample deliverable
