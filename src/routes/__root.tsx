@@ -14,6 +14,10 @@ import appCss from "../styles.css?url";
 import logoAsset from "../assets/vistaxm-logo.svg.asset.json";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { ORGANIZATION_JSONLD, WEBSITE_JSONLD } from "../lib/seo";
+import { getIsProductionHost } from "../lib/host.functions";
+
+const GTM_ID = "GTM-NX6L38LZ";
+const GTM_INLINE = `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','${GTM_ID}');`;
 
 function NotFoundComponent() {
   return (
@@ -119,6 +123,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     ],
     scripts: [ORGANIZATION_JSONLD, WEBSITE_JSONLD],
   }),
+  loader: async () => await getIsProductionHost(),
   shellComponent: RootShell,
   component: RootComponent,
   notFoundComponent: NotFoundComponent,
@@ -126,12 +131,23 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 });
 
 function RootShell({ children }: { children: ReactNode }) {
+  const { isProductionHost } = Route.useLoaderData();
   return (
     <html lang="en">
       <head>
         <HeadContent />
+        {isProductionHost ? (
+          <script dangerouslySetInnerHTML={{ __html: GTM_INLINE }} />
+        ) : null}
       </head>
       <body>
+        {isProductionHost ? (
+          <noscript
+            dangerouslySetInnerHTML={{
+              __html: `<iframe src="https://www.googletagmanager.com/ns.html?id=${GTM_ID}" height="0" width="0" style="display:none;visibility:hidden"></iframe>`,
+            }}
+          />
+        ) : null}
         {children}
         <Scripts />
       </body>
