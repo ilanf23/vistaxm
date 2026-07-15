@@ -26,6 +26,7 @@ import { Route as LegalTermsOfServiceRouteImport } from './routes/legal/terms-of
 import { Route as LegalPrivacyPolicyRouteImport } from './routes/legal/privacy-policy'
 import { Route as LegalCookiePolicyRouteImport } from './routes/legal/cookie-policy'
 import { Route as InsightHubRoiCalculatorRouteImport } from './routes/insight-hub.roi-calculator'
+import { Route as InsightHubCxMaturityAssessmentRouteImport } from './routes/insight-hub.cx-maturity-assessment'
 import { Route as InsightHubSplatRouteImport } from './routes/insight-hub.$'
 import { Route as IndustriesTechnologyProvidersRouteImport } from './routes/industries/technology-providers'
 import { Route as IndustriesItSolutionProvidersRouteImport } from './routes/industries/it-solution-providers'
@@ -117,6 +118,12 @@ const InsightHubRoiCalculatorRoute = InsightHubRoiCalculatorRouteImport.update({
   path: '/roi-calculator',
   getParentRoute: () => InsightHubRoute,
 } as any)
+const InsightHubCxMaturityAssessmentRoute =
+  InsightHubCxMaturityAssessmentRouteImport.update({
+    id: '/cx-maturity-assessment',
+    path: '/cx-maturity-assessment',
+    getParentRoute: () => InsightHubRoute,
+  } as any)
 const InsightHubSplatRoute = InsightHubSplatRouteImport.update({
   id: '/$',
   path: '/$',
@@ -155,6 +162,7 @@ export interface FileRoutesByFullPath {
   '/industries/it-solution-providers': typeof IndustriesItSolutionProvidersRoute
   '/industries/technology-providers': typeof IndustriesTechnologyProvidersRoute
   '/insight-hub/$': typeof InsightHubSplatRoute
+  '/insight-hub/cx-maturity-assessment': typeof InsightHubCxMaturityAssessmentRoute
   '/insight-hub/roi-calculator': typeof InsightHubRoiCalculatorRoute
   '/legal/cookie-policy': typeof LegalCookiePolicyRoute
   '/legal/privacy-policy': typeof LegalPrivacyPolicyRoute
@@ -178,6 +186,7 @@ export interface FileRoutesByTo {
   '/industries/it-solution-providers': typeof IndustriesItSolutionProvidersRoute
   '/industries/technology-providers': typeof IndustriesTechnologyProvidersRoute
   '/insight-hub/$': typeof InsightHubSplatRoute
+  '/insight-hub/cx-maturity-assessment': typeof InsightHubCxMaturityAssessmentRoute
   '/insight-hub/roi-calculator': typeof InsightHubRoiCalculatorRoute
   '/legal/cookie-policy': typeof LegalCookiePolicyRoute
   '/legal/privacy-policy': typeof LegalPrivacyPolicyRoute
@@ -202,6 +211,7 @@ export interface FileRoutesById {
   '/industries/it-solution-providers': typeof IndustriesItSolutionProvidersRoute
   '/industries/technology-providers': typeof IndustriesTechnologyProvidersRoute
   '/insight-hub/$': typeof InsightHubSplatRoute
+  '/insight-hub/cx-maturity-assessment': typeof InsightHubCxMaturityAssessmentRoute
   '/insight-hub/roi-calculator': typeof InsightHubRoiCalculatorRoute
   '/legal/cookie-policy': typeof LegalCookiePolicyRoute
   '/legal/privacy-policy': typeof LegalPrivacyPolicyRoute
@@ -227,6 +237,7 @@ export interface FileRouteTypes {
     | '/industries/it-solution-providers'
     | '/industries/technology-providers'
     | '/insight-hub/$'
+    | '/insight-hub/cx-maturity-assessment'
     | '/insight-hub/roi-calculator'
     | '/legal/cookie-policy'
     | '/legal/privacy-policy'
@@ -250,6 +261,7 @@ export interface FileRouteTypes {
     | '/industries/it-solution-providers'
     | '/industries/technology-providers'
     | '/insight-hub/$'
+    | '/insight-hub/cx-maturity-assessment'
     | '/insight-hub/roi-calculator'
     | '/legal/cookie-policy'
     | '/legal/privacy-policy'
@@ -273,6 +285,7 @@ export interface FileRouteTypes {
     | '/industries/it-solution-providers'
     | '/industries/technology-providers'
     | '/insight-hub/$'
+    | '/insight-hub/cx-maturity-assessment'
     | '/insight-hub/roi-calculator'
     | '/legal/cookie-policy'
     | '/legal/privacy-policy'
@@ -425,6 +438,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof InsightHubRoiCalculatorRouteImport
       parentRoute: typeof InsightHubRoute
     }
+    '/insight-hub/cx-maturity-assessment': {
+      id: '/insight-hub/cx-maturity-assessment'
+      path: '/cx-maturity-assessment'
+      fullPath: '/insight-hub/cx-maturity-assessment'
+      preLoaderRoute: typeof InsightHubCxMaturityAssessmentRouteImport
+      parentRoute: typeof InsightHubRoute
+    }
     '/insight-hub/$': {
       id: '/insight-hub/$'
       path: '/$'
@@ -458,11 +478,13 @@ declare module '@tanstack/react-router' {
 
 interface InsightHubRouteChildren {
   InsightHubSplatRoute: typeof InsightHubSplatRoute
+  InsightHubCxMaturityAssessmentRoute: typeof InsightHubCxMaturityAssessmentRoute
   InsightHubRoiCalculatorRoute: typeof InsightHubRoiCalculatorRoute
 }
 
 const InsightHubRouteChildren: InsightHubRouteChildren = {
   InsightHubSplatRoute: InsightHubSplatRoute,
+  InsightHubCxMaturityAssessmentRoute: InsightHubCxMaturityAssessmentRoute,
   InsightHubRoiCalculatorRoute: InsightHubRoiCalculatorRoute,
 }
 
