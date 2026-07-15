@@ -1,7 +1,7 @@
 import { createServerFn } from "@tanstack/react-start";
 import { getRequestHost } from "@tanstack/react-start/server";
 
-const PRODUCTION_HOSTS = new Set(["vistaxm.com", "www.vistaxm.com"]);
+const PRODUCTION_HOSTS = new Set(["vistaxm.com", "www.vistaxm.com", "localhost"]);
 
 export const getIsProductionHost = createServerFn({ method: "GET" }).handler(() => {
   try {
