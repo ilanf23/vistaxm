@@ -311,7 +311,7 @@ const VIDEOS: {
   featured: { title: string; url: string };
   clips: { title: string; url: string }[];
 } = {
-  featured: { title: "Erik Vogel × Terry Richardson", url: "" }, // paste YouTube/Vimeo URL here
+  featured: { title: "The Journey from CX to Revenue Intelligence", url: "https://www.youtube.com/embed/EH3hJEnUTuc" },
   clips: [], // additional placed clips later
 };
 
