@@ -35,6 +35,7 @@ import { Route as InsightHubSplatRouteImport } from './routes/insight-hub.$'
 import { Route as IndustriesTechnologyProvidersRouteImport } from './routes/industries/technology-providers'
 import { Route as IndustriesItSolutionProvidersRouteImport } from './routes/industries/it-solution-providers'
 import { Route as CaseStudiesJfPetroleumRouteImport } from './routes/case-studies/jf-petroleum'
+import { Route as BrochuresSplatRouteImport } from './routes/brochures.$'
 import { Route as ArticlesSplatRouteImport } from './routes/articles.$'
 
 const VideosRoute = VideosRouteImport.update({
@@ -171,6 +172,11 @@ const CaseStudiesJfPetroleumRoute = CaseStudiesJfPetroleumRouteImport.update({
   path: '/case-studies/jf-petroleum',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BrochuresSplatRoute = BrochuresSplatRouteImport.update({
+  id: '/$',
+  path: '/$',
+  getParentRoute: () => BrochuresRoute,
+} as any)
 const ArticlesSplatRoute = ArticlesSplatRouteImport.update({
   id: '/$',
   path: '/$',
@@ -182,7 +188,7 @@ export interface FileRoutesByFullPath {
   '/about': typeof AboutRoute
   '/articles': typeof ArticlesRouteWithChildren
   '/book': typeof BookRoute
-  '/brochures': typeof BrochuresRoute
+  '/brochures': typeof BrochuresRouteWithChildren
   '/crn': typeof CrnRoute
   '/for-oems': typeof ForOemsRoute
   '/how-to-start': typeof HowToStartRoute
@@ -192,6 +198,7 @@ export interface FileRoutesByFullPath {
   '/the-model': typeof TheModelRoute
   '/videos': typeof VideosRouteWithChildren
   '/articles/$': typeof ArticlesSplatRoute
+  '/brochures/$': typeof BrochuresSplatRoute
   '/case-studies/jf-petroleum': typeof CaseStudiesJfPetroleumRoute
   '/industries/it-solution-providers': typeof IndustriesItSolutionProvidersRoute
   '/industries/technology-providers': typeof IndustriesTechnologyProvidersRoute
@@ -211,7 +218,7 @@ export interface FileRoutesByTo {
   '/about': typeof AboutRoute
   '/articles': typeof ArticlesRouteWithChildren
   '/book': typeof BookRoute
-  '/brochures': typeof BrochuresRoute
+  '/brochures': typeof BrochuresRouteWithChildren
   '/crn': typeof CrnRoute
   '/for-oems': typeof ForOemsRoute
   '/how-to-start': typeof HowToStartRoute
@@ -221,6 +228,7 @@ export interface FileRoutesByTo {
   '/the-model': typeof TheModelRoute
   '/videos': typeof VideosRouteWithChildren
   '/articles/$': typeof ArticlesSplatRoute
+  '/brochures/$': typeof BrochuresSplatRoute
   '/case-studies/jf-petroleum': typeof CaseStudiesJfPetroleumRoute
   '/industries/it-solution-providers': typeof IndustriesItSolutionProvidersRoute
   '/industries/technology-providers': typeof IndustriesTechnologyProvidersRoute
@@ -241,7 +249,7 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute
   '/articles': typeof ArticlesRouteWithChildren
   '/book': typeof BookRoute
-  '/brochures': typeof BrochuresRoute
+  '/brochures': typeof BrochuresRouteWithChildren
   '/crn': typeof CrnRoute
   '/for-oems': typeof ForOemsRoute
   '/how-to-start': typeof HowToStartRoute
@@ -251,6 +259,7 @@ export interface FileRoutesById {
   '/the-model': typeof TheModelRoute
   '/videos': typeof VideosRouteWithChildren
   '/articles/$': typeof ArticlesSplatRoute
+  '/brochures/$': typeof BrochuresSplatRoute
   '/case-studies/jf-petroleum': typeof CaseStudiesJfPetroleumRoute
   '/industries/it-solution-providers': typeof IndustriesItSolutionProvidersRoute
   '/industries/technology-providers': typeof IndustriesTechnologyProvidersRoute
@@ -282,6 +291,7 @@ export interface FileRouteTypes {
     | '/the-model'
     | '/videos'
     | '/articles/$'
+    | '/brochures/$'
     | '/case-studies/jf-petroleum'
     | '/industries/it-solution-providers'
     | '/industries/technology-providers'
@@ -311,6 +321,7 @@ export interface FileRouteTypes {
     | '/the-model'
     | '/videos'
     | '/articles/$'
+    | '/brochures/$'
     | '/case-studies/jf-petroleum'
     | '/industries/it-solution-providers'
     | '/industries/technology-providers'
@@ -340,6 +351,7 @@ export interface FileRouteTypes {
     | '/the-model'
     | '/videos'
     | '/articles/$'
+    | '/brochures/$'
     | '/case-studies/jf-petroleum'
     | '/industries/it-solution-providers'
     | '/industries/technology-providers'
@@ -360,7 +372,7 @@ export interface RootRouteChildren {
   AboutRoute: typeof AboutRoute
   ArticlesRoute: typeof ArticlesRouteWithChildren
   BookRoute: typeof BookRoute
-  BrochuresRoute: typeof BrochuresRoute
+  BrochuresRoute: typeof BrochuresRouteWithChildren
   CrnRoute: typeof CrnRoute
   ForOemsRoute: typeof ForOemsRoute
   HowToStartRoute: typeof HowToStartRoute
@@ -564,6 +576,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CaseStudiesJfPetroleumRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/brochures/$': {
+      id: '/brochures/$'
+      path: '/$'
+      fullPath: '/brochures/$'
+      preLoaderRoute: typeof BrochuresSplatRouteImport
+      parentRoute: typeof BrochuresRoute
+    }
     '/articles/$': {
       id: '/articles/$'
       path: '/$'
@@ -584,6 +603,18 @@ const ArticlesRouteChildren: ArticlesRouteChildren = {
 
 const ArticlesRouteWithChildren = ArticlesRoute._addFileChildren(
   ArticlesRouteChildren,
+)
+
+interface BrochuresRouteChildren {
+  BrochuresSplatRoute: typeof BrochuresSplatRoute
+}
+
+const BrochuresRouteChildren: BrochuresRouteChildren = {
+  BrochuresSplatRoute: BrochuresSplatRoute,
+}
+
+const BrochuresRouteWithChildren = BrochuresRoute._addFileChildren(
+  BrochuresRouteChildren,
 )
 
 interface InsightHubRouteChildren {
@@ -618,7 +649,7 @@ const rootRouteChildren: RootRouteChildren = {
   AboutRoute: AboutRoute,
   ArticlesRoute: ArticlesRouteWithChildren,
   BookRoute: BookRoute,
-  BrochuresRoute: BrochuresRoute,
+  BrochuresRoute: BrochuresRouteWithChildren,
   CrnRoute: CrnRoute,
   ForOemsRoute: ForOemsRoute,
   HowToStartRoute: HowToStartRoute,
