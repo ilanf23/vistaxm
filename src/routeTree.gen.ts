@@ -25,6 +25,7 @@ import { Route as SolutionsBrokerpulseRouteImport } from './routes/solutions/bro
 import { Route as LegalTermsOfServiceRouteImport } from './routes/legal/terms-of-service'
 import { Route as LegalPrivacyPolicyRouteImport } from './routes/legal/privacy-policy'
 import { Route as LegalCookiePolicyRouteImport } from './routes/legal/cookie-policy'
+import { Route as InsightHubRoiCalculatorRouteImport } from './routes/insight-hub.roi-calculator'
 import { Route as InsightHubSplatRouteImport } from './routes/insight-hub.$'
 import { Route as IndustriesTechnologyProvidersRouteImport } from './routes/industries/technology-providers'
 import { Route as IndustriesItSolutionProvidersRouteImport } from './routes/industries/it-solution-providers'
@@ -111,6 +112,11 @@ const LegalCookiePolicyRoute = LegalCookiePolicyRouteImport.update({
   path: '/legal/cookie-policy',
   getParentRoute: () => rootRouteImport,
 } as any)
+const InsightHubRoiCalculatorRoute = InsightHubRoiCalculatorRouteImport.update({
+  id: '/roi-calculator',
+  path: '/roi-calculator',
+  getParentRoute: () => InsightHubRoute,
+} as any)
 const InsightHubSplatRoute = InsightHubSplatRouteImport.update({
   id: '/$',
   path: '/$',
@@ -149,6 +155,7 @@ export interface FileRoutesByFullPath {
   '/industries/it-solution-providers': typeof IndustriesItSolutionProvidersRoute
   '/industries/technology-providers': typeof IndustriesTechnologyProvidersRoute
   '/insight-hub/$': typeof InsightHubSplatRoute
+  '/insight-hub/roi-calculator': typeof InsightHubRoiCalculatorRoute
   '/legal/cookie-policy': typeof LegalCookiePolicyRoute
   '/legal/privacy-policy': typeof LegalPrivacyPolicyRoute
   '/legal/terms-of-service': typeof LegalTermsOfServiceRoute
@@ -171,6 +178,7 @@ export interface FileRoutesByTo {
   '/industries/it-solution-providers': typeof IndustriesItSolutionProvidersRoute
   '/industries/technology-providers': typeof IndustriesTechnologyProvidersRoute
   '/insight-hub/$': typeof InsightHubSplatRoute
+  '/insight-hub/roi-calculator': typeof InsightHubRoiCalculatorRoute
   '/legal/cookie-policy': typeof LegalCookiePolicyRoute
   '/legal/privacy-policy': typeof LegalPrivacyPolicyRoute
   '/legal/terms-of-service': typeof LegalTermsOfServiceRoute
@@ -194,6 +202,7 @@ export interface FileRoutesById {
   '/industries/it-solution-providers': typeof IndustriesItSolutionProvidersRoute
   '/industries/technology-providers': typeof IndustriesTechnologyProvidersRoute
   '/insight-hub/$': typeof InsightHubSplatRoute
+  '/insight-hub/roi-calculator': typeof InsightHubRoiCalculatorRoute
   '/legal/cookie-policy': typeof LegalCookiePolicyRoute
   '/legal/privacy-policy': typeof LegalPrivacyPolicyRoute
   '/legal/terms-of-service': typeof LegalTermsOfServiceRoute
@@ -218,6 +227,7 @@ export interface FileRouteTypes {
     | '/industries/it-solution-providers'
     | '/industries/technology-providers'
     | '/insight-hub/$'
+    | '/insight-hub/roi-calculator'
     | '/legal/cookie-policy'
     | '/legal/privacy-policy'
     | '/legal/terms-of-service'
@@ -240,6 +250,7 @@ export interface FileRouteTypes {
     | '/industries/it-solution-providers'
     | '/industries/technology-providers'
     | '/insight-hub/$'
+    | '/insight-hub/roi-calculator'
     | '/legal/cookie-policy'
     | '/legal/privacy-policy'
     | '/legal/terms-of-service'
@@ -262,6 +273,7 @@ export interface FileRouteTypes {
     | '/industries/it-solution-providers'
     | '/industries/technology-providers'
     | '/insight-hub/$'
+    | '/insight-hub/roi-calculator'
     | '/legal/cookie-policy'
     | '/legal/privacy-policy'
     | '/legal/terms-of-service'
@@ -406,6 +418,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LegalCookiePolicyRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/insight-hub/roi-calculator': {
+      id: '/insight-hub/roi-calculator'
+      path: '/roi-calculator'
+      fullPath: '/insight-hub/roi-calculator'
+      preLoaderRoute: typeof InsightHubRoiCalculatorRouteImport
+      parentRoute: typeof InsightHubRoute
+    }
     '/insight-hub/$': {
       id: '/insight-hub/$'
       path: '/$'
@@ -439,10 +458,12 @@ declare module '@tanstack/react-router' {
 
 interface InsightHubRouteChildren {
   InsightHubSplatRoute: typeof InsightHubSplatRoute
+  InsightHubRoiCalculatorRoute: typeof InsightHubRoiCalculatorRoute
 }
 
 const InsightHubRouteChildren: InsightHubRouteChildren = {
   InsightHubSplatRoute: InsightHubSplatRoute,
+  InsightHubRoiCalculatorRoute: InsightHubRoiCalculatorRoute,
 }
 
 const InsightHubRouteWithChildren = InsightHubRoute._addFileChildren(
