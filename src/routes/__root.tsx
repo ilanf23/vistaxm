@@ -123,6 +123,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     ],
     scripts: [ORGANIZATION_JSONLD, WEBSITE_JSONLD],
   }),
+  loader: async () => await getIsProductionHost(),
   shellComponent: RootShell,
   component: RootComponent,
   notFoundComponent: NotFoundComponent,
@@ -130,12 +131,23 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 });
 
 function RootShell({ children }: { children: ReactNode }) {
+  const { isProductionHost } = Route.useLoaderData();
   return (
     <html lang="en">
       <head>
         <HeadContent />
+        {isProductionHost ? (
+          <script dangerouslySetInnerHTML={{ __html: GTM_INLINE }} />
+        ) : null}
       </head>
       <body>
+        {isProductionHost ? (
+          <noscript
+            dangerouslySetInnerHTML={{
+              __html: `<iframe src="https://www.googletagmanager.com/ns.html?id=${GTM_ID}" height="0" width="0" style="display:none;visibility:hidden"></iframe>`,
+            }}
+          />
+        ) : null}
         {children}
         <Scripts />
       </body>
