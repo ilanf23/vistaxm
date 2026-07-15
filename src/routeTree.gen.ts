@@ -23,6 +23,7 @@ import { Route as BookRouteImport } from './routes/book'
 import { Route as ArticlesRouteImport } from './routes/articles'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as WhitePapersSplatRouteImport } from './routes/white-papers.$'
 import { Route as VideosSplatRouteImport } from './routes/videos.$'
 import { Route as SolutionsPartnerpulseRouteImport } from './routes/solutions/partnerpulse'
 import { Route as SolutionsIndustrialpulseRouteImport } from './routes/solutions/industrialpulse'
@@ -108,6 +109,11 @@ const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
+} as any)
+const WhitePapersSplatRoute = WhitePapersSplatRouteImport.update({
+  id: '/$',
+  path: '/$',
+  getParentRoute: () => WhitePapersRoute,
 } as any)
 const VideosSplatRoute = VideosSplatRouteImport.update({
   id: '/$',
@@ -203,7 +209,7 @@ export interface FileRoutesByFullPath {
   '/proof': typeof ProofRoute
   '/the-model': typeof TheModelRoute
   '/videos': typeof VideosRouteWithChildren
-  '/white-papers': typeof WhitePapersRoute
+  '/white-papers': typeof WhitePapersRouteWithChildren
   '/articles/$': typeof ArticlesSplatRoute
   '/brochures/$': typeof BrochuresSplatRoute
   '/case-studies/jf-petroleum': typeof CaseStudiesJfPetroleumRoute
@@ -219,6 +225,7 @@ export interface FileRoutesByFullPath {
   '/solutions/industrialpulse': typeof SolutionsIndustrialpulseRoute
   '/solutions/partnerpulse': typeof SolutionsPartnerpulseRoute
   '/videos/$': typeof VideosSplatRoute
+  '/white-papers/$': typeof WhitePapersSplatRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -234,7 +241,7 @@ export interface FileRoutesByTo {
   '/proof': typeof ProofRoute
   '/the-model': typeof TheModelRoute
   '/videos': typeof VideosRouteWithChildren
-  '/white-papers': typeof WhitePapersRoute
+  '/white-papers': typeof WhitePapersRouteWithChildren
   '/articles/$': typeof ArticlesSplatRoute
   '/brochures/$': typeof BrochuresSplatRoute
   '/case-studies/jf-petroleum': typeof CaseStudiesJfPetroleumRoute
@@ -250,6 +257,7 @@ export interface FileRoutesByTo {
   '/solutions/industrialpulse': typeof SolutionsIndustrialpulseRoute
   '/solutions/partnerpulse': typeof SolutionsPartnerpulseRoute
   '/videos/$': typeof VideosSplatRoute
+  '/white-papers/$': typeof WhitePapersSplatRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -266,7 +274,7 @@ export interface FileRoutesById {
   '/proof': typeof ProofRoute
   '/the-model': typeof TheModelRoute
   '/videos': typeof VideosRouteWithChildren
-  '/white-papers': typeof WhitePapersRoute
+  '/white-papers': typeof WhitePapersRouteWithChildren
   '/articles/$': typeof ArticlesSplatRoute
   '/brochures/$': typeof BrochuresSplatRoute
   '/case-studies/jf-petroleum': typeof CaseStudiesJfPetroleumRoute
@@ -282,6 +290,7 @@ export interface FileRoutesById {
   '/solutions/industrialpulse': typeof SolutionsIndustrialpulseRoute
   '/solutions/partnerpulse': typeof SolutionsPartnerpulseRoute
   '/videos/$': typeof VideosSplatRoute
+  '/white-papers/$': typeof WhitePapersSplatRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -315,6 +324,7 @@ export interface FileRouteTypes {
     | '/solutions/industrialpulse'
     | '/solutions/partnerpulse'
     | '/videos/$'
+    | '/white-papers/$'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -346,6 +356,7 @@ export interface FileRouteTypes {
     | '/solutions/industrialpulse'
     | '/solutions/partnerpulse'
     | '/videos/$'
+    | '/white-papers/$'
   id:
     | '__root__'
     | '/'
@@ -377,6 +388,7 @@ export interface FileRouteTypes {
     | '/solutions/industrialpulse'
     | '/solutions/partnerpulse'
     | '/videos/$'
+    | '/white-papers/$'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -393,7 +405,7 @@ export interface RootRouteChildren {
   ProofRoute: typeof ProofRoute
   TheModelRoute: typeof TheModelRoute
   VideosRoute: typeof VideosRouteWithChildren
-  WhitePapersRoute: typeof WhitePapersRoute
+  WhitePapersRoute: typeof WhitePapersRouteWithChildren
   CaseStudiesJfPetroleumRoute: typeof CaseStudiesJfPetroleumRoute
   IndustriesItSolutionProvidersRoute: typeof IndustriesItSolutionProvidersRoute
   IndustriesTechnologyProvidersRoute: typeof IndustriesTechnologyProvidersRoute
@@ -504,6 +516,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/white-papers/$': {
+      id: '/white-papers/$'
+      path: '/$'
+      fullPath: '/white-papers/$'
+      preLoaderRoute: typeof WhitePapersSplatRouteImport
+      parentRoute: typeof WhitePapersRoute
     }
     '/videos/$': {
       id: '/videos/$'
@@ -664,6 +683,18 @@ const VideosRouteChildren: VideosRouteChildren = {
 const VideosRouteWithChildren =
   VideosRoute._addFileChildren(VideosRouteChildren)
 
+interface WhitePapersRouteChildren {
+  WhitePapersSplatRoute: typeof WhitePapersSplatRoute
+}
+
+const WhitePapersRouteChildren: WhitePapersRouteChildren = {
+  WhitePapersSplatRoute: WhitePapersSplatRoute,
+}
+
+const WhitePapersRouteWithChildren = WhitePapersRoute._addFileChildren(
+  WhitePapersRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
@@ -678,7 +709,7 @@ const rootRouteChildren: RootRouteChildren = {
   ProofRoute: ProofRoute,
   TheModelRoute: TheModelRoute,
   VideosRoute: VideosRouteWithChildren,
-  WhitePapersRoute: WhitePapersRoute,
+  WhitePapersRoute: WhitePapersRouteWithChildren,
   CaseStudiesJfPetroleumRoute: CaseStudiesJfPetroleumRoute,
   IndustriesItSolutionProvidersRoute: IndustriesItSolutionProvidersRoute,
   IndustriesTechnologyProvidersRoute: IndustriesTechnologyProvidersRoute,
