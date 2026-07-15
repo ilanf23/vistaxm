@@ -29,6 +29,7 @@ import { Route as SolutionsIndexRouteImport } from './routes/solutions/index'
 import { Route as WhitePapersSplatRouteImport } from './routes/white-papers.$'
 import { Route as VideosSplatRouteImport } from './routes/videos.$'
 import { Route as SolutionsPartnerpulseRouteImport } from './routes/solutions/partnerpulse'
+import { Route as SolutionsMethodologyRouteImport } from './routes/solutions/methodology'
 import { Route as SolutionsIndustrialpulseRouteImport } from './routes/solutions/industrialpulse'
 import { Route as SolutionsBrokerpulseRouteImport } from './routes/solutions/brokerpulse'
 import { Route as NewsSplatRouteImport } from './routes/news.$'
@@ -145,6 +146,11 @@ const SolutionsPartnerpulseRoute = SolutionsPartnerpulseRouteImport.update({
   path: '/solutions/partnerpulse',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SolutionsMethodologyRoute = SolutionsMethodologyRouteImport.update({
+  id: '/solutions/methodology',
+  path: '/solutions/methodology',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SolutionsIndustrialpulseRoute =
   SolutionsIndustrialpulseRouteImport.update({
     id: '/solutions/industrialpulse',
@@ -257,6 +263,7 @@ export interface FileRoutesByFullPath {
   '/news/$': typeof NewsSplatRoute
   '/solutions/brokerpulse': typeof SolutionsBrokerpulseRoute
   '/solutions/industrialpulse': typeof SolutionsIndustrialpulseRoute
+  '/solutions/methodology': typeof SolutionsMethodologyRoute
   '/solutions/partnerpulse': typeof SolutionsPartnerpulseRoute
   '/videos/$': typeof VideosSplatRoute
   '/white-papers/$': typeof WhitePapersSplatRoute
@@ -294,6 +301,7 @@ export interface FileRoutesByTo {
   '/news/$': typeof NewsSplatRoute
   '/solutions/brokerpulse': typeof SolutionsBrokerpulseRoute
   '/solutions/industrialpulse': typeof SolutionsIndustrialpulseRoute
+  '/solutions/methodology': typeof SolutionsMethodologyRoute
   '/solutions/partnerpulse': typeof SolutionsPartnerpulseRoute
   '/videos/$': typeof VideosSplatRoute
   '/white-papers/$': typeof WhitePapersSplatRoute
@@ -332,6 +340,7 @@ export interface FileRoutesById {
   '/news/$': typeof NewsSplatRoute
   '/solutions/brokerpulse': typeof SolutionsBrokerpulseRoute
   '/solutions/industrialpulse': typeof SolutionsIndustrialpulseRoute
+  '/solutions/methodology': typeof SolutionsMethodologyRoute
   '/solutions/partnerpulse': typeof SolutionsPartnerpulseRoute
   '/videos/$': typeof VideosSplatRoute
   '/white-papers/$': typeof WhitePapersSplatRoute
@@ -371,6 +380,7 @@ export interface FileRouteTypes {
     | '/news/$'
     | '/solutions/brokerpulse'
     | '/solutions/industrialpulse'
+    | '/solutions/methodology'
     | '/solutions/partnerpulse'
     | '/videos/$'
     | '/white-papers/$'
@@ -408,6 +418,7 @@ export interface FileRouteTypes {
     | '/news/$'
     | '/solutions/brokerpulse'
     | '/solutions/industrialpulse'
+    | '/solutions/methodology'
     | '/solutions/partnerpulse'
     | '/videos/$'
     | '/white-papers/$'
@@ -445,6 +456,7 @@ export interface FileRouteTypes {
     | '/news/$'
     | '/solutions/brokerpulse'
     | '/solutions/industrialpulse'
+    | '/solutions/methodology'
     | '/solutions/partnerpulse'
     | '/videos/$'
     | '/white-papers/$'
@@ -476,6 +488,7 @@ export interface RootRouteChildren {
   LegalTermsOfServiceRoute: typeof LegalTermsOfServiceRoute
   SolutionsBrokerpulseRoute: typeof SolutionsBrokerpulseRoute
   SolutionsIndustrialpulseRoute: typeof SolutionsIndustrialpulseRoute
+  SolutionsMethodologyRoute: typeof SolutionsMethodologyRoute
   SolutionsPartnerpulseRoute: typeof SolutionsPartnerpulseRoute
   SolutionsIndexRoute: typeof SolutionsIndexRoute
 }
@@ -620,6 +633,13 @@ declare module '@tanstack/react-router' {
       path: '/solutions/partnerpulse'
       fullPath: '/solutions/partnerpulse'
       preLoaderRoute: typeof SolutionsPartnerpulseRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/solutions/methodology': {
+      id: '/solutions/methodology'
+      path: '/solutions/methodology'
+      fullPath: '/solutions/methodology'
+      preLoaderRoute: typeof SolutionsMethodologyRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/solutions/industrialpulse': {
@@ -839,6 +859,7 @@ const rootRouteChildren: RootRouteChildren = {
   LegalTermsOfServiceRoute: LegalTermsOfServiceRoute,
   SolutionsBrokerpulseRoute: SolutionsBrokerpulseRoute,
   SolutionsIndustrialpulseRoute: SolutionsIndustrialpulseRoute,
+  SolutionsMethodologyRoute: SolutionsMethodologyRoute,
   SolutionsPartnerpulseRoute: SolutionsPartnerpulseRoute,
   SolutionsIndexRoute: SolutionsIndexRoute,
 }
