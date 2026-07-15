@@ -25,6 +25,7 @@ import { Route as SolutionsBrokerpulseRouteImport } from './routes/solutions/bro
 import { Route as LegalTermsOfServiceRouteImport } from './routes/legal/terms-of-service'
 import { Route as LegalPrivacyPolicyRouteImport } from './routes/legal/privacy-policy'
 import { Route as LegalCookiePolicyRouteImport } from './routes/legal/cookie-policy'
+import { Route as InsightHubSplatRouteImport } from './routes/insight-hub.$'
 import { Route as IndustriesTechnologyProvidersRouteImport } from './routes/industries/technology-providers'
 import { Route as IndustriesItSolutionProvidersRouteImport } from './routes/industries/it-solution-providers'
 import { Route as CaseStudiesJfPetroleumRouteImport } from './routes/case-studies/jf-petroleum'
@@ -110,6 +111,11 @@ const LegalCookiePolicyRoute = LegalCookiePolicyRouteImport.update({
   path: '/legal/cookie-policy',
   getParentRoute: () => rootRouteImport,
 } as any)
+const InsightHubSplatRoute = InsightHubSplatRouteImport.update({
+  id: '/$',
+  path: '/$',
+  getParentRoute: () => InsightHubRoute,
+} as any)
 const IndustriesTechnologyProvidersRoute =
   IndustriesTechnologyProvidersRouteImport.update({
     id: '/industries/technology-providers',
@@ -135,13 +141,14 @@ export interface FileRoutesByFullPath {
   '/crn': typeof CrnRoute
   '/for-oems': typeof ForOemsRoute
   '/how-to-start': typeof HowToStartRoute
-  '/insight-hub': typeof InsightHubRoute
+  '/insight-hub': typeof InsightHubRouteWithChildren
   '/insights': typeof InsightsRoute
   '/proof': typeof ProofRoute
   '/the-model': typeof TheModelRoute
   '/case-studies/jf-petroleum': typeof CaseStudiesJfPetroleumRoute
   '/industries/it-solution-providers': typeof IndustriesItSolutionProvidersRoute
   '/industries/technology-providers': typeof IndustriesTechnologyProvidersRoute
+  '/insight-hub/$': typeof InsightHubSplatRoute
   '/legal/cookie-policy': typeof LegalCookiePolicyRoute
   '/legal/privacy-policy': typeof LegalPrivacyPolicyRoute
   '/legal/terms-of-service': typeof LegalTermsOfServiceRoute
@@ -156,13 +163,14 @@ export interface FileRoutesByTo {
   '/crn': typeof CrnRoute
   '/for-oems': typeof ForOemsRoute
   '/how-to-start': typeof HowToStartRoute
-  '/insight-hub': typeof InsightHubRoute
+  '/insight-hub': typeof InsightHubRouteWithChildren
   '/insights': typeof InsightsRoute
   '/proof': typeof ProofRoute
   '/the-model': typeof TheModelRoute
   '/case-studies/jf-petroleum': typeof CaseStudiesJfPetroleumRoute
   '/industries/it-solution-providers': typeof IndustriesItSolutionProvidersRoute
   '/industries/technology-providers': typeof IndustriesTechnologyProvidersRoute
+  '/insight-hub/$': typeof InsightHubSplatRoute
   '/legal/cookie-policy': typeof LegalCookiePolicyRoute
   '/legal/privacy-policy': typeof LegalPrivacyPolicyRoute
   '/legal/terms-of-service': typeof LegalTermsOfServiceRoute
@@ -178,13 +186,14 @@ export interface FileRoutesById {
   '/crn': typeof CrnRoute
   '/for-oems': typeof ForOemsRoute
   '/how-to-start': typeof HowToStartRoute
-  '/insight-hub': typeof InsightHubRoute
+  '/insight-hub': typeof InsightHubRouteWithChildren
   '/insights': typeof InsightsRoute
   '/proof': typeof ProofRoute
   '/the-model': typeof TheModelRoute
   '/case-studies/jf-petroleum': typeof CaseStudiesJfPetroleumRoute
   '/industries/it-solution-providers': typeof IndustriesItSolutionProvidersRoute
   '/industries/technology-providers': typeof IndustriesTechnologyProvidersRoute
+  '/insight-hub/$': typeof InsightHubSplatRoute
   '/legal/cookie-policy': typeof LegalCookiePolicyRoute
   '/legal/privacy-policy': typeof LegalPrivacyPolicyRoute
   '/legal/terms-of-service': typeof LegalTermsOfServiceRoute
@@ -208,6 +217,7 @@ export interface FileRouteTypes {
     | '/case-studies/jf-petroleum'
     | '/industries/it-solution-providers'
     | '/industries/technology-providers'
+    | '/insight-hub/$'
     | '/legal/cookie-policy'
     | '/legal/privacy-policy'
     | '/legal/terms-of-service'
@@ -229,6 +239,7 @@ export interface FileRouteTypes {
     | '/case-studies/jf-petroleum'
     | '/industries/it-solution-providers'
     | '/industries/technology-providers'
+    | '/insight-hub/$'
     | '/legal/cookie-policy'
     | '/legal/privacy-policy'
     | '/legal/terms-of-service'
@@ -250,6 +261,7 @@ export interface FileRouteTypes {
     | '/case-studies/jf-petroleum'
     | '/industries/it-solution-providers'
     | '/industries/technology-providers'
+    | '/insight-hub/$'
     | '/legal/cookie-policy'
     | '/legal/privacy-policy'
     | '/legal/terms-of-service'
@@ -265,7 +277,7 @@ export interface RootRouteChildren {
   CrnRoute: typeof CrnRoute
   ForOemsRoute: typeof ForOemsRoute
   HowToStartRoute: typeof HowToStartRoute
-  InsightHubRoute: typeof InsightHubRoute
+  InsightHubRoute: typeof InsightHubRouteWithChildren
   InsightsRoute: typeof InsightsRoute
   ProofRoute: typeof ProofRoute
   TheModelRoute: typeof TheModelRoute
@@ -394,6 +406,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LegalCookiePolicyRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/insight-hub/$': {
+      id: '/insight-hub/$'
+      path: '/$'
+      fullPath: '/insight-hub/$'
+      preLoaderRoute: typeof InsightHubSplatRouteImport
+      parentRoute: typeof InsightHubRoute
+    }
     '/industries/technology-providers': {
       id: '/industries/technology-providers'
       path: '/industries/technology-providers'
@@ -418,6 +437,18 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface InsightHubRouteChildren {
+  InsightHubSplatRoute: typeof InsightHubSplatRoute
+}
+
+const InsightHubRouteChildren: InsightHubRouteChildren = {
+  InsightHubSplatRoute: InsightHubSplatRoute,
+}
+
+const InsightHubRouteWithChildren = InsightHubRoute._addFileChildren(
+  InsightHubRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
@@ -425,7 +456,7 @@ const rootRouteChildren: RootRouteChildren = {
   CrnRoute: CrnRoute,
   ForOemsRoute: ForOemsRoute,
   HowToStartRoute: HowToStartRoute,
-  InsightHubRoute: InsightHubRoute,
+  InsightHubRoute: InsightHubRouteWithChildren,
   InsightsRoute: InsightsRoute,
   ProofRoute: ProofRoute,
   TheModelRoute: TheModelRoute,
