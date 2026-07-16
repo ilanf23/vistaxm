@@ -244,6 +244,9 @@ function Microsite() {
       {/* Co-branded sticky header */}
       <MicroHeader />
 
+      {/* Flip-through deck viewer */}
+      <DeckViewer />
+
       {/* Hero */}
       <section id="top" className="vx-hero">
         <div aria-hidden className="vx-hero-dots" />
