@@ -229,6 +229,192 @@ function SectionHead({ eyebrow, title, kicker }: { eyebrow: string; title: strin
 }
 
 /* -------------------------- Main --------------------------------------------- */
+const DECK_SLIDES = Array.from(
+  { length: 19 },
+  (_, i) => `/decks/abacus/slide-${String(i + 1).padStart(2, "0")}.jpg`,
+);
+
+function DeckViewer() {
+  const [index, setIndex] = useState(0);
+  const [isFs, setIsFs] = useState(false);
+  const frameRef = useRef<HTMLDivElement | null>(null);
+  const rootRef = useRef<HTMLDivElement | null>(null);
+  const touchStartX = useRef<number | null>(null);
+  const inViewRef = useRef(true);
+  const total = DECK_SLIDES.length;
+  const [dir, setDir] = useState<1 | -1>(1);
+
+  const go = (next: number) => {
+    const clamped = Math.max(0, Math.min(total - 1, next));
+    setDir(clamped >= index ? 1 : -1);
+    setIndex(clamped);
+  };
+  const prev = () => go(index - 1);
+  const next = () => go(index + 1);
+
+  // Keyboard nav when in view
+  useEffect(() => {
+    const el = rootRef.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) inViewRef.current = e.isIntersecting;
+      },
+      { threshold: 0.2 },
+    );
+    io.observe(el);
+    const onKey = (e: KeyboardEvent) => {
+      if (!inViewRef.current) return;
+      if (e.key === "ArrowLeft") { e.preventDefault(); prev(); }
+      else if (e.key === "ArrowRight") { e.preventDefault(); next(); }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => {
+      io.disconnect();
+      window.removeEventListener("keydown", onKey);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [index]);
+
+  // Fullscreen sync
+  useEffect(() => {
+    const onFsChange = () => setIsFs(document.fullscreenElement === frameRef.current);
+    document.addEventListener("fullscreenchange", onFsChange);
+    return () => document.removeEventListener("fullscreenchange", onFsChange);
+  }, []);
+
+  const toggleFullscreen = () => {
+    const el = frameRef.current;
+    if (!el) return;
+    if (document.fullscreenElement) document.exitFullscreen();
+    else el.requestFullscreen?.();
+  };
+
+  // Preload the immediate next slide
+  useEffect(() => {
+    if (index + 1 < total) {
+      const img = new Image();
+      img.src = DECK_SLIDES[index + 1];
+    }
+  }, [index, total]);
+
+  const onTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+  };
+  const onTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartX.current == null) return;
+    const dx = e.changedTouches[0].clientX - touchStartX.current;
+    if (Math.abs(dx) > 40) {
+      if (dx < 0) next(); else prev();
+    }
+    touchStartX.current = null;
+  };
+
+  return (
+    <section ref={rootRef} className="vx-deck-section" aria-label="Client Centricity Program Review deck">
+      <div className="vx-container">
+        <div className="vx-deck-head">
+          <div className="vx-eyebrow">Client Centricity Program Review</div>
+          <p className="vx-deck-help">Use the arrows or swipe to flip through.</p>
+        </div>
+
+        <div
+          ref={frameRef}
+          className={`vx-deck-frame ${isFs ? "vx-deck-frame-fs" : ""}`}
+          onTouchStart={onTouchStart}
+          onTouchEnd={onTouchEnd}
+        >
+          <div className="vx-deck-stage">
+            {DECK_SLIDES.map((src, i) => {
+              const active = i === index;
+              const offset = i - index;
+              return (
+                <img
+                  key={src}
+                  src={src}
+                  alt={`Slide ${i + 1} of ${total}`}
+                  loading={i === 0 ? "eager" : "lazy"}
+                  decoding="async"
+                  draggable={false}
+                  className={`vx-deck-slide ${active ? "is-active" : ""}`}
+                  style={{
+                    transform: active
+                      ? "translateX(0)"
+                      : `translateX(${offset > 0 ? "3%" : "-3%"})`,
+                    opacity: active ? 1 : 0,
+                    pointerEvents: active ? "auto" : "none",
+                    // subtle direction cue on enter
+                    ...(active ? { transitionDelay: "0ms" } : {}),
+                    // hint using dir so lint keeps it used
+                    ["--vx-deck-dir" as string]: String(dir),
+                  }}
+                />
+              );
+            })}
+          </div>
+
+          <button
+            type="button"
+            className="vx-deck-nav vx-deck-prev"
+            onClick={prev}
+            disabled={index === 0}
+            aria-label="Previous slide"
+          >
+            <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden>
+              <path d="M15 6l-6 6 6 6" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </button>
+          <button
+            type="button"
+            className="vx-deck-nav vx-deck-next"
+            onClick={next}
+            disabled={index === total - 1}
+            aria-label="Next slide"
+          >
+            <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden>
+              <path d="M9 6l6 6-6 6" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </button>
+
+          <button
+            type="button"
+            className="vx-deck-fs"
+            onClick={toggleFullscreen}
+            aria-label={isFs ? "Exit fullscreen" : "Enter fullscreen"}
+          >
+            <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden>
+              {isFs ? (
+                <path d="M9 15H5v4M15 15h4v4M9 9H5V5M15 9h4V5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+              ) : (
+                <path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+              )}
+            </svg>
+          </button>
+        </div>
+
+        <div className="vx-deck-controls">
+          <div className="vx-deck-count" aria-live="polite">
+            {index + 1} / {total}
+          </div>
+          <div className="vx-deck-dots" role="tablist" aria-label="Jump to slide">
+            {DECK_SLIDES.map((_, i) => (
+              <button
+                key={i}
+                type="button"
+                role="tab"
+                aria-selected={i === index}
+                aria-label={`Go to slide ${i + 1}`}
+                className={`vx-deck-dot ${i === index ? "is-active" : ""}`}
+                onClick={() => go(i)}
+              />
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function Microsite() {
   useReveal();
   const [filter, setFilter] = useState<"all" | "case" | "press">("all");
