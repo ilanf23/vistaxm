@@ -229,6 +229,192 @@ function SectionHead({ eyebrow, title, kicker }: { eyebrow: string; title: strin
 }
 
 /* -------------------------- Main --------------------------------------------- */
+const DECK_SLIDES = Array.from(
+  { length: 19 },
+  (_, i) => `/decks/abacus/slide-${String(i + 1).padStart(2, "0")}.jpg`,
+);
+
+function DeckViewer() {
+  const [index, setIndex] = useState(0);
+  const [isFs, setIsFs] = useState(false);
+  const frameRef = useRef<HTMLDivElement | null>(null);
+  const rootRef = useRef<HTMLDivElement | null>(null);
+  const touchStartX = useRef<number | null>(null);
+  const inViewRef = useRef(true);
+  const total = DECK_SLIDES.length;
+  const [dir, setDir] = useState<1 | -1>(1);
+
+  const go = (next: number) => {
+    const clamped = Math.max(0, Math.min(total - 1, next));
+    setDir(clamped >= index ? 1 : -1);
+    setIndex(clamped);
+  };
+  const prev = () => go(index - 1);
+  const next = () => go(index + 1);
+
+  // Keyboard nav when in view
+  useEffect(() => {
+    const el = rootRef.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) inViewRef.current = e.isIntersecting;
+      },
+      { threshold: 0.2 },
+    );
+    io.observe(el);
+    const onKey = (e: KeyboardEvent) => {
+      if (!inViewRef.current) return;
+      if (e.key === "ArrowLeft") { e.preventDefault(); prev(); }
+      else if (e.key === "ArrowRight") { e.preventDefault(); next(); }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => {
+      io.disconnect();
+      window.removeEventListener("keydown", onKey);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [index]);
+
+  // Fullscreen sync
+  useEffect(() => {
+    const onFsChange = () => setIsFs(document.fullscreenElement === frameRef.current);
+    document.addEventListener("fullscreenchange", onFsChange);
+    return () => document.removeEventListener("fullscreenchange", onFsChange);
+  }, []);
+
+  const toggleFullscreen = () => {
+    const el = frameRef.current;
+    if (!el) return;
+    if (document.fullscreenElement) document.exitFullscreen();
+    else el.requestFullscreen?.();
+  };
+
+  // Preload the immediate next slide
+  useEffect(() => {
+    if (index + 1 < total) {
+      const img = new Image();
+      img.src = DECK_SLIDES[index + 1];
+    }
+  }, [index, total]);
+
+  const onTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+  };
+  const onTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartX.current == null) return;
+    const dx = e.changedTouches[0].clientX - touchStartX.current;
+    if (Math.abs(dx) > 40) {
+      if (dx < 0) next(); else prev();
+    }
+    touchStartX.current = null;
+  };
+
+  return (
+    <section ref={rootRef} className="vx-deck-section" aria-label="Client Centricity Program Review deck">
+      <div className="vx-container">
+        <div className="vx-deck-head">
+          <div className="vx-eyebrow">Client Centricity Program Review</div>
+          <p className="vx-deck-help">Use the arrows or swipe to flip through.</p>
+        </div>
+
+        <div
+          ref={frameRef}
+          className={`vx-deck-frame ${isFs ? "vx-deck-frame-fs" : ""}`}
+          onTouchStart={onTouchStart}
+          onTouchEnd={onTouchEnd}
+        >
+          <div className="vx-deck-stage">
+            {DECK_SLIDES.map((src, i) => {
+              const active = i === index;
+              const offset = i - index;
+              return (
+                <img
+                  key={src}
+                  src={src}
+                  alt={`Slide ${i + 1} of ${total}`}
+                  loading={i === 0 ? "eager" : "lazy"}
+                  decoding="async"
+                  draggable={false}
+                  className={`vx-deck-slide ${active ? "is-active" : ""}`}
+                  style={{
+                    transform: active
+                      ? "translateX(0)"
+                      : `translateX(${offset > 0 ? "3%" : "-3%"})`,
+                    opacity: active ? 1 : 0,
+                    pointerEvents: active ? "auto" : "none",
+                    // subtle direction cue on enter
+                    ...(active ? { transitionDelay: "0ms" } : {}),
+                    // hint using dir so lint keeps it used
+                    ["--vx-deck-dir" as string]: String(dir),
+                  }}
+                />
+              );
+            })}
+          </div>
+
+          <button
+            type="button"
+            className="vx-deck-nav vx-deck-prev"
+            onClick={prev}
+            disabled={index === 0}
+            aria-label="Previous slide"
+          >
+            <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden>
+              <path d="M15 6l-6 6 6 6" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </button>
+          <button
+            type="button"
+            className="vx-deck-nav vx-deck-next"
+            onClick={next}
+            disabled={index === total - 1}
+            aria-label="Next slide"
+          >
+            <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden>
+              <path d="M9 6l6 6-6 6" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </button>
+
+          <button
+            type="button"
+            className="vx-deck-fs"
+            onClick={toggleFullscreen}
+            aria-label={isFs ? "Exit fullscreen" : "Enter fullscreen"}
+          >
+            <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden>
+              {isFs ? (
+                <path d="M9 15H5v4M15 15h4v4M9 9H5V5M15 9h4V5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+              ) : (
+                <path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+              )}
+            </svg>
+          </button>
+        </div>
+
+        <div className="vx-deck-controls">
+          <div className="vx-deck-count" aria-live="polite">
+            {index + 1} / {total}
+          </div>
+          <div className="vx-deck-dots" role="tablist" aria-label="Jump to slide">
+            {DECK_SLIDES.map((_, i) => (
+              <button
+                key={i}
+                type="button"
+                role="tab"
+                aria-selected={i === index}
+                aria-label={`Go to slide ${i + 1}`}
+                className={`vx-deck-dot ${i === index ? "is-active" : ""}`}
+                onClick={() => go(i)}
+              />
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function Microsite() {
   useReveal();
   const [filter, setFilter] = useState<"all" | "case" | "press">("all");
@@ -243,6 +429,9 @@ function Microsite() {
 
       {/* Co-branded sticky header */}
       <MicroHeader />
+
+      {/* Flip-through deck viewer */}
+      <DeckViewer />
 
       {/* Hero */}
       <section id="top" className="vx-hero">
@@ -1168,4 +1357,78 @@ const MICROSITE_CSS = `
 .vx-foot-sep { color: rgba(255,255,255,0.4); }
 .vx-foot-co { font-weight: 600; }
 .vx-foot-meta { font-size: 0.82rem; color: rgba(255,255,255,0.55); }
+
+/* Deck viewer */
+.vx-deck-section { background: #eef4fc; padding: 48px 0 40px; border-bottom: 1px solid #dce7f4; }
+.vx-deck-head { text-align: center; margin-bottom: 20px; }
+.vx-deck-help { margin: 8px 0 0; color: #536b8a; font-size: 0.9rem; }
+.vx-deck-frame {
+  position: relative;
+  max-width: 1080px;
+  margin: 0 auto;
+  aspect-ratio: 16 / 9;
+  background: #022550;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 24px 60px -20px rgba(2, 37, 80, 0.35), 0 8px 20px -10px rgba(2, 37, 80, 0.2);
+}
+.vx-deck-frame-fs { max-width: none; border-radius: 0; aspect-ratio: auto; width: 100vw; height: 100vh; }
+.vx-deck-stage { position: absolute; inset: 0; }
+.vx-deck-slide {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: contain;
+  background: #022550;
+  transition: opacity 250ms ease, transform 250ms ease;
+  will-change: opacity, transform;
+  user-select: none;
+}
+.vx-deck-slide.is-active { opacity: 1; transform: translateX(0); }
+.vx-deck-nav {
+  position: absolute; top: 50%; transform: translateY(-50%);
+  width: 44px; height: 44px; border-radius: 999px;
+  background: rgba(255,255,255,0.92); color: #022550;
+  border: 1px solid #dce7f4;
+  display: grid; place-items: center;
+  box-shadow: 0 6px 16px -6px rgba(2,37,80,0.35);
+  transition: background 160ms ease, color 160ms ease, transform 160ms ease, opacity 160ms ease;
+  z-index: 2;
+}
+.vx-deck-nav:hover:not(:disabled) { background: #3185fc; color: #fff; }
+.vx-deck-nav:disabled { opacity: 0.35; }
+.vx-deck-prev { left: 12px; }
+.vx-deck-next { right: 12px; }
+.vx-deck-fs {
+  position: absolute; top: 10px; right: 10px;
+  width: 32px; height: 32px; border-radius: 8px;
+  background: rgba(255,255,255,0.85); color: #022550;
+  border: 1px solid #dce7f4;
+  display: grid; place-items: center;
+  transition: background 160ms ease, color 160ms ease;
+  z-index: 2;
+}
+.vx-deck-fs:hover { background: #3185fc; color: #fff; }
+.vx-deck-controls {
+  max-width: 1080px; margin: 16px auto 0;
+  display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+}
+.vx-deck-count { color: #22344f; font-variant-numeric: tabular-nums; font-size: 0.9rem; font-weight: 600; }
+.vx-deck-dots { display: flex; gap: 6px; flex-wrap: wrap; }
+.vx-deck-dot {
+  width: 10px; height: 10px; border-radius: 999px;
+  background: #cfdcee; border: 0; padding: 0;
+  transition: background 140ms ease, transform 140ms ease;
+}
+.vx-deck-dot:hover { background: #67a6ff; }
+.vx-deck-dot.is-active { background: #3185fc; transform: scale(1.15); }
+@media (max-width: 640px) {
+  .vx-deck-section { padding: 28px 0 24px; }
+  .vx-deck-frame { border-radius: 10px; }
+  .vx-deck-nav { width: 38px; height: 38px; }
+  .vx-deck-prev { left: 6px; }
+  .vx-deck-next { right: 6px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .vx-deck-slide { transition: opacity 120ms linear; transform: none !important; }
+}
 `;
