@@ -4,6 +4,7 @@ import {
   Link,
   createRootRouteWithContext,
   useRouter,
+  useRouterState,
   HeadContent,
   Scripts,
 } from "@tanstack/react-router";
@@ -598,17 +599,25 @@ function Footer() {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  const pathname = useRouterState({ select: (s) => s.location.pathname });
+  // Hidden per-prospect microsites at /for/* render standalone (co-branded),
+  // without the public site's Header/Footer chrome.
+  const bareShell = pathname.startsWith("/for/");
 
   return (
     <QueryClientProvider client={queryClient}>
       <MotionConfig reducedMotion="user">
-        <div className="flex min-h-dvh flex-col">
-          <Header />
-          <main className="flex-1">
-            <Outlet />
-          </main>
-          <Footer />
-        </div>
+        {bareShell ? (
+          <Outlet />
+        ) : (
+          <div className="flex min-h-dvh flex-col">
+            <Header />
+            <main className="flex-1">
+              <Outlet />
+            </main>
+            <Footer />
+          </div>
+        )}
       </MotionConfig>
     </QueryClientProvider>
   );
