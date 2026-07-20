@@ -58,10 +58,9 @@ export const Route = createFileRoute("/crn")({
 // constant so it can be repointed to a dedicated provider page later.
 const PROVIDER_PATH = "/";
 
-// Placeholder hrefs so the real PDFs can be dropped in later.
 const RESOURCES = {
-  fiveThings: "#",
-  stateOfRci: "#",
+  fiveThings: "/assets/briefs/5-things.pdf",
+  stateOfRci: "/assets/briefs/state-of-rci.pdf",
 } as const;
 
 /* ----------------------------------------------------------------------------
@@ -675,6 +674,9 @@ function DownloadCard({
     <Reveal delay={delay} className="h-full">
       <a
         href={href}
+        target="_blank"
+        rel="noopener"
+        download
         className="group relative flex h-full items-center gap-5 overflow-hidden rounded-2xl hairline bg-white p-7 card-lift"
       >
         <span
