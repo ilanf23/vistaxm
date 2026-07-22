@@ -168,6 +168,39 @@ function JFPetroleumCaseStudy() {
             <Stat key={m.label} value={m.value} label={m.label} delay={i * 100} />
           ))}
         </div>
+
+        <div className="mt-12 flex justify-center">
+          <Reveal>
+            <div className="relative w-full max-w-2xl overflow-hidden rounded-2xl hairline bg-white p-8 text-center md:p-10">
+              <span
+                aria-hidden
+                className="absolute inset-x-0 top-0 h-[3px] bg-gradient-to-r from-[color:var(--blue-cta)] to-[color:var(--orange-pop)]"
+              />
+              <div className="text-xs font-semibold uppercase tracking-[0.14em] text-[color:var(--blue-link)]">
+                Full case study
+              </div>
+              <h3
+                className="mt-2 text-xl font-semibold text-[color:var(--navy-deep)] md:text-2xl"
+                style={{ fontFamily: "var(--font-display)" }}
+              >
+                Get the complete JF Petroleum story
+              </h3>
+              <p className="mt-3 text-base leading-relaxed text-[color:var(--ink-soft)]">
+                Download the approved case study for the full methodology, quotes, and results.
+              </p>
+              <div className="mt-6">
+                <a
+                  href="/assets/case-studies/jf-petroleum.pdf"
+                  download
+                  className="btn-primary inline-flex items-center gap-2.5 px-7 py-3.5 text-base"
+                >
+                  <DownloadIcon className="h-5 w-5" />
+                  Download the full case study (PDF)
+                </a>
+              </div>
+            </div>
+          </Reveal>
+        </div>
       </Section>
 
       {/* The challenge */}
@@ -178,16 +211,6 @@ function JFPetroleumCaseStudy() {
               eyebrow="The challenge"
               title="Acquisition growth, rising asset complexity, fragmented visibility."
             />
-            <div className="mt-8">
-              <a
-                href="/assets/case-studies/jf-petroleum.pdf"
-                download
-                className="btn-secondary-dark inline-flex items-center gap-2"
-              >
-                <DownloadIcon />
-                Download the full case study (PDF)
-              </a>
-            </div>
           </div>
           <FadeIn delay={120}>
             <div className="space-y-5 text-base leading-relaxed text-[color:var(--ink-soft)] md:text-lg">
