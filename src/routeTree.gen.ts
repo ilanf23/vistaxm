@@ -57,6 +57,7 @@ import { Route as InsightHubCxMaturityAssessmentRouteImport } from './routes/ins
 import { Route as InsightHubSplatRouteImport } from './routes/insight-hub.$'
 import { Route as IndustriesTechnologyProvidersRouteImport } from './routes/industries/technology-providers'
 import { Route as IndustriesItSolutionProvidersRouteImport } from './routes/industries/it-solution-providers'
+import { Route as ForBrokerpulseMatrixK9m4RouteImport } from './routes/for.brokerpulse-matrix-k9m4'
 import { Route as ForAbacus9f4k2q7xRouteImport } from './routes/for.abacus-9f4k2q7x'
 import { Route as CompanyLeadershipRouteImport } from './routes/company.leadership'
 import { Route as CaseStudiesJfPetroleumRouteImport } from './routes/case-studies/jf-petroleum'
@@ -314,6 +315,12 @@ const IndustriesItSolutionProvidersRoute =
     path: '/industries/it-solution-providers',
     getParentRoute: () => rootRouteImport,
   } as any)
+const ForBrokerpulseMatrixK9m4Route =
+  ForBrokerpulseMatrixK9m4RouteImport.update({
+    id: '/for/brokerpulse-matrix-k9m4',
+    path: '/for/brokerpulse-matrix-k9m4',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const ForAbacus9f4k2q7xRoute = ForAbacus9f4k2q7xRouteImport.update({
   id: '/for/abacus-9f4k2q7x',
   path: '/for/abacus-9f4k2q7x',
@@ -374,6 +381,7 @@ export interface FileRoutesByFullPath {
   '/case-studies/jf-petroleum': typeof CaseStudiesJfPetroleumRoute
   '/company/leadership': typeof CompanyLeadershipRoute
   '/for/abacus-9f4k2q7x': typeof ForAbacus9f4k2q7xRoute
+  '/for/brokerpulse-matrix-k9m4': typeof ForBrokerpulseMatrixK9m4Route
   '/industries/it-solution-providers': typeof IndustriesItSolutionProvidersRoute
   '/industries/technology-providers': typeof IndustriesTechnologyProvidersRoute
   '/insight-hub/$': typeof InsightHubSplatRoute
@@ -427,6 +435,7 @@ export interface FileRoutesByTo {
   '/case-studies/jf-petroleum': typeof CaseStudiesJfPetroleumRoute
   '/company/leadership': typeof CompanyLeadershipRoute
   '/for/abacus-9f4k2q7x': typeof ForAbacus9f4k2q7xRoute
+  '/for/brokerpulse-matrix-k9m4': typeof ForBrokerpulseMatrixK9m4Route
   '/industries/it-solution-providers': typeof IndustriesItSolutionProvidersRoute
   '/industries/technology-providers': typeof IndustriesTechnologyProvidersRoute
   '/insight-hub/$': typeof InsightHubSplatRoute
@@ -483,6 +492,7 @@ export interface FileRoutesById {
   '/case-studies/jf-petroleum': typeof CaseStudiesJfPetroleumRoute
   '/company/leadership': typeof CompanyLeadershipRoute
   '/for/abacus-9f4k2q7x': typeof ForAbacus9f4k2q7xRoute
+  '/for/brokerpulse-matrix-k9m4': typeof ForBrokerpulseMatrixK9m4Route
   '/industries/it-solution-providers': typeof IndustriesItSolutionProvidersRoute
   '/industries/technology-providers': typeof IndustriesTechnologyProvidersRoute
   '/insight-hub/$': typeof InsightHubSplatRoute
@@ -540,6 +550,7 @@ export interface FileRouteTypes {
     | '/case-studies/jf-petroleum'
     | '/company/leadership'
     | '/for/abacus-9f4k2q7x'
+    | '/for/brokerpulse-matrix-k9m4'
     | '/industries/it-solution-providers'
     | '/industries/technology-providers'
     | '/insight-hub/$'
@@ -593,6 +604,7 @@ export interface FileRouteTypes {
     | '/case-studies/jf-petroleum'
     | '/company/leadership'
     | '/for/abacus-9f4k2q7x'
+    | '/for/brokerpulse-matrix-k9m4'
     | '/industries/it-solution-providers'
     | '/industries/technology-providers'
     | '/insight-hub/$'
@@ -648,6 +660,7 @@ export interface FileRouteTypes {
     | '/case-studies/jf-petroleum'
     | '/company/leadership'
     | '/for/abacus-9f4k2q7x'
+    | '/for/brokerpulse-matrix-k9m4'
     | '/industries/it-solution-providers'
     | '/industries/technology-providers'
     | '/insight-hub/$'
@@ -701,6 +714,7 @@ export interface RootRouteChildren {
   WhitePapersRoute: typeof WhitePapersRouteWithChildren
   CaseStudiesJfPetroleumRoute: typeof CaseStudiesJfPetroleumRoute
   ForAbacus9f4k2q7xRoute: typeof ForAbacus9f4k2q7xRoute
+  ForBrokerpulseMatrixK9m4Route: typeof ForBrokerpulseMatrixK9m4Route
   IndustriesItSolutionProvidersRoute: typeof IndustriesItSolutionProvidersRoute
   IndustriesTechnologyProvidersRoute: typeof IndustriesTechnologyProvidersRoute
   LegalCookiePolicyRoute: typeof LegalCookiePolicyRoute
@@ -1053,6 +1067,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndustriesItSolutionProvidersRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/for/brokerpulse-matrix-k9m4': {
+      id: '/for/brokerpulse-matrix-k9m4'
+      path: '/for/brokerpulse-matrix-k9m4'
+      fullPath: '/for/brokerpulse-matrix-k9m4'
+      preLoaderRoute: typeof ForBrokerpulseMatrixK9m4RouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/for/abacus-9f4k2q7x': {
       id: '/for/abacus-9f4k2q7x'
       path: '/for/abacus-9f4k2q7x'
@@ -1213,6 +1234,7 @@ const rootRouteChildren: RootRouteChildren = {
   WhitePapersRoute: WhitePapersRouteWithChildren,
   CaseStudiesJfPetroleumRoute: CaseStudiesJfPetroleumRoute,
   ForAbacus9f4k2q7xRoute: ForAbacus9f4k2q7xRoute,
+  ForBrokerpulseMatrixK9m4Route: ForBrokerpulseMatrixK9m4Route,
   IndustriesItSolutionProvidersRoute: IndustriesItSolutionProvidersRoute,
   IndustriesTechnologyProvidersRoute: IndustriesTechnologyProvidersRoute,
   LegalCookiePolicyRoute: LegalCookiePolicyRoute,
