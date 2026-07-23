@@ -97,12 +97,18 @@ export const Route = createFileRoute("/for/brokerpulse-matrix-k9m4")({
   component: BrokerPulseMatrixPreview,
 });
 
-function useReveal(threshold = 0.2) {
+function useReveal(threshold = 0) {
   const ref = useRef<HTMLDivElement | null>(null);
   const [shown, setShown] = useState(false);
   useEffect(() => {
     const el = ref.current;
-    if (!el) return;
+    if (!el) {
+      setShown(true);
+      return;
+    }
+    // Fallback: guarantee visibility shortly after mount even if the
+    // observer never fires (e.g. element already fully in view).
+    const fallback = window.setTimeout(() => setShown(true), 300);
     const io = new IntersectionObserver(
       (entries) => {
         entries.forEach((e) => {
@@ -115,7 +121,10 @@ function useReveal(threshold = 0.2) {
       { threshold },
     );
     io.observe(el);
-    return () => io.disconnect();
+    return () => {
+      window.clearTimeout(fallback);
+      io.disconnect();
+    };
   }, [threshold]);
   return { ref, shown };
 }
